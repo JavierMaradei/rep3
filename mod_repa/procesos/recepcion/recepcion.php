@@ -1,316 +1,226 @@
-<div class="ibox float-e-margins">
-    <form id="formRecepcion">
-        <div class="ibox-title">
-            <h3>Recepción</h3>
+<div class="content__boxed bg-gray-500">
+    <div class="content__wrap">
+        <div class="mb-3 mt-3 text-end">
+            <h2><i>Recepción de productos</i></h2>
         </div>
-        <div class="ibox-content">
-            <div class="panel-body">
-                <!--<div class="panel-group" id="accordion">-->
-                <div class="panel-group">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                Recepción del equipo
-                            </h4>
-                        </div>
-                        <!--<div aria-expanded="false" style="height: 0px;">-->
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon" style="font-weight: bold;">Orden</span>
-                                        <input type="text" id="nroDeOrden" class="form-control input-sm" readonly>
-                                    </div>
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon" style="font-weight: bold;">Fecha</span>
-                                        <input type="date" id="fechaRecepcion" class="form-control input-sm" value="<?php echo date('Y-m-d'); ?>" readonly>
-                                    </div>
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon" style="font-weight: bold;">Remito</span>
-                                        <div class="form-inline">
-                                            <div class="form-group col-sm-4" style="padding-left: 0px; padding-right: 0px;">
-                                                <input type="text" id="prefijoRemitoClienteSirep" class="form-control input-sm" placeholder="Prefijo">
-                                            </div>
-                                            <div class="form-group col-sm-8" style="padding-left: 0px; padding-right: 0px;">
-                                                <input type="text" id="nroRemitoClienteSirep" class="form-control input-sm" placeholder="Nro. de remito">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-5">
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon" style="font-weight: bold;" title="Lugar de recepción">L.Recep.</span>
-                                        <select id="lugarRecepcion" class="form-control input-sm">
-                                        </select>
-                                    </div>
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon" style="font-weight: bold;" title="Tipo de reparación">Tipo</span>
-                                        <select id="tipoReparacion" class="form-control input-sm">
-                                            <?php /* echo tiposReparacion() */ ?>
-                                        </select>
-                                    </div>
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon" style="font-weight: bold;">Atención</span>
-                                        <select id="atencion" class="form-control input-sm">
-                                            <?php /* echo tiposAtencionABM() */ ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <input type="text" id="tipoGarantia" hidden>
-                                    <div class="input-group col-sm-12 text-left">
-                                        <label for="garantia" class="checkbox-inline"> <input id="garantia" type="checkbox" name="c">Reclama garantía </label>
-                                    </div>
-                                    <div class="input-group col-sm-12 text-left">
-                                        <label for="reduccionTurbina" class="checkbox-inline"> <input id="reduccionTurbina" type="checkbox" name="c">Reducción de turbina </label>
-                                    </div>
-                                    <div class="input-group col-sm-12 text-left">
-                                        <label for="flete" class="checkbox-inline"> <input id="flete" type="checkbox" name="c">Flete </label>
-                                    </div>
-                                    <div class="input-group col-sm-12 text-left">
-                                        <label for="antisarro" class="checkbox-inline"> <input id="antisarro" type="checkbox" name="c">Antisarro </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--</div>-->
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-md-6 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Datos generales de Ingreso</h5>
+                <hr>
+                <div class="row mb-2">
+                    <label for="nroDeOrden" class="col-sm-2 col-form-label">Orden</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="nroDeOrden" value="1" readonly>
                     </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                Info del Cliente
-                            </h4>
-                        </div>
-                        <!--<div id="collapseTwo" class="panel-collapse" aria-expanded="false" style="height: 0px;">-->
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-sm-3 text-center">
-                                    <button id="btnNuevoCliente" type="button" class="btn btn-success btn-sm">Nuevo cliente</button>
-                                </div>
-                                <div class="col-sm-5 text-right">
-                                    <div class="input-group">
-                                    <!--<input type="text" class="form-control input-sm" id="searchCliente" placeholder="Ingrese código, nombre, apellido, teléfono, celular o mail">-->
-                                        <input type="text" class="form-control input-sm" id="searchCliente" placeholder="Ingrese código, nombre o apellido">
-                                        <span class="input-group-btn">
-                                            <button id="btnBuscarCliente" type="button" class="btn btn-primary btn-outline btn-sm">Buscar cliente</button>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <input type="checkbox" id="tipoBusquedaCliente"><label for="tipoBusquedaCliente">Incluir celular, email y teléfono</label>
-                                </div>
-                                <div class="col-sm-12">
-                                    <hr>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon" style="font-weight: bold;">Código</span>
-                                        <input type="text" id="clienteCodigo" class="form-control input-sm" readonly>
-                                    </div>
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon" style="font-weight: bold;">Apellido</span>
-                                        <input type="text" id="clienteRazonSocial1" class="form-control input-sm" maxlength="50">
-                                    </div>
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon" style="font-weight: bold;">Nombre</span>
-                                        <input type="text" id="clienteRazonSocial2" class="form-control input-sm" maxlength="50">
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon" style="font-weight: bold;">Teléfono</span>
-                                        <input type="text" id="clienteTelefono" class="form-control input-sm" maxlength="60">
-                                    </div>
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon" style="font-weight: bold;">Celular</span>
-                                        <input type="text" id="clienteCelular" class="form-control input-sm" maxlength="25">
-                                    </div>
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon" style="font-weight: bold;">Email</span>
-                                        <input type="text" id="clienteEmail" class="form-control input-sm" maxlength="50">
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon" title="Referencia" style="font-weight: bold;">Ref.</span>
-                                        <input type="text" id="referencia" class="form-control input-sm" maxlength="50">
-                                    </div>
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon" style="font-weight: bold;">O/C</span>
-                                        <input type="text" id="ordenDeCompra" class="form-control input-sm" maxlength="20">
-                                    </div>
-                                    <div class="input-group col-sm-12" id="divTecnico">
-                                        <span class="input-group-addon" style="font-weight: bold;">Técnico</span>
-                                        <select id="tecnico" class="form-control input-sm"></select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--</div>-->
+                </div>
+                <div class="row mb-2">
+                    <label for="fechaRecepcion" class="col-sm-2 col-form-label">Fecha</label>
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control" id="fechaRecepcion" value="<?php echo date('Y-m-d'); ?>" readonly>
                     </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                Info del Producto
-                            </h4>
+                </div>
+                <div class="row mb-2">
+                    <label for="lugarRecepcion" class="col-sm-2 col-form-label">L.Recepción</label>
+                    <div class="col-sm-10">
+                        <select id="lugarRecepcion" class="form-select">
+                            <option value="1" selected>Villa Devoto</option>
+                            <option value="2">Pilar</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label for="tipoReparacion" class="col-sm-2 col-form-label">Tipo</label>
+                    <div class="col-sm-10">
+                        <select id="tipoReparacion" class="form-select">
+                            <option value="1" selected>Reparación</option>
+                            <option value="2">Presupuesto</option>
+                            <option value="3">Plan canje</option>
+                            <option value="3">Cambio de equipo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label for="atencion" class="col-sm-2 col-form-label">Atención</label>
+                    <div class="col-sm-10">
+                        <select id="atencion" class="form-select">
+                            <option value="1" selected>Revisar</option>
+                            <option value="2">Reparar en el momento</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label for="remitoCliente" class="col-sm-2 col-form-label">Remito</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="remitoCliente">
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label class="col-sm-3 col-form-label">Adicionales</label>
+                    <div class="col-sm-9 pt-3">
+                        <div class="form-check form-check-inline">
+                            <input id="garantia" class="form-check-input" type="checkbox">
+                            <label for="garantia" class="form-check-label">Reclama garantía</label>
                         </div>
-                        <!--<div id="collapseThree" class="panel-collapse" aria-expanded="false">-->
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-sm-5">
 
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon" style="font-weight: bold;">Código</span>
-                                        <input type="text" id="codigo" class="form-control input-sm" maxlength="9">
-                                    </div>
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon" style="font-weight: bold;" title="Número de Serie">Serie</span>
-                                        <input type="text" id="nroSerieProducto" class="form-control input-sm" maxlength="10">
-                                        <small class="input-group-btn">
-                                            <button type="button" title="Generar nuevo nro. de serie" id="generarNroSerie" class="btn btn-outline btn-primary btn-sm"><i class="fa fa-plus"></i></button>
-                                        </small>
-                                    </div>
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon" style="font-weight: bold;">Serie Gtía</span>
-                                        <input type="text" id="nroSerieGarantia" class="form-control input-sm" readonly>
-                                    </div>
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon" style="font-weight: bold;" title="Modelo">Modelo</span>
-                                        <select id="modeloFicha" class="form-control input-sm"></select>
-                                    </div>
-                                    <div class="input-group col-sm-12" id="divMediaUnion">
-                                        <span class="input-group-addon" style="font-weight: bold;" title="Media unión">M.Unión</span>
-                                        <select class="form-control input-sm" id="mediaUnion">
-                                            <option value="">Seleccionar</option>
-                                            <option value="S">Si</option>
-                                            <option value="N">No</option>
-                                        </select>
-                                    </div>
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon" style="font-weight: bold;">Equipo a Recuperar</span>
-                                        <div class="input-group-addon">
-                                            <div class="switch">
-                                                <div class="onoffswitch">
-                                                    <input type="checkbox" class="onoffswitch-checkbox" id="equipoRecuperar">
-                                                    <label class="onoffswitch-label" for="equipoRecuperar">
-                                                        <span class="onoffswitch-inner"></span>
-                                                        <span class="onoffswitch-switch"></span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-7">
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon" style="font-weight: bold;" title="Descripción">Desc.</span>
-                                        <input type="text" id="descripcion" class="form-control input-sm" readonly>
-                                        <span class="input-group-btn">
-                                            <button id="btnBuscarBomba" type="button" class="btn btn-primary btn-outline btn-sm">Buscar</button>
-                                        </span>
-                                    </div>
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon" style="font-weight: bold;" title="Problema Declarado">Prob.Dec.</span>
-                                        <select id="problemaDeclarado" class="form-control input-sm"></select>
-                                    </div>
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon" style="font-weight: bold;" title="Pedido de Service">P.Serv.</span>
-                                        <input type="text" id="pedidoServiceSirep" class="form-control input-sm">
-                                    </div>
-                                    <textarea name="observacionesProductoSirep" id="observacionesProductoSirep" cols="30" rows="4" placeholder="Observaciones" class="form-control input-sm"></textarea>
-                                    <div class="col-sm-12 text-center" style="padding-top: 1em;">
-                                        <button id="btnProdSinRep" type="button" class="btn btn-warning btn-sm">Ver Productos sin repuestos</button>
-                                    </div>
-                                </div>
+                        <div class="form-check form-check-inline">
+                            <input id="flete" class="form-check-input" type="checkbox">
+                            <label for="flete" class="form-check-label">Flete</label>
+                        </div>
 
-                            </div>
-                        </div>
-                        <!--</div>-->
                     </div>
-                    <div class="panel panel-default" id="divCanje">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                Producto de destino por Plan canje o Cambio de equipo
-                            </h4>
-                        </div>
-                        <!--<div id="collapseThree" class="panel-collapse" aria-expanded="false">-->
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="input-group">
-                                        <span class="input-group-addon" style="font-weight: bold;">Código</span>
-                                        <input type="text" id="codigoCanje" class="form-control input-sm" maxlength="9">
-                                    </div>
-                                </div>
-                                <div class="col-sm-8">
-                                    <div class="input-group">
-                                        <span class="input-group-addon" style="font-weight: bold;">Descripción</span>
-                                        <input type="text" id="descripcionCanje" class="form-control input-sm" readonly>
-                                        <span class="input-group-btn">
-                                            <button id="btnBuscarBombaCanje" type="button" class="btn btn-primary btn-outline btn-sm">Buscar</button>
-                                        </span>
-                                    </div>
-                                </div>
+                </div>
 
-                                <div class="col-sm-12" id="mensajeIOX" hidden>
-                                    <p style="color: red; font-size: 14px; font-weight: bold">Recuerde que el producto de destino debe ser IOX.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!--</div>-->
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Datos Cliente</h5>
+                <hr>
+                <div class="row mb-3">
+                    <div class="col-sm-12 text-center">
+                        <button id="btnNuevoCliente" type="button" class="btn btn-lg btn-info">Nuevo cliente</button>
                     </div>
-                    <div class="row" style="margin-top: 5px;">
-                        <div class="col-sm-6">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        Retiro
-                                    </h4>
-                                </div>
-                                <!--<div id="collapseFour" class="panel-collapse" aria-expanded="false">-->
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="form-group col-sm-6">
-                                            <div class="input-group">
-                                                <span class="input-group-addon" style="font-weight: bold;" title="Fecha de retiro">F.Ret.</span>
-                                                <input type="date" id="fechaReparacion" hidden>
-                                                <input id="fechaRetiroProductoSirep" type="date" class="form-control input-sm" name="fechaRetiroProductoSirep">
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-sm-6">
-                                            <div class="input-group">
-                                                <span class="input-group-addon" style="font-weight: bold;" title="Costo estimado">C.Est.</span>
-                                                <input id="costoEstimadoProducto" type="text" class="form-control input-sm" name="costoEstimadoProducto">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--</div>-->
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="panel panel-default" style="border-color: ; box-shadow: 10px 5px 5px #cdcdcd; background-color: #f5f5f5;">
-                                <!--<div id="collapseFour" class="panel-collapse" aria-expanded="false">-->
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-sm-12 text-center" style= "height: 9vh; display: flex; justify-content: center; align-content: center; flex-wrap: wrap;">
-                                            <div class="col-sm-6 text-right">
-                                                <button class="btn btn-danger" id="btnCancelar" type="button">Cancelar</button>
-                                            </div>
-                                            <div class="col-sm-6 text-left">
-                                                <button class="btn btn-primary" id="btnAceptar" type="button">Generar orden</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--</div>-->
-                            </div>
-                        </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="text" id="searchCliente" class="form-control" placeholder="Ingrese código, nombre o apellido">
+                    <button class="btn btn-outline-secondary" type="button" id="btnBuscarCliente">Buscar cliente</button>
+                </div>
+                <div class="row mb-2">
+                    <label for="clienteCodigo" class="col-sm-2 col-form-label">Código</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="clienteCodigo" readonly>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label for="clienteApellido" class="col-sm-2 col-form-label">Apellido</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="clienteApellido">
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label for="clienteNombre" class="col-sm-2 col-form-label">Nombre</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="clienteNombre">
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label for="clienteTelefono" class="col-sm-2 col-form-label">Teléfono</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="clienteTelefono">
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label for="clienteCelular" class="col-sm-2 col-form-label">Celular</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="clienteCelular">
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label for="clienteEmail" class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="clienteEmail">
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Datos del Producto</h5>
+                <hr>
+                <div class="row mb-2">
+                    <label for="codigoProducto" class="col-sm-2 col-form-label">Código</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="codigoProducto">
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <label for="descripcionProducto" class="col-sm-2 col-form-label">Descripción</label>
+                    <input type="text" id="descripcionProducto" class="form-control" readonly>
+                    <button class="btn btn-outline-secondary" type="button" id="buscarProducto">Buscar</button>
+                </div>
+
+                <div class="input-group mb-3">
+                    <label for="serieProducto" class="col-sm-2 col-form-label">Serie</label>
+                    <input type="text" id="serieProducto" class="form-control">
+                    <button class="btn btn-outline-secondary" type="button" id="generarNroSerie">Generar serie</button>
+                </div>
+                <div class="row mb-2">
+                    <label for="problemaProducto" class="col-sm-2 col-form-label">Problema</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="problemaProducto">
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label for="observacionesProducto" class="col-sm-2 col-form-label">Observaciones</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="observacionesProducto" cols="30" rows="4"></textarea>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-3 pb-3">
+        <div class="card h-50 mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Datos Retiro</h5>
+                <hr>
+                <div class="row mb-2">
+                    <label for="fechaRetiro" class="col-sm-2 col-form-label">F.Retiro</label>
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control" id="fechaRetiro"readonly>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label for="costoProducto" class="col-sm-2 col-form-label">Costo</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="costoProducto">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card h-50 " id="divCanje">
+            <div class="card-body">
+                <h5 class="card-title">Producto destino Canje</h5>
+                <hr>
+                <div class="row mb-2">
+                    <label for="codigoProductoCanje" class="col-sm-2 col-form-label">Código</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="codigoProductoCanje" readonly>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <label for="descripcionProductoCanje" class="col-sm-2 col-form-label">Descripción</label>
+                    <input type="text" id="descripcionProductoCanje" class="form-control" readonly>
+                    <button class="btn btn-outline-secondary" type="button" id="buscarProductoCanje" disabled>Buscar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="col-sm-12 text-center">
+                    <button class="btn btn-lg btn-success" type="button" id="generarOrdenProducto">Generar orden</button>
+                    <button class="btn btn-lg btn-danger" type="button" id="cancelarOrdenProducto">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </div>
 
 <!--Modal Recepción-->

@@ -25,6 +25,7 @@
     <!-- Nifty CSS [ REQUIRED ] -->
     <!-- <link rel="stylesheet" href="assets/css/nifty.min.4d1ebee0c2ac4ed3c2df72b5178fb60181cfff43375388fee0f4af67ecf44050.css"> -->
     <link rel="stylesheet" href="assets/css/color-schemes/all-headers/cherry/nifty.min.css">
+    <link rel="stylesheet" href="assets/css/color-schemes/all-headers/cherry/estilos.css">
 
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~---
 

@@ -11,8 +11,12 @@
 ?>
     <body class="jumping">
         <div id="root" class="root mn--max hd--expanded">
-            <section id="page" class="ms-4">
-                <?php CargarPagina( $page ); ?>
+            <section id="content" class="content">
+                <div class="content__boxed">
+                    <div id="page" class="content__wrap">
+                        <?php CargarPagina( $page ); ?>
+                    </div>
+                </div>
             </section>
         <?php
             include('header.php');
