@@ -1,0 +1,1 @@
+<h1>Diagnóstico</h1>
