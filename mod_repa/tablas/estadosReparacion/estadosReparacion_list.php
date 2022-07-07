@@ -7,7 +7,7 @@
 
         $conexion = conectar(DB_DSN, DB_USER, DB_PASS);
 
-        $query = "SELECT estadoReparacion_id, descripcion, activo, defecto, sinreparar FROM estadosreparacion WHERE estadoReparacion_id > 0";           
+        $query = "SELECT estado_id, descripcion, activo FROM rep3_estados_reparacion";           
         $sentenciaSQL= $conexion->prepare($query);
         $sentenciaSQL->execute();
     

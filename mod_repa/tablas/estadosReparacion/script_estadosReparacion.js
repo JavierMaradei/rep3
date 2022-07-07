@@ -35,15 +35,13 @@
             dataSrc: ""
         },
         "columns": [  
-            {"data" : "estadoReparacion_id",
+            {"data" : "estado_id",
                 "render": function ( data, type, row, meta ) {
                     return '<a class="task-item" href="'+data+'">' + data + '</a>';
                     }, 
             },
             {"data" : "descripcion"},
-            {"data" : "activo"},
-            {"data" : "defecto"},
-            {"data" : "sinreparar"}
+            {"data" : "activo"}
         ],
         processing: true,
         dom: '<"html5buttons"B>lTfgitp',

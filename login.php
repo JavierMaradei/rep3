@@ -19,26 +19,23 @@
 
     $conexion = conectar(DB_DSN, DB_USER, DB_PASS);
 
-    $query = "SELECT * FROM usuarios WHERE usuario_id = '".$_POST['usuarioV3']."' AND clave = '".md5($_POST['passwordV3'])."' AND activo = 'S'";
+    $query = "SELECT * FROM rep3_usuarios WHERE email = '".$_POST['usuarioV3']."' AND clave = '".md5($_POST['passwordV3'])."' AND activo = 'S'";
     $resultado = $conexion->prepare($query);
     $resultado->execute();
         
     if ($resultado->rowCount() > 0) {
         $usuario = $resultado->fetch(PDO::FETCH_ASSOC);
-            //Usuario logueado
-            session_start();
+        //Usuario logueado
+        session_start();
+        $_SESSION['nombre']     = $usuario['nombre'];
+        $_SESSION['apellido']   = $usuario['apellido'];
+        $_SESSION['usuario_id'] = $usuario['email'];
 
-            /* Se agregan $_SESSION['usuario'] y $_SESSION['clave'] para compatibilizar
-            con la plantilla original */
-            $_SESSION['nombre']     = $usuario['nombre'];
-            $_SESSION['apellido']   = $usuario['apellido'];
-            $_SESSION['usuario_id'] = $usuario['usuario_id'];
-
-            $fecha = new DateTime();
-            $fechaFormateada = $fecha->format('Y-m-d H:i:s');
-            $update = "UPDATE usuario SET fultimocambio ='".$fechaFormateada."' WHERE usuario_id = ".$usuario['usuario_id'];
-            $resultado = $conexion->prepare($update);
-            $resultado->execute();
+        $fecha              = new DateTime();
+        $fechaFormateada    = $fecha->format('Y-m-d H:i:s');
+        $update             = "UPDATE rep3_usuarios SET fultimocambio ='{$fechaFormateada}' WHERE email = '{$_SESSION['usuario_id']}'";
+        $resultado          = $conexion->prepare($update);
+        $resultado->execute();
 
         header("Location: index.php?page=home");
         exit();

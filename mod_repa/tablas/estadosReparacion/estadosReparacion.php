@@ -17,9 +17,7 @@
                             <thead>
                                 <th>Id</th>
                                 <th>Descripción</th>
-                                <th>Activo</th>
-                                <th>Default</th>
-                                <th>Sin Reparar</th>                               
+                                <th>Activo</th>                          
                             </thead>
                             <tbody id="tbodyEstadosReparacionList">
                             </tbody>
@@ -45,7 +43,7 @@
                     <div class="row mb-2">
                         <label for="clienteApellido" class="col-sm-2 col-form-label" title="Descripción">Desc.</label>
                         <div class="col-sm-10">
-                            <input type="text" id="descripcionEstadoReparcion" class="form-control input-sm">
+                            <input type="text" id="descripcionEstadoReparacion" class="form-control input-sm">
                         </div>
                     </div>
                     <div class="row mb-2">
@@ -54,40 +52,8 @@
                             <div class="input-group-addon">
                                 <div class="switch">
                                     <div class="onoffswitch">
-                                        <input type="checkbox" class="onoffswitch-checkbox" id="activoEstadoReparcion" checked>
-                                        <label class="onoffswitch-label" for="activoEstadoReparcion">
-                                            <span class="onoffswitch-inner"></span>
-                                            <span class="onoffswitch-switch"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="input-group col-sm-12">
-                            <span class="input-group-addon" style="font-weight: bold;">Default</span>
-                            <div class="input-group-addon">
-                                <div class="switch">
-                                    <div class="onoffswitch">
-                                        <input type="checkbox" class="onoffswitch-checkbox" id="defaultEstadoReparcion">
-                                        <label class="onoffswitch-label" for="defaultEstadoReparcion">
-                                            <span class="onoffswitch-inner"></span>
-                                            <span class="onoffswitch-switch"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="input-group col-sm-12">
-                            <span class="input-group-addon" style="font-weight: bold;" title="Sin reparar">S/reparar</span>
-                            <div class="input-group-addon">
-                                <div class="switch">
-                                    <div class="onoffswitch">
-                                        <input type="checkbox" class="onoffswitch-checkbox" id="sinRepararEstadoReparcion">
-                                        <label class="onoffswitch-label" for="sinRepararEstadoReparcion">
+                                        <input type="checkbox" class="onoffswitch-checkbox" id="activoEstadoReparacion" checked>
+                                        <label class="onoffswitch-label" for="activoEstadoReparacion">
                                             <span class="onoffswitch-inner"></span>
                                             <span class="onoffswitch-switch"></span>
                                         </label>

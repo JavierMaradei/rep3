@@ -1,6 +1,6 @@
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-sm-4">
-        <h2>Bienvenido</h2>
+        <h2>Bienvenido <?php echo $_SESSION['nombre']?></h2>
         <ol class="breadcrumb">
             <li>
                 Esta es la nueva intranet de Hidroeléctrica del Norte

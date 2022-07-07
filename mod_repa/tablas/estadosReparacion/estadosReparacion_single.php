@@ -9,15 +9,13 @@
         $conexion   = conectar(DB_DSN, DB_USER, DB_PASS);
         
         $query      = " SELECT 
-                            estadoReparacion_id as idEstadoReparacion, 
-                            descripcion         as descripcionEstadoReparcion, 
-                            activo              as activoEstadoReparcion, 
-                            defecto             as defaultEstadoReparcion, 
-                            sinreparar          as sinRepararEstadoReparcion 
+                            estado_id as idEstadoReparacion, 
+                            descripcion as descripcionEstadoReparacion, 
+                            activo as activoEstadoReparacion 
                         FROM 
-                            estadosreparacion
+                            rep3_estados_reparacion
                         WHERE 
-                            estadoReparacion_id = '{$id}'
+                            estado_id = '{$id}'
                     "; 
 
         $sentenciaSQL= $conexion->prepare($query);
