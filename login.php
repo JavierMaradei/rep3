@@ -96,7 +96,7 @@
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~--- -->
 </head>
 
-<body class="" style="background-image: url('./assets/premium/boxed-bg/blurred/thumbs/1.jpg')";>
+<body class="" style="background-image: url('./assets/premium/boxed-bg/blurred/bg/12.jpg')";>
 
     <!-- PAGE CONTAINER -->
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -114,13 +114,16 @@
 
                             <div class="text-center">
                                 <h1 class="h3">Logeo de Cuentas</h1>
+                                <div class="card bg-dark mb-3">
+                                    <img class="card-img-top" src="./img/logoHDN.jpg" alt="town" loading="lazy">
+                                </div>
                                 <p>Iniciar sesión en tu cuenta</p>
                             </div>
 
                             <form class="mt-4" role="form" action="" method="POST">
 
                                 <div class="mb-3">
-                                    <input type="text" name="usuarioV3" class="form-control" placeholder="Username" autofocus>
+                                    <input type="text" name="usuarioV3" class="form-control" placeholder="Email" autofocus>
                                 </div>
 
                                 <div class="mb-3">
