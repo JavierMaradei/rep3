@@ -1,0 +1,110 @@
+<div class="content__boxed bg-gray-500">
+    <div class="content__wrap">
+        <div class="mb-3 mt-3 text-end">
+            <h2><i>Estados de Reparación</i></h2>
+        </div>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-md-8 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h3 class="card-title text-center"><i>Listado de Estados de Reparación</i></h3>
+                <hr>
+                <div class="row mb-2">
+                    <div class="table-responsive">
+                        <table id="tabla_estadosReparacion" class="table table-striped table-hover" style="font-size: 11px; font-weight: 400;">
+                            <thead>
+                                <th>Id</th>
+                                <th>Descripción</th>
+                                <th>Activo</th>
+                                <th>Default</th>
+                                <th>Sin Reparar</th>                               
+                            </thead>
+                            <tbody id="tbodyEstadosReparacionList">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <form id="formEstadoReparacion">
+                <div class="card-body">
+                    <h3 class="card-title text-center"><i>Estado</i></h3>
+                    <hr>
+                    <div class="row mb-2">
+                        <label for="clienteCodigo" class="col-sm-2 col-form-label">Id</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="idEstadoReparacion" class="form-control input-sm" readonly>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <label for="clienteApellido" class="col-sm-2 col-form-label" title="Descripción">Desc.</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="descripcionEstadoReparcion" class="form-control input-sm">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group col-sm-12">
+                            <span class="input-group-addon" style="font-weight: bold;">Activo</span>
+                            <div class="input-group-addon">
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" class="onoffswitch-checkbox" id="activoEstadoReparcion" checked>
+                                        <label class="onoffswitch-label" for="activoEstadoReparcion">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group col-sm-12">
+                            <span class="input-group-addon" style="font-weight: bold;">Default</span>
+                            <div class="input-group-addon">
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" class="onoffswitch-checkbox" id="defaultEstadoReparcion">
+                                        <label class="onoffswitch-label" for="defaultEstadoReparcion">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="input-group col-sm-12">
+                            <span class="input-group-addon" style="font-weight: bold;" title="Sin reparar">S/reparar</span>
+                            <div class="input-group-addon">
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" class="onoffswitch-checkbox" id="sinRepararEstadoReparcion">
+                                        <label class="onoffswitch-label" for="sinRepararEstadoReparcion">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button id="btnGrabaEstadoReparacion" class="btn btn-success btn-outline">Grabar</button>
+                    <button id="btnEliminaEstadoReparacion" class="btn btn-danger btn-outline">Eliminar</button>
+                    <button id="btnCancelaEstadoReparacion" class="btn btn-default btn-outline">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="./mod_repa/tablas/estadosReparacion/script_estadosReparacion.js?v=<?php echo uniqid();?>"></script>

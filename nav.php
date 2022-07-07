@@ -104,31 +104,31 @@
                                 <!-- Layouts submenu list -->
                                 <ul class="mininav-content nav collapse">
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">Clientes</a>
+                                        <a href="?page=mod_repa/tablas/clientes/clientes" class="nav-link">Clientes</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">Productos</a>
+                                        <a href="?page=mod_repa/tablas/productos/productos#" class="nav-link">Productos</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">Lugar recepción</a>
+                                        <a href="?page=mod_repa/tablas/lugaresRecepcion/lugaresRecepcion" class="nav-link">Lugar recepción</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">Estados reparación</a>
+                                        <a href="?page=mod_repa/tablas/estadosReparacion/estadosReparacion" class="nav-link">Estados reparación</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">Estante</a>
+                                        <a href="?page=mod_repa/tablas/estantes/estantes" class="nav-link">Estante</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">Motivos anulación</a>
+                                        <a href="?page=mod_repa/tablas/motivosAnulacion/motivosAnulacion" class="nav-link">Motivos anulación</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">Formas de retiro</a>
+                                        <a href="#?page=mod_repa/tablas/formasRetiro/formasRetiro" class="nav-link">Formas de retiro</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">Feriados</a>
+                                        <a href="?page=mod_repa/tablas/feriados/feriados" class="nav-link">Feriados</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">Sucursales</a>
+                                        <a href="?page=mod_repa/tablas/sucursales/sucursales" class="nav-link">Sucursales</a>
                                     </li>
                                 </ul>
                                 <!-- END : Layouts submenu list -->

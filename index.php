@@ -1,5 +1,10 @@
 <?php
+    session_start();
     require_once('includes/funciones.php');
+
+    if (!isset($_SESSION['usuario_id'])) {
+        header("Location: login.php");
+    }
 
     if ( isset( $_GET["page"] ) ) {
         $page = $_GET["page"];

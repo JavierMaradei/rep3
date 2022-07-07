@@ -27,6 +27,16 @@
     <link rel="stylesheet" href="assets/css/color-schemes/all-headers/cherry/nifty.min.css">
     <link rel="stylesheet" href="assets/css/color-schemes/all-headers/cherry/estilos.css">
 
+    <!-- Datatables -->
+    <link rel="stylesheet" type="text/css" href="./css/DataTables/datatables.min.css"/>
+
+    <!-- Jquery -->
+    <script src="./js/jquery36.js"></script>
+    <!-- Datatables -->
+    <script type="text/javascript" src="./js/DataTables/datatables.min.js"></script>
+    <!-- Librería JS -->
+    <script src="./js/libreria.js?v=<?php echo uniqid()?>"></script>
+
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~---
 
     [ REQUIRED ]
