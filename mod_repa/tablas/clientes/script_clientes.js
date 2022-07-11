@@ -8,61 +8,16 @@
     let activoCliente       = document.querySelector('#clienteActivo')//Captura de boton cancelar
     let edit                = false//flag de edición de registro existente o nuevo registro
     let id                  = ''
-    let selectZonas         = document.querySelector('#clienteZonasDespacho')
+
     let arrayVal = {
-        clienteCodigo: {
-            required: true,
-            maxlength: 10,
-            validated: true
-        },
-        clienteRazonSocial1: {
-            required: true,
-            maxlength: 50,
-            validated: true
-        },
-        clienteRazonSocial2: {
-            maxlength: 50,
-            validated: true
-        },
-        clienteDireccion: {
-            required: true,
-            maxlength: 100,
-            validated: true
-        },
-        clienteTelefono:{
-            required: true,
-            maxlength: 60,
-            validated: true
-        },
-        clienteCelular:{
-            maxlength: 25,
-            validated: true
-        },
-        clienteEmail:{
-            required: true,
-            validated: 'email',
-            maxlength: 50
-        },
-        clienteZonasDespacho:{
-        },
-        clienteActivo:{
-        },
-        clienteAntisarro:{
-        },
-        clienteSolicitaOc:{
-        },
-        clienteContactoNombre:{
-            maxlength: 50,
-            validated: true
-        },
-        clienteContactoEmail:{
-            maxlength: 50,
-            validated: 'email'
-        },
-        clienteContactoTelefono:{
-            maxlength: 60,
-            validated: true
-        }
+        clienteCodigo       : { required: true, maxlength: 10, validated: true},
+        clienteRazonSocial1 : {required: true, maxlength: 50, validated: true},
+        clienteRazonSocial2 : {maxlength: 50, validated: true},
+        clienteDireccion    : {required: true, maxlength: 100, validated: true},
+        clienteTelefono     : {required: true, maxlength: 60, validated: true},
+        clienteCelular      : {maxlength: 25, validated: true},
+        clienteEmail        : {required: true, validated: 'email', maxlength: 50},
+        clienteActivo       : {}
     }
 
     $(btnEliminaCliente).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
@@ -70,7 +25,7 @@
     //Declaración del complemento DataTable
     let tabla = $('#tabla_clientes').DataTable( {
         "ajax": {
-            url: 'mod_sirep/admin/tablas/clientes/clientes_list.php',
+            url: 'mod_repa/tablas/clientes/clientes_list.php',
             type: 'GET',
             dataSrc: ""
         },
@@ -81,23 +36,15 @@
                     }, 
             },
             {"data" : "codigo"},
-            {"data" : "razon_social1"},
-            {"data" : "razon_social2"},
+            {"data" : "nombre"},
+            {"data" : "apellido"},
             {"data" : "direccion"},
-            {"data" : "telefono"}/*,
-            {"data" : "celular"},
-            {"data" : "mail"}  */
+            {"data" : "telefono"}
         ],
         processing: true,
         dom: '<"html5buttons"B>lTfgitp',
         buttons: [
-            {extend: 'copy'},
-            {extend: 'csv'},
-            {extend: 'excel', title: 'Lista de clientes'},
-            {extend: 'pdf', title: 'Lista de clientes'},
-    
-            {extend: 'print',}
-            
+            {extend: 'excel', title: 'Lista de clientes', text: 'Exportar a Excel'}  
         ],
         language: {
             "decimal": "",
@@ -121,14 +68,12 @@
         }
     })
     
-    cargaZonasDespacho(selectZonas)
-    
     //Tomo el link de la tabla con el ID del registro
     $(document).on('click', '.task-item', (e) => {
         e.preventDefault()
         cleanInputs(inputs)
         id= e.target.innerText
-        url = 'mod_sirep/admin/tablas/clientes/clientes_single.php'
+        url = 'mod_repa/tablas/clientes/clientes_single.php'
         showData(id, url, inputs)
         $(btnEliminaCliente).show()
         edit = true
@@ -140,8 +85,8 @@
         let validacion = validateData(inputs, arrayVal)
         if(validacion){
             collectData(inputs, formData)
-            let agregar = 'mod_sirep/admin/tablas/clientes/clientes_add.php'
-            let editar = 'mod_sirep/admin/tablas/clientes/clientes_edit.php'
+            let agregar = 'mod_repa/tablas/clientes/clientes_add.php'
+            let editar = 'mod_repa/tablas/clientes/clientes_edit.php'
             let estado = enviarData(agregar, editar, formData, edit, id)
             estado.then((respuesta) => {
                 switch (respuesta.estado) {
@@ -154,7 +99,6 @@
                         activoCliente.checked = true
                         id = ''
                         edit = false
-                        selectZonas.value = 0
                         break;
                     case 'Sesión expirada':
                         sesionExpiradaMensajeFlotante()
@@ -180,7 +124,7 @@
     btnEliminaCliente.addEventListener('click', e => {
         e.preventDefault()
         let xhr2 = new XMLHttpRequest
-        let url2 = 'mod_sirep/admin/tablas/clientes/clientes_use.php?id='+id
+        let url2 = 'mod_repa/tablas/clientes/clientes_use.php?id='+id
         xhr2.open('GET', url2)
         xhr2.send()
         xhr2.addEventListener('load', () => {
@@ -201,7 +145,7 @@
                         if (isConfirm) {
                             
                             let xhr = new XMLHttpRequest
-                            let url = 'mod_sirep/admin/tablas/clientes/clientes_delete.php'
+                            let url = 'mod_repa/tablas/clientes/clientes_delete.php'
                             xhr.open('GET', url+'?id='+id)
                             xhr.send()
                             xhr.addEventListener('load', () => {
@@ -217,7 +161,6 @@
                                             activoCliente.checked = true
                                             id = ''
                                             edit = false
-                                            selectZonas.value = 0 
                                             break;
                                         case 'Sesión expirada':
                                             sesionExpiradaMensajeFlotante()
@@ -252,6 +195,5 @@
         $(btnEliminaCliente).hide()
         activoCliente.checked = true
         id = ''
-        selectZonas.value = 0
     })
 })()

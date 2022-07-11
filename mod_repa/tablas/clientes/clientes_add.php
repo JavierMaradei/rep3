@@ -1,8 +1,7 @@
 <?php
     session_start();
-    include_once('../../../../includes/funciones.php');
-    //include('../../../../includes/funciones.php');
-    //include('../../../../includes/config.php');
+    include_once('../../../includes/funciones.php');
+    include_once('../../../includes/config.php');
 
     $arrayRespuesta  = array();
 
@@ -20,24 +19,15 @@
     $clienteTelefono            = filter_var($_POST['clienteTelefono'], FILTER_SANITIZE_STRING);
     $clienteCelular             = filter_var($_POST['clienteCelular'], FILTER_SANITIZE_STRING);
     $clienteEmail               = filter_var($_POST['clienteEmail'], FILTER_SANITIZE_STRING);
-    $clienteZonasDespacho       = filter_var($_POST['clienteZonasDespacho'], FILTER_SANITIZE_STRING);
     $clienteActivo              = filter_var($_POST['clienteActivo'], FILTER_SANITIZE_STRING);
-    $clienteAntisarro           = filter_var($_POST['clienteAntisarro'], FILTER_SANITIZE_STRING);
-    $clienteContactoNombre      = filter_var($_POST['clienteContactoNombre'], FILTER_SANITIZE_STRING);
-    $clienteContactoEmail       = filter_var($_POST['clienteContactoEmail'], FILTER_SANITIZE_STRING);
-    $clienteContactoTelefono    = filter_var($_POST['clienteContactoTelefono'], FILTER_SANITIZE_STRING);
-    $clienteSolicitaOc          = filter_var($_POST['clienteSolicitaOc'], FILTER_SANITIZE_STRING);
     
     $perfilSirep                = recuperaPerfil($_SESSION['usuario']);
     $codigoClienteDuplicado     = codigoClienteDuplicado($clienteCodigo);
-    //var_dump($codigoClienteDuplicado);
 
     $activo     = $clienteActivo        == 'true' ? 'N' : 'S';
-    $antisarro  = $clienteAntisarro     == 'true' ? 'S' : 'N';
-    $solicitaOc = $clienteSolicitaOc    == 'true' ? 'S' : 'N';
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $conexion = conectar(DB_DSN_SIREP, DB_USER_SIREP_RW, DB_PASS_SIREP_RW);
+        $conexion   = conectar(DB_DSN, DB_USER, DB_PASS);
 
         if($perfilSirep <= 3 || $perfilSirep >= 7 && $perfilSirep <> 11 && $perfilSirep <> 15){
 
@@ -46,21 +36,15 @@
                 //CUIDADO, EL ID DE CLIENTES ES AUTOINCREMENTAL!!!!
                 
                 if(!$codigoClienteDuplicado){
-                    $query1 =   "INSERT INTO rep_clientes (
+                    $query1 =   "INSERT INTO rep3_clientes (
                         codigo, 
-                        razon_social1, 
-                        razon_social2, 
+                        nombre, 
+                        apellido, 
                         direccion, 
                         telefono, 
                         celular, 
                         mail,
-                        zonadespacho_id,
-                        anulado,
-                        iox, 
-                        contacto, 
-                        mailcontacto,  
-                        telefonocontacto,
-                        solicita_oc
+                        activo
                         ) VALUES (
                         '{$clienteCodigo}', 
                         '{$clienteRazonSocial1}', 
@@ -69,13 +53,7 @@
                         '{$clienteTelefono}', 
                         '{$clienteCelular}', 
                         '{$clienteEmail}', 
-                        {$clienteZonasDespacho},
-                        '{$activo}', 
-                        '{$antisarro}',  
-                        '{$clienteContactoNombre}', 
-                        '{$clienteContactoEmail}', 
-                        '{$clienteContactoTelefono}',
-                        '{$solicitaOc}'
+                        '{$activo}'
                         )";
 
                     $sentenciaSQL= $conexion->prepare($query1);
@@ -99,5 +77,5 @@
         }
 
         header("Content-type: aplication/json");
-        echo json_encode($arrayRespuesta/* , JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR */);
+        echo json_encode($arrayRespuesta, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
     };
