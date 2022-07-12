@@ -43,9 +43,9 @@
     <!-- Datatables -->
     <script type="text/javascript" src="./js/DataTables/datatables.min.js"></script>
     
-    <!-- Momment JS -->
+    <!-- Moment JS -->
+    <script src="./js/datetime.js"></script>
     <script src="./js/moment.min.js"></script>
-    <!-- <script src="./js/datetime.js"></script> -->
 
     <!-- Librería JS -->
     <script src="./js/libreria.js?v=<?php echo uniqid()?>"></script>

@@ -32,10 +32,10 @@
             {"data" : "fecha"},
             {"data" : "descripcion"}
         ],
-/*         columnDefs: [ {
+        columnDefs: [ {
             targets: 1,
-            render: $.fn.dataTable.render.datetime('DD/MM/YYYY', 'DD/MM/YYYY')
-          } ], */
+            render: $.fn.dataTable.render.moment('YYYY-MM-DD', 'DD/MM/YYYY')
+          } ],
         processing: true,
         dom: '<"html5buttons"B>lTfgitp',
         buttons: [
