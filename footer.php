@@ -220,6 +220,9 @@
     <!-- END - OFFCANVAS [ DEMO ] -->
     <!-- JAVASCRIPTS -->
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    
+    <!--Sweet alert-->
+    <script src="./js/sweetalert/sweetalert.min.js"></script>
 
     <!-- Bootstrap JS [ OPTIONAL ] -->
     <!-- <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script> -->

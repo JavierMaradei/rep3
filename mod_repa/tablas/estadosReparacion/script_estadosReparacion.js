@@ -8,23 +8,13 @@
     let activoEstadoReparacion      = document.querySelector('#activoEstadoReparcion')//Captura de boton cancelar
     let edit                        = false//flag de edición de registro existente o nuevo registro
     let id                          = ''
+
     let arrayVal = {
-        idEstadoReparacion: {
-            readonly: true
-        },
-        descripcionEstadoReparcion: {
-            required: true,
-            maxlength: 50,
-            validated: true
-        },
-        activoEstadoReparcion: {
-        },
-        defaultEstadoReparcion: {
-        },
-        sinRepararEstadoReparcion:{
-        }
+        idEstadoReparacion          : {readonly: true},
+        descripcionEstadoReparacion : {required: true, maxlength: 50, validated: true},
+        activoEstadoReparacion      : {}
     }
-    
+
     $(btnEliminaEstadoReparacion).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
 
     //Declaración del complemento DataTable
@@ -87,8 +77,8 @@
         let validacion = validateData(inputs, arrayVal)
         if(validacion){
             collectData(inputs, formData)
-            let agregar = 'mod_sirep/admin/tablas/estadosReparacion/estadosReparacion_add.php'
-            let editar  = 'mod_sirep/admin/tablas/estadosReparacion/estadosReparacion_edit.php'
+            let agregar = 'mod_repa/tablas/estadosReparacion/estadosReparacion_add.php'
+            let editar  = 'mod_repa/tablas/estadosReparacion/estadosReparacion_edit.php'
 
             let estado = enviarData(agregar, editar, formData, edit, id)
             estado.then((respuesta) => {
@@ -123,7 +113,7 @@
     btnEliminaEstadoReparacion.addEventListener('click', e => {
         e.preventDefault()
         let xhr2 = new XMLHttpRequest
-        let url = 'mod_sirep/admin/tablas/estadosReparacion/estadosReparacion_use.php?id='+id
+        let url = 'mod_repa/tablas/estadosReparacion/estadosReparacion_use.php?id='+id
         xhr2.open('GET', url)
         xhr2.send()
         xhr2.addEventListener('load', () => {
@@ -144,7 +134,7 @@
                         if (isConfirm) {
 
                             let xhr = new XMLHttpRequest
-                            let url = 'mod_sirep/admin/tablas/estadosReparacion/estadosReparacion_delete.php'
+                            let url = 'mod_repa/tablas/estadosReparacion/estadosReparacion_delete.php'
                             xhr.open('GET', url+'?id='+id)
                             xhr.send()
                             xhr.addEventListener('load', () => {

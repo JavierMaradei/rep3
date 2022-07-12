@@ -10,7 +10,6 @@
         
         $query      =   "SELECT 
                             rep3_clientes.cliente_id    as clienteId, 
-                            rep3_clientes.codigo        as clienteCodigo, 
                             rep3_clientes.nombre        as clienteNombre, 
                             rep3_clientes.apellido      as clienteApellido, 
                             rep3_clientes.telefono      as clienteTelefono, 

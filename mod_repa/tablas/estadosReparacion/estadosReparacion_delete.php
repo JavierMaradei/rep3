@@ -6,7 +6,7 @@
 
     $arrayRespuesta = array();
 
-    if(empty($_SESSION['usuario'])){
+    if(empty($_SESSION['usuario_id'])){
         $arrayRespuesta['estado'] = "Sesión expirada";
         header("Content-type: aplication/json");
         echo json_encode($arrayRespuesta, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
@@ -17,11 +17,11 @@
 
         $conexion       = conectar(DB_DSN, DB_USER, DB_PASS);
         $id             = $_GET['id'];
-        $perfilSirep    = recuperaPerfil($_SESSION['usuario']);
+        $perfilSirep    = recuperaPerfil($_SESSION['usuario_id']);
 
-        if($perfilSirep == 1 || $perfilSirep == 13){
+        if($perfilSirep == 1){
 
-            $query0         = "DELETE FROM estadosreparacion WHERE estadoReparacion_id = '{$id}'";
+            $query0         = "DELETE FROM rep3_estados_reparacion WHERE estado_id = '{$id}'";
             $sentenciaSQL   = $conexion->prepare($query0);
             $sentenciaSQL   -> execute();
             

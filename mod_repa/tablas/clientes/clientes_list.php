@@ -6,7 +6,6 @@
     $conexion   = conectar(DB_DSN, DB_USER, DB_PASS);
     $query      = " SELECT 
                         cliente_id,
-                        codigo,
                         nombre,
                         apellido,
                         telefono,

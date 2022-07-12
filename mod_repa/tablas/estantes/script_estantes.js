@@ -9,16 +9,9 @@
     let edit                = false//flag de edición de registro existente o nuevo registro
     let id                  = ''
     let arrayVal = {
-        idEstantes: {
-            readonly : true,
-        },
-        descripcionEstantes: {
-            required: true,
-            maxlength: 10,
-            validated: true
-        },
-        activoEstantes: {
-        }
+        idEstantes          : {readonly : true},
+        descripcionEstantes : {required: true, maxlength: 10, validated: true},
+        activoEstantes      : {}
     }
     
     $(btnEliminaEstantes).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
@@ -26,7 +19,7 @@
     //Declaración del complemento DataTable
     let tabla = $('#tabla_estantes').DataTable( {
         "ajax": {
-            url: 'mod_sirep/admin/tablas/estantes/estantes_list.php',
+            url: 'mod_repa/tablas/estantes/estantes_list.php',
             type: 'GET',
             dataSrc: ""
         },
@@ -36,19 +29,13 @@
                     return '<a class="task-item" href="'+data+'">' + data + '</a>';
                     }, 
             },
-            {"data" : "nombre"},
+            {"data" : "descripcion"},
             {"data" : "activo"}
         ],
         processing: true,
         dom: '<"html5buttons"B>lTfgitp',
         buttons: [
-            {extend: 'copy'},
-            {extend: 'csv'},
-            {extend: 'excel', title: 'Lista de estantes'},
-            {extend: 'pdf', title: 'Lista de estantes'},
-    
-            {extend: 'print',}
-            
+            {extend: 'excel', title: 'Lista de estantes', text: 'Exportar a Excel'},
         ],
         language: {
             "decimal": "",
@@ -77,7 +64,7 @@
         e.preventDefault()
         cleanInputs(inputs)
         id= e.target.innerText
-        url = 'mod_sirep/admin/tablas/estantes/estantes_single.php'
+        url = 'mod_repa/tablas/estantes/estantes_single.php'
         showData(id, url, inputs)
         $(btnEliminaEstantes).show()
         edit = true
@@ -89,8 +76,8 @@
         let validacion = validateData(inputs, arrayVal)
         if(validacion){
             collectData(inputs, formData)
-            let agregar = 'mod_sirep/admin/tablas/estantes/estantes_add.php'
-            let editar = 'mod_sirep/admin/tablas/estantes/estantes_edit.php'
+            let agregar = 'mod_repa/tablas/estantes/estantes_add.php'
+            let editar = 'mod_repa/tablas/estantes/estantes_edit.php'
             let estado = enviarData(agregar, editar, formData, edit, id)
             estado.then((respuesta) => {
                 switch (respuesta.estado) {
@@ -124,7 +111,7 @@
     btnEliminaEstantes.addEventListener('click', e => {
         e.preventDefault()
         let xhr2 = new XMLHttpRequest
-        let url2 = 'mod_sirep/admin/tablas/estantes/estantes_use.php?id='+id
+        let url2 = 'mod_repa/tablas/estantes/estantes_use.php?id='+id
         xhr2.open('GET', url2)
         xhr2.send()
         xhr2.addEventListener('load', () => {
@@ -144,7 +131,7 @@
                     function (isConfirm) {
                         if (isConfirm) {
                             let xhr = new XMLHttpRequest
-                            let url = 'mod_sirep/admin/tablas/estantes/estantes_delete.php'
+                            let url = 'mod_repa/tablas/estantes/estantes_delete.php'
                             xhr.open('GET', url+'?id='+id)
                             xhr.send()
                             xhr.addEventListener('load', () => {

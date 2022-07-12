@@ -6,7 +6,7 @@
 
     $arrayRespuesta = array();
 
-    if(empty($_SESSION['usuario'])){
+    if(empty($_SESSION['usuario_id'])){
         $arrayRespuesta['estado'] = "Sesión expirada";
         header("Content-type: aplication/json");
         echo json_encode($arrayRespuesta, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
@@ -18,21 +18,20 @@
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $conexion       = conectar(DB_DSN, DB_USER, DB_PASS);
-        $descripcion    = filter_var($_POST['descripcionEstadoReparcion'], FILTER_SANITIZE_STRING);
-        $activo         = $_POST['activoEstadoReparcion'] == 'true' ? 'S' : 'N';
-        $defecto        = $_POST['defaultEstadoReparcion'] == 'true' ? 'S' : 'N';
-        $sinreparar     = $_POST['sinRepararEstadoReparcion'] == 'true' ? 'S' : 'N';
-        $perfilSirep    = recuperaPerfil($_SESSION['usuario']);
+        $descripcion    = filter_var($_POST['descripcionEstadoReparacion'], FILTER_SANITIZE_STRING);
+        $activo         = $_POST['activoEstadoReparacion'] == 'true' ? 'S' : 'N';
+        $perfilSirep    = recuperaPerfil($_SESSION['usuario_id']);
 
-        if($perfilSirep == 1 || $perfilSirep == 13){
+        if($perfilSirep == 1){
 
             if(!empty($descripcion)){
-                $query = "  UPDATE estadosreparacion SET 
-                            descripcion = '{$descripcion}', 
-                            activo = '{$activo}', 
-                            defecto = '{$defecto}', 
-                            sinreparar = '{$sinreparar}' 
-                            WHERE estadoReparacion_id = '{$id}'
+                $query = "  UPDATE 
+                                rep3_estados_reparacion 
+                            SET 
+                                descripcion     = '{$descripcion}', 
+                                activo          = '{$activo}'
+                            WHERE 
+                                estado_id       = '{$id}'
                         ";           
                 
                 $sentenciaSQL= $conexion->prepare($query);

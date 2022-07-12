@@ -13,26 +13,11 @@
     let edit                        = false//flag de edición de registro existente o nuevo registro
     let id                          = ''
     let arrayVal = {
-        idLugaresRecepcion: {
-            readonly : true,
-        },
-        descripcionLugaresRecepcion: {
-            required: true,
-            maxlength: 50,
-            validated: true
-        },
-        demoraLugaresRecepcion: {
-            maxlength: 3,
-            validated: true
-        },
-        activoLugaresRecepcion: {
-        },
-        fleteLugaresRecepcion: {
-        },
-        hoja1LugaresRecepcion:{
-        },
-        hoja2LugaresRecepcion:{
-        }
+        idLugaresRecepcion          : {readonly : true},
+        descripcionLugaresRecepcion : {required: true, maxlength: 50, validated: true},
+        demoraLugaresRecepcion      : {maxlength: 3, validated: true},
+        activoLugaresRecepcion      : {},
+        fleteLugaresRecepcion       : {}
     }
     
     $(btnEliminaLugaresRecepcion).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
@@ -40,33 +25,25 @@
     //Declaración del complemento DataTable
     let tabla = $('#tabla_lugaresRecepcion').DataTable( {
         "ajax": {
-            url: 'mod_sirep/admin/tablas/lugaresRecepcion/lugaresRecepcion_list.php',
+            url: 'mod_repa/tablas/lugaresRecepcion/lugaresRecepcion_list.php',
             type: 'GET',
             dataSrc: ""
         },
         "columns": [  
-            {"data" : "LugarRecep_id",
+            {"data" : "lugar_recepcion_id",
                 "render": function ( data, type, row, meta ) {
                     return '<a class="task-item" href="'+data+'">' + data + '</a>';
                     }, 
             },
-            {"data" : "Descripcion"},
-            {"data" : "Demora"},
-            {"data" : "Activo"},
-            {"data" : "Flete"},
-            {"data" : "Hoja1"},
-            {"data" : "Hoja2"}
+            {"data" : "descripcion"},
+            {"data" : "dias_demora"},
+            {"data" : "activo"},
+            {"data" : "flete"}
         ],
         processing: true,
         dom: '<"html5buttons"B>lTfgitp',
         buttons: [
-            {extend: 'copy'},
-            {extend: 'csv'},
-            {extend: 'excel', title: 'Lista de lugares de recepcion'},
-            {extend: 'pdf', title: 'Lista de lugares de recepcion'},
-    
-            {extend: 'print',}
-            
+            {extend: 'excel', title: 'Lista de lugares de recepcion', text: 'Exportar a Excel'}
         ],
         language: {
             "decimal": "",
@@ -95,7 +72,7 @@
         e.preventDefault()
         cleanInputs(inputs)
         id= e.target.innerText
-        url = 'mod_sirep/admin/tablas/lugaresRecepcion/lugaresRecepcion_single.php'
+        url = 'mod_repa/tablas/lugaresRecepcion/lugaresRecepcion_single.php'
         showData(id, url, inputs)
         $(btnEliminaLugaresRecepcion).show()
         edit = true
@@ -107,8 +84,8 @@
         let validacion = validateData(inputs, arrayVal)
         if(validacion){
             collectData(inputs, formData)
-            let agregar = 'mod_sirep/admin/tablas/lugaresRecepcion/lugaresRecepcion_add.php'
-            let editar = 'mod_sirep/admin/tablas/lugaresRecepcion/lugaresRecepcion_edit.php'
+            let agregar = 'mod_repa/tablas/lugaresRecepcion/lugaresRecepcion_add.php'
+            let editar = 'mod_repa/tablas/lugaresRecepcion/lugaresRecepcion_edit.php'
             let estado = enviarData(agregar, editar, formData, edit, id)
             estado.then((respuesta) => {
                 switch (respuesta.estado) {
@@ -142,7 +119,7 @@
     btnEliminaLugaresRecepcion.addEventListener('click', e => {
         e.preventDefault()
         let xhr2 = new XMLHttpRequest
-        let url2 = 'mod_sirep/admin/tablas/lugaresRecepcion/lugaresRecepcion_use.php?id='+id
+        let url2 = 'mod_repa/tablas/lugaresRecepcion/lugaresRecepcion_use.php?id='+id
         xhr2.open('GET', url2)
         xhr2.send()
         xhr2.addEventListener('load', () => {
@@ -162,7 +139,7 @@
                     function (isConfirm) {
                         if (isConfirm) {
                             let xhr = new XMLHttpRequest
-                            let url = 'mod_sirep/admin/tablas/lugaresRecepcion/lugaresRecepcion_delete.php'
+                            let url = 'mod_repa/tablas/lugaresRecepcion/lugaresRecepcion_delete.php'
                             xhr.open('GET', url+'?id='+id)
                             xhr.send()
                             xhr.addEventListener('load', () => {

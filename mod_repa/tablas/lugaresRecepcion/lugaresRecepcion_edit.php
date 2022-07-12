@@ -1,42 +1,40 @@
 <?php
     session_start();
     date_default_timezone_set('America/Argentina/Buenos_Aires');
-    include_once('../../../../includes/funciones.php');
-    //include('../../../../includes/funciones.php');
-    //include('../../../../includes/config.php');
+    include_once('../../../includes/funciones.php');
+    include_once('../../../includes/config.php');
 
     $arrayRespuesta = array();
 
-    if(empty($_SESSION['usuario'])){
+    if(empty($_SESSION['usuario_id'])){
         $arrayRespuesta['estado'] = "Sesión expirada";
         header("Content-type: aplication/json");
-        echo json_encode($arrayRespuesta/* , JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR */);
+        echo json_encode($arrayRespuesta, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
         exit();
     }
 
-    $id = $_GET['id'];
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
-
-        $conexion       = conectar(DB_DSN_SIREP, DB_USER_SIREP_RW, DB_PASS_SIREP_RW);
+        
+        $id             = $_GET['id'];
+        $conexion       = conectar(DB_DSN, DB_USER, DB_PASS);
         $descripcion    = filter_var($_POST['descripcionLugaresRecepcion'], FILTER_SANITIZE_STRING);
         $demora         = filter_var($_POST['demoraLugaresRecepcion'], FILTER_SANITIZE_NUMBER_INT);
         $activo         = $_POST['activoLugaresRecepcion'] == 'true' ? 'S' : 'N';
         $flete          = $_POST['fleteLugaresRecepcion'] == 'true' ? 'S' : 'N';
-        $hoja1          = $_POST['hoja1LugaresRecepcion'] == 'true' ? 'S' : 'N';
-        $hoja2          = $_POST['hoja2LugaresRecepcion'] == 'true' ? 'S' : 'N';
-        $perfilSirep    = recuperaPerfil($_SESSION['usuario']);
+        $perfilSirep    = recuperaPerfil($_SESSION['usuario_id']);
 
-        if($perfilSirep == 1 || $perfilSirep == 13){
+        if($perfilSirep == 1){
 
             if(!empty($descripcion)){
-                $query = "  UPDATE rep_lugares_recepcion SET 
-                            Descripcion         = '{$descripcion}', 
-                            Dias_demora         = '{$demora}', 
-                            Activo              = '{$activo}', 
-                            Flete               = '{$flete}', 
-                            Hoja1               = '{$hoja1}', 
-                            Hoja2               = '{$hoja2}' 
-                            WHERE LugarRecep_Id = '{$id}'
+                $query = "  UPDATE 
+                                rep3_lugares_recepcion 
+                            SET 
+                                descripcion         = '{$descripcion}', 
+                                dias_demora         = '{$demora}', 
+                                activo              = '{$activo}', 
+                                flete               = '{$flete}'
+                            WHERE 
+                                lugar_recepcion_id  = '{$id}'
                         ";           
                 
                 $sentenciaSQL= $conexion->prepare($query);
@@ -54,6 +52,6 @@
         }
         
         header("Content-type: aplication/json");
-        echo json_encode($arrayRespuesta/* , JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR */);
+        echo json_encode($arrayRespuesta, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
 
     }

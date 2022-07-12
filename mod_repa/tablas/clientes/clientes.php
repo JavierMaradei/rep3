@@ -16,7 +16,6 @@
                         <table id="tabla_clientes" class="table table-striped table-hover" style="font-size: 11px; font-weight: 400;">
                             <thead>
                                 <th>Id</th>
-                                <th>Código</th>
                                 <th>Razón Social 1</th>
                                 <th>Razón Social 2</th>
                                 <th>Dirección</th>  

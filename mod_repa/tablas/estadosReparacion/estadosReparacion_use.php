@@ -6,7 +6,7 @@
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $id             = $_GET['id'];
         $conexion       = conectar(DB_DSN, DB_USER, DB_PASS);
-        $query          = "SELECT numero FROM rep_reparaciones WHERE estadoreparacion_id = '{$id}'";           
+        $query          = "SELECT reparacion_id FROM rep3_reparaciones WHERE estado_id = '{$id}'";           
         $sentenciaSQL   = $conexion->prepare($query);
         $sentenciaSQL   ->execute();
         $resultado      = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);

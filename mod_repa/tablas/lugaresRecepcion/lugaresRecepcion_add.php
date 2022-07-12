@@ -1,59 +1,41 @@
 <?php
     session_start();
     date_default_timezone_set('America/Argentina/Buenos_Aires');
-    include_once('../../../../includes/funciones.php');
-    //include('../../../../includes/funciones.php');
-    //include('../../../../includes/config.php');
+    include_once('../../../includes/funciones.php');
+    include_once('../../../includes/config.php');
 
     $arrayRespuesta = array();
 
-    if(empty($_SESSION['usuario'])){
+    if(empty($_SESSION['usuario_id'])){
         $arrayRespuesta['estado'] = "Sesión expirada";
         header("Content-type: aplication/json");
-        echo json_encode($arrayRespuesta/* , JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR */);
+        echo json_encode($arrayRespuesta, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
         exit();
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-        $conexion       = conectar(DB_DSN_SIREP, DB_USER_SIREP_RW, DB_PASS_SIREP_RW);
+        $conexion       = conectar(DB_DSN, DB_USER, DB_PASS);
         $descripcion    = filter_var($_POST['descripcionLugaresRecepcion'], FILTER_SANITIZE_STRING);
         $demora         = filter_var($_POST['demoraLugaresRecepcion'], FILTER_SANITIZE_NUMBER_INT);
         $activo         = $_POST['activoLugaresRecepcion'] == 'true' ? 'S' : 'N';
         $flete          = $_POST['fleteLugaresRecepcion'] == 'true' ? 'S' : 'N';
-        $hoja1          = $_POST['hoja1LugaresRecepcion'] == 'true' ? 'S' : 'N';
-        $hoja2          = $_POST['hoja2LugaresRecepcion'] == 'true' ? 'S' : 'N';
-        $perfilSirep    = recuperaPerfil($_SESSION['usuario']);
+        $perfilSirep    = recuperaPerfil($_SESSION['usuario_id']);
 
-        if($perfilSirep == 1 || $perfilSirep == 13){
+        if($perfilSirep == 1){
 
             if(!empty($descripcion)){
-                $query0         = "SELECT TOP (1) LugarRecep_Id FROM REP_LUGARES_RECEPCION ORDER BY LugarRecep_Id DESC";
-                $sentenciaSQL   = $conexion->prepare($query0);
-                $sentenciaSQL   -> execute();
-                $ultimoId       = $sentenciaSQL->fetch();
-                $idIncrementado = ++$ultimoId[0];
         
-                $query1 = " INSERT INTO rep_lugares_recepcion (
-                            LugarRecep_Id, 
-                            empresa_id, 
-                            sucursal_id, 
-                            Descripcion, 
-                            Dias_demora, 
-                            Activo, 
-                            Flete, 
-                            Hoja1, 
-                            Hoja2
+                $query1 = " INSERT INTO rep3_lugares_recepcion (
+                                descripcion, 
+                                dias_demora, 
+                                activo, 
+                                flete
                             ) VALUES (
-                            '{$idIncrementado}', 
-                            '1', 
-                            '1', 
-                            '{$descripcion}', 
-                            '{$demora}', 
-                            '{$activo}', 
-                            '{$flete}', 
-                            '{$hoja1}', 
-                            '{$hoja2}'
+                                '{$descripcion}', 
+                                '{$demora}', 
+                                '{$activo}', 
+                                '{$flete}'
                             )
                         ";
                 $sentenciaSQL= $conexion->prepare($query1);
@@ -71,6 +53,6 @@
         }
 
         header("Content-type: aplication/json");
-        echo json_encode($arrayRespuesta/* , JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR */);
+        echo json_encode($arrayRespuesta, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
 
     }

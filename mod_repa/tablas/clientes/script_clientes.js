@@ -10,9 +10,9 @@
     let id                  = ''
 
     let arrayVal = {
-        clienteCodigo       : { required: true, maxlength: 10, validated: true},
-        clienteRazonSocial1 : {required: true, maxlength: 50, validated: true},
-        clienteRazonSocial2 : {maxlength: 50, validated: true},
+        clienteId           : {},
+        clienteNombre       : {required: true, maxlength: 50, validated: true},
+        clienteApellido     : {required: true, maxlength: 50, validated: true},
         clienteDireccion    : {required: true, maxlength: 100, validated: true},
         clienteTelefono     : {required: true, maxlength: 60, validated: true},
         clienteCelular      : {maxlength: 25, validated: true},
@@ -35,7 +35,6 @@
                     return '<a class="task-item" href="'+data+'">' + data + '</a>';
                     }, 
             },
-            {"data" : "codigo"},
             {"data" : "nombre"},
             {"data" : "apellido"},
             {"data" : "direccion"},
@@ -150,7 +149,7 @@
                             xhr.send()
                             xhr.addEventListener('load', () => {
                                 if(xhr.status == 200){ 
-                                    let respuesta = JSON.parse(xhr.repsonse)
+                                    let respuesta = JSON.parse(xhr.response)
                                     switch (respuesta.estado) {
                                         case 'Transacción exitosa':
                                             msgEliminado()

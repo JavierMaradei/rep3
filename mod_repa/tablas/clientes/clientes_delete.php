@@ -1,29 +1,28 @@
 <?php
     session_start();
-    include_once('../../../../includes/funciones.php');
-    //include('../../../../includes/funciones.php');
-    //include('../../../../includes/config.php');
+    include_once('../../../includes/funciones.php');
+    include_once('../../../includes/config.php');
 
     $arrayRespuesta  = array();
 
-    if(empty($_SESSION['usuario'])){
+    if(empty($_SESSION['usuario_id'])){
         $arrayRespuesta['estado'] = "Sesión expirada";
         header("Content-type: aplication/json");
-        echo json_encode($arrayRespuesta/* , JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR */);
+        echo json_encode($arrayRespuesta, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
         exit();
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-        $conexion       = conectar(DB_DSN_SIREP, DB_USER_SIREP_RW, DB_PASS_SIREP_RW);
+        $conexion       = conectar(DB_DSN, DB_USER, DB_PASS);
         $id             = $_GET['id'];
-        $perfilSirep    = recuperaPerfil($_SESSION['usuario']);
+        $perfilSirep    = recuperaPerfil($_SESSION['usuario_id']);
 
-        if($perfilSirep <= 3 || $perfilSirep >= 7 && $perfilSirep <> 11 && $perfilSirep <> 15){
+        if($perfilSirep == 1){
 
-            $query0 = "DELETE FROM REP_CLIENTES WHERE CLIENTE_ID = '{$id}'";
-            $sentenciaSQL= $conexion->prepare($query0);
-            $sentenciaSQL->execute();
+            $query0         = " DELETE FROM rep3_clientes WHERE cliente_id = '{$id}' ";
+            $sentenciaSQL   = $conexion->prepare($query0);
+            $sentenciaSQL   ->execute();
             
             if($sentenciaSQL->rowCount() > 0){
                 $arrayRespuesta['estado'] = "Transacción exitosa";
@@ -37,5 +36,5 @@
         }
 
         header("Content-type: aplication/json");
-        echo json_encode($arrayRespuesta/* , JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR */);
+        echo json_encode($arrayRespuesta, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
     };

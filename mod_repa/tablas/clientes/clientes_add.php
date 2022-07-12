@@ -5,72 +5,56 @@
 
     $arrayRespuesta  = array();
 
-    if(empty($_SESSION['usuario'])){
+    if(empty($_SESSION['usuario_id'])){
         $arrayRespuesta['estado'] = "Sesión expirada";
         header("Content-type: aplication/json");
-        echo json_encode($arrayRespuesta/* , JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR */);
+        echo json_encode($arrayRespuesta, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
         exit();
     }
 
-    $clienteCodigo              = filter_var($_POST['clienteCodigo'], FILTER_SANITIZE_STRING);
-    $clienteRazonSocial1        = filter_var($_POST['clienteRazonSocial1'], FILTER_SANITIZE_STRING);
-    $clienteRazonSocial2        = filter_var($_POST['clienteRazonSocial2'], FILTER_SANITIZE_STRING);
-    $clienteDireccion           = filter_var($_POST['clienteDireccion'], FILTER_SANITIZE_STRING);
-    $clienteTelefono            = filter_var($_POST['clienteTelefono'], FILTER_SANITIZE_STRING);
-    $clienteCelular             = filter_var($_POST['clienteCelular'], FILTER_SANITIZE_STRING);
-    $clienteEmail               = filter_var($_POST['clienteEmail'], FILTER_SANITIZE_STRING);
-    $clienteActivo              = filter_var($_POST['clienteActivo'], FILTER_SANITIZE_STRING);
-    
-    $perfilSirep                = recuperaPerfil($_SESSION['usuario']);
-    $codigoClienteDuplicado     = codigoClienteDuplicado($clienteCodigo);
-
-    $activo     = $clienteActivo        == 'true' ? 'N' : 'S';
+    $clienteNombre      = filter_var($_POST['clienteNombre'], FILTER_SANITIZE_STRING);
+    $clienteApellido    = filter_var($_POST['clienteApellido'], FILTER_SANITIZE_STRING);
+    $clienteDireccion   = filter_var($_POST['clienteDireccion'], FILTER_SANITIZE_STRING);
+    $clienteTelefono    = filter_var($_POST['clienteTelefono'], FILTER_SANITIZE_STRING);
+    $clienteCelular     = filter_var($_POST['clienteCelular'], FILTER_SANITIZE_STRING);
+    $clienteEmail       = filter_var($_POST['clienteEmail'], FILTER_SANITIZE_STRING);
+    $clienteActivo      = filter_var($_POST['clienteActivo'], FILTER_SANITIZE_STRING);
+    $perfilSirep        = recuperaPerfil($_SESSION['usuario_id']);
+    $activo             = $clienteActivo == 'true' ? 'S' : 'N';
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $conexion   = conectar(DB_DSN, DB_USER, DB_PASS);
 
-        if($perfilSirep <= 3 || $perfilSirep >= 7 && $perfilSirep <> 11 && $perfilSirep <> 15){
-
-            if(!empty($clienteCodigo)){
-
-                //CUIDADO, EL ID DE CLIENTES ES AUTOINCREMENTAL!!!!
-                
-                if(!$codigoClienteDuplicado){
-                    $query1 =   "INSERT INTO rep3_clientes (
-                        codigo, 
-                        nombre, 
-                        apellido, 
-                        direccion, 
-                        telefono, 
-                        celular, 
-                        mail,
-                        activo
+        if($perfilSirep == 1){
+            
+            $query1 = " INSERT INTO rep3_clientes (
+                            nombre, 
+                            apellido, 
+                            direccion, 
+                            telefono, 
+                            celular, 
+                            email,
+                            activo
                         ) VALUES (
-                        '{$clienteCodigo}', 
-                        '{$clienteRazonSocial1}', 
-                        '{$clienteRazonSocial2}', 
-                        '{$clienteDireccion}', 
-                        '{$clienteTelefono}', 
-                        '{$clienteCelular}', 
-                        '{$clienteEmail}', 
-                        '{$activo}'
-                        )";
+                            '{$clienteNombre}', 
+                            '{$clienteApellido}', 
+                            '{$clienteDireccion}', 
+                            '{$clienteTelefono}', 
+                            '{$clienteCelular}', 
+                            '{$clienteEmail}', 
+                            '{$activo}'
+                        )
+                    ";
 
-                    $sentenciaSQL= $conexion->prepare($query1);
-                    //var_dump($sentenciaSQL);
-                    $sentenciaSQL->execute();
+            $sentenciaSQL= $conexion->prepare($query1);
+            //var_dump($sentenciaSQL);
+            $sentenciaSQL->execute();
 
-                    if($sentenciaSQL->rowCount() > 0){
-                        $arrayRespuesta['estado'] = 'Transacción exitosa';
-                    } else {
-                        $arrayRespuesta['estado'] = "Algo salió mal";
-                    } 
-
-                } else {
-                    $arrayRespuesta['estado'] = "Cliente duplicado";
-                }
-
-            }
+            if($sentenciaSQL->rowCount() > 0){
+                $arrayRespuesta['estado'] = 'Transacción exitosa';
+            } else {
+                $arrayRespuesta['estado'] = "Algo salió mal";
+            } 
 
         } else {
             $arrayRespuesta['estado'] = "Error perfil";  

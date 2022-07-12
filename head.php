@@ -29,11 +29,24 @@
 
     <!-- Datatables -->
     <link rel="stylesheet" type="text/css" href="./css/DataTables/datatables.min.css"/>
+    
+    <!--Sweet alert-->
+    <link href="./css/sweetalert/sweetalert.css" rel="stylesheet">
 
     <!-- Jquery -->
     <script src="./js/jquery36.js"></script>
+
+    <!--Avisos flotantes sesión expirada-->
+    <link href="./css/toastr/toastr.min.css" rel="stylesheet">
+    <script src="./js/toastr/toastr.min.js"></script>
+
     <!-- Datatables -->
     <script type="text/javascript" src="./js/DataTables/datatables.min.js"></script>
+    
+    <!-- Momment JS -->
+    <script src="./js/moment.min.js"></script>
+    <!-- <script src="./js/datetime.js"></script> -->
+
     <!-- Librería JS -->
     <script src="./js/libreria.js?v=<?php echo uniqid()?>"></script>
 

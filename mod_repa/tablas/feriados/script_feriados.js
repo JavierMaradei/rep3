@@ -8,17 +8,9 @@
     let edit                = false//flag de edición de registro existente o nuevo registro
     let id                  = ''
     let arrayVal = {
-        idFeriados: {
-            readonly : true,
-        },
-        fechaFeriados: {
-            required: true
-        },
-        descripcionFeriados: {
-            required: true,
-            maxlength: 50,
-            validated: true
-        }
+        idFeriados: {readonly : true},
+        fechaFeriados: {required: true},
+        descripcionFeriados: {required: true, maxlength: 50, validated: true}
     }
 
     $(btnEliminaFeriados).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
@@ -26,7 +18,7 @@
     //Declaración del complemento DataTable
     let tabla = $('#tabla_feriados').DataTable( {
         "ajax": {
-            url: 'mod_sirep/admin/tablas/feriados/feriados_list.php',
+            url: 'mod_repa/tablas/feriados/feriados_list.php',
             type: 'GET',
             dataSrc: ""
         },
@@ -40,20 +32,14 @@
             {"data" : "fecha"},
             {"data" : "descripcion"}
         ],
-        columnDefs: [ {
+/*         columnDefs: [ {
             targets: 1,
-            render: $.fn.dataTable.render.moment('DD/MM/YYYY', 'DD/MM/YYYY')
-          } ],
+            render: $.fn.dataTable.render.datetime('DD/MM/YYYY', 'DD/MM/YYYY')
+          } ], */
         processing: true,
         dom: '<"html5buttons"B>lTfgitp',
         buttons: [
-            {extend: 'copy'},
-            {extend: 'csv'},
-            {extend: 'excel', title: 'Lista de feriados'},
-            {extend: 'pdf', title: 'Lista de feriados'},
-
-            {extend: 'print',}
-
+            {extend: 'excel', title: 'Lista de feriados', text: 'Exportar a Excel'},
         ],
         language: {
             "decimal": "",
@@ -82,7 +68,7 @@
         e.preventDefault()
         cleanInputs(inputs)
         id= e.target.innerText
-        url = 'mod_sirep/admin/tablas/feriados/feriados_single.php'
+        url = 'mod_repa/tablas/feriados/feriados_single.php'
         showData(id, url, inputs)
         $(btnEliminaFeriados).show()
         edit = true
@@ -94,8 +80,8 @@
         let validacion = validateData(inputs, arrayVal)
         if(validacion){
             collectData(inputs, formData)
-            let agregar = 'mod_sirep/admin/tablas/feriados/feriados_add.php'
-            let editar = 'mod_sirep/admin/tablas/feriados/feriados_edit.php'
+            let agregar = 'mod_repa/tablas/feriados/feriados_add.php'
+            let editar = 'mod_repa/tablas/feriados/feriados_edit.php'
             let estado = enviarData(agregar, editar, formData, edit, id)
             estado.then((respuesta) => {
                 switch (respuesta.estado) {
@@ -144,7 +130,7 @@
         function (isConfirm) {
             if (isConfirm) {
                 let xhr = new XMLHttpRequest
-                let url = 'mod_sirep/admin/tablas/feriados/feriados_delete.php'
+                let url = 'mod_repa/tablas/feriados/feriados_delete.php'
                 xhr.open('GET', url+'?id='+id)
                 xhr.send()
                 xhr.addEventListener('load', () => {

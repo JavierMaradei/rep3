@@ -26,3 +26,20 @@
             include( $modulo );
         }
     }
+
+    /**
+     * Retorna el perfil según el email del usuario logueado
+     * @param {string} $email
+     * @return {string}
+     * @version 1.0
+     */
+    function recuperaPerfil($email){
+
+        $query 			= "SELECT perfil_id FROM rep3_usuarios WHERE email = '{$email}'";
+
+        $conexion       = conectar(DB_DSN, DB_USER, DB_PASS);
+        $sentenciaSQL	= $conexion->prepare($query);
+        $sentenciaSQL	-> execute();
+        $perfil 		= $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
+        return $perfil['perfil_id'];
+	}
