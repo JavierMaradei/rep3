@@ -47,23 +47,13 @@
                         </div>
                     </div>
                     <div class="row mb-2">
-                        <div class="input-group col-sm-12">
-                            <span class="input-group-addon" style="font-weight: bold;">Activo</span>
-                            <div class="input-group-addon">
-                                <div class="switch">
-                                    <div class="onoffswitch">
-                                        <input type="checkbox" class="onoffswitch-checkbox" id="activoEstadoReparacion" checked>
-                                        <label class="onoffswitch-label" for="activoEstadoReparacion">
-                                            <span class="onoffswitch-inner"></span>
-                                            <span class="onoffswitch-switch"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
+                        <label for="activoEstadoReparacion" class="col-sm-2 col-form-label">Activo</label>
+                        <div class="col-sm-10 text-center">
+                            <input type="checkbox" id="activoEstadoReparacion" class="form-check-input bigCheck">
                         </div>
                     </div>
                 </div>
-                <div class="card-footer">
+                <div class="card-footer text-center">
                     <button id="btnGrabaEstadoReparacion" class="btn btn-success btn-outline">Grabar</button>
                     <button id="btnEliminaEstadoReparacion" class="btn btn-danger btn-outline">Eliminar</button>
                     <button id="btnCancelaEstadoReparacion" class="btn btn-default btn-outline">Cancelar</button>

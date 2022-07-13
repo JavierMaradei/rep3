@@ -42,15 +42,17 @@
             {"data" : "activo"}
         ],
         processing: true,
-        dom: '<"html5buttons"B>lTfgitp',
+        paging: true,
+        bLengthChange: false,
+        iDisplayLength: 10,
+        bInfo: true,
+        bAutoWidth: false,
+        dom:
+            "<'row'<'col-sm-4'B><'col-sm-4 text-center'l><'col-sm-4'f>>" +
+            "<'row'<'col-sm-12'tr>>" +
+            "<'row'<'col-sm-6'i><'col-sm-6'p>>",
         buttons: [
-            {extend: 'copy'},
-            {extend: 'csv'},
-            {extend: 'excel', title: 'Lista de motivos de anulación'},
-            {extend: 'pdf', title: 'Lista de motivos de anulación'},
-    
-            {extend: 'print',}
-            
+            {extend: 'excel', title: 'Lista de motivos de anulación', text: 'Exportar a Excel'},
         ],
         language: {
             "decimal": "",

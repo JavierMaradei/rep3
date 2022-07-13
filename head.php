@@ -32,7 +32,10 @@
     
     <!--Sweet alert-->
     <link href="./css/sweetalert/sweetalert.css" rel="stylesheet">
-
+    
+    <!--Sweet alert-->
+    <link href="./css/estilos.css?v=<?php echo uniqid()?>" rel="stylesheet">
+    
     <!-- Jquery -->
     <script src="./js/jquery36.js"></script>
 

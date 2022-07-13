@@ -28,30 +28,31 @@
     //Declaración del complemento DataTable
     let tabla = $('#tabla_formasRetiro').DataTable( {
         "ajax": {
-            url: 'mod_sirep/admin/tablas/formasRetiro/formasRetiro_list.php',
+            url: 'mod_repa/tablas/formasRetiro/formasRetiro_list.php',
             type: 'GET',
             dataSrc: ""
         },
         "columns": [  
-            {"data" : "formasderetiro_id",
+            {"data" : "forma_retiro_id",
                 "render": function ( data, type, row, meta ) {
                     return '<a class="task-item" href="'+data+'">' + data + '</a>';
                     }, 
             },
             {"data" : "descripcion"},
-            {"data" : "activo"},
-            {"data" : "valorizado"}
+            {"data" : "activo"}
         ],
         processing: true,
-        dom: '<"html5buttons"B>lTfgitp',
+        paging: true,
+        bLengthChange: false,
+        iDisplayLength: 10,
+        bInfo: true,
+        bAutoWidth: false,
+        dom:
+            "<'row'<'col-sm-4'B><'col-sm-4 text-center'l><'col-sm-4'f>>" +
+            "<'row'<'col-sm-12'tr>>" +
+            "<'row'<'col-sm-6'i><'col-sm-6'p>>",
         buttons: [
-            {extend: 'copy'},
-            {extend: 'csv'},
-            {extend: 'excel', title: 'Lista de formas de retiro'},
-            {extend: 'pdf', title: 'Lista de formas de retiro'},
-    
-            {extend: 'print',}
-            
+            {extend: 'excel', title: 'Lista de formas de retiro', text: 'Exportar a Excel'},
         ],
         language: {
             "decimal": "",
@@ -80,7 +81,7 @@
         e.preventDefault()
         cleanInputs(inputs)
         id= e.target.innerText
-        url = 'mod_sirep/admin/tablas/formasRetiro/formasRetiro_single.php'
+        url = 'mod_repa/tablas/formasRetiro/formasRetiro_single.php'
         showData(id, url, inputs)
         $(btnEliminaFormasRetiro).show()
         edit = true
@@ -92,8 +93,8 @@
         let validacion = validateData(inputs, arrayVal)
         if(validacion){
             collectData(inputs, formData)
-            let agregar = 'mod_sirep/admin/tablas/formasRetiro/formasRetiro_add.php'
-            let editar = 'mod_sirep/admin/tablas/formasRetiro/formasRetiro_edit.php'
+            let agregar = 'mod_repa/tablas/formasRetiro/formasRetiro_add.php'
+            let editar = 'mod_repa/tablas/formasRetiro/formasRetiro_edit.php'
             let estado = enviarData(agregar, editar, formData, edit, id)
             estado.then((respuesta) => {
                 switch (respuesta.estado) {
@@ -127,7 +128,7 @@
     btnEliminaFormasRetiro.addEventListener('click', e => {
         e.preventDefault()
         let xhr2 = new XMLHttpRequest
-        let url2 = 'mod_sirep/admin/tablas/formasRetiro/formasRetiro_use.php?id='+id
+        let url2 = 'mod_repa/tablas/formasRetiro/formasRetiro_use.php?id='+id
         xhr2.open('GET', url2)
         xhr2.send()
         xhr2.addEventListener('load', () => {
@@ -147,7 +148,7 @@
                     function (isConfirm) {
                         if (isConfirm) {
                             let xhr = new XMLHttpRequest
-                            let url = 'mod_sirep/admin/tablas/formasRetiro/formasRetiro_delete.php'
+                            let url = 'mod_repa/tablas/formasRetiro/formasRetiro_delete.php'
                             xhr.open('GET', url+'?id='+id)
                             xhr.send()
                             xhr.addEventListener('load', () => {

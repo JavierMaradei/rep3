@@ -1,22 +1,40 @@
 <?php
-    include_once('../../../../includes/funciones.php');
-    //include('../../../../includes/funciones.php');
-    //include('../../../../includes/config.php');
+    session_start();
+    date_default_timezone_set('America/Argentina/Buenos_Aires');
+    include_once('../../../includes/funciones.php');
+    include_once('../../../includes/config.php');
+    
+    if(empty($_SESSION['usuario_id'])){
+        $arrayRespuesta['estado'] = "Sesión expirada";
+        header("Content-type: aplication/json");
+        echo json_encode($arrayRespuesta, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
+        exit();
+    }
     
     //Creamos la conexión
     if($_SERVER['REQUEST_METHOD'] == 'GET'){
-        $conexion = conectar(DB_DSN_SIREP, DB_USER_SIREP_R, DB_PASS_SIREP_R);
-        $activo = $_GET['activo'];
-        $query = "SELECT formasderetiro_id, descripcion, activo, valorizado FROM rep_formasderetiro WHERE formasderetiro_id > 0";  
+
+        $conexion       = conectar(DB_DSN, DB_USER, DB_PASS);
+        $activo         = $_GET['activo'];
+
+        $query          = " SELECT 
+                                forma_retiro_id, 
+                                descripcion, 
+                                activo 
+                            FROM 
+                                rep3_formas_retiro
+                        ";  
+        
         if($activo == 'S'){
-            $query .="AND activo = 'S'";
+            $query      .=" AND activo = 'S'";
         } 
-        $query .= "order by descripcion asc";          
-        $sentenciaSQL= $conexion->prepare($query);
-        $sentenciaSQL->execute();
-    
-        $resultado= $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
+        
+        $query          .= " ORDER BY descripcion ASC";
+
+        $sentenciaSQL   = $conexion->prepare($query);
+        $sentenciaSQL   ->execute();
+        $resultado      = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
     
         header("Content-type: aplication/json");
-        echo json_encode($resultado/* , JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR */);
+        echo json_encode($resultado, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
     }

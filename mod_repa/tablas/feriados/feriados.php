@@ -53,7 +53,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-footer">
+                <div class="card-footer text-center">
                     <button id="btnGrabaFeriados" class="btn btn-success btn-outline">Grabar</button>
                     <button id="btnEliminaFeriados" class="btn btn-danger btn-outline">Eliminar</button>
                     <button id="btnCancelaFeriados" class="btn btn-default btn-outline">Cancelar</button>
