@@ -1,0 +1,76 @@
+<div class="card h-100">
+    <form id="formProductos">
+        <div class="card-body">
+            <h3 class="card-title text-center"><i>Productos</i></h3>
+            <hr>
+            <div class="mininav-toggle text-center py-2 collapsed" id="productoImagen">
+                <img class="mainnav__avatar img-xl " src="../../hdn/assets/img/megamenu/sfl14.jpg" alt="Imagen Producto">
+            </div>
+            <div class="row mb-2">
+                <label for="productoId" class="col-sm-2 col-form-label">Id</label>
+                <div class="col-sm-10">
+                    <input type="text" id="productoId" class="form-control input-sm" readonly>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="productoCodigo" class="col-sm-2 col-form-label">Codigo</label>
+                <div class="col-sm-10">
+                    <input type="text" id="productoCodigo" class="form-control input-sm">
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="productoMarca" class="col-sm-2 col-form-label">Marca</label>
+                <div class="col-sm-10">
+                    <select id="productoMarca" class="form-select"></select>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="productoFamilia" class="col-sm-2 col-form-label">Familia</label>
+                <div class="col-sm-10">
+                    <select id="productoFamilia" class="form-select"></select>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="productoDescripcion" class="col-sm-2 col-form-label" title="Descripción">Desc.</label>
+                <div class="col-sm-10">
+                    <input type="text" id="productoDescripcion" class="form-control input-sm">
+                </div>
+            </div>                    
+            <div class="row mb-2">
+                <label for="productoCosto" class="col-sm-2 col-form-label">Costo</label>
+                <div class="col-sm-10">
+                    <input type="text" id="productoCosto" class="form-control input-sm">
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="productoMonoTri" class="col-sm-2 col-form-label">Mono/Tri</label>
+                <div class="col-sm-10">
+                    <select id="productoMonoTri" class="form-select"><?php echo tiposMonoTri();?></select>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="productoSubirFoto" class="col-sm-2 col-form-label">Subir Foto</label>
+                <div class="col-sm-10 text-center">
+                    <input type="file" id="productoSubirFoto" class="form-select">
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="productoActivo" class="col-sm-2 col-form-label">Activo</label>
+                <div class="col-sm-10 text-center">
+                    <input type="checkbox" id="productoActivo" class="form-check-input bigCheck">
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="productoCanjeable" class="col-sm-2 col-form-label">Canje?</label>
+                <div class="col-sm-10 text-center">
+                    <input type="checkbox" id="productoCanjeable" class="form-check-input bigCheck">
+                </div>
+            </div>            
+        </div>
+        <div class="card-footer text-center">
+            <button id="btnGrabaProductos" class="btn btn-success btn-outline">Grabar</button>
+            <button id="btnEliminaProductos" class="btn btn-danger btn-outline">Eliminar</button>
+            <button id="btnCancelaProductos" class="btn btn-default btn-outline">Cancelar</button>
+        </div>
+    </form>
+</div>

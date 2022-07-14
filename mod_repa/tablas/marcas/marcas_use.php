@@ -10,21 +10,13 @@
         echo json_encode($arrayRespuesta, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
         exit();
     }
-
+    
     //Creamos la conexión
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $id         = $_GET['id'];
         $conexion   = conectar(DB_DSN, DB_USER, DB_PASS);
 
-        $query =    "   SELECT 
-                            motivo_anulacion_id as idMotivosAnulacion, 
-                            descripcion as descripcionMotivosAnulacion, 
-                            activo as activoMotivosAnulacion
-                        FROM 
-                            rep3_motivos_anulacion
-                        WHERE 
-                            motivo_anulacion_id = '{$id}'
-                    ";           
+        $query      =   " SELECT producto_id FROM rep3_productos WHERE marca_id = '{$id}'";           
         $sentenciaSQL= $conexion->prepare($query);
         $sentenciaSQL->execute();
 

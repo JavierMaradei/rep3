@@ -5,7 +5,7 @@
     let btnGrabaEstadoReparacion    = document.querySelector('#btnGrabaEstadoReparacion')//Captura de boton grabar
     let btnEliminaEstadoReparacion  = document.querySelector('#btnEliminaEstadoReparacion')//Captura de boton eliminar
     let btnCancelaEstadoReparacion  = document.querySelector('#btnCancelaEstadoReparacion')//Captura de boton cancelar
-    let activoEstadoReparacion      = document.querySelector('#activoEstadoReparcion')//Captura de boton cancelar
+    let activoEstadoReparacion      = document.querySelector('#activoEstadoReparacion')//Captura de boton cancelar
     let edit                        = false//flag de edición de registro existente o nuevo registro
     let id                          = ''
 
@@ -14,6 +14,8 @@
         descripcionEstadoReparacion : {required: true, maxlength: 50, validated: true},
         activoEstadoReparacion      : {}
     }
+
+    activoEstadoReparacion.checked = true
 
     $(btnEliminaEstadoReparacion).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
 

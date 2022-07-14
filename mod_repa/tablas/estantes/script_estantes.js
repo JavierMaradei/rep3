@@ -16,6 +16,8 @@
     
     $(btnEliminaEstantes).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
 
+    activoEstantes.checked = true
+
     //Declaración del complemento DataTable
     let tabla = $('#tabla_estantes').DataTable( {
         "ajax": {

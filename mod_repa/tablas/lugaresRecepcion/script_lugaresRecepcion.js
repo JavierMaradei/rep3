@@ -19,6 +19,8 @@
         activoLugaresRecepcion      : {},
         fleteLugaresRecepcion       : {}
     }
+
+    activoLugaresRecepcion.checked = true
     
     $(btnEliminaLugaresRecepcion).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
 

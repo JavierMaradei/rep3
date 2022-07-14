@@ -6,7 +6,7 @@
     </div>
 </div>
 <div class="row mt-3">
-    <div class="col-md-8 mb-3">
+    <div class="col-md-7 mb-3">
         <div class="card h-100">
             <div class="card-body">
                 <h3 class="card-title text-center"><i>Listado de Lugares de Recepción</i></h3>
@@ -30,7 +30,7 @@
         </div>
     </div>
 
-    <div class="col-md-4 mb-3">
+    <div class="col-md-5 mb-3">
         <div class="card h-100">
             <form id="formLugaresRecepcion">
                 <div class="card-body">
@@ -55,39 +55,19 @@
                         </div>
                     </div>
                     <div class="row mb-2">
-                        <div class="input-group col-sm-12">
-                            <span class="input-group-addon" style="font-weight: bold;">Activo</span>
-                            <div class="input-group-addon">
-                                <div class="switch">
-                                    <div class="onoffswitch">
-                                        <input type="checkbox" class="onoffswitch-checkbox" id="activoLugaresRecepcion" checked>
-                                        <label class="onoffswitch-label" for="activoLugaresRecepcion">
-                                            <span class="onoffswitch-inner"></span>
-                                            <span class="onoffswitch-switch"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
+                        <label for="activoLugaresRecepcion" class="col-sm-2 col-form-label">Activo</label>
+                        <div class="col-sm-10 text-center">
+                            <input type="checkbox" id="activoLugaresRecepcion" class="form-check-input bigCheck">
                         </div>
                     </div>
                     <div class="row mb-2">
-                        <div class="input-group col-sm-12">
-                            <span class="input-group-addon" style="font-weight: bold;">Flete</span>
-                            <div class="input-group-addon">
-                                <div class="switch">
-                                    <div class="onoffswitch">
-                                        <input type="checkbox" class="onoffswitch-checkbox" id="fleteLugaresRecepcion" checked>
-                                        <label class="onoffswitch-label" for="fleteLugaresRecepcion">
-                                            <span class="onoffswitch-inner"></span>
-                                            <span class="onoffswitch-switch"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
+                        <label for="fleteLugaresRecepcion" class="col-sm-2 col-form-label">Flete</label>
+                        <div class="col-sm-10 text-center">
+                            <input type="checkbox" id="fleteLugaresRecepcion" class="form-check-input bigCheck">
                         </div>
                     </div>
                 </div>
-                <div class="card-footer">
+                <div class="card-footer text-center">
                     <button id="btnGrabaLugaresRecepcion" class="btn btn-success btn-outline">Grabar</button>
                     <button id="btnEliminaLugaresRecepcion" class="btn btn-danger btn-outline">Eliminar</button>
                     <button id="btnCancelaLugaresRecepcion" class="btn btn-default btn-outline">Cancelar</button>

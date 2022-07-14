@@ -2215,6 +2215,59 @@ function cargaFormasDeResolucionOSCA(select){
     })
 }
 
+/**
+ * Carga el select de Marcas
+ * @param {string} select
+ * @param {string} activo
+ */
+ function cargaMarcas(select){
+    return new Promise(function(resolve, reject) {
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_repa/tablas/marcas/marcas_list.php')
+        xhr.send()
+        xhr.addEventListener('load', () => {
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+                resolve(respuesta)
+                let template = '<option value= "0">Seleccionar</option>'
+                respuesta.forEach(element => {
+                    template += `<option value= "${element.marca_id}">${element.descripcion}</option>`
+                })
+                select.innerHTML = template
+            } else {
+                reject()
+            }
+        })
+    })
+}
+
+/**
+ * Carga el select de Familias
+ * @param {string} select
+ * @param {string} activo
+ */
+ function cargaFamilias(select){
+    return new Promise(function(resolve, reject) {
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_repa/tablas/familias/familias_list.php')
+        xhr.send()
+        xhr.addEventListener('load', () => {
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+                resolve(respuesta)
+                let template = '<option value= "0">Seleccionar</option>'
+                respuesta.forEach(element => {
+                    template += `<option value= "${element.familia_id}">${element.descripcion}</option>`
+                })
+                select.innerHTML = template
+            } else {
+                reject()
+            }
+        })
+    })
+}
+
+
 
 /**
  * Limita cantidad de caractéres de un campo.

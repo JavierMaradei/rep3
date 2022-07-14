@@ -1,41 +1,41 @@
-(function iniciarFormasRetiro(){
-    let formulario              = document.querySelector('#formFormasRetiro')//Captura del formulario
-    let inputs                  = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
-    let formData                = new FormData() //Creo el formData para transferencia de información con el Backend
-    let btnGrabaFormasRetiro    = document.querySelector('#btnGrabaFormasRetiro')//Captura de boton grabar
-    let btnEliminaFormasRetiro  = document.querySelector('#btnEliminaFormasRetiro')//Captura de boton eliminar
-    let btnCancelaFormasRetiro  = document.querySelector('#btnCancelaFormasRetiro')//Captura de boton cancelar
-    let activoFormasRetiro      = document.querySelector('#activoFormasRetiro')//Captura de boton cancelar
-    let edit                    = false//flag de edición de registro existente o nuevo registro
-    let id                      = ''
+(function iniciarSucursales(){
+    let formulario                  = document.querySelector('#formSucursales')//Captura del formulario
+    let inputs                      = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
+    let formData                    = new FormData() //Creo el formData para transferencia de información con el Backend
+    let btnGrabaSucursales          = document.querySelector('#btnGrabaSucursales')//Captura de boton grabar
+    let btnEliminaSucursales        = document.querySelector('#btnEliminaSucursales')//Captura de boton eliminar
+    let btnCancelaSucursales        = document.querySelector('#btnCancelaSucursales')//Captura de boton cancelar
+    let activoSucursales            = document.querySelector('#activoSucursales')//Captura de boton cancelar
+    let edit                        = false//flag de edición de registro existente o nuevo registro
+    let id                          = ''
     let arrayVal = {
-        idFormasRetiro: {
+        idSucursales: {
             readonly : true,
         },
-        descripcionFormasRetiro: {
+        descripcionSucursales: {
             required: true,
             maxlength: 50,
             validated: true
         },
-        activoFormasRetiro: {
-        },
-        valorizadoFormasRetiro: {
+        activoSucursales: {
+            maxlength: 6,
+            validated: true
         }
     }
     
-    $(btnEliminaFormasRetiro).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
+    $(btnEliminaSucursales).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
 
-    activoFormasRetiro.checked = true
+    activoSucursales.checked = true
 
     //Declaración del complemento DataTable
-    let tabla = $('#tabla_formasRetiro').DataTable( {
+    let tabla = $('#tabla_sucursales').DataTable( {
         "ajax": {
-            url: 'mod_repa/tablas/formasRetiro/formasRetiro_list.php',
+            url: 'mod_repa/tablas/sucursales/sucursales_list.php',
             type: 'GET',
             dataSrc: ""
         },
         "columns": [  
-            {"data" : "forma_retiro_id",
+            {"data" : "sucursal_id",
                 "render": function ( data, type, row, meta ) {
                     return '<a class="task-item" href="'+data+'">' + data + '</a>';
                     }, 
@@ -54,7 +54,7 @@
             "<'row'<'col-sm-12'tr>>" +
             "<'row'<'col-sm-6'i><'col-sm-6'p>>",
         buttons: [
-            {extend: 'excel', title: 'Lista de formas de retiro', text: 'Exportar a Excel'},
+            {extend: 'excel', title: 'Lista de Sucursales', text: 'Exportar a Excel'},
         ],
         language: {
             "decimal": "",
@@ -77,36 +77,36 @@
             }
         },
     })
-        
+    
     //Tomo el link de la tabla con el ID del registro
     $(document).on('click', '.task-item', (e) => {
         e.preventDefault()
         cleanInputs(inputs)
         id= e.target.innerText
-        url = 'mod_repa/tablas/formasRetiro/formasRetiro_single.php'
+        url = 'mod_repa/tablas/sucursales/sucursales_single.php'
         showData(id, url, inputs)
-        $(btnEliminaFormasRetiro).show()
+        $(btnEliminaSucursales).show()
         edit = true
     })
 
     //Funcionalidad del botón de Grabar
-    btnGrabaFormasRetiro.addEventListener('click', e => {
+    btnGrabaSucursales.addEventListener('click', e => {
         e.preventDefault()
         let validacion = validateData(inputs, arrayVal)
         if(validacion){
             collectData(inputs, formData)
-            let agregar = 'mod_repa/tablas/formasRetiro/formasRetiro_add.php'
-            let editar = 'mod_repa/tablas/formasRetiro/formasRetiro_edit.php'
+            let agregar = 'mod_repa/tablas/sucursales/sucursales_add.php'
+            let editar = 'mod_repa/tablas/sucursales/sucursales_edit.php'
             let estado = enviarData(agregar, editar, formData, edit, id)
             estado.then((respuesta) => {
                 switch (respuesta.estado) {
                     case 'Transacción exitosa':
                         msgTransaccionExitosa()
                         tabla.ajax.reload();
-                        $(btnEliminaFormasRetiro).hide()
+                        $(btnEliminaSucursales).hide()
                         cleanInputs(inputs)
                         cleanFormData(inputs, formData)
-                        activoFormasRetiro.checked = true
+                        activoSucursales.checked = true
                         id = ''
                         edit = false
                         break;
@@ -122,15 +122,15 @@
                         cleanFormData(inputs, formData)
                         break;
                 }
-            })
+            }) 
         }
     })
     
     //Funcionalidad del botón de Eliminar
-    btnEliminaFormasRetiro.addEventListener('click', e => {
+    btnEliminaSucursales.addEventListener('click', e => {
         e.preventDefault()
         let xhr2 = new XMLHttpRequest
-        let url2 = 'mod_repa/tablas/formasRetiro/formasRetiro_use.php?id='+id
+        let url2 = 'mod_repa/tablas/sucursales/sucursales_use.php?id='+id
         xhr2.open('GET', url2)
         xhr2.send()
         xhr2.addEventListener('load', () => {
@@ -150,7 +150,7 @@
                     function (isConfirm) {
                         if (isConfirm) {
                             let xhr = new XMLHttpRequest
-                            let url = 'mod_repa/tablas/formasRetiro/formasRetiro_delete.php'
+                            let url = 'mod_repa/tablas/sucursales/sucursales_delete.php'
                             xhr.open('GET', url+'?id='+id)
                             xhr.send()
                             xhr.addEventListener('load', () => {
@@ -160,10 +160,10 @@
                                         case 'Transacción exitosa':
                                             msgEliminado()
                                             tabla.ajax.reload();
-                                            $(btnEliminaFormasRetiro).hide()
+                                            $(btnEliminaSucursales).hide()
                                             cleanInputs(inputs)
                                             cleanFormData(inputs, formData)
-                                            activoFormasRetiro.checked = true
+                                            activoSucursales.checked = true
                                             id = ''
                                             edit = false
                                             break;
@@ -193,12 +193,12 @@
     })
     
     //Funcionalidad del botón de Cancelar
-    btnCancelaFormasRetiro.addEventListener('click', e => {
+    btnCancelaSucursales.addEventListener('click', e => {
         e.preventDefault()
         cleanInputs(inputs)
+        activoSucursales.checked = true
         edit = false
-        activoFormasRetiro.checked = true
-        $(btnEliminaFormasRetiro).hide()
+        $(btnEliminaSucursales).hide()
         id = ''
     })
 })()

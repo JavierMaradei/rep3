@@ -19,7 +19,7 @@
 
         if($perfilSirep == 1){
 
-            $query0         = "DELETE FROM rep3_motivos_anulacion WHERE motivo_anulacion_id = '{$id}'";
+            $query0         = "DELETE FROM rep3_familias WHERE familia_id = '{$id}'";
             $sentenciaSQL   = $conexion->prepare($query0);
             $sentenciaSQL   -> execute();
             

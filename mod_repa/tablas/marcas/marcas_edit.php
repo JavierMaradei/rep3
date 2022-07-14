@@ -11,26 +11,24 @@
         exit();
     }
 
-    //Creamos la conexión
-    $id = $_GET['id'];
-
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+        $id             = $_GET['id'];
         $conexion       = conectar(DB_DSN, DB_USER, DB_PASS);
-        $descripcion    = filter_var($_POST['descripcionFormasRetiro'], FILTER_SANITIZE_STRING);
-        $activo         = $_POST['activoFormasRetiro'] == 'true' ? 'S' : 'N';
+        $descripcion    = filter_var($_POST['descripcionMarcas'], FILTER_SANITIZE_STRING);
+        $activo         = $_POST['activoMarcas'] == 'true' ? 'S' : 'N';
         $perfilSirep    = recuperaPerfil($_SESSION['usuario_id']);
 
         if($perfilSirep == 1){
 
             if(!empty($descripcion)){
                 $query = "  UPDATE 
-                                rep3_formas_retiro 
-                            SET 
-                                descripcion     = '{$descripcion}', 
-                                activo          = '{$activo}'
+                                rep3_marcas 
+                            SET
+                                descripcion = '{$descripcion}', 
+                                activo      = '{$activo}'
                             WHERE 
-                                forma_retiro_id = '{$id}'
+                                marca_id    = '{$id}'
                         ";           
                 
                 $sentenciaSQL= $conexion->prepare($query);
@@ -40,7 +38,7 @@
                     $arrayRespuesta['estado'] = "Transacción exitosa";
                 } else {
                     $arrayRespuesta['estado'] = "Algo salió mal";
-                }  
+                } 
             }
 
         } else {

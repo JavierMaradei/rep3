@@ -43,3 +43,17 @@
         $perfil 		= $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
         return $perfil['perfil_id'];
 	}
+
+        /**
+     * Template de los tipos de alimentacion de los equipos
+     * @return {string}
+     * @version 1.0
+     */
+    function tiposMonoTri(){
+        $template = '
+            <option value="">Seleccionar</option>
+            <option value="M">Monofásico</option>
+            <option value="T">Trifásico</option>
+        ';
+        return $template;
+	}

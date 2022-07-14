@@ -11,27 +11,35 @@
         exit();
     }
 
-    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $conexion       = conectar(DB_DSN, DB_USER, DB_PASS);
-        $id             = $_GET['id'];
+        $descripcion    = filter_var($_POST['descripcionMarcas'], FILTER_SANITIZE_STRING);
+        $activo         = $_POST['activoMarcas'] == 'true' ? 'S' : 'N';
         $perfilSirep    = recuperaPerfil($_SESSION['usuario_id']);
 
         if($perfilSirep == 1){
 
-            $query0         = "DELETE FROM rep3_motivos_anulacion WHERE motivo_anulacion_id = '{$id}'";
-            $sentenciaSQL   = $conexion->prepare($query0);
-            $sentenciaSQL   -> execute();
-            
-            if($sentenciaSQL->rowCount() > 0){
-                $arrayRespuesta['estado'] = "Transacción exitosa";
-            } else {
-                $arrayRespuesta['estado'] = "Algo salió mal";
+            if(!empty($descripcion)){        
+                $query1 = " INSERT INTO rep3_marcas (
+                            descripcion, 
+                            activo
+                            ) VALUES (
+                            '{$descripcion}', 
+                            '{$activo}')
+                        ";
+                $sentenciaSQL= $conexion->prepare($query1);
+                $sentenciaSQL->execute();
+                
+                if($sentenciaSQL->rowCount() > 0){
+                    $arrayRespuesta['estado'] = "Transacción exitosa";
+                } else {
+                    $arrayRespuesta['estado'] = "Algo salió mal";
+                }   
             }
 
         } else {
             $arrayRespuesta['estado'] = "Error perfil";  
-
         }
 
         header("Content-type: aplication/json");

@@ -20,6 +20,8 @@
         clienteActivo       : {}
     }
 
+    activoCliente.checked = true
+
     $(btnEliminaCliente).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
 
     //Declaración del complemento DataTable

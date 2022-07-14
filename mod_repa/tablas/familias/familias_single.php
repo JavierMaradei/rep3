@@ -17,13 +17,13 @@
         $conexion   = conectar(DB_DSN, DB_USER, DB_PASS);
 
         $query =    "   SELECT 
-                            motivo_anulacion_id as idMotivosAnulacion, 
-                            descripcion as descripcionMotivosAnulacion, 
-                            activo as activoMotivosAnulacion
+                            familia_id as idFamilias, 
+                            descripcion as descripcionFamilias, 
+                            activo as activoFamilias
                         FROM 
-                            rep3_motivos_anulacion
+                            rep3_familias
                         WHERE 
-                            motivo_anulacion_id = '{$id}'
+                            familia_id = '{$id}'
                     ";           
         $sentenciaSQL= $conexion->prepare($query);
         $sentenciaSQL->execute();

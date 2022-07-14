@@ -1,41 +1,30 @@
 <?php
     session_start();
     date_default_timezone_set('America/Argentina/Buenos_Aires');
-    include_once('../../../../includes/funciones.php');
-    //include('../../../../includes/funciones.php');
-    //include('../../../../includes/config.php');
-
-    $arrayRespuesta = array();
-
-    if(empty($_SESSION['usuario'])){
+    include_once('../../../includes/funciones.php');
+    include_once('../../../includes/config.php');
+    
+    if(empty($_SESSION['usuario_id'])){
         $arrayRespuesta['estado'] = "Sesión expirada";
         header("Content-type: aplication/json");
-        echo json_encode($arrayRespuesta/* , JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR */);
+        echo json_encode($arrayRespuesta, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
         exit();
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-        $conexion       = conectar(DB_DSN_SIREP, DB_USER_SIREP_RW, DB_PASS_SIREP_RW);
+        $conexion       = conectar(DB_DSN, DB_USER, DB_PASS);
         $descripcion    = filter_var($_POST['descripcionMotivosAnulacion'], FILTER_SANITIZE_STRING);
         $activo         = $_POST['activoMotivosAnulacion'] == 'true' ? 'S' : 'N';
-        $perfilSirep    = recuperaPerfil($_SESSION['usuario']);
+        $perfilSirep    = recuperaPerfil($_SESSION['usuario_id']);
 
-        if($perfilSirep == 1 || $perfilSirep == 2 || $perfilSirep == 7 || $perfilSirep == 10 || $perfilSirep == 13 || $perfilSirep == 14 || $perfilSirep == 16){
+        if($perfilSirep == 1){
 
-            if(!empty($descripcion)){
-                $query0         = "SELECT TOP (1) motivoanulacion_id FROM rep_motivosanulacion ORDER BY motivoanulacion_id DESC";
-                $sentenciaSQL   = $conexion->prepare($query0);
-                $sentenciaSQL   ->execute();
-                $ultimoId       = $sentenciaSQL->fetch();
-                $idIncrementado = ++$ultimoId[0];
-        
-                $query1 = " INSERT INTO rep_motivosanulacion (
-                            motivoanulacion_id, 
+            if(!empty($descripcion)){        
+                $query1 = " INSERT INTO rep3_motivos_anulacion (
                             descripcion, 
                             activo
                             ) VALUES (
-                            '{$idIncrementado}', 
                             '{$descripcion}', 
                             '{$activo}')
                         ";
@@ -54,6 +43,6 @@
         }
 
         header("Content-type: aplication/json");
-        echo json_encode($arrayRespuesta/* , JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR */);
+        echo json_encode($arrayRespuesta, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
 
     }

@@ -116,6 +116,9 @@
                                         <a href="?page=mod_repa/tablas/estantes/estantes" class="nav-link">Estante</a>
                                     </li>
                                     <li class="nav-item">
+                                        <a href="?page=mod_repa/tablas/familias/familias" class="nav-link">Familias</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a href="?page=mod_repa/tablas/feriados/feriados" class="nav-link">Feriados</a>
                                     </li>
                                     <li class="nav-item">
@@ -123,6 +126,9 @@
                                     </li>
                                     <li class="nav-item">
                                         <a href="?page=mod_repa/tablas/lugaresRecepcion/lugaresRecepcion" class="nav-link">Lugar recepción</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="?page=mod_repa/tablas/marcas/marcas" class="nav-link">Marcas</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="?page=mod_repa/tablas/motivosAnulacion/motivosAnulacion" class="nav-link">Motivos anulación</a>
