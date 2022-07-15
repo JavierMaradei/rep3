@@ -8,9 +8,8 @@
 <div class="row mt-3">
     <div class="col-md-7 mb-3">
         <div class="card h-100">
+        <h4 class="card-header bg-dark text-white text-center"><i>Listado de Lugares de Recepción</i></h4>
             <div class="card-body">
-                <h3 class="card-title text-center"><i>Listado de Lugares de Recepción</i></h3>
-                <hr>
                 <div class="row mb-2">
                     <div class="table-responsive">
                         <table id="tabla_lugaresRecepcion" class="table table-striped table-hover" style="font-size: 11px; font-weight: 400;">
@@ -32,10 +31,9 @@
 
     <div class="col-md-5 mb-3">
         <div class="card h-100">
+            <h4 class="card-header bg-dark text-white text-center"><i>Lugar de Recepción</i></h4>
             <form id="formLugaresRecepcion">
                 <div class="card-body">
-                    <h3 class="card-title text-center"><i>Lugar de Recepción</i></h3>
-                    <hr>
                     <div class="row mb-2">
                         <label for="idLugaresRecepcion" class="col-sm-2 col-form-label">Id</label>
                         <div class="col-sm-10">

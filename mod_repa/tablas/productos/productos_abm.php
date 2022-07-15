@@ -1,10 +1,9 @@
 <div class="card h-100">
+    <h4 class="card-header bg-dark text-white text-center"><i>Productos</i></h4>
     <form id="formProductos">
         <div class="card-body">
-            <h3 class="card-title text-center"><i>Productos</i></h3>
-            <hr>
-            <div class="mininav-toggle text-center py-2 collapsed" id="productoImagen">
-                <img class="mainnav__avatar img-xl " src="../../hdn/assets/img/megamenu/sfl14.jpg" alt="Imagen Producto">
+            <div class="mininav-toggle text-center pb-4 collapsed">
+                <img id="productoImagen" class="mainnav__avatar img-xl " src="../../hdn/img/sinImagen.png" alt="Imagen Producto">
             </div>
             <div class="row mb-2">
                 <label for="productoId" class="col-sm-2 col-form-label">Id</label>
@@ -49,9 +48,9 @@
                 </div>
             </div>
             <div class="row mb-2">
-                <label for="productoSubirFoto" class="col-sm-2 col-form-label">Subir Foto</label>
+                <label for="productoSubirFoto" class="col-sm-2 col-form-label">Foto</label>
                 <div class="col-sm-10 text-center">
-                    <input type="file" id="productoSubirFoto" class="form-select">
+                    <input type="file" id="productoSubirFoto" class="form-control">
                 </div>
             </div>
             <div class="row mb-2">
@@ -68,9 +67,9 @@
             </div>            
         </div>
         <div class="card-footer text-center">
-            <button id="btnGrabaProductos" class="btn btn-success btn-outline">Grabar</button>
-            <button id="btnEliminaProductos" class="btn btn-danger btn-outline">Eliminar</button>
-            <button id="btnCancelaProductos" class="btn btn-default btn-outline">Cancelar</button>
+            <button id="btnGrabaProducto" class="btn btn-success btn-outline">Grabar</button>
+            <button id="btnEliminaProducto" class="btn btn-danger btn-outline">Eliminar</button>
+            <button id="btnCancelaProducto" class="btn btn-default btn-outline">Cancelar</button>
         </div>
     </form>
 </div>

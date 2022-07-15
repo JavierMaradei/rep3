@@ -8,9 +8,8 @@
 <div class="row mt-3">
     <div class="col-md-7 mb-3">
         <div class="card h-100">
+            <h4 class="card-header bg-dark text-white text-center"><i>Listado de Productos</i></h4>
             <div class="card-body">
-                <h3 class="card-title text-center"><i>Listado de Productos</i></h3>
-                <hr>
                 <div class="row mb-2">
                     <div class="table-responsive">
                         <table id="tabla_productos" class="table table-striped table-hover" style="font-size: 11px; font-weight: 400;">
@@ -20,10 +19,9 @@
                                 <th>Desc.</th>
                                 <th>Marca</th>
                                 <th>Familia</th>
-                                <th>Costo Est.</th>
+                                <th>CostoEst.</th>
                                 <th>Mono/Tri</th>
                                 <th>Activo</th>
-                                <th>F.Mod.</th>
                             </thead>
                             <tbody id="tbodyProductosList">
                             </tbody>

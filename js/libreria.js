@@ -35,12 +35,6 @@
                                 case 'N':
                                     $('#'+key).prop("checked", false)
                                     break;
-                                case 'M':
-                                    $('#monofasica').prop("checked", true)
-                                    break;
-                                case 'T':
-                                    $('#trifasica').prop("checked", true)
-                                    break;
                                 default:
                                     $('#'+key).val(value)
                                     break;
@@ -89,12 +83,6 @@
                                         break;
                                     case 'N':
                                         $('#'+key).prop("checked", false)
-                                        break;
-                                    case 'M':
-                                        $('#monofasica').prop("checked", true)
-                                        break;
-                                    case 'T':
-                                        $('#trifasica').prop("checked", true)
                                         break;
                                     default:
                                         $('#'+key).val(value)

@@ -57,3 +57,70 @@
         ';
         return $template;
 	}
+
+    /**
+     * Subida de archivos al servidor
+     * @param {string}
+     * @param {string}
+     * @param {string}
+     * @param {string}
+     * @return {array}
+     */
+	function subirArchivo($error, $tipo, $tmp_name, $name){
+        $nombreArchivoDestino   = '';
+
+		switch ($error) {
+			case UPLOAD_ERR_OK:
+				$extensiones = array('image/jpeg', 'image/png', 'image/gif');
+
+				if (in_array($tipo, $extensiones)) {
+					//Seguimos adelante con validacion de tamanio
+                    $info_imagen = getimagesize($tmp_name);
+
+					if (is_array($info_imagen)) {
+						//Si llegamos hasta es porque es una imagen y esta OK
+						$fecha = new DateTime();
+						$fechahora = $fecha->format('YmdHis');
+						$nombreArchivoDestino = uniqid().$fechahora.$name;
+
+						if (move_uploaded_file($tmp_name, './adjuntos/'.$nombreArchivoDestino)) {
+							$error = false;
+							$mensaje = "Archivo subido exitosamente";
+						} else {
+							$error = true;
+							$mensaje = "Error al subir el archivo";
+						}
+					} else {
+						$error = true;
+						$mensaje = "Error al subir el archivo";
+					}
+				} else {
+					$error = true;
+					$mensaje = "Esta intentando subir un archivo con un formato inválido";
+				}
+			break;
+
+			case UPLOAD_ERR_INI_SIZE:
+			case UPLOAD_ERR_FORM_SIZE:
+				$error = true;
+				$mensaje = "El archivo que esta intentando subir supera el tamaño máximo permitido";
+			break;
+			case UPLOAD_ERR_PARTIAL:
+				$error = true;
+				$mensaje = "Error al subir el archivo. El mismo fue subido parcialmente";
+			break;
+			case UPLOAD_ERR_NO_FILE:
+				$error = true;
+				$mensaje = "Error al subir el archivo. No ha seleccionado ningún archivo";
+			break;
+			default:
+			//case UPLOAD_ERR_NO_TMP_DIR:
+			//case UPLOAD_ERR_CANT_WRITE:
+			//case UPLOAD_ERR_EXTENSION:
+				$error = true;
+				$mensaje = "Error al subir el archivo.";
+			break;
+		}
+
+		return array($error, $mensaje, $nombreArchivoDestino);
+	}

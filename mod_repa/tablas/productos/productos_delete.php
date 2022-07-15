@@ -20,12 +20,19 @@
 
         if($perfilSirep == 1){
 
-            $query0         = " DELETE FROM rep3_productos WHERE producto_id = '{$id}' ";
+            $query0         = "SELECT foto FROM rep3_productos WHERE producto_id = '{$id}'";
             $sentenciaSQL   = $conexion->prepare($query0);
+            $sentenciaSQL   -> execute();
+            $respuesta0     = $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
+
+            $query1         = " DELETE FROM rep3_productos WHERE producto_id = '{$id}' ";
+            $sentenciaSQL   = $conexion->prepare($query1);
             $sentenciaSQL   ->execute();
             
             if($sentenciaSQL->rowCount() > 0){
                 $arrayRespuesta['estado'] = "Transacción exitosa";
+                chdir('./adjuntos');
+                unlink($respuesta0['foto']);
             } else {
                 $arrayRespuesta['estado'] = "Algo salió mal";
             }

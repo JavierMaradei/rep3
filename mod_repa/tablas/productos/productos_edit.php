@@ -13,48 +13,77 @@
     }
 
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        
-        $id                 = $_GET['id'];
-        $conexion           = conectar(DB_DSN, DB_USER, DB_PASS);
-        $clienteNombre      = filter_var($_POST['clienteNombre'], FILTER_SANITIZE_STRING);
-        $clienteApellido    = filter_var($_POST['clienteApellido'], FILTER_SANITIZE_STRING);
-        $clienteDireccion   = filter_var($_POST['clienteDireccion'], FILTER_SANITIZE_STRING);
-        $clienteTelefono    = filter_var($_POST['clienteTelefono'], FILTER_SANITIZE_STRING);
-        $clienteCelular     = filter_var($_POST['clienteCelular'], FILTER_SANITIZE_STRING);
-        $clienteEmail       = filter_var($_POST['clienteEmail'], FILTER_SANITIZE_STRING);
-        $clienteActivo      = filter_var($_POST['clienteActivo'], FILTER_SANITIZE_STRING);
-        $perfilSirep        = recuperaPerfil($_SESSION['usuario_id']);
-        $activo             = $clienteActivo == 'true' ? 'S' : 'N';
 
-        if($perfilSirep == 1){
-            $query = "  UPDATE 
-                            rep3_clientes 
-                        SET 
-                            nombre      = '{$clienteNombre}',
-                            apellido    = '{$clienteApellido}', 
-                            direccion   = '{$clienteDireccion}', 
-                            telefono    = '{$clienteTelefono}',
-                            celular     = '{$clienteCelular}', 
-                            email       = '{$clienteEmail}',
-                            activo      = '{$activo}'      
-                        WHERE 
-                            cliente_id  = '{$id}'
-                    ";
+        $conexion               = conectar(DB_DSN, DB_USER, DB_PASS);
+        $id                     = $_GET['id'];
+        $productoCodigo         = filter_var($_POST['productoCodigo'], FILTER_SANITIZE_STRING);
+        $productoMarca          = filter_var($_POST['productoMarca'], FILTER_SANITIZE_STRING);
+        $productoFamilia        = filter_var($_POST['productoFamilia'], FILTER_SANITIZE_STRING);
+        $productoDescripcion    = filter_var($_POST['productoDescripcion'], FILTER_SANITIZE_STRING);
+        $productoCosto          = filter_var($_POST['productoCosto'], FILTER_SANITIZE_STRING);
+        $productoMonoTri        = filter_var($_POST['productoMonoTri'], FILTER_SANITIZE_STRING);
+        $productoSubirFoto      = filter_var($_POST['productoSubirFoto'], FILTER_SANITIZE_STRING);
+        $productoActivo         = filter_var($_POST['productoActivo'], FILTER_SANITIZE_STRING);
+        $productoCanjeable      = filter_var($_POST['productoCanjeable'], FILTER_SANITIZE_STRING);
+        $productoActivo         = $productoActivo == 'true' ? 'S' : 'N';
+        $productoCanjeable      = $productoCanjeable == 'true' ? 'S' : 'N';
+        $fecha                  = new DateTime();
+        $formateadaArg          = $fecha->format('Y-m-d');
+        $perfilSirep            = recuperaPerfil($_SESSION['usuario_id']);
+        $archivoAdjunto['0']    = false;
 
-            $sentenciaSQL   = $conexion->prepare($query);
-            $respuesta      = $sentenciaSQL->execute();
+        $query0         = "SELECT foto FROM rep3_productos WHERE producto_id = '{$id}'";
+        $sentenciaSQL   = $conexion->prepare($query0);
+        $sentenciaSQL   -> execute();
+        $respuesta0     = $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
 
-            if($respuesta){
-                $arrayRespuesta['estado'] = "Transacción exitosa";
+        $archivoAdjunto['2']    = $respuesta0['foto'];
+
+        if($productoSubirFoto != ''){
+            $archivoAdjunto = subirArchivo($_FILES['archivoAdjunto']['error'], $_FILES['archivoAdjunto']['type'], $_FILES['archivoAdjunto']['tmp_name'], $_FILES['archivoAdjunto']['name']);
+        }
+
+        if($archivoAdjunto['0'] == false){
+            if($perfilSirep == 1){
+                $query = "  UPDATE 
+                                rep3_productos 
+                            SET 
+                                codigo          = '{$productoCodigo}', 
+                                marca_id        = '{$productoMarca}', 
+                                familia_id      = '{$productoFamilia}', 
+                                descripcion     = '{$productoDescripcion}', 
+                                costo_estimado  = '{$productoCosto}', 
+                                activo          = '{$productoActivo}',
+                                fmodificacion   = '{$formateadaArg}',
+                                mono_tri        = '{$productoMonoTri}',
+                                canje_flag      = '{$productoCanjeable}',
+                                foto            = '{$archivoAdjunto['2']}'     
+                            WHERE 
+                                producto_id     = '{$id}'
+                        ";
+    
+                $sentenciaSQL   = $conexion->prepare($query);
+                $respuesta      = $sentenciaSQL->execute();
+    
+                if($respuesta){
+                    $arrayRespuesta['estado'] = "Transacción exitosa";
+                    if($productoSubirFoto != ''){
+                        chdir('./adjuntos');
+                        unlink($respuesta0['foto']);
+                    }
+                } else {
+                    $arrayRespuesta['estado'] = "Algo salió mal";
+                } 
+    
             } else {
-                $arrayRespuesta['estado'] = "Algo salió mal";
-            } 
-
+                
+                $arrayRespuesta['estado'] = "Error perfil";  
+            }
         } else {
-            
-            $arrayRespuesta['estado'] = "Error perfil";  
+            $arrayRespuesta['estado'] = "Error adjunto";
+            $arrayRespuesta['msgError'] = $archivoAdjunto['1'];
         }
 
         header("Content-type: aplication/json");
-        echo json_encode($arrayRespuesta/* , JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR */);
+        echo json_encode($arrayRespuesta, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
     }

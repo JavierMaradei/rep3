@@ -8,9 +8,8 @@
 <div class="row mt-3">
     <div class="col-md-6 mb-3">
         <div class="card h-100">
+            <h4 class="card-header bg-dark text-white text-center"><i>Datos generales de Ingreso</i></h4>
             <div class="card-body">
-                <h5 class="card-title">Datos generales de Ingreso</h5>
-                <hr>
                 <div class="row mb-2">
                     <label for="nroDeOrden" class="col-sm-2 col-form-label">Orden</label>
                     <div class="col-sm-10">
@@ -81,9 +80,8 @@
 
     <div class="col-md-6 mb-3">
         <div class="card h-100">
+            <h4 class="card-header bg-dark text-white text-center"><i>Datos Cliente</i></h4>
             <div class="card-body">
-                <h5 class="card-title">Datos Cliente</h5>
-                <hr>
                 <div class="row mb-3">
                     <div class="col-sm-12 text-center">
                         <button id="btnNuevoCliente" type="button" class="btn btn-lg btn-info">Nuevo cliente</button>
@@ -135,9 +133,8 @@
 
     <div class="col-md-6 mb-3">
         <div class="card h-100">
+            <h4 class="card-header bg-dark text-white text-center"><i>Datos del Producto</i></h4>
             <div class="card-body">
-                <h5 class="card-title">Datos del Producto</h5>
-                <hr>
                 <div class="row mb-2">
                     <label for="codigoProducto" class="col-sm-2 col-form-label">Código</label>
                     <div class="col-sm-10">
@@ -174,9 +171,8 @@
 
     <div class="col-md-6 mb-3 pb-3">
         <div class="card h-50 mb-3">
+            <h4 class="card-header bg-dark text-white text-center"><i>Datos Retiro</i></h4>
             <div class="card-body">
-                <h5 class="card-title">Datos Retiro</h5>
-                <hr>
                 <div class="row mb-2">
                     <label for="fechaRetiro" class="col-sm-2 col-form-label">F.Retiro</label>
                     <div class="col-sm-10">
@@ -192,9 +188,8 @@
             </div>
         </div>
         <div class="card h-50 " id="divCanje">
+            <h4 class="card-header bg-dark text-white text-center"><i>Producto destino Canje</i></h4>
             <div class="card-body">
-                <h5 class="card-title">Producto destino Canje</h5>
-                <hr>
                 <div class="row mb-2">
                     <label for="codigoProductoCanje" class="col-sm-2 col-form-label">Código</label>
                     <div class="col-sm-10">

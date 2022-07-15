@@ -1,8 +1,7 @@
 <div class="card h-100">
+    <h4 class="card-header bg-dark text-white text-center"><i>Clientes</i></h4>
     <form id="formClientes">
         <div class="card-body">
-            <h3 class="card-title text-center"><i>Clientes</i></h3>
-            <hr>
             <div class="row mb-2">
                 <label for="clienteCodigo" class="col-sm-2 col-form-label">Id</label>
                 <div class="col-sm-10">

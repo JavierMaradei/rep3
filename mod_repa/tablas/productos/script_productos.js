@@ -2,50 +2,54 @@
     let formulario          = document.querySelector('#formProductos')//Captura del formulario
     let inputs              = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
     let formData            = new FormData() //Creo el formData para transferencia de información con el Backend
-    let btnGrabaCliente     = document.querySelector('#btnGrabaCliente')//Captura de boton grabar
-    let btnEliminaCliente   = document.querySelector('#btnEliminaCliente')//Captura de boton eliminar
-    let btnCancelaCliente   = document.querySelector('#btnCancelaCliente')//Captura de boton cancelar
-    let activoCliente       = document.querySelector('#clienteActivo')//Captura de boton cancelar
+    let btnGrabaProducto    = document.querySelector('#btnGrabaProducto')//Captura de boton grabar
+    let btnEliminaProducto  = document.querySelector('#btnEliminaProducto')//Captura de boton eliminar
+    let btnCancelaProducto  = document.querySelector('#btnCancelaProducto')//Captura de boton cancelar
+    let productoActivo      = document.querySelector('#productoActivo')//Captura de boton cancelar
     let productoMarca       = document.querySelector('#productoMarca')//Captura de boton cancelar
-    let productoFamilia       = document.querySelector('#productoFamilia')//Captura de boton cancelar
+    let productoFamilia     = document.querySelector('#productoFamilia')//Captura de boton cancelar
+    let productoSubirFoto   = document.querySelector('#productoSubirFoto')
+    let productoImagen      = document.querySelector('#productoImagen')
     let edit                = false//flag de edición de registro existente o nuevo registro
     let id                  = ''
+    let arrayVal = {
+        productoId          : {},
+        productoCodigo      : {required: true, maxlength: 50, validated: true},
+        productoMarca       : {required: true, validated: true},
+        productoFamilia     : {required: true, validated: true},
+        productoDescripcion : {required: true, maxlength: 50, validated: true},
+        productoCosto       : {maxlength: 20, validated: true},
+        productoMonoTri     : {required: true, validated: true},
+        productoSubirFoto   : {maxlength: 100},
+        productoActivo      : {validated: true},
+        productoCanjeable   : {validated: true}
+    }
 
     cargaFamilias(productoFamilia)
     cargaMarcas(productoMarca)
-
-/*     let arrayVal = {
-        clienteId           : {},
-        clienteNombre       : {required: true, maxlength: 50, validated: true},
-        clienteApellido     : {required: true, maxlength: 50, validated: true},
-        clienteDireccion    : {required: true, maxlength: 100, validated: true},
-        clienteTelefono     : {required: true, maxlength: 60, validated: true},
-        clienteCelular      : {maxlength: 25, validated: true},
-        clienteEmail        : {required: true, validated: 'email', maxlength: 50},
-        clienteActivo       : {}
-    }
-
-    activoCliente.checked = true
-
-    $(btnEliminaCliente).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
+    productoActivo.checked = true
+    $(btnEliminaProducto).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
 
     //Declaración del complemento DataTable
-    let tabla = $('#tabla_clientes').DataTable( {
+    let tabla = $('#tabla_productos').DataTable( {
         "ajax": {
-            url: 'mod_repa/tablas/clientes/clientes_list.php',
+            url: 'mod_repa/tablas/productos/productos_list.php',
             type: 'GET',
             dataSrc: ""
         },
         "columns": [  
-            {"data" : "cliente_id",
+            {"data" : "producto_id",
                 "render": function ( data, type, row, meta ) {
                     return '<a class="task-item" href="'+data+'">' + data + '</a>';
                     }, 
             },
-            {"data" : "nombre"},
-            {"data" : "apellido"},
-            {"data" : "direccion"},
-            {"data" : "telefono"}
+            {"data" : "codigo"},
+            {"data" : "descripcion"},
+            {"data" : "marca"},
+            {"data" : "familia"},
+            {"data" : "costo_estimado"},
+            {"data" : "mono_tri"},
+            {"data" : "activo"}
         ],
         processing: true,
         paging: true,
@@ -58,7 +62,7 @@
             "<'row'<'col-sm-12'tr>>" +
             "<'row'<'col-sm-6'i><'col-sm-6'p>>",
         buttons: [
-            {extend: 'excel', title: 'Lista de clientes', text: 'Exportar a Excel'}  
+            {extend: 'excel', title: 'Lista de Productos', text: 'Exportar a Excel'}  
         ],
         language: {
             "decimal": "",
@@ -87,44 +91,68 @@
         e.preventDefault()
         cleanInputs(inputs)
         id= e.target.innerText
-        url = 'mod_repa/tablas/clientes/clientes_single.php'
-        showData(id, url, inputs)
-        $(btnEliminaCliente).show()
+        url = 'mod_repa/tablas/productos/productos_single.php'
+        showDataReloaded(id, url, inputs).then((r) => {
+            if(r.productoImagen != ''){
+                productoImagen.src = `mod_repa/tablas/productos/adjuntos/${r.productoImagen}`
+            } else {
+                productoImagen.src = '../../hdn/img/sinImagen.png'
+            }
+        })
+        $(btnEliminaProducto).show()
         edit = true
     })
 
     //Funcionalidad del botón de Grabar
-    btnGrabaCliente.addEventListener('click', e => {
+    btnGrabaProducto.addEventListener('click', e => {
         e.preventDefault()
+        
         let validacion = validateData(inputs, arrayVal)
+        
         if(validacion){
             collectData(inputs, formData)
-            let agregar = 'mod_repa/tablas/clientes/clientes_add.php'
-            let editar = 'mod_repa/tablas/clientes/clientes_edit.php'
+            formData.append('archivoAdjunto', productoSubirFoto.files[0])
+
+            let agregar = 'mod_repa/tablas/productos/productos_add.php'
+            let editar = 'mod_repa/tablas/productos/productos_edit.php'
+
             let estado = enviarData(agregar, editar, formData, edit, id)
+            
             estado.then((respuesta) => {
                 switch (respuesta.estado) {
+
                     case 'Transacción exitosa':
                         msgTransaccionExitosa()
                         tabla.ajax.reload();
-                        $(btnEliminaCliente).hide()
+                        $(btnEliminaProducto).hide()
                         cleanInputs(inputs)
                         cleanFormData(inputs, formData)
-                        activoCliente.checked = true
+                        formData.delete('archivoAdjunto')
+                        productoActivo.checked = true
+                        productoImagen.src = '../../hdn/img/sinImagen.png'
                         id = ''
                         edit = false
                         break;
+
                     case 'Sesión expirada':
                         sesionExpiradaMensajeFlotante()
                         break;
+
                     case 'Error perfil':
                         msgErrorPerfil()
                         cleanFormData(inputs, formData)
                         break;
-                    case 'Cliente duplicado':
-                        msgClienteDuplicado()
+
+                    case 'Error adjunto':
+                        swal({
+                            title   : "Error :( !",
+                            text    : respuesta.msgError+' (Formatos permitidos: pdf, png y jpg.)',
+                            type    : "error",
+                        });
                         cleanFormData(inputs, formData)
+                        formData.delete('archivoAdjunto')
                         break;
+
                     default:
                         msgAlgoNoFueBien()
                         cleanFormData(inputs, formData)
@@ -135,10 +163,10 @@
     })
     
     //Funcionalidad del botón de Eliminar
-    btnEliminaCliente.addEventListener('click', e => {
+    btnEliminaProducto.addEventListener('click', e => {
         e.preventDefault()
         let xhr2 = new XMLHttpRequest
-        let url2 = 'mod_repa/tablas/clientes/clientes_use.php?id='+id
+        let url2 = 'mod_repa/tablas/productos/productos_use.php?id='+id
         xhr2.open('GET', url2)
         xhr2.send()
         xhr2.addEventListener('load', () => {
@@ -159,7 +187,7 @@
                         if (isConfirm) {
                             
                             let xhr = new XMLHttpRequest
-                            let url = 'mod_repa/tablas/clientes/clientes_delete.php'
+                            let url = 'mod_repa/tablas/productos/productos_delete.php'
                             xhr.open('GET', url+'?id='+id)
                             xhr.send()
                             xhr.addEventListener('load', () => {
@@ -169,12 +197,13 @@
                                         case 'Transacción exitosa':
                                             msgEliminado()
                                             tabla.ajax.reload();
-                                            $(btnEliminaCliente).hide()
+                                            $(btnEliminaProducto).hide()
                                             cleanInputs(inputs)
                                             cleanFormData(inputs, formData)
-                                            activoCliente.checked = true
+                                            productoActivo.checked = true
                                             id = ''
                                             edit = false
+                                            productoImagen.src = '../../hdn/img/sinImagen.png'
                                             break;
                                         case 'Sesión expirada':
                                             sesionExpiradaMensajeFlotante()
@@ -202,12 +231,13 @@
     })
     
     //Funcionalidad del botón de Cancelar
-    btnCancelaCliente.addEventListener('click', e => {
+    btnCancelaProducto.addEventListener('click', e => {
         e.preventDefault()
         cleanInputs(inputs)
         edit = false
-        $(btnEliminaCliente).hide()
-        activoCliente.checked = true
+        $(btnEliminaProducto).hide()
+        productoActivo.checked = true
         id = ''
-    }) */
+        productoImagen.src = '../../hdn/img/sinImagen.png'
+    })
 })()
