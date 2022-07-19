@@ -2,6 +2,7 @@
     let formulario                  = document.querySelector('#formLugaresRecepcion')//Captura del formulario
     let inputs                      = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
     let formData                    = new FormData() //Creo el formData para transferencia de información con el Backend
+    let descripcionLugaresRecepcion = document.querySelector('#descripcionLugaresRecepcion')
     let btnGrabaLugaresRecepcion    = document.querySelector('#btnGrabaLugaresRecepcion')//Captura de boton grabar
     let btnEliminaLugaresRecepcion  = document.querySelector('#btnEliminaLugaresRecepcion')//Captura de boton eliminar
     let btnCancelaLugaresRecepcion  = document.querySelector('#btnCancelaLugaresRecepcion')//Captura de boton cancelar
@@ -21,7 +22,8 @@
     }
 
     activoLugaresRecepcion.checked = true
-    
+    limitaCaracteres(descripcionLugaresRecepcion, 50)
+    limitaCaracteres(demoraLugaresRecepcion, 3)
     $(btnEliminaLugaresRecepcion).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
 
     //Declaración del complemento DataTable

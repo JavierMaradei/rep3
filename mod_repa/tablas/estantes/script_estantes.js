@@ -2,6 +2,7 @@
     let formulario          = document.querySelector('#formEstantes')//Captura del formulario
     let inputs              = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
     let formData            = new FormData() //Creo el formData para transferencia de información con el Backend
+    let descripcionEstantes = document.querySelector('#descripcionEstantes')
     let btnGrabaEstantes    = document.querySelector('#btnGrabaEstantes')//Captura de boton grabar
     let btnEliminaEstantes  = document.querySelector('#btnEliminaEstantes')//Captura de boton eliminar
     let btnCancelaEstantes  = document.querySelector('#btnCancelaEstantes')//Captura de boton cancelar
@@ -15,7 +16,7 @@
     }
     
     $(btnEliminaEstantes).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
-
+    limitaCaracteres(descripcionEstantes, 50)
     activoEstantes.checked = true
 
     //Declaración del complemento DataTable

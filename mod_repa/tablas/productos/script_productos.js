@@ -5,7 +5,9 @@
     let btnGrabaProducto    = document.querySelector('#btnGrabaProducto')//Captura de boton grabar
     let btnEliminaProducto  = document.querySelector('#btnEliminaProducto')//Captura de boton eliminar
     let btnCancelaProducto  = document.querySelector('#btnCancelaProducto')//Captura de boton cancelar
-    let productoActivo      = document.querySelector('#productoActivo')//Captura de boton cancelar
+    let productoCodigo      = document.querySelector('#productoCodigo')
+    let productoDescripcion = document.querySelector('#productoDescripcion')
+    let productoCosto       = document.querySelector('#productoCosto')
     let productoMarca       = document.querySelector('#productoMarca')//Captura de boton cancelar
     let productoFamilia     = document.querySelector('#productoFamilia')//Captura de boton cancelar
     let productoSubirFoto   = document.querySelector('#productoSubirFoto')
@@ -14,17 +16,20 @@
     let id                  = ''
     let arrayVal = {
         productoId          : {},
-        productoCodigo      : {required: true, maxlength: 50, validated: true},
+        productoCodigo      : {required: true, maxlength: 30, validated: true},
         productoMarca       : {required: true, validated: true},
         productoFamilia     : {required: true, validated: true},
-        productoDescripcion : {required: true, maxlength: 50, validated: true},
-        productoCosto       : {maxlength: 20, validated: true},
+        productoDescripcion : {required: true, maxlength: 100, validated: true},
+        productoCosto       : {maxlength: 21, validated: true},
         productoMonoTri     : {required: true, validated: true},
         productoSubirFoto   : {maxlength: 100},
         productoActivo      : {validated: true},
         productoCanjeable   : {validated: true}
     }
 
+    limitaCaracteres(productoCodigo, 30)
+    limitaCaracteres(productoDescripcion, 100)
+    limitaCaracteres(productoCosto, 10)
     cargaFamilias(productoFamilia)
     cargaMarcas(productoMarca)
     productoActivo.checked = true

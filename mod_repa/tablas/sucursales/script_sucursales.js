@@ -2,29 +2,21 @@
     let formulario                  = document.querySelector('#formSucursales')//Captura del formulario
     let inputs                      = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
     let formData                    = new FormData() //Creo el formData para transferencia de información con el Backend
+    let descripcionSucursales       = document.querySelector('#descripcionSucursales')
     let btnGrabaSucursales          = document.querySelector('#btnGrabaSucursales')//Captura de boton grabar
     let btnEliminaSucursales        = document.querySelector('#btnEliminaSucursales')//Captura de boton eliminar
     let btnCancelaSucursales        = document.querySelector('#btnCancelaSucursales')//Captura de boton cancelar
-    let activoSucursales            = document.querySelector('#activoSucursales')//Captura de boton cancelar
+    let activoSucursales            = document.querySelector('#activoSucursales')
     let edit                        = false//flag de edición de registro existente o nuevo registro
     let id                          = ''
     let arrayVal = {
-        idSucursales: {
-            readonly : true,
-        },
-        descripcionSucursales: {
-            required: true,
-            maxlength: 50,
-            validated: true
-        },
-        activoSucursales: {
-            maxlength: 6,
-            validated: true
-        }
+        idSucursales: {readonly : true},
+        descripcionSucursales: {required: true, maxlength: 50, validated: true},
+        activoSucursales: {maxlength: 6, validated: true}
     }
     
     $(btnEliminaSucursales).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
-
+    limitaCaracteres(descripcionSucursales, 50)
     activoSucursales.checked = true
 
     //Declaración del complemento DataTable

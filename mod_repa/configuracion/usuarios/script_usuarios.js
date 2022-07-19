@@ -2,6 +2,10 @@
     let formulario              = document.querySelector('#formUsuarios')//Captura del formulario
     let inputs                  = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
     let formData                = new FormData() //Creo el formData para transferencia de información con el Backend
+    let nombreUsuarios          = document.querySelector('#nombreUsuarios')
+    let apellidoUsuarios        = document.querySelector('#apellidoUsuarios')
+    let emailUsuarios           = document.querySelector('#emailUsuarios')
+    let claveUsuarios           = document.querySelector('#claveUsuarios')
     let sucursalUsuarios        = document.querySelector('#sucursalUsuarios')
     let lugarRecepcionUsuarios  = document.querySelector('#lugarRecepcionUsuarios')
     let perfilUsuarios          = document.querySelector('#perfilUsuarios')
@@ -12,13 +16,13 @@
     let edit                    = false//flag de edición de registro existente o nuevo registro
     let id                      = ''
     let arrayVal                = {
-        idUsuarios              : {readonly : true},
+        idUsuarios              : {readonly: true},
         nombreUsuarios          : {required: true, maxlength: 40, validated: true},
         apellidoUsuarios        : {required: true, maxlength: 40, validated: true},
-        lugarRecepcionUsuarios  : {required: true, validated: true},
-        sucursalUsuarios        : {required: true, validated: true},
-        perfilUsuarios          : {required: true, validated: true},
-        emailUsuarios           : {required: true, maxlength: 50, validated: true},
+        lugarRecepcionUsuarios  : {required: true, validated: true, noCero: true},
+        sucursalUsuarios        : {required: true, validated: true, noCero: true},
+        perfilUsuarios          : {required: true, validated: true, noCero: true},
+        emailUsuarios           : {required: true, maxlength: 50, validated: 'email'},
         claveUsuarios           : {required: true, maxlength: 50, validated: true},
         emisorUsuarios          : {},
         reparadorUsuarios       : {},
@@ -29,6 +33,10 @@
     cargaSucursales(sucursalUsuarios)
     cargaLugarRecepcion(lugarRecepcionUsuarios)
     cargaPerfiles(perfilUsuarios)
+    limitaCaracteres(nombreUsuarios, 40)
+    limitaCaracteres(apellidoUsuarios, 40)
+    limitaCaracteres(emailUsuarios, 50)
+    limitaCaracteres(claveUsuarios, 50)
     activoUsuarios.checked = true
 
     //Declaración del complemento DataTable
@@ -102,22 +110,25 @@
         showData(id, url, inputs)
         $(btnEliminaUsuarios).show()
         edit = true
+        emailUsuarios.readOnly = true
+        arrayVal.emailUsuarios.readonly = true
     })
 
     //Funcionalidad del botón de Grabar
     btnGrabaUsuarios.addEventListener('click', e => {
+        
         e.preventDefault()
-        console.log(inputs)
-        console.log(arrayVal)
-        //let validacion = validateData(inputs, arrayVal)
-        let validacion = true
+        let validacion = validateData(inputs, arrayVal)
         if(validacion){
+
             collectData(inputs, formData)
             let agregar = 'mod_repa/configuracion/usuarios/usuarios_add.php'
             let editar = 'mod_repa/configuracion/usuarios/usuarios_edit.php'
             let estado = enviarData(agregar, editar, formData, edit, id)
+
             estado.then((respuesta) => {
                 switch (respuesta.estado) {
+                    
                     case 'Transacción exitosa':
                         msgTransaccionExitosa()
                         tabla.ajax.reload();
@@ -127,14 +138,19 @@
                         activoUsuarios.checked = true
                         id = ''
                         edit = false
+                        emailUsuarios.readOnly = false
+                        arrayVal.emailUsuarios.readonly = false
                         break;
+                    
                     case 'Sesión expirada':
                         sesionExpiradaMensajeFlotante()
                         break;
+                    
                     case 'Error perfil':
                         msgErrorPerfil()
                         cleanFormData(inputs, formData)
                         break;
+                    
                     default:
                         msgAlgoNoFueBien()
                         cleanFormData(inputs, formData)
@@ -184,6 +200,8 @@
                                             activoUsuarios.checked = true
                                             id = ''
                                             edit = false
+                                            emailUsuarios.readOnly = false
+                                            arrayVal.emailUsuarios.readonly = false
                                             break;
                                         case 'Sesión expirada':
                                             sesionExpiradaMensajeFlotante()
@@ -215,6 +233,8 @@
         e.preventDefault()
         cleanInputs(inputs)
         edit = false
+        emailUsuarios.readOnly = false
+        arrayVal.emailUsuarios.readonly = false
         activoUsuarios.checked = true
         $(btnEliminaUsuarios).hide()
         id = ''

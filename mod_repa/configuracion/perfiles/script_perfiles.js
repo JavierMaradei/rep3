@@ -2,6 +2,7 @@
     let formulario          = document.querySelector('#formPerfiles')//Captura del formulario
     let inputs              = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
     let formData            = new FormData() //Creo el formData para transferencia de información con el Backend
+    let descripcionPerfiles = document.querySelector('#descripcionPerfiles')//Captura de boton grabar
     let btnGrabaPerfiles    = document.querySelector('#btnGrabaPerfiles')//Captura de boton grabar
     let btnEliminaPerfiles  = document.querySelector('#btnEliminaPerfiles')//Captura de boton eliminar
     let btnCancelaPerfiles  = document.querySelector('#btnCancelaPerfiles')//Captura de boton cancelar
@@ -15,7 +16,7 @@
     }
     
     $(btnEliminaPerfiles).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
-
+    limitaCaracteres(descripcionPerfiles, 50)
     activoPerfiles.checked = true
 
     //Declaración del complemento DataTable

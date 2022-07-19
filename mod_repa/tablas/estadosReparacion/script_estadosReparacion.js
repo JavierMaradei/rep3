@@ -2,6 +2,7 @@
     let formulario                  = document.querySelector('#formEstadoReparacion')//Captura del formulario
     let inputs                      = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
     let formData                    = new FormData() //Creo el formData para transferencia de información con el Backend
+    let descripcionEstadoReparacion = document.querySelector('#descripcionEstadoReparacion')
     let btnGrabaEstadoReparacion    = document.querySelector('#btnGrabaEstadoReparacion')//Captura de boton grabar
     let btnEliminaEstadoReparacion  = document.querySelector('#btnEliminaEstadoReparacion')//Captura de boton eliminar
     let btnCancelaEstadoReparacion  = document.querySelector('#btnCancelaEstadoReparacion')//Captura de boton cancelar
@@ -11,12 +12,12 @@
 
     let arrayVal = {
         idEstadoReparacion          : {readonly: true},
-        descripcionEstadoReparacion : {required: true, maxlength: 50, validated: true},
+        descripcionEstadoReparacion : {required: true, maxlength: 45, validated: true},
         activoEstadoReparacion      : {}
     }
 
     activoEstadoReparacion.checked = true
-
+    limitarCaracteres(descripcionEstadoReparacion, 45)
     $(btnEliminaEstadoReparacion).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
 
     //Declaración del complemento DataTable

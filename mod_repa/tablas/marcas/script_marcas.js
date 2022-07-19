@@ -2,6 +2,7 @@
     let formulario          = document.querySelector('#formMarcas')//Captura del formulario
     let inputs              = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
     let formData            = new FormData() //Creo el formData para transferencia de información con el Backend
+    let descripcionMarcas   = document.querySelector('#descripcionMarcas')
     let btnGrabaMarcas      = document.querySelector('#btnGrabaMarcas')//Captura de boton grabar
     let btnEliminaMarcas    = document.querySelector('#btnEliminaMarcas')//Captura de boton eliminar
     let btnCancelaMarcas    = document.querySelector('#btnCancelaMarcas')//Captura de boton cancelar
@@ -9,22 +10,13 @@
     let edit                = false//flag de edición de registro existente o nuevo registro
     let id                  = ''
     let arrayVal = {
-        idMarcas: {
-            readonly : true,
-        },
-        descripcionMarcas: {
-            required: true,
-            maxlength: 50,
-            validated: true
-        },
-        activoMarcas: {
-            maxlength: 6,
-            validated: true
-        }
+        idMarcas: {readonly : true},
+        descripcionMarcas: {required: true, maxlength: 50, validated: true},
+        activoMarcas: {maxlength: 6, validated: true}
     }
     
     $(btnEliminaMarcas).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
-
+    limitaCaracteres(descripcionMarcas, 50)
     activoMarcas.checked = true
 
     //Declaración del complemento DataTable

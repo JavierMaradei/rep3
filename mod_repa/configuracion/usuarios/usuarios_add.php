@@ -23,12 +23,12 @@
         $sucursal       = filter_var($_POST['sucursalUsuarios'], FILTER_SANITIZE_STRING);
         $perfil         = filter_var($_POST['perfilUsuarios'], FILTER_SANITIZE_STRING);
         $email          = filter_var($_POST['emailUsuarios'], FILTER_SANITIZE_STRING);
-        $clave          = md5(filter_var($_POST['claveUsuarios'], FILTER_SANITIZE_STRING);)
+        $clave          = md5(filter_var($_POST['claveUsuarios'], FILTER_SANITIZE_STRING));
         $emisor         = $_POST['emisorUsuarios'] == 'true' ? 'S' : 'N';
         $reparador      = $_POST['reparadorUsuarios'] == 'true' ? 'S' : 'N';
-        $activo         = $_POST['activoPerfiles'] == 'true' ? 'S' : 'N';
+        $activo         = $_POST['activoUsuarios'] == 'true' ? 'S' : 'N';
         $perfilSirep    = recuperaPerfil($_SESSION['usuario_id']);
-        $fecha          = new DateTime()
+        $fecha          = new DateTime();
         $formateadaArg  = $fecha->format('Y-m-d');
 
         if($perfilSirep == 1){

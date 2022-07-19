@@ -2,6 +2,12 @@
     let formulario          = document.querySelector('#formClientes')//Captura del formulario
     let inputs              = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
     let formData            = new FormData() //Creo el formData para transferencia de información con el Backend
+    let clienteNombre       = document.querySelector('#clienteNombre')//Captura de boton grabar
+    let clienteApellido     = document.querySelector('#clienteApellido')//Captura de boton grabar
+    let clienteDireccion    = document.querySelector('#clienteDireccion')//Captura de boton grabar
+    let clienteTelefono     = document.querySelector('#clienteTelefono')//Captura de boton grabar
+    let clienteCelular      = document.querySelector('#clienteCelular')//Captura de boton grabar
+    let clienteEmail        = document.querySelector('#clienteEmail')//Captura de boton grabar
     let btnGrabaCliente     = document.querySelector('#btnGrabaCliente')//Captura de boton grabar
     let btnEliminaCliente   = document.querySelector('#btnEliminaCliente')//Captura de boton eliminar
     let btnCancelaCliente   = document.querySelector('#btnCancelaCliente')//Captura de boton cancelar
@@ -21,7 +27,12 @@
     }
 
     activoCliente.checked = true
-
+    limitaCaracteres(clienteNombre, 50)
+    limitaCaracteres(clienteApellido, 50)
+    limitaCaracteres(clienteDireccion, 100)
+    limitaCaracteres(clienteTelefono, 60)
+    limitaCaracteres(clienteCelular, 25)
+    limitaCaracteres(clienteEmail, 50)
     $(btnEliminaCliente).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
 
     //Declaración del complemento DataTable

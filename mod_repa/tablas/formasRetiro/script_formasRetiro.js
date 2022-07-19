@@ -2,6 +2,7 @@
     let formulario              = document.querySelector('#formFormasRetiro')//Captura del formulario
     let inputs                  = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
     let formData                = new FormData() //Creo el formData para transferencia de información con el Backend
+    let descripcionFormasRetiro = document.querySelector('#descripcionFormasRetiro')
     let btnGrabaFormasRetiro    = document.querySelector('#btnGrabaFormasRetiro')//Captura de boton grabar
     let btnEliminaFormasRetiro  = document.querySelector('#btnEliminaFormasRetiro')//Captura de boton eliminar
     let btnCancelaFormasRetiro  = document.querySelector('#btnCancelaFormasRetiro')//Captura de boton cancelar
@@ -9,22 +10,14 @@
     let edit                    = false//flag de edición de registro existente o nuevo registro
     let id                      = ''
     let arrayVal = {
-        idFormasRetiro: {
-            readonly : true,
-        },
-        descripcionFormasRetiro: {
-            required: true,
-            maxlength: 50,
-            validated: true
-        },
-        activoFormasRetiro: {
-        },
-        valorizadoFormasRetiro: {
-        }
+        idFormasRetiro: {readonly : true},
+        descripcionFormasRetiro: {required: true, maxlength: 50, validated: true},
+        activoFormasRetiro: {},
+        valorizadoFormasRetiro: {}
     }
     
     $(btnEliminaFormasRetiro).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
-
+    limitaCaracteres(descripcionFormasRetiro, 50)
     activoFormasRetiro.checked = true
 
     //Declaración del complemento DataTable

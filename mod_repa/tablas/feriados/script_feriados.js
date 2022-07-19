@@ -2,6 +2,7 @@
     let formulario          = document.querySelector('#formFeriados')//Captura del formulario
     let inputs              = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
     let formData            = new FormData() //Creo el formData para transferencia de información con el Backend
+    let descripcionFeriados = document.querySelector('#descripcionFeriados')
     let btnGrabaFeriados    = document.querySelector('#btnGrabaFeriados')//Captura de boton grabar
     let btnEliminaFeriados  = document.querySelector('#btnEliminaFeriados')//Captura de boton eliminar
     let btnCancelaFeriados  = document.querySelector('#btnCancelaFeriados')//Captura de boton cancelar
@@ -14,7 +15,8 @@
     }
 
     $(btnEliminaFeriados).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
-
+    limitaCaracteres(descripcionFeriados, 50)
+    
     //Declaración del complemento DataTable
     let tabla = $('#tabla_feriados').DataTable( {
         "ajax": {

@@ -2,6 +2,7 @@
     let formulario          = document.querySelector('#formFamilias')//Captura del formulario
     let inputs              = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
     let formData            = new FormData() //Creo el formData para transferencia de información con el Backend
+    let descripcionFamilias = document.querySelector('#descripcionFamilias')
     let btnGrabaFamilias    = document.querySelector('#btnGrabaFamilias')//Captura de boton grabar
     let btnEliminaFamilias  = document.querySelector('#btnEliminaFamilias')//Captura de boton eliminar
     let btnCancelaFamilias  = document.querySelector('#btnCancelaFamilias')//Captura de boton cancelar
@@ -9,22 +10,13 @@
     let edit                = false//flag de edición de registro existente o nuevo registro
     let id                  = ''
     let arrayVal = {
-        idFamilias: {
-            readonly : true,
-        },
-        descripcionFamilias: {
-            required: true,
-            maxlength: 50,
-            validated: true
-        },
-        activoFamilias: {
-            maxlength: 6,
-            validated: true
-        }
+        idFamilias: {readonly : true},
+        descripcionFamilias: {required: true, maxlength: 50, validated: true},
+        activoFamilias: {maxlength: 6, validated: true}
     }
     
     $(btnEliminaFamilias).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
-
+    limitaCaracteres(descripcionFamilias, 50)
     activoFamilias.checked = true
 
     //Declaración del complemento DataTable

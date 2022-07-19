@@ -2,29 +2,21 @@
     let formulario                  = document.querySelector('#formMotivosAnulacion')//Captura del formulario
     let inputs                      = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
     let formData                    = new FormData() //Creo el formData para transferencia de información con el Backend
+    let descripcionMotivosAnulacion = document.querySelector('#descripcionMotivosAnulacion')
     let btnGrabaMotivosAnulacion    = document.querySelector('#btnGrabaMotivosAnulacion')//Captura de boton grabar
     let btnEliminaMotivosAnulacion  = document.querySelector('#btnEliminaMotivosAnulacion')//Captura de boton eliminar
     let btnCancelaMotivosAnulacion  = document.querySelector('#btnCancelaMotivosAnulacion')//Captura de boton cancelar
-    let activoMotivosAnulacion      = document.querySelector('#activoMotivosAnulacion')//Captura de boton cancelar
+    let activoMotivosAnulacion      = document.querySelector('#activoMotivosAnulacion')
     let edit                        = false//flag de edición de registro existente o nuevo registro
     let id                          = ''
     let arrayVal = {
-        idMotivosAnulacion: {
-            readonly : true,
-        },
-        descripcionMotivosAnulacion: {
-            required: true,
-            maxlength: 50,
-            validated: true
-        },
-        activoMotivosAnulacion: {
-            maxlength: 6,
-            validated: true
-        }
+        idMotivosAnulacion: {readonly : true},
+        descripcionMotivosAnulacion: {required: true, maxlength: 50, validated: true},
+        activoMotivosAnulacion: {maxlength: 6, validated: true}
     }
     
     $(btnEliminaMotivosAnulacion).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
-
+    limitaCaracteres(descripcionMotivosAnulacion, 50)
     activoMotivosAnulacion.checked = true
 
     //Declaración del complemento DataTable

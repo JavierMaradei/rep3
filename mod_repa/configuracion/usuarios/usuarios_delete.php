@@ -21,7 +21,7 @@
 
         if($perfilSirep == 1){
 
-            $query0 = "DELETE FROM rep3_perfiles WHERE perfil_id = '{$id}'";
+            $query0 = "DELETE FROM rep3_usuarios WHERE usuario_id = '{$id}'";
             $sentenciaSQL= $conexion->prepare($query0);
             $sentenciaSQL->execute();
             
