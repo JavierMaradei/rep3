@@ -2230,6 +2230,81 @@ function cargaFormasDeResolucionOSCA(select){
 }
 
 /**
+ * Carga el select de sucursales. Admite un solo parámetro con el cual se define el input en donde se cargará
+ * @param {string} select
+ */
+ function cargaSucursales(select){
+    return new Promise(function(resolve, reject) {
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_repa/tablas/sucursales/sucursales_list.php')
+        xhr.send()
+        xhr.addEventListener('load', () => {
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+                resolve(respuesta)
+                let template = '<option value= "0" selected>Seleccionar</option>'
+                respuesta.forEach(element => {
+                    template += `<option value= "${element.sucursal_id}">${element.descripcion}</option>`
+                })
+                select.innerHTML = template
+            } else {
+                reject()
+            }
+        })
+    })
+}
+
+/**
+ * Carga el select de perfiles. Admite un solo parámetro con el cual se define el input en donde se cargará
+ * @param {string} select
+ */
+ function cargaPerfiles(select){
+    return new Promise(function(resolve, reject) {
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_repa/configuracion/perfiles/perfiles_list.php')
+        xhr.send()
+        xhr.addEventListener('load', () => {
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+                resolve(respuesta)
+                let template = '<option value= "0" selected>Seleccionar</option>'
+                respuesta.forEach(element => {
+                    template += `<option value= "${element.perfil_id}">${element.descripcion}</option>`
+                })
+                select.innerHTML = template
+            } else {
+                reject()
+            }
+        })
+    })
+}
+
+/**
+ * Carga el select de lugar Recepcion. Admite un solo parámetro con el cual se define el input en donde se cargará
+ * @param {string} select
+ */
+ function cargaLugarRecepcion(select){
+    return new Promise(function(resolve, reject) {
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_repa/tablas/lugaresRecepcion/lugaresRecepcion_list.php')
+        xhr.send()
+        xhr.addEventListener('load', () => {
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+                resolve(respuesta)
+                let template = '<option value= "0" selected>Seleccionar</option>'
+                respuesta.forEach(element => {
+                    template += `<option value= "${element.lugar_recepcion_id}">${element.descripcion}</option>`
+                })
+                select.innerHTML = template
+            } else {
+                reject()
+            }
+        })
+    })
+}
+
+/**
  * Carga el select de Familias
  * @param {string} select
  * @param {string} activo

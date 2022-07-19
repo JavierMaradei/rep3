@@ -215,10 +215,13 @@
                                 <!-- Layouts submenu list -->
                                 <ul class="mininav-content nav collapse">
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">Usuarios</a>
+                                        <a href="?page=mod_repa/configuracion/parametros/parametros" class="nav-link">Parámetros</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">Parámetros</a>
+                                        <a href="?page=mod_repa/configuracion/perfiles/perfiles" class="nav-link">Perfiles</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="?page=mod_repa/configuracion/usuarios/usuarios" class="nav-link">Usuarios</a>
                                     </li>
                                 </ul>
                                 <!-- END : Layouts submenu list -->

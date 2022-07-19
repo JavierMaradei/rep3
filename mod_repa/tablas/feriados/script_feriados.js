@@ -35,17 +35,17 @@
         columnDefs: [ {
             targets: 1,
             render: $.fn.dataTable.render.moment('YYYY-MM-DD', 'DD/MM/YYYY')
-          } ],
-          processing: true,
-          paging: true,
-          bLengthChange: false,
-          iDisplayLength: 10,
-          bInfo: true,
-          bAutoWidth: false,
-          dom:
-              "<'row'<'col-sm-4'B><'col-sm-4 text-center'l><'col-sm-4'f>>" +
-              "<'row'<'col-sm-12'tr>>" +
-              "<'row'<'col-sm-6'i><'col-sm-6'p>>",
+        } ],
+        processing: true,
+        paging: true,
+        bLengthChange: false,
+        iDisplayLength: 10,
+        bInfo: true,
+        bAutoWidth: false,
+        dom:
+            "<'row'<'col-sm-4'B><'col-sm-4 text-center'l><'col-sm-4'f>>" +
+            "<'row'<'col-sm-12'tr>>" +
+            "<'row'<'col-sm-6'i><'col-sm-6'p>>",
         buttons: [
             {extend: 'excel', title: 'Lista de feriados', text: 'Exportar a Excel'},
         ],
