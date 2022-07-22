@@ -17,7 +17,7 @@
     }
 
     activoEstadoReparacion.checked = true
-    limitarCaracteres(descripcionEstadoReparacion, 45)
+    limitaCaracteres(descripcionEstadoReparacion, 45)
     $(btnEliminaEstadoReparacion).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
 
     //Declaración del complemento DataTable
