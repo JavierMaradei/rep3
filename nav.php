@@ -161,13 +161,34 @@
                                         <a href="#" class="nav-link">Anular resolución</a>
                                     </li>
                                     <li class="nav-item">
+                                        <a href="?page=mod_repa/procesos/buscar/buscar" class="nav-link">Buscador</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a href="#" class="nav-link">Cambiar de sucursal</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="?page=mod_repa/procesos/diagnostico/diagnostico" class="nav-link">Diagnóstico</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="?page=mod_repa/procesos/embalaje/embalaje" class="nav-link">Embalaje</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="#" class="nav-link">Modificar orden</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="#" class="nav-link">Orden facturada</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="?page=mod_repa/procesos/presupuesto/presupuesto" class="nav-link">Presupuesto</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="?page=mod_repa/procesos/recepcion/recepcion" class="nav-link">Recepción</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="?page=mod_repa/procesos/reparacion/reparacion" class="nav-link">Reparación</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="?page=mod_repa/procesos/resolucion/resolucion" class="nav-link">Resolución</a>
                                     </li>
                                 </ul>
                                 <!-- END : Layouts submenu list -->

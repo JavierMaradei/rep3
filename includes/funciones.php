@@ -44,7 +44,7 @@
         return $perfil['perfil_id'];
 	}
 
-        /**
+    /**
      * Template de los tipos de alimentacion de los equipos
      * @return {string}
      * @version 1.0
@@ -54,6 +54,34 @@
             <option value="">Seleccionar</option>
             <option value="M">Monofásico</option>
             <option value="T">Trifásico</option>
+        ';
+        return $template;
+	}
+
+    /**
+     * Template de los tipos de reparación en la recepción de productos
+     * @return {string}
+     * @version 1.0
+     */
+    function tiposReparacion(){
+        $template = '
+            <option value="R" selected>Reparación</option>
+            <option value="P">Presupuesto</option>
+            <option value="C">Plan canje</option>
+            <option value="E">Cambio de equipo</option>
+        ';
+        return $template;
+	}
+
+    /**
+     * Template de los tipos de reparación en la recepción de productos
+     * @return {string}
+     * @version 1.0
+     */
+    function tiposAtencion(){
+        $template = '
+            <option value="1" selected>Revisar</option>
+            <option value="2">Reparar en el momento</option>
         ';
         return $template;
 	}
