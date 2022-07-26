@@ -2,3 +2,10 @@
     height: 35px;
     width: 35px;
 }
+
+.validacion {
+    color : red;
+    margin: 0px;
+    padding: 0px;
+    font-weight: 400;
+}

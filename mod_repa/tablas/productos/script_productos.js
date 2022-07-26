@@ -17,8 +17,8 @@
     let arrayVal = {
         productoId          : {},
         productoCodigo      : {required: true, maxlength: 30, validated: true},
-        productoMarca       : {required: true, validated: true},
-        productoFamilia     : {required: true, validated: true},
+        productoMarca       : {required: true, validated: true, noCero: true},
+        productoFamilia     : {required: true, validated: true, noCero: true},
         productoDescripcion : {required: true, maxlength: 100, validated: true},
         productoCosto       : {maxlength: 21, validated: true},
         productoMonoTri     : {required: true, validated: true},

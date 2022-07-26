@@ -16,7 +16,7 @@
                             rep3_clientes.celular       as clienteCelular, 
                             rep3_clientes.direccion     as clienteDireccion, 
                             rep3_clientes.email         as clienteEmail, 
-                            rep3_clientes.activo        as clienteActivo 
+                            rep3_clientes.activo        as clienteActivo
                         FROM 
                             rep3_clientes
                         WHERE 

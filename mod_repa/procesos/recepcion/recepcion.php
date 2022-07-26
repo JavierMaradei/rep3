@@ -7,6 +7,114 @@
 </div>
 <form id="formRecepcion">
     <div class="row mt-3">
+
+        <div class="col-md-6 mb-3">
+            <div class="card h-100">
+                <h4 class="card-header bg-dark text-white text-center"><i>Datos del Producto</i></h4>
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <label for="codigoProducto" class="col-sm-2 col-form-label">Código</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="codigoProducto">
+                        </div>
+                    </div>
+                    <div class="input-group mb-2">
+                        <label for="descripcionProducto" class="col-sm-2 col-form-label">Descripción</label>
+                        <input type="text" id="descripcionProducto" class="form-control" readonly>
+                        <button class="btn btn-outline-secondary" type="button" id="btnBuscarProducto">Buscar</button>
+                    </div>
+                    <div class="row mb-2">
+                        <label for="marcaProducto" class="col-sm-2 col-form-label">Marca</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="marcaProducto" disabled>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <label for="familiaProducto" class="col-sm-2 col-form-label">Familia</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="familiaProducto" disabled>
+                        </div>
+                    </div>
+                    <div class="input-group mb-2">
+                        <label for="serieProducto" class="col-sm-2 col-form-label">Serie</label>
+                        <input type="text" id="serieProducto" class="form-control">
+                        <button class="btn btn-outline-secondary" type="button" id="generarNroSerie">Generar serie</button>
+                    </div>
+                    <div class="row mb-2">
+                        <label for="problemaProducto" class="col-sm-2 col-form-label">Problema</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="problemaProducto">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <label for="observacionesProducto" class="col-sm-2 col-form-label" title="Observaciones">Obs.</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" id="observacionesProducto" cols="30" rows="6"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="card h-100">
+                <h4 class="card-header bg-dark text-white text-center"><i>Datos Cliente</i></h4>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-12 text-center">
+                            <button id="btnNuevoCliente" type="button" class="btn btn-lg btn-info">Nuevo cliente</button>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" id="searchCliente" class="form-control" placeholder="Ingrese Id, nombre, apellido, telefono, email o dirección">
+                        <button class="btn btn-outline-secondary" type="button" id="btnBuscarCliente">Buscar cliente</button>
+                    </div>
+                    <div class="row mb-2">
+                        <label for="clienteId" class="col-sm-2 col-form-label">ID Cliente</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="clienteId" readonly>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <label for="clienteApellido" class="col-sm-2 col-form-label">Apellido</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="clienteApellido">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <label for="clienteNombre" class="col-sm-2 col-form-label">Nombre</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="clienteNombre">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <label for="clienteTelefono" class="col-sm-2 col-form-label">Teléfono</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="clienteTelefono">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <label for="clienteCelular" class="col-sm-2 col-form-label">Celular</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="clienteCelular">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <label for="clienteDireccion" class="col-sm-2 col-form-label">Dirección</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="clienteDireccion">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <label for="clienteEmail" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="clienteEmail">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="col-md-6 mb-3">
             <div class="card h-100">
                 <h4 class="card-header bg-dark text-white text-center"><i>Datos generales de Ingreso</i></h4>
@@ -63,109 +171,6 @@
                         </div>
                     </div>
 
-
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 mb-3">
-            <div class="card h-100">
-                <h4 class="card-header bg-dark text-white text-center"><i>Datos Cliente</i></h4>
-                <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-sm-12 text-center">
-                            <button id="btnNuevoCliente" type="button" class="btn btn-lg btn-info">Nuevo cliente</button>
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="text" id="searchCliente" class="form-control" placeholder="Ingrese Id, nombre, apellido, telefono, email o dirección">
-                        <button class="btn btn-outline-secondary" type="button" id="btnBuscarCliente">Buscar cliente</button>
-                    </div>
-                    <div class="row mb-2">
-                        <label for="clienteIdR" class="col-sm-2 col-form-label">ID Cliente</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="clienteIdR" readonly>
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <label for="clienteApellidoR" class="col-sm-2 col-form-label">Apellido</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="clienteApellidoR">
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <label for="clienteNombreR" class="col-sm-2 col-form-label">Nombre</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="clienteNombreR">
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <label for="clienteTelefonoR" class="col-sm-2 col-form-label">Teléfono</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="clienteTelefonoR">
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <label for="clienteCelularR" class="col-sm-2 col-form-label">Celular</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="clienteCelularR">
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <label for="clienteDireccionR" class="col-sm-2 col-form-label">Dirección</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="clienteDireccionR">
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <label for="clienteEmailR" class="col-sm-2 col-form-label">Email</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="clienteEmailR">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 mb-3">
-            <div class="card h-100">
-                <h4 class="card-header bg-dark text-white text-center"><i>Datos del Producto</i></h4>
-                <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-sm-12 text-center">
-                            <button id="btnNuevoProducto" type="button" class="btn btn-lg btn-info">Nuevo producto</button>
-                        </div>
-                    </div>
-
-                    <div class="row mb-2">
-                        <label for="codigoProductoR" class="col-sm-2 col-form-label">Código</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="codigoProductoR">
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <label for="descripcionProductoR" class="col-sm-2 col-form-label">Descripción</label>
-                        <input type="text" id="descripcionProductoR" class="form-control" readonly>
-                        <button class="btn btn-outline-secondary" type="button" id="buscarProducto">Buscar</button>
-                    </div>
-
-                    <div class="input-group mb-3">
-                        <label for="serieProductoR" class="col-sm-2 col-form-label">Serie</label>
-                        <input type="text" id="serieProductoR" class="form-control">
-                        <button class="btn btn-outline-secondary" type="button" id="generarNroSerie">Generar serie</button>
-                    </div>
-                    <div class="row mb-2">
-                        <label for="problemaProducto" class="col-sm-2 col-form-label">Problema</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="problemaProducto">
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <label for="observacionesProducto" class="col-sm-2 col-form-label">Observaciones</label>
-                        <div class="col-sm-10">
-                            <textarea class="form-control" id="observacionesProducto" cols="30" rows="4"></textarea>
-                        </div>
-                    </div>
 
                 </div>
             </div>
