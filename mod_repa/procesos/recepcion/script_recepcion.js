@@ -26,6 +26,7 @@
     let marcaProducto               = document.querySelector('#marcaProducto')
     let familiaProducto             = document.querySelector('#familiaProducto')
     let serieProducto               = document.querySelector('#serieProducto')
+    let btnGenerarNroSerie          = document.querySelector('#btnGenerarNroSerie')
     let problemaProducto            = document.querySelector('#problemaProducto')
     let observacionesProducto       = document.querySelector('#observacionesProducto')
     let fechaRetiro                 = document.querySelector('#fechaRetiro')
@@ -35,6 +36,7 @@
     let buscarProductoCanje         = document.querySelector('#buscarProductoCanje')
     let btnGenerarOrden             = document.querySelector('#btnGenerarOrden')
     let btnCancelarOrden            = document.querySelector('#btnCancelarOrden')
+    let nuevoNroSerie               = false
     let nuevoCliente                = false
     let datosCliente                = [clienteId, clienteApellido, clienteNombre, clienteTelefono, clienteCelular, clienteDireccion, clienteEmail]
     let datosClienteEditable        = [clienteApellido, clienteNombre, clienteTelefono, clienteCelular, clienteDireccion, clienteEmail]
@@ -52,14 +54,7 @@
     }
 
     function busquedaPorProducto(){
-        return new Promise(function(resolve, reject) {
-            codigoProducto.value        = ''
-            descripcionProducto.value   = ''
-            serieProducto.value         = ''
-            marcaProducto.value         = ''
-            familiaProducto.value       = ''
-            costoProducto.value         = ''
-    
+        return new Promise(function(resolve, reject) {    
             $('#modalRecepcion').show()
             $('#bodyRecepcion').empty()
             $('#titulo').text('Equipos')
@@ -178,7 +173,7 @@
     codigoProducto.addEventListener('keyup', () => {
         serieProducto.value = ''
         serieProducto.readOnly = false
-        if(codigoProducto.value.length == 11){
+        if(codigoProducto.value.length == CODIGO_LENGTH){
             let xhr = new XMLHttpRequest
             xhr.open('GET', 'mod_repa/tablas/productos/productos_search.php?code='+codigoProducto.value)
             xhr.send()
@@ -202,7 +197,9 @@
             })
         } else {
             descripcionProducto.value   = ''
-            costoProducto.value = ''
+            costoProducto.value         = ''
+            familiaProducto.value       = ''
+            marcaProducto.value         = ''
         }
     })
 
@@ -253,9 +250,28 @@
                 marcaProducto.value         = respuesta.marca
                 familiaProducto.value       = respuesta.familia
                 costoProducto.value         = respuesta.costo_estimado
+                serieProducto.value         = ''
+                serieProducto.readOnly      = false
+
             }
         })
     })
+
+    btnGenerarNroSerie.addEventListener('click', e => {
+        e.preventDefault()
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_repa/procesos/recepcion/nroSerie_new.php')
+        xhr.send()
+        xhr.addEventListener('load', () => {
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+                serieProducto.readOnly   = true
+                serieProducto.value      = respuesta
+                nuevoNroSerie            = true
+            }
+        })
+    })
+
     ///////////////// FIN PRODUCTOS /////////////////
 
     /////////////////// CLIENTES ///////////////////

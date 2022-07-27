@@ -1,5 +1,8 @@
 //---------------------LIBRERÍA DE FUNCIONES JS---------------------//
 
+//Se define constante para determinar la cantidad de caractéres del campo Código.
+const CODIGO_LENGTH = 12;
+
 /**
  * Mostrar datos del ID seleccionado. Esta función se utiliza para mostrar la data de los campos en los ABM.
  * @param {string} id

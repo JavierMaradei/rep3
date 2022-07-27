@@ -38,7 +38,7 @@
                     <div class="input-group mb-2">
                         <label for="serieProducto" class="col-sm-2 col-form-label">Serie</label>
                         <input type="text" id="serieProducto" class="form-control">
-                        <button class="btn btn-outline-secondary" type="button" id="generarNroSerie">Generar serie</button>
+                        <button class="btn btn-outline-secondary" type="button" id="btnGenerarNroSerie">Generar serie</button>
                     </div>
                     <div class="row mb-2">
                         <label for="problemaProducto" class="col-sm-2 col-form-label">Problema</label>
