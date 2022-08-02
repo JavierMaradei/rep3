@@ -12,39 +12,45 @@
             <div class="card h-100">
                 <h4 class="card-header bg-dark text-white text-center"><i>Datos del Producto</i></h4>
                 <div class="card-body">
-                    <div class="col-sm-12 mb-2">
-                        <label for="codigoProducto" class="form-label">Código</label>
-                        <input type="text" class="form-control" id="codigoProducto"> 
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="descripcionProducto" class="form-label">Descripción</label>
-                        <div class="input-group">
-                            <input type="text" id="descripcionProducto" class="form-control" readonly>
-                            <button class="btn btn-outline-secondary" type="button" id="btnBuscarProducto">Buscar</button>
+                    <div class="row mb-2">
+                        <label for="codigoProducto" class="col-sm-2 col-form-label">Código</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="codigoProducto">
                         </div>
                     </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="marcaProducto" class="form-label">Marca</label>
-                        <input type="text" class="form-control" id="marcaProducto" disabled> 
+                    <div class="input-group mb-2">
+                        <label for="descripcionProducto" class="col-sm-2 col-form-label">Descripción</label>
+                        <input type="text" id="descripcionProducto" class="form-control" readonly>
+                        <button class="btn btn-outline-secondary" type="button" id="btnBuscarProducto">Buscar</button>
                     </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="familiaProducto" class="form-label">Familia</label>
-                        <input type="text" class="form-control" id="familiaProducto" disabled> 
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="serieProducto" class="form-label">Serie</label>
-                        <div class="input-group">
-                            <input type="text" id="serieProducto" class="form-control">
-                            <button class="btn btn-outline-secondary" type="button" id="btnGenerarNroSerie">Generar serie</button>
+                    <div class="row mb-2">
+                        <label for="marcaProducto" class="col-sm-2 col-form-label">Marca</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="marcaProducto" disabled>
                         </div>
                     </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="problemaProducto" class="form-label">Problema</label>
-                        <input type="text" class="form-control" id="problemaProducto"> 
+                    <div class="row mb-2">
+                        <label for="familiaProducto" class="col-sm-2 col-form-label">Familia</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="familiaProducto" disabled>
+                        </div>
                     </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="observacionesProducto" class="form-label">Observaciones</label>
-                        <textarea class="form-control" id="observacionesProducto" cols="30" rows="6"></textarea>
+                    <div class="input-group mb-2">
+                        <label for="serieProducto" class="col-sm-2 col-form-label">Serie</label>
+                        <input type="text" id="serieProducto" class="form-control">
+                        <button class="btn btn-outline-secondary" type="button" id="btnGenerarNroSerie">Generar serie</button>
+                    </div>
+                    <div class="row mb-2">
+                        <label for="problemaProducto" class="col-sm-2 col-form-label">Problema</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="problemaProducto">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <label for="observacionesProducto" class="col-sm-2 col-form-label" title="Observaciones">Obs.</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" id="observacionesProducto" cols="30" rows="6"></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
