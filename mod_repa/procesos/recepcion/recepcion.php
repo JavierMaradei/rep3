@@ -63,47 +63,33 @@
                         <input type="text" id="searchCliente" class="form-control" placeholder="Ingrese Id, nombre, apellido, telefono, email o dirección">
                         <button class="btn btn-outline-secondary" type="button" id="btnBuscarCliente">Buscar cliente</button>
                     </div>
-                    <div class="row mb-2">
-                        <label for="clienteId" class="col-sm-2 col-form-label">ID Cliente</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="clienteId" readonly>
-                        </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="clienteId" class="form-label">ID Cliente</label>
+                        <input type="text" class="form-control" id="clienteId" readonly> 
                     </div>
-                    <div class="row mb-2">
-                        <label for="clienteApellido" class="col-sm-2 col-form-label">Apellido</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="clienteApellido">
-                        </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="clienteApellido" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="clienteApellido"> 
                     </div>
-                    <div class="row mb-2">
-                        <label for="clienteNombre" class="col-sm-2 col-form-label">Nombre</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="clienteNombre">
-                        </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="clienteNombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="clienteNombre"> 
                     </div>
-                    <div class="row mb-2">
-                        <label for="clienteTelefono" class="col-sm-2 col-form-label">Teléfono</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="clienteTelefono">
-                        </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="clienteTelefono" class="form-label">Teléfono</label>
+                        <input type="text" class="form-control" id="clienteTelefono"> 
                     </div>
-                    <div class="row mb-2">
-                        <label for="clienteCelular" class="col-sm-2 col-form-label">Celular</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="clienteCelular">
-                        </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="clienteCelular" class="form-label">Celular</label>
+                        <input type="text" class="form-control" id="clienteCelular"> 
                     </div>
-                    <div class="row mb-2">
-                        <label for="clienteDireccion" class="col-sm-2 col-form-label">Dirección</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="clienteDireccion">
-                        </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="clienteDireccion" class="form-label">Dirección</label>
+                        <input type="text" class="form-control" id="clienteDireccion"> 
                     </div>
-                    <div class="row mb-2">
-                        <label for="clienteEmail" class="col-sm-2 col-form-label">Email</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="clienteEmail">
-                        </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="clienteEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="clienteEmail"> 
                     </div>
                 </div>
             </div>
@@ -113,41 +99,29 @@
             <div class="card h-100">
                 <h4 class="card-header bg-dark text-white text-center"><i>Datos generales de Ingreso</i></h4>
                 <div class="card-body">
-                    <div class="row mb-2">
-                        <label for="fechaRecepcion" class="col-sm-2 col-form-label">Fecha</label>
-                        <div class="col-sm-10">
-                            <input type="date" class="form-control" id="fechaRecepcion" value="<?php echo date('Y-m-d'); ?>" readonly>
-                        </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="fechaRecepcion" class="form-label">Fecha</label>
+                        <input type="date" class="form-control" id="fechaRecepcion" value="<?php echo date('Y-m-d'); ?>" readonly>
                     </div>
-                    <div class="row mb-2">
-                        <label for="sucursalRecepcion" class="col-sm-2 col-form-label">Sucursal</label>
-                        <div class="col-sm-10">
-                            <select id="sucursalRecepcion" class="form-select"></select>
-                        </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="sucursalRecepcion" class="form-label">Sucursal</label>
+                        <select id="sucursalRecepcion" class="form-select"></select>
                     </div>
-                    <div class="row mb-2">
-                        <label for="lugarRecepcion" class="col-sm-2 col-form-label">L.Recepción</label>
-                        <div class="col-sm-10">
-                            <select id="lugarRecepcion" class="form-select"></select>
-                        </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="lugarRecepcion" class="form-label">Lugar de Recepción</label>
+                        <select id="lugarRecepcion" class="form-select"></select>
                     </div>
-                    <div class="row mb-2">
-                        <label for="tipoReparacion" class="col-sm-2 col-form-label">Tipo</label>
-                        <div class="col-sm-10">
-                            <select id="tipoReparacion" class="form-select"><?php echo tiposReparacion(); ?></select>
-                        </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="tipoReparacion" class="form-label">Tipo de Reparación</label>
+                        <select id="tipoReparacion" class="form-select"><?php echo tiposReparacion(); ?></select>
                     </div>
-                    <div class="row mb-2">
-                        <label for="atencion" class="col-sm-2 col-form-label">Atención</label>
-                        <div class="col-sm-10">
-                            <select id="atencion" class="form-select"><?php echo tiposAtencion(); ?></select>
-                        </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="atencion" class="form-label">Atención</label>
+                        <select id="atencion" class="form-select"><?php echo tiposAtencion(); ?></select>
                     </div>
-                    <div class="row mb-2">
-                        <label for="remitoCliente" class="col-sm-2 col-form-label">Remito</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="remitoCliente">
-                        </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="remitoCliente" class="form-label">Remito</label>
+                        <input type="text" class="form-control" id="remitoCliente"> 
                     </div>
                     <div class="row mb-2">
                         <label class="col-sm-3 col-form-label">Adicionales</label>
@@ -164,8 +138,6 @@
 
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -174,33 +146,29 @@
             <div class="card h-50 mb-3">
                 <h4 class="card-header bg-dark text-white text-center"><i>Datos Retiro</i></h4>
                 <div class="card-body">
-                    <div class="row mb-2">
-                        <label for="fechaRetiro" class="col-sm-2 col-form-label">F.Retiro</label>
-                        <div class="col-sm-10">
-                            <input type="date" class="form-control" id="fechaRetiro"readonly>
-                        </div>
+                <div class="col-sm-12 mb-2">
+                        <label for="fechaRetiro" class="form-label">Fecha de Retiro</label>
+                        <input type="date" class="form-control" id="fechaRetiro"readonly>
                     </div>
-                    <div class="row mb-2">
-                        <label for="costoProducto" class="col-sm-2 col-form-label">Costo</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="costoProducto">
-                        </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="costoProducto" class="form-label">Costo</label>
+                        <input type="text" class="form-control" id="costoProducto">
                     </div>
                 </div>
             </div>
             <div class="card h-50">
                 <h4 class="card-header bg-dark text-white text-center"><i>Producto destino Canje</i></h4>
                 <div class="card-body">
-                    <div class="row mb-2">
-                        <label for="codigoProductoCanjeR" class="col-sm-2 col-form-label">Código</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="codigoProductoCanjeR" readonly>
-                        </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="codigoProductoCanjeR" class="form-label">Código</label>
+                        <input type="text" class="form-control" id="codigoProductoCanjeR" readonly> 
                     </div>
-                    <div class="input-group mb-3">
-                        <label for="descripcionProductoCanjeR" class="col-sm-2 col-form-label">Descripción</label>
-                        <input type="text" id="descripcionProductoCanjeR" class="form-control" readonly>
-                        <button class="btn btn-outline-secondary" type="button" id="buscarProductoCanje" disabled>Buscar</button>
+                    <div class="col-sm-12 mb-2">
+                        <label for="descripcionProductoCanjeR" class="form-label">Descripción</label>
+                        <div class="input-group">
+                            <input type="text" id="descripcionProductoCanjeR" class="form-control" readonly>
+                            <button class="btn btn-outline-secondary" type="button" id="buscarProductoCanje" disabled>Buscar</button>
+                        </div>
                     </div>
                 </div>
             </div>
