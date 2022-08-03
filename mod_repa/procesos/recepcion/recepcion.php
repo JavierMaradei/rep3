@@ -142,13 +142,17 @@
             </div>
         </div>
 
-        <div class="col-md-6 mb-3 pb-3">
-            <div class="card h-50 mb-3">
-                <h4 class="card-header bg-dark text-white text-center"><i>Datos Retiro</i></h4>
+        <div class="col-md-6 mb-3">
+            <div class="card h-60 mb-3">
+                <h4 class="card-header bg-dark text-white text-center"><i>Datos Reparación</i></h4>
                 <div class="card-body">
-                <div class="col-sm-12 mb-2">
-                        <label for="fechaRetiro" class="form-label">Fecha de Retiro</label>
-                        <input type="date" class="form-control" id="fechaRetiro"readonly>
+                    <div class="col-sm-12 mb-2">
+                        <label for="fechaReparacion" class="form-label">Fecha de Reparación / Visita técnica</label>
+                        <input type="date" class="form-control" id="fechaReparacion">
+                    </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="tecnico" class="form-label">Técnico Asignado</label>
+                        <select id="tecnico" class="form-select" disabled></select>
                     </div>
                     <div class="col-sm-12 mb-2">
                         <label for="costoProducto" class="form-label">Costo</label>
@@ -156,17 +160,17 @@
                     </div>
                 </div>
             </div>
-            <div class="card h-50">
+            <div class="card h-40">
                 <h4 class="card-header bg-dark text-white text-center"><i>Producto destino Canje</i></h4>
                 <div class="card-body">
                     <div class="col-sm-12 mb-2">
-                        <label for="codigoProductoCanjeR" class="form-label">Código</label>
-                        <input type="text" class="form-control" id="codigoProductoCanjeR" readonly> 
+                        <label for="codigoProductoCanje" class="form-label">Código</label>
+                        <input type="text" class="form-control" id="codigoProductoCanje" disabled> 
                     </div>
                     <div class="col-sm-12 mb-2">
-                        <label for="descripcionProductoCanjeR" class="form-label">Descripción</label>
+                        <label for="descripcionProductoCanje" class="form-label">Descripción</label>
                         <div class="input-group">
-                            <input type="text" id="descripcionProductoCanjeR" class="form-control" readonly>
+                            <input type="text" id="descripcionProductoCanje" class="form-control" readonly>
                             <button class="btn btn-outline-secondary" type="button" id="buscarProductoCanje" disabled>Buscar</button>
                         </div>
                     </div>

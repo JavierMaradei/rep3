@@ -62,6 +62,7 @@
                     rep3_usuarios.emisor, 
                     rep3_usuarios.diagnosticador, 
                     rep3_usuarios.reparador, 
+                    rep3_usuarios.tecnico, 
                     rep3_usuarios.sucursal_id,
                     rep3_sucursales.descripcion as sucursal,
                     rep3_usuarios.activo 

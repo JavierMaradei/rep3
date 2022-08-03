@@ -100,6 +100,12 @@
                         </div>
                     </div>
                     <div class="row mb-2">
+                        <label for="tecnicoUsuarios" class="col-sm-2 col-form-label" title="Tecnico">Tec.</label>
+                        <div class="col-sm-10 text-center">
+                            <input type="checkbox" id="tecnicoUsuarios" class="form-check-input bigCheck">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
                         <label for="activoUsuarios" class="col-sm-2 col-form-label">Activo</label>
                         <div class="col-sm-10 text-center">
                             <input type="checkbox" id="activoUsuarios" class="form-check-input bigCheck">

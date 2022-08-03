@@ -26,6 +26,7 @@
         claveUsuarios           : {required: true, maxlength: 50, validated: true},
         emisorUsuarios          : {},
         reparadorUsuarios       : {},
+        tecnicoUsuarios         : {},
         activoUsuarios          : {}
     }
     

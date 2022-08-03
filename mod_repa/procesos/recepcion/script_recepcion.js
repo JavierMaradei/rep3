@@ -29,10 +29,11 @@
     let btnGenerarNroSerie          = document.querySelector('#btnGenerarNroSerie')
     let problemaProducto            = document.querySelector('#problemaProducto')
     let observacionesProducto       = document.querySelector('#observacionesProducto')
-    let fechaRetiro                 = document.querySelector('#fechaRetiro')
+    let fechaReparacion             = document.querySelector('#fechaReparacion')
+    let tecnico                     = document.querySelector('#tecnico')
     let costoProducto               = document.querySelector('#costoProducto')
-    let codigoProductoCanje         = document.querySelector('#codigoProductoCanjeR')
-    let descripcionProductoCanje    = document.querySelector('#descripcionProductoCanjeR')
+    let codigoProductoCanje         = document.querySelector('#codigoProductoCanje')
+    let descripcionProductoCanje    = document.querySelector('#descripcionProductoCanje')
     let buscarProductoCanje         = document.querySelector('#buscarProductoCanje')
     let btnGenerarOrden             = document.querySelector('#btnGenerarOrden')
     let btnCancelarOrden            = document.querySelector('#btnCancelarOrden')
@@ -40,7 +41,40 @@
     let nuevoCliente                = false
     let datosCliente                = [clienteId, clienteApellido, clienteNombre, clienteTelefono, clienteCelular, clienteDireccion, clienteEmail]
     let datosClienteEditable        = [clienteApellido, clienteNombre, clienteTelefono, clienteCelular, clienteDireccion, clienteEmail]
+    let datosCanje                  = [codigoProductoCanje, buscarProductoCanje]
     let hoy                         = moment(new Date(), 'DD-MM-YYYY').format('YYYY-MM-DD')
+    let modal                       = document.querySelector('#modalRecepcion')
+    let modalBody                   = document.querySelector('#bodyRecepcion')
+    let modalTitulo                 = document.querySelector('#titulo')
+    let arrayVal = {
+        fechaRecepcion              : {},
+        sucursalRecepcion           : {},
+        lugarRecepcion              : {},
+        tipoReparacion              : {},
+        atencion                    : {required: true, maxlength: 60, validated: true},
+        remitoCliente               : {maxlength: 25, validated: true},
+        garantia                    : {required: true, validated: 'email', maxlength: 50},
+        flete                       : {},
+        clienteCodigo               : {},
+        clienteApellido             : {},
+        clienteNombre               : {},
+        clienteTelefono             : {},
+        clienteCelular              : {},
+        clienteDireccion            : {},
+        clienteEmail                : {},
+        codigoProducto              : {},
+        descripcionProducto         : {},
+        marcaProducto               : {},
+        familiaProducto             : {},
+        serieProducto               : {},
+        problemaProducto            : {},
+        observacionesProducto       : {},
+        fechaReparacion             : {},
+        tecnico                     : {},
+        costoProducto               : {},
+        codigoProductoCanje         : {},
+        descripcionProductoCanje    : {}
+    }
 
     function inputsClienteEstado(estado){
         datosClienteEditable.forEach(element => {
@@ -48,9 +82,34 @@
         });  
     }
 
+    function recuperaDatosPerfil(){
+        return new Promise(function(resolve, reject) {
+            let xhr = new XMLHttpRequest
+            xhr.open('GET', 'mod_repa/configuracion/usuarios/usuariosData_search.php')
+            xhr.send()
+            xhr.addEventListener('load', () => {
+                if(xhr.status == 200){
+                    let respuesta = JSON.parse(xhr.response)
+                    sucursalRecepcion.value = respuesta.sucursalUsuarios 
+                    lugarRecepcion.value = respuesta.lugarRecepcionUsuarios
+                    resolve(respuesta)
+                } else {
+                    reject()
+                }
+            })
+        })
+    }
+
     function limpieza(){
         inputsClienteEstado('inactivos')
-        nuevoCliente = false
+        nuevoCliente            = false
+        tipoReparacion.value    = 'R'
+        atencion.value          = '1'
+        fechaRecepcion.value    = hoy
+        fechaReparacion.value   = hoy
+        tecnico.disabled        = true
+        tecnico.value           = '0'
+        recuperaDatosPerfil()
     }
 
     function busquedaPorProducto(){
@@ -129,33 +188,19 @@
         })
     }
 
-    let arrayVal = {
-        fechaRecepcion              : {},
-        sucursalRecepcion           : {},
-        lugarRecepcion              : {},
-        tipoReparacion              : {},
-        atencion                    : {required: true, maxlength: 60, validated: true},
-        remitoCliente               : {maxlength: 25, validated: true},
-        garantia                    : {required: true, validated: 'email', maxlength: 50},
-        flete                       : {},
-        clienteCodigo               : {},
-        clienteApellido             : {},
-        clienteNombre               : {},
-        clienteTelefono             : {},
-        clienteCelular              : {},
-        clienteDireccion            : {},
-        clienteEmail                : {},
-        codigoProducto              : {},
-        descripcionProducto         : {},
-        marcaProducto               : {},
-        familiaProducto             : {},
-        serieProducto               : {},
-        problemaProducto            : {},
-        observacionesProducto       : {},
-        fechaRetiro                 : {},
-        costoProducto               : {},
-        codigoProductoCanjeR        : {},
-        descripcionProductoCanjeR   : {}
+    function estadoCanje(){
+
+        datosCanje.forEach(element => {
+
+            if(tipoReparacion.value == 'C' || tipoReparacion.value == 'E'){
+                element.disabled = false
+            }else {
+                element.disabled = true
+                codigoProductoCanje.value = ''
+                descripcionProductoCanje.value = ''
+            }
+        });
+        
     }
 
     inputsClienteEstado('inactivos')
@@ -166,8 +211,14 @@
     limitaCaracteres(clienteCelular, 25)
     limitaCaracteres(clienteEmail, 50)
 
-    cargaSucursales(sucursalRecepcion)
-    cargaLugaresRecepcion(lugarRecepcion)
+    cargaSucursales(sucursalRecepcion).then(() => {
+        cargaLugaresRecepcion(lugarRecepcion).then(() => {
+            recuperaDatosPerfil()
+        })
+    })
+    cargaTecnicos(tecnico)
+
+    fechaReparacion.value = hoy
 
     /////////////////// PRODUCTOS ///////////////////
     codigoProducto.addEventListener('keyup', () => {
@@ -383,6 +434,23 @@
 
     ///////////////// FIN CLIENTES /////////////////
 
+    
+    tipoReparacion.addEventListener('change', e => {
+        e.preventDefault()
+        estadoCanje()
+    })
+
+    modalBuscarBombaCanje(modal, modalBody, modalTitulo, buscarProductoCanje)
+
+    lugarRecepcion.addEventListener('change', e => {
+        e.preventDefault()
+        if(lugarRecepcion.value == '2'){
+            tecnico.disabled = false
+        } else {
+            tecnico.disabled = true
+            tecnico.value = '0'
+        } 
+    })
 
     //Cierro modal
     btnCerrarModal.addEventListener('click', e => {

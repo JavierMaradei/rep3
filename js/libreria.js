@@ -2026,8 +2026,8 @@ function modalBuscarBomba(idModal, idBodyModal, idTituloModal){
  * @param {string} idBodyModal
  * @param {string} idTituloModal
  */
- function modalBuscarBombaCanje(idModal, idBodyModal, idTituloModal){
-    btnBuscarBombaCanje.addEventListener('click', e => {
+ function modalBuscarBombaCanje(idModal, idBodyModal, idTituloModal, botonAccion){
+    botonAccion.addEventListener('click', e => {
         e.preventDefault()
         $(idModal).show()
         $(idBodyModal).empty()
@@ -2375,6 +2375,32 @@ function cargaFormasDeResolucionOSCA(select){
                 let template = '<option value= "0">Seleccionar</option>'
                 respuesta.forEach(element => {
                     template += `<option value= "${element.sucursal_id}">${element.descripcion}</option>`
+                })
+                select.innerHTML = template
+            } else {
+                reject()
+            }
+        })
+    })
+}
+
+/**
+ * Carga el select de Tecnicos
+ * @param {string} select
+ * @param {string} activo
+ */
+ function cargaTecnicos(select){
+    return new Promise(function(resolve, reject) {
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_repa/configuracion/usuarios/usuariosTecnicos_list.php')
+        xhr.send()
+        xhr.addEventListener('load', () => {
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+                resolve(respuesta)
+                let template = '<option value= "0">Seleccionar</option>'
+                respuesta.forEach(element => {
+                    template += `<option value= "${element.usuario_id}">${element.apellido}, ${element.nombre}</option>`
                 })
                 select.innerHTML = template
             } else {

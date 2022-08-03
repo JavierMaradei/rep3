@@ -1,6 +1,5 @@
 <?php
     session_start();
-    date_default_timezone_set('America/Argentina/Buenos_Aires');
     include_once('../../../includes/funciones.php');
     include_once('../../../includes/config.php');
     
@@ -13,7 +12,7 @@
     
     //Creamos la conexión
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-        $id         = $_GET['id'];
+        $id         = $_SESSION['usuario_id'];
         $conexion   = conectar(DB_DSN, DB_USER, DB_PASS);
         $query      = " SELECT 
                             rep3_usuarios.usuario_id            as idUsuarios, 
@@ -24,7 +23,6 @@
                             rep3_usuarios.perfil_id             as perfilUsuarios, 
                             rep3_perfiles.descripcion           as perfil,
                             rep3_usuarios.email                 as emailUsuarios, 
-                            rep3_usuarios.clave                 as claveUsuarios, 
                             rep3_usuarios.emisor                as emisorUsuarios, 
                             rep3_usuarios.diagnosticador        as diagnosticadorUsuarios, 
                             rep3_usuarios.reparador             as reparadorUsuarios, 
@@ -47,12 +45,12 @@
                         ON
                             rep3_usuarios.sucursal_id = rep3_sucursales.sucursal_id
                         WHERE 
-                            usuario_id  = '{$id}'
-                    ";           
-        $sentenciaSQL= $conexion->prepare($query);
-        $sentenciaSQL->execute();
+                            rep3_usuarios.email  = '{$id}'
+                    "; 
 
-        $resultado= $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
+        $sentenciaSQL   = $conexion->prepare($query);
+        $sentenciaSQL   -> execute();
+        $resultado      = $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
 
         header("Content-type: aplication/json");
         echo json_encode($resultado, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
