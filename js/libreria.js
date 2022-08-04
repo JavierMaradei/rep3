@@ -2035,17 +2035,23 @@ function modalBuscarBomba(idModal, idBodyModal, idTituloModal){
         let template = ''
         template = `
             <div class="row">
-                <form id="formModalEquipos">
-                    <div class="form-group col-sm-6 text-center">
-                        <label for="tiposProductoModal">Tipo Producto</label>
-                        <select id="tiposProductoModal" class="form-control"></select>
-                    </div>
-                    <div class="form-group col-sm-6 text-center">
-                        <label for="buscadorModal">Buscador por descripción</label>
-                        <input id="buscadorModal" type="text" class="form-control">
-                    </div>
-                    <div class="form-group col-sm-12 text-center">
-                        <button id="btnBuscarEquipo" type="button" class="btn btn-primary">Buscar
+                <form id="formModalEquiposCanje">
+                    <div class="row g-3">
+                        <div class="form-group col-sm-4">
+                            <label for="marcaProductoModalCanje">Marca</label>
+                            <select id="marcaProductoModalCanje" class="form-control"></select>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="familiaProductoModalCanje">Familia</label>
+                            <select id="familiaProductoModalCanje" class="form-control"></select>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="buscadorModalCanje">Buscador</label>
+                            <input id="buscadorModalCanje" type="text" class="form-control">
+                        </div>
+                        <div class="form-group col-sm-12 text-center">
+                            <button id="btnBuscarEquipoCanje" type="button" class="btn btn-primary">Buscar
+                        </div>
                     </div>
                 </form>
             </div>
@@ -2054,10 +2060,11 @@ function modalBuscarBomba(idModal, idBodyModal, idTituloModal){
                     <div class="table-responsive">
                         <table class="table table-striped table-hover">
                             <thead>
+                                <th>Id</th>
                                 <th>Código</th>
                                 <th>Descripción</th>
-                                <th>Código</th>
-                                <th>Descripción</th>
+                                <th>Marca</th>
+                                <th>Familia</th>
                             </thead>
                             <tbody id="modalBusquedaTabla"></tbody>
                         </table>
@@ -2067,42 +2074,31 @@ function modalBuscarBomba(idModal, idBodyModal, idTituloModal){
         `
         $(idBodyModal).html(template)
 
-        let formModalEquipos = document.querySelector('#formModalEquipos')
+        let formModalEquipos = document.querySelector('#formModalEquiposCanje')
         formModalEquipos.addEventListener('submit', e => {
             e.preventDefault()
         })
 
-        let buscadorModal = document.querySelector('#buscadorModal')
-        let btnBuscarEquipo = document.querySelector('#btnBuscarEquipo')
-        let modalBusquedaTabla = document.querySelector('#modalBusquedaTabla')
-        let tiposProductoModal = document.querySelector('#tiposProductoModal')
+        let modalBusquedaTabla          = document.querySelector('#modalBusquedaTabla')
+        let marcaProductoModalCanje     = document.querySelector('#marcaProductoModalCanje')
+        let familiaProductoModalCanje   = document.querySelector('#familiaProductoModalCanje')
+        let buscadorModalCanje          = document.querySelector('#buscadorModalCanje')
+        let btnBuscarEquipoCanje        = document.querySelector('#btnBuscarEquipoCanje')
 
-        buscadorModal.addEventListener('keyup', e => {
+        cargaFamilias(familiaProductoModalCanje)
+        cargaMarcas(marcaProductoModalCanje)
+
+        buscadorModalCanje.addEventListener('keyup', e => {
             e.preventDefault()
             if(e.keyCode === 13){
-                btnBuscarEquipo.click()
+                btnBuscarEquipoCanje.click()
             }
         })
 
-        let xhr2 = new XMLHttpRequest
-        xhr2.open('GET', 'mod_sirep/admin/tablas/tiposProducto/tiposProducto_list.php')
-        xhr2.send()
-        xhr2.addEventListener('load', () => {
-            if(xhr2.status == 200){
-                let respuesta2 = JSON.parse(xhr2.response)
-                let template2 = ''
-                template2 +=`<option value="">Seleccionar</option>`
-                respuesta2.forEach(element2 => {
-                    template2 +=`<option value="${element2.tipo_id}">${element2.descripcion}</option>`
-                });
-                tiposProductoModal.innerHTML = template2
-            }
-        })
-
-        btnBuscarEquipo.addEventListener('click', e => {
+        btnBuscarEquipoCanje.addEventListener('click', e => {
             e.preventDefault()
             let xhr = new XMLHttpRequest
-            xhr.open('GET', 'mod_sirep/busquedas/equipos_search.php?tipo='+tiposProductoModal.value+'&buscador='+buscadorModal.value)
+            xhr.open('GET', 'mod_repa/tablas/productos/productosCanje_list.php?familia='+familiaProductoModalCanje.value+'&marca='+marcaProductoModalCanje.value+'&buscador='+buscadorModalCanje.value)
             xhr.send()
             xhr.addEventListener('load', ()=> {
                 if(xhr.status == 200){
@@ -2111,10 +2107,11 @@ function modalBuscarBomba(idModal, idBodyModal, idTituloModal){
                     respuesta.forEach(element => {
                         template += `
                             <tr>
-                                <td style="width: 10%;"><a class="equipoCanje-item" href="${element.codigo_adonix}">${element.codigo_adonix}</td>
-                                <td style="width: 40%;">${element.descrip_adonix}</td>
-                                <td style="width: 10%;">${element.codigo}</td>
+                                <td style="width: 10%;"><a class="equipoCanje-item" href="${element.producto_id}">${element.producto_id}</td>
+                                <td style="width: 40%;">${element.codigo}</td>
                                 <td style="width: 40%;">${element.descripcion}</td>
+                                <td style="width: 10%;">${element.marca}</td>
+                                <td style="width: 40%;">${element.familia}</td>
                             </tr>
                         `
                     })
@@ -2122,10 +2119,12 @@ function modalBuscarBomba(idModal, idBodyModal, idTituloModal){
 
                     $(document).on('click', '.equipoCanje-item', (e) => {
                         e.preventDefault()
-                        let cod= e.target.innerText
-                        let tr = e.target.parentNode.parentNode
-                        codigoCanje.value = cod
-                        descripcionCanje.value = tr.querySelector("td:nth-of-type(2)").innerText
+                        let tr              = e.target.parentNode.parentNode
+                        let codProdCanje    = document.querySelector('#codigoProductoCanje')
+                        let descProdCanje   = document.querySelector('#descripcionProductoCanje')
+                    
+                        codProdCanje.value  = tr.querySelector("td:nth-of-type(2)").innerText
+                        descProdCanje.value = tr.querySelector("td:nth-of-type(3)").innerText
                         $(idModal).hide()
                     })
                 }

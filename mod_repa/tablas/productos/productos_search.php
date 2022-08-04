@@ -25,6 +25,7 @@
                             rep3_productos.familia_id, 
                             rep3_productos.descripcion, 
                             rep3_productos.costo_estimado,
+                            rep3_productos.canje_flag,
                             rep3_marcas.descripcion as marca,
                             rep3_familias.descripcion as familia
                         FROM 

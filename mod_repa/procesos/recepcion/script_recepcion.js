@@ -32,8 +32,8 @@
     let fechaReparacion             = document.querySelector('#fechaReparacion')
     let tecnico                     = document.querySelector('#tecnico')
     let costoProducto               = document.querySelector('#costoProducto')
-    let codigoProductoCanje         = document.querySelector('#codigoProductoCanje')
-    let descripcionProductoCanje    = document.querySelector('#descripcionProductoCanje')
+    let codigoProdCanje             = document.querySelector('#codigoProductoCanje')
+    let descripcionProdCanje        = document.querySelector('#descripcionProductoCanje')
     let buscarProductoCanje         = document.querySelector('#buscarProductoCanje')
     let btnGenerarOrden             = document.querySelector('#btnGenerarOrden')
     let btnCancelarOrden            = document.querySelector('#btnCancelarOrden')
@@ -41,7 +41,7 @@
     let nuevoCliente                = false
     let datosCliente                = [clienteId, clienteApellido, clienteNombre, clienteTelefono, clienteCelular, clienteDireccion, clienteEmail]
     let datosClienteEditable        = [clienteApellido, clienteNombre, clienteTelefono, clienteCelular, clienteDireccion, clienteEmail]
-    let datosCanje                  = [codigoProductoCanje, buscarProductoCanje]
+    let datosCanje                  = [codigoProdCanje, buscarProductoCanje]
     let hoy                         = moment(new Date(), 'DD-MM-YYYY').format('YYYY-MM-DD')
     let modal                       = document.querySelector('#modalRecepcion')
     let modalBody                   = document.querySelector('#bodyRecepcion')
@@ -51,10 +51,12 @@
         sucursalRecepcion           : {},
         lugarRecepcion              : {},
         tipoReparacion              : {},
-        atencion                    : {required: true, maxlength: 60, validated: true},
-        remitoCliente               : {maxlength: 25, validated: true},
-        garantia                    : {required: true, validated: 'email', maxlength: 50},
+        atencion                    : {},
+        remitoCliente               : {},
+        garantia                    : {},
         flete                       : {},
+        searchCliente               : {},
+        clienteId                   : {},
         clienteCodigo               : {},
         clienteApellido             : {},
         clienteNombre               : {},
@@ -75,6 +77,9 @@
         codigoProductoCanje         : {},
         descripcionProductoCanje    : {}
     }
+
+    console.log(inputs)
+    console.log(arrayVal)
 
     function inputsClienteEstado(estado){
         datosClienteEditable.forEach(element => {
@@ -166,7 +171,7 @@
 
     function enviarParametrosModal(marca, familia, buscador, idBodyTabla){
         let xhr = new XMLHttpRequest
-        xhr.open('GET', 'mod_repa/procesos/recepcion/productosModal_search.php?marca='+marca+'&familia='+familia+'&buscador='+buscador)
+        xhr.open('GET', 'mod_repa/tablas/productos/productosModal_search.php?marca='+marca+'&familia='+familia+'&buscador='+buscador)
         xhr.send()
         xhr.addEventListener('load', () => {
             if(xhr.status == 200){
@@ -221,9 +226,14 @@
     fechaReparacion.value = hoy
 
     /////////////////// PRODUCTOS ///////////////////
-    codigoProducto.addEventListener('keyup', () => {
+    codigoProducto.addEventListener('keyup', (e) => {
         serieProducto.value = ''
         serieProducto.readOnly = false
+
+        if(e.keyCode === 13){
+            btnBuscarProducto.click()
+        }
+
         if(codigoProducto.value.length == CODIGO_LENGTH){
             let xhr = new XMLHttpRequest
             xhr.open('GET', 'mod_repa/tablas/productos/productos_search.php?code='+codigoProducto.value)
@@ -399,6 +409,7 @@
                             $('#bodyRecepcion').html(template)
 
                         } else {
+                            $('#clienteId').val(respuesta[0].cliente_id)
                             $('#clienteNombre').val(respuesta[0].nombre)
                             $('#clienteApellido').val(respuesta[0].apellido)
                             $('#clienteTelefono').val(respuesta[0].telefono)
@@ -433,14 +444,49 @@
     })
 
     ///////////////// FIN CLIENTES /////////////////
-
     
+
+    //////////////// CANJE ////////////////////////
+
+    // Evaluo desplegable tipo de reparación para habilitar los campos de canje
     tipoReparacion.addEventListener('change', e => {
         e.preventDefault()
         estadoCanje()
     })
 
+    //Funcionalidad botón buscar canje
     modalBuscarBombaCanje(modal, modalBody, modalTitulo, buscarProductoCanje)
+
+    //Funcionalidad campo código canje
+    codigoProdCanje.addEventListener('keyup', e => {
+        e.preventDefault()
+        if(e.keyCode === 13){
+            buscarProductoCanje.click()
+        }
+
+        if(codigoProdCanje.value.length == CODIGO_LENGTH){
+            let xhr = new XMLHttpRequest
+            xhr.open('GET', 'mod_repa/tablas/productos/productos_search.php?code='+codigoProdCanje.value)
+            xhr.send()
+            xhr.addEventListener('load', () => {
+                if(xhr.status == 200){
+                    let respuesta = JSON.parse(xhr.response)
+                    if(respuesta != null && respuesta.canje_flag == 'S'){
+                        descripcionProdCanje.value  = respuesta.descripcion
+                    } else {
+                        descripcionProdCanje.value  = ''
+                        codigoProdCanje.value       = ''
+                        alert('Código inexistente o inválido :(')
+                    }
+                }
+            })
+        } else {
+            descripcionProdCanje.value  = ''
+        }
+
+    })
+
+    ///////////////// FIN CANJE //////////////////
 
     lugarRecepcion.addEventListener('change', e => {
         e.preventDefault()
@@ -467,38 +513,128 @@
     //Funcionalidad del botón de Grabar
     btnGenerarOrden.addEventListener('click', e => {
         e.preventDefault()
-        let validacion = validateData(inputs, arrayVal)
-        if(validacion){
-            collectData(inputs, formData)
-            let agregar = 'mod_repa/tablas/clientes/clientes_add.php'
-            let editar = 'mod_repa/tablas/clientes/clientes_edit.php'
-            let estado = enviarData(agregar, editar, formData, edit, id)
-            estado.then((respuesta) => {
-                switch (respuesta.estado) {
-                    case 'Transacción exitosa':
-                        msgTransaccionExitosa()
-                        cleanInputs(inputs)
-                        cleanFormData(inputs, formData)
-                        limpieza()
-                        break;
-                    case 'Sesión expirada':
-                        sesionExpiradaMensajeFlotante()
-                        break;
-                    case 'Error perfil':
-                        msgErrorPerfil()
-                        cleanFormData(inputs, formData)
-                        break;
-                    case 'Cliente duplicado':
-                        msgClienteDuplicado()
-                        cleanFormData(inputs, formData)
-                        break;
-                    default:
-                        msgAlgoNoFueBien()
-                        cleanFormData(inputs, formData)
-                        break;
-                }
-            })
-        }
+        if(clienteTelefono.value == '' && clienteCelular.value == '' && clienteEmail.value == ''){
+            alert('Al menos debe completar uno de los campos: teléfono, celular o email')
+        } else {
+            let validacion = validateData(inputs, arrayVal)
+            if(validacion){
+                swal({
+                    title               : "Confirma la grabación?",
+                    type                : "warning",
+                    showCancelButton    : true,
+                    confirmButtonColor  : "#DD6B55",
+                    confirmButtonText   : "Si, confirmar!",
+                    cancelButtonText    : "No, Cancelar!",
+                    closeOnConfirm      : true,
+                    closeOnCancel       : true
+                    },
+
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            let btnAceptarSwal      = document.querySelector('.confirm')
+                            btnAceptarSwal.disabled = true
+                            collectData(inputs, formData)
+                            formData.append('nuevoCliente', nuevoCliente)
+                            formData.append('nuevoNroSerie', nuevoNroSerie)
+                            let url = 'mod_repa/procesos/recepcion/recepcion_add.php'
+                            let xhr = new XMLHttpRequest
+                            xhr.open('POST', url)
+                            xhr.send(formData)
+                            xhr.addEventListener('load', () => {
+                                if(xhr.status == 200){
+                                    let respuesta           = JSON.parse(xhr.response)
+                                    btnAceptarSwal.disabled = false
+
+                                    switch (respuesta.estado) {
+                                        case 'Transacción exitosa':
+                                            swal({
+                                                title: "Orden nro: "+respuesta.orden,
+                                                text: "La orden se generó exitosamente",
+                                                type: "success",
+                                            });
+                                            
+                                            let ticket2 = window.open("", "", "width=800,height=600");
+                                            ticket2.document.write(`
+                                                                        <p>
+                                                                            <h4 style="margin: 0px; padding: 0px;">ROWA S.A.</h4>
+                                                                            Puerto Rico 1255</br>
+                                                                            Martinez - Buenos Aires</br>
+                                                                            Argentina</br>
+                                                                            Teléfono:(011)4717-1405</br>
+                                                                            recepcion@rowa.com.ar</br>
+                                                                        </p>
+                                                                        <h6>COMPROBANTE NO VALIDO COMO FACTURA</h6>
+                                                                        <h6 style="margin:5px;">Fecha: ${respuesta.hoy}</h6>
+                                                                        <h6 style="margin:5px;">Nro. de Orden: ${respuesta.orden}</h6>
+                                                                        <h6 style="margin:5px;">Modelo: ${respuesta.modelo}</h6>
+                                                                        <h6 style="margin:5px;">Nro. de Serie: ${respuesta.serie}</h6>
+                                                                        <h6 style="margin:5px;">Probl.: ${respuesta.problema}</h6>
+                                                                        <h6 style="margin:5px;">Obs.: ${respuesta.observacion}</h6>
+                                                                        <h6 style="margin:5px;">Nombre: ${respuesta.cliente}</h6>
+                                                                        <h6 style="margin:5px;">Teléfono: ${respuesta.telefono}</h6>
+                                                                        <h6 style="margin:5px;">Celular: ${respuesta.celular}</h6>
+                                                                        <h6 style="margin:5px;">OPERACION: ${respuesta.operacion}</h6>
+                                                                        <h6 style="margin:5px;">TIPO: ${respuesta.tipo}</h6>
+                                                                        <h6 style="margin:5px;">ESTADO: ${respuesta.garantia}</h6>
+                                                                        <h6 style="margin:5px;">SALIDA: ${respuesta.salida}</h6>
+                                                                        <h6 style="margin:5px;">Fecha de Retiro: ${respuesta.fechaRetiro}</h6>
+                                                                        <h6 style="margin:5px;">Valor Estimado: $${respuesta.valor}</h6>
+                                                                        <h6 style="margin:5px;">Atendido por: ${respuesta.atendido}</h6>
+                                                                        <h4>COPIA PARA EL CLIENTE</h4>
+                                                                        <h5>********************************</h5>
+                                                                        <h5>NRO. DE ORDEN: ${respuesta.orden}</h5>
+                                                                        <h5>NRO. DE SERIE: ${respuesta.serie}</h5>
+                                                                        <h5>OPERACION: ${respuesta.operacion}</h5>
+                                                                        <h5>${respuesta.modelo}</h5>
+                                                                        <h5>CLIENTE: ${respuesta.cliente}</h5>
+                                                                        <h5>ZONA: ${respuesta.zona}</h5>
+                                                                        <h5>********************************</h5>                                                               
+                                                                    `);
+                                            ticket2.window.print();
+                                            ticket2.window.close();
+                                            
+
+                                            limpiezaBtnCancelarAceptar()
+                                            break;
+
+                                        case 'Sesión expirada':
+                                            sesionExpiradaMensajeFlotante()
+                                            break;
+
+                                        case 'Error perfil':
+                                            msgErrorPerfil()
+                                            cleanFormData(inputs, formData)
+                                            formData.delete('nuevoCliente')
+                                            formData.delete('nuevoNroSerie')
+                                            break;
+
+                                        case 'Tabla bloqueada':
+                                            swal({
+                                                title: "Datos no registrados",
+                                                text: "Por favor intente nuevamente",
+                                                type: "error",
+                                            });
+                                            cleanFormData(inputs, formData)
+                                            formData.delete('nuevoCliente')
+                                            formData.delete('nuevoNroSerie')
+                                            break;
+
+                                        default:
+                                            msgAlgoNoFueBienRecep(respuesta.falla)
+                                            cleanFormData(inputs, formData)
+                                            formData.delete('nuevoCliente')
+                                            formData.delete('nuevoNroSerie')
+                                            break;
+                                    }
+                                }
+                            })
+                        }
+                    }
+
+                )
+            }
+
+        }    
     })
     
     //Funcionalidad del botón de Cancelar
@@ -507,4 +643,5 @@
         cleanInputs(inputs)
         limpieza()
     })
+    
 })()
