@@ -152,3 +152,37 @@
 
 		return array($error, $mensaje, $nombreArchivoDestino);
 	}
+
+    	/**
+     * Retorna el id del código ingresado de producto
+     * @param {string} $codigo
+     * @return {string}
+     * @version 1.0
+     */
+    function recuperaIdProducto($codigo){
+
+        $query 			= "SELECT producto_id FROM rep3_productos WHERE codigo = '{$codigo}'";
+
+		$conexion 		= conectar(DB_DSN, DB_USER, DB_PASS);
+        $sentenciaSQL	= $conexion->prepare($query);
+        $sentenciaSQL	-> execute();
+		$idProducto		= $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
+        return $idProducto['producto_id'];
+	}
+
+    /**
+     * Retorna el id del usuario logueado
+     * @param {string} $codigo
+     * @return {string}
+     * @version 1.0
+     */
+    function recuperaIdUsuario($email){
+
+        $query 			= "SELECT usuario_id FROM rep3_usuarios WHERE email = '{$email}'";
+
+		$conexion 		= conectar(DB_DSN, DB_USER, DB_PASS);
+        $sentenciaSQL	= $conexion->prepare($query);
+        $sentenciaSQL	-> execute();
+		$idUsuario		= $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
+        return $idUsuario['usuario_id'];
+	}

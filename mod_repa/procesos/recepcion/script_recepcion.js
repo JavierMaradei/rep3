@@ -78,9 +78,6 @@
         descripcionProductoCanje    : {}
     }
 
-    console.log(inputs)
-    console.log(arrayVal)
-
     function inputsClienteEstado(estado){
         datosClienteEditable.forEach(element => {
             estado == 'activos' ? element.readOnly = false : element.readOnly = true
@@ -547,54 +544,51 @@
 
                                     switch (respuesta.estado) {
                                         case 'Transacción exitosa':
-                                            swal({
-                                                title: "Orden nro: "+respuesta.orden,
-                                                text: "La orden se generó exitosamente",
-                                                type: "success",
-                                            });
-                                            
+                                            //alert("Orden nro: "+respuesta.valores.reparacion_id)
+                                            setTimeout(() => {
+                                                swal({
+                                                    title: "Orden nro: "+respuesta.valores.reparacion_id,
+                                                    text: "La orden se generó exitosamente",
+                                                    type: "success",
+                                                });
+                                            }, 500);
+
                                             let ticket2 = window.open("", "", "width=800,height=600");
                                             ticket2.document.write(`
                                                                         <p>
-                                                                            <h4 style="margin: 0px; padding: 0px;">ROWA S.A.</h4>
-                                                                            Puerto Rico 1255</br>
-                                                                            Martinez - Buenos Aires</br>
+                                                                            <h4 style="margin: 0px; padding: 0px;">Hidroeléctrica del Norte</h4>
+                                                                            Av. Beiró 4296</br>
+                                                                            Villa Devoto - C.A.B.A</br>
                                                                             Argentina</br>
-                                                                            Teléfono:(011)4717-1405</br>
-                                                                            recepcion@rowa.com.ar</br>
+                                                                            Teléfono: 011 2300-5121</br>
                                                                         </p>
                                                                         <h6>COMPROBANTE NO VALIDO COMO FACTURA</h6>
-                                                                        <h6 style="margin:5px;">Fecha: ${respuesta.hoy}</h6>
-                                                                        <h6 style="margin:5px;">Nro. de Orden: ${respuesta.orden}</h6>
-                                                                        <h6 style="margin:5px;">Modelo: ${respuesta.modelo}</h6>
-                                                                        <h6 style="margin:5px;">Nro. de Serie: ${respuesta.serie}</h6>
-                                                                        <h6 style="margin:5px;">Probl.: ${respuesta.problema}</h6>
-                                                                        <h6 style="margin:5px;">Obs.: ${respuesta.observacion}</h6>
-                                                                        <h6 style="margin:5px;">Nombre: ${respuesta.cliente}</h6>
-                                                                        <h6 style="margin:5px;">Teléfono: ${respuesta.telefono}</h6>
-                                                                        <h6 style="margin:5px;">Celular: ${respuesta.celular}</h6>
-                                                                        <h6 style="margin:5px;">OPERACION: ${respuesta.operacion}</h6>
-                                                                        <h6 style="margin:5px;">TIPO: ${respuesta.tipo}</h6>
-                                                                        <h6 style="margin:5px;">ESTADO: ${respuesta.garantia}</h6>
-                                                                        <h6 style="margin:5px;">SALIDA: ${respuesta.salida}</h6>
-                                                                        <h6 style="margin:5px;">Fecha de Retiro: ${respuesta.fechaRetiro}</h6>
-                                                                        <h6 style="margin:5px;">Valor Estimado: $${respuesta.valor}</h6>
-                                                                        <h6 style="margin:5px;">Atendido por: ${respuesta.atendido}</h6>
+                                                                        <h6 style="margin:5px;">Fecha: ${respuesta.valores.frecepcion}</h6>
+                                                                        <h6 style="margin:5px;">Nro. de Orden: ${respuesta.valores.reparacion_id}</h6>
+                                                                        <h6 style="margin:5px;">Modelo: ${respuesta.valores.producto_id}</h6>
+                                                                        <h6 style="margin:5px;">Nro. de Serie: ${respuesta.valores.nro_serie}</h6>
+                                                                        <h6 style="margin:5px;">Probl.: ${respuesta.valores.problema}</h6>
+                                                                        <h6 style="margin:5px;">Obs.: ${respuesta.valores.observaciones}</h6>
+                                                                        <h6 style="margin:5px;">Nombre: ${respuesta.valores.cliente_id}</h6>
+                                                                        <h6 style="margin:5px;">Teléfono: ${respuesta.valores.cliente_id}</h6>
+                                                                        <h6 style="margin:5px;">Celular: ${respuesta.valores.cliente_id}</h6>
+                                                                        <h6 style="margin:5px;">OPERACION: ${respuesta.valores.tipo_ingreso_id}</h6>
+                                                                        <h6 style="margin:5px;">GARANTÍA: ${respuesta.valores.reclama_garantia}</h6>
+                                                                        <h6 style="margin:5px;">Fecha de Retiro: CONSULTAR</h6>
+                                                                        <h6 style="margin:5px;">Atendido por: ${respuesta.valores.usuario_id}</h6>
                                                                         <h4>COPIA PARA EL CLIENTE</h4>
                                                                         <h5>********************************</h5>
-                                                                        <h5>NRO. DE ORDEN: ${respuesta.orden}</h5>
-                                                                        <h5>NRO. DE SERIE: ${respuesta.serie}</h5>
-                                                                        <h5>OPERACION: ${respuesta.operacion}</h5>
-                                                                        <h5>${respuesta.modelo}</h5>
-                                                                        <h5>CLIENTE: ${respuesta.cliente}</h5>
-                                                                        <h5>ZONA: ${respuesta.zona}</h5>
+                                                                        <h5>NRO. DE ORDEN: ${respuesta.valores.reparacion_id}</h5>
+                                                                        <h5>NRO. DE SERIE: ${respuesta.valores.nro_serie}</h5>
+                                                                        <h5>OPERACION: ${respuesta.valores.tipo_ingreso_id}</h5>
+                                                                        <h5>${respuesta.valores.producto_id}</h5>
+                                                                        <h5>CLIENTE: ${respuesta.valores.cliente_id}</h5>
                                                                         <h5>********************************</h5>                                                               
                                                                     `);
                                             ticket2.window.print();
                                             ticket2.window.close();
-                                            
 
-                                            limpiezaBtnCancelarAceptar()
+                                            //limpiezaBtnCancelarAceptar()
                                             break;
 
                                         case 'Sesión expirada':
