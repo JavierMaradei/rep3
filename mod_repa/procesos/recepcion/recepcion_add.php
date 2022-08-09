@@ -233,7 +233,48 @@
                     $respuesta3     = $sentenciaSQL->execute();
                 }
 
-                $query6         = "SELECT * FROM rep3_reparaciones ORDER BY reparacion_id DESC LIMIT 1";
+                $query6         = " SELECT 
+                                        rep3_reparaciones.frecepcion,
+                                        rep3_reparaciones.reparacion_id,
+                                        rep3_reparaciones.producto_id,
+                                        rep3_productos.descripcion as modelo,
+                                        rep3_reparaciones.nro_serie,
+                                        rep3_reparaciones.problema,
+                                        rep3_reparaciones.observaciones,
+                                        rep3_reparaciones.cliente_id,
+                                        rep3_clientes.nombre as nombre_cliente,
+                                        rep3_clientes.apellido as apellido_cliente,
+                                        rep3_clientes.telefono as telefono_cliente,
+                                        rep3_clientes.celular as celular_cliente,
+                                        rep3_clientes.email as email_cliente,
+                                        rep3_reparaciones.tipo_ingreso_id,
+                                        rep3_tipo_ingreso.descripcion as tipo_ingreso,
+                                        rep3_reparaciones.reclama_garantia,
+                                        rep3_reparaciones.usuario_id,
+                                        rep3_usuarios.nombre as nombre_usuario,
+                                        rep3_usuarios.apellido as apellido_usuario
+                                    FROM 
+                                        rep3_reparaciones
+                                    INNER JOIN
+                                        rep3_productos
+                                    ON
+                                        rep3_reparaciones.producto_id = rep3_productos.producto_id 
+                                    INNER JOIN
+                                        rep3_clientes
+                                    ON
+                                        rep3_reparaciones.cliente_id = rep3_clientes.cliente_id 
+                                    INNER JOIN
+                                        rep3_tipo_ingreso
+                                    ON
+                                        rep3_reparaciones.tipo_ingreso_id = rep3_tipo_ingreso.tipo_ingreso_id 
+                                    INNER JOIN
+                                        rep3_usuarios
+                                    ON
+                                        rep3_reparaciones.usuario_id = rep3_usuarios.usuario_id 
+                                    ORDER BY 
+                                        reparacion_id 
+                                    DESC LIMIT 1
+                                ";
                 $sentenciaSQL   = $conexion->prepare($query6);
                 $respuesta6     = $sentenciaSQL->execute();
                 $respuesta6		= $sentenciaSQL->fetch(PDO::FETCH_ASSOC);

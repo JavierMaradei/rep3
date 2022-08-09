@@ -47,35 +47,35 @@
     let modalBody                   = document.querySelector('#bodyRecepcion')
     let modalTitulo                 = document.querySelector('#titulo')
     let arrayVal = {
-        fechaRecepcion              : {},
-        sucursalRecepcion           : {},
-        lugarRecepcion              : {},
-        tipoReparacion              : {},
-        atencion                    : {},
-        remitoCliente               : {},
+        fechaRecepcion              : {required : true, readOnly : true},
+        sucursalRecepcion           : {required : true, noCero : true},
+        lugarRecepcion              : {required : true, noCero : true},
+        tipoReparacion              : {required : true, noCero : true},
+        atencion                    : {required : true, noCero : true},
+        remitoCliente               : {validated : true},
         garantia                    : {},
         flete                       : {},
         searchCliente               : {},
-        clienteId                   : {},
-        clienteCodigo               : {},
-        clienteApellido             : {},
-        clienteNombre               : {},
-        clienteTelefono             : {},
-        clienteCelular              : {},
-        clienteDireccion            : {},
-        clienteEmail                : {},
-        codigoProducto              : {},
-        descripcionProducto         : {},
-        marcaProducto               : {},
-        familiaProducto             : {},
-        serieProducto               : {},
-        problemaProducto            : {},
-        observacionesProducto       : {},
-        fechaReparacion             : {},
+        clienteId                   : {readOnly : true},
+        clienteCodigo               : {required : true, validated : true},
+        clienteApellido             : {required : true, validated : true},
+        clienteNombre               : {required : true, validated : true},
+        clienteTelefono             : {validated : true},
+        clienteCelular              : {validated : true},
+        clienteDireccion            : {validated : true},
+        clienteEmail                : {validated : 'email'},
+        codigoProducto              : {required : true, validated : true},
+        descripcionProducto         : {required : true, readOnly : true},
+        marcaProducto               : {readOnly : true},
+        familiaProducto             : {readOnly : true},
+        serieProducto               : {required : true, validated : true},
+        problemaProducto            : {validated : true},
+        observacionesProducto       : {validated : true},
+        fechaReparacion             : {validated : true},
         tecnico                     : {},
-        costoProducto               : {},
+        costoProducto               : {validated : true},
         codigoProductoCanje         : {},
-        descripcionProductoCanje    : {}
+        descripcionProductoCanje    : {readOnly : true}
     }
 
     function inputsClienteEstado(estado){
@@ -195,11 +195,15 @@
         datosCanje.forEach(element => {
 
             if(tipoReparacion.value == 'C' || tipoReparacion.value == 'E'){
-                element.disabled = false
+                element.disabled                            = false
+                arrayVal.codigoProductoCanje.required       = true
+                arrayVal.descripcionProductoCanje.required  = true
             }else {
-                element.disabled = true
-                codigoProductoCanje.value = ''
-                descripcionProductoCanje.value = ''
+                element.disabled                            = true
+                codigoProductoCanje.value                   = ''
+                descripcionProductoCanje.value              = ''
+                arrayVal.codigoProductoCanje.required       = false
+                arrayVal.descripcionProductoCanje.required  = false
             }
         });
         
@@ -212,6 +216,13 @@
     limitaCaracteres(clienteTelefono, 60)
     limitaCaracteres(clienteCelular, 25)
     limitaCaracteres(clienteEmail, 50)
+    limitaCaracteres(remitoCliente, 45)
+    limitaCaracteres(codigoProducto, CODIGO_LENGTH)
+    limitaCaracteres(serieProducto, 10)
+    limitaCaracteres(problemaProducto, 200)
+    limitaCaracteres(observacionesProducto, 500)
+    limitaCaracteres(costoProducto, 15)
+    limitaCaracteres(codigoProdCanje, CODIGO_LENGTH)
 
     cargaSucursales(sucursalRecepcion).then(() => {
         cargaLugaresRecepcion(lugarRecepcion).then(() => {
@@ -238,7 +249,7 @@
             xhr.addEventListener('load', () => {
                 if(xhr.status == 200){
                     let respuesta = JSON.parse(xhr.response)
-                    if(respuesta != null){
+                    if(respuesta != null && respuesta != false){
                         descripcionProducto.value   = respuesta.descripcion
                         marcaProducto.value         = respuesta.marca
                         familiaProducto.value       = respuesta.familia
@@ -468,7 +479,7 @@
             xhr.addEventListener('load', () => {
                 if(xhr.status == 200){
                     let respuesta = JSON.parse(xhr.response)
-                    if(respuesta != null && respuesta.canje_flag == 'S'){
+                    if(respuesta != null && respuesta != false && respuesta.canje_flag == 'S'){
                         descripcionProdCanje.value  = respuesta.descripcion
                     } else {
                         descripcionProdCanje.value  = ''
@@ -488,10 +499,14 @@
     lugarRecepcion.addEventListener('change', e => {
         e.preventDefault()
         if(lugarRecepcion.value == '2'){
-            tecnico.disabled = false
+            tecnico.disabled            = false
+            arrayVal.tecnico.required   = true
+            arrayVal.tecnico.noCero     = true
         } else {
-            tecnico.disabled = true
-            tecnico.value = '0'
+            tecnico.disabled            = true
+            tecnico.value               = '0'
+            arrayVal.tecnico.required   = false
+            arrayVal.tecnico.noCero     = false
         } 
     })
 
@@ -565,24 +580,24 @@
                                                                         <h6>COMPROBANTE NO VALIDO COMO FACTURA</h6>
                                                                         <h6 style="margin:5px;">Fecha: ${respuesta.valores.frecepcion}</h6>
                                                                         <h6 style="margin:5px;">Nro. de Orden: ${respuesta.valores.reparacion_id}</h6>
-                                                                        <h6 style="margin:5px;">Modelo: ${respuesta.valores.producto_id}</h6>
+                                                                        <h6 style="margin:5px;">Modelo: ${respuesta.valores.modelo}</h6>
                                                                         <h6 style="margin:5px;">Nro. de Serie: ${respuesta.valores.nro_serie}</h6>
                                                                         <h6 style="margin:5px;">Probl.: ${respuesta.valores.problema}</h6>
                                                                         <h6 style="margin:5px;">Obs.: ${respuesta.valores.observaciones}</h6>
-                                                                        <h6 style="margin:5px;">Nombre: ${respuesta.valores.cliente_id}</h6>
-                                                                        <h6 style="margin:5px;">Teléfono: ${respuesta.valores.cliente_id}</h6>
-                                                                        <h6 style="margin:5px;">Celular: ${respuesta.valores.cliente_id}</h6>
-                                                                        <h6 style="margin:5px;">OPERACION: ${respuesta.valores.tipo_ingreso_id}</h6>
+                                                                        <h6 style="margin:5px;">Nombre: ${respuesta.valores.apellido_cliente}, ${respuesta.valores.nombre_cliente}</h6>
+                                                                        <h6 style="margin:5px;">Teléfono: ${respuesta.valores.telefono_cliente}</h6>
+                                                                        <h6 style="margin:5px;">Celular: ${respuesta.valores.celular_cliente}</h6>
+                                                                        <h6 style="margin:5px;">OPERACION: ${respuesta.valores.tipo_ingreso}</h6>
                                                                         <h6 style="margin:5px;">GARANTÍA: ${respuesta.valores.reclama_garantia}</h6>
                                                                         <h6 style="margin:5px;">Fecha de Retiro: CONSULTAR</h6>
-                                                                        <h6 style="margin:5px;">Atendido por: ${respuesta.valores.usuario_id}</h6>
+                                                                        <h6 style="margin:5px;">Atendido por: ${respuesta.valores.apellido_usuario}, ${respuesta.valores.nombre_usuario}</h6>
                                                                         <h4>COPIA PARA EL CLIENTE</h4>
                                                                         <h5>********************************</h5>
                                                                         <h5>NRO. DE ORDEN: ${respuesta.valores.reparacion_id}</h5>
                                                                         <h5>NRO. DE SERIE: ${respuesta.valores.nro_serie}</h5>
-                                                                        <h5>OPERACION: ${respuesta.valores.tipo_ingreso_id}</h5>
-                                                                        <h5>${respuesta.valores.producto_id}</h5>
-                                                                        <h5>CLIENTE: ${respuesta.valores.cliente_id}</h5>
+                                                                        <h5>OPERACION: ${respuesta.valores.tipo_ingreso}</h5>
+                                                                        <h5>${respuesta.valores.modelo}</h5>
+                                                                        <h5>CLIENTE: ${respuesta.valores.apellido_cliente}, ${respuesta.valores.nombre_cliente}</h5>
                                                                         <h5>********************************</h5>                                                               
                                                                     `);
                                             ticket2.window.print();
