@@ -2,13 +2,13 @@
 // Import PHPMailer classes into the global namespace
 // These must be at the top of your script, not inside a function
 // Load Composer's autoloader
-/*IMPORTANTE!!!!!!!!!!!!!!!!!!!!!!!! MODO DEV (Descomentar ambas líneas, 7,8 y 11), ELSE, se deben comentar (7,8 y 12)!!!*/
+/*IMPORTANTE!!!!!!!!!!!!!!!!!!!!!!!! PHP 7 (Descomentar ambas líneas, 6,7,8 y 10), PHP 5, se deben comentar (6,7,8 y 10)!!!*/
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
   
 require '../../../vendor/autoload.php';
-//require_once 'vendor/PHPMailer_5/PHPMailerAutoload.php';
+//require_once '../../../vendor/PHPMailer_5/PHPMailerAutoload.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                            
