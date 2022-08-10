@@ -184,6 +184,7 @@
                     <div class="col-sm-12 text-center">
                         <button class="btn btn-lg btn-success" type="button" id="btnGenerarOrden">Generar orden</button>
                         <button class="btn btn-lg btn-danger" type="button" id="btnCancelarOrden">Cancelar</button>
+                        <div id="respuesta" class="text-center"></div>
                     </div>
                 </div>
             </div>

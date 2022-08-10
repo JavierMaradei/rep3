@@ -1,5 +1,6 @@
 <?php
     session_start();
+    date_default_timezone_set('America/Argentina/Buenos_Aires');
     include_once('../../../includes/funciones.php');
     include_once('../../../includes/config.php');
 
@@ -29,7 +30,6 @@
         $clienteCelular             = filter_var($_POST['clienteCelular'], FILTER_SANITIZE_STRING);
         $clienteDireccion           = filter_var($_POST['clienteDireccion'], FILTER_SANITIZE_STRING);
         $clienteEmail               = filter_var($_POST['clienteEmail'], FILTER_SANITIZE_STRING);
-        $fechaRecepcion             = new DateTime($_POST['fechaRecepcion']);
         $sucursalRecepcion          = filter_var($_POST['sucursalRecepcion'], FILTER_SANITIZE_STRING);
         $lugarRecepcion             = filter_var($_POST['lugarRecepcion'], FILTER_SANITIZE_STRING);
         $tipoReparacion             = filter_var($_POST['tipoReparacion'], FILTER_SANITIZE_STRING);
@@ -47,7 +47,6 @@
         $perfilSirep                = recuperaPerfil($_SESSION['usuario_id']);
         $fecha                      = new DateTime();
         $formateadaArg              = $fecha->format("Y-m-d H:i:s");
-        $fechaRecepcion             = $fechaRecepcion->format("Y-m-d H:i:s");
         $fechaReparacion            = $fechaReparacion->format("Y-m-d");
         $fechaDefault               = $fechaDefault->format("Y-m-d");
         $productoId                 = recuperaIdProducto($codigoProducto);
@@ -176,7 +175,7 @@
                             sucursal_id, 
                             tecnico_id
                         ) VALUES (
-                            '{$fechaRecepcion}',
+                            '{$formateadaArg}',
                             '{$garantia}',
                             '{$flete}',
                             '{$problemaProducto}',
@@ -247,12 +246,20 @@
                                         rep3_clientes.telefono as telefono_cliente,
                                         rep3_clientes.celular as celular_cliente,
                                         rep3_clientes.email as email_cliente,
-                                        rep3_reparaciones.tipo_ingreso_id,
-                                        rep3_tipo_ingreso.descripcion as tipo_ingreso,
                                         rep3_reparaciones.reclama_garantia,
                                         rep3_reparaciones.usuario_id,
                                         rep3_usuarios.nombre as nombre_usuario,
-                                        rep3_usuarios.apellido as apellido_usuario
+                                        rep3_usuarios.apellido as apellido_usuario,
+                                        Case rep3_reparaciones.tipo_ingreso_id
+                                        when 'R' then 'REPARACIÓN'
+                                        when 'P' then 'PRESUPUESTO'
+                                        when 'C' then 'PLAN CANJE'
+                                        when 'E' then 'CAMBIO EQUIPO'
+                                        end As tipo_ingreso,
+                                        Case rep3_reparaciones.tipo_atencion_id
+                                        when '1' then 'REVISAR'
+                                        when '2' then 'REPARAR EN EL MOMENTO'
+                                        end As tipo_atencion
                                     FROM 
                                         rep3_reparaciones
                                     INNER JOIN
@@ -263,10 +270,6 @@
                                         rep3_clientes
                                     ON
                                         rep3_reparaciones.cliente_id = rep3_clientes.cliente_id 
-                                    INNER JOIN
-                                        rep3_tipo_ingreso
-                                    ON
-                                        rep3_reparaciones.tipo_ingreso_id = rep3_tipo_ingreso.tipo_ingreso_id 
                                     INNER JOIN
                                         rep3_usuarios
                                     ON
@@ -291,4 +294,9 @@
 
         header("Content-type: aplication/json");
         echo json_encode($arrayRespuesta, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
+
+        if($clienteEmail != '' && $arrayRespuesta['estado'] == 'Transacción exitosa'){
+            require_once('envioMail.php');
+        }
+
     };

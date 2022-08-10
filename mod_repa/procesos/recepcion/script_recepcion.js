@@ -37,6 +37,7 @@
     let buscarProductoCanje         = document.querySelector('#buscarProductoCanje')
     let btnGenerarOrden             = document.querySelector('#btnGenerarOrden')
     let btnCancelarOrden            = document.querySelector('#btnCancelarOrden')
+    let respBtn                     = document.querySelector('#respuesta')//Div para mostrar los avisos de espera
     let nuevoNroSerie               = false
     let nuevoCliente                = false
     let datosCliente                = [clienteId, clienteApellido, clienteNombre, clienteTelefono, clienteCelular, clienteDireccion, clienteEmail]
@@ -103,6 +104,7 @@
     }
 
     function limpieza(){
+        cleanInputs(inputs)
         inputsClienteEstado('inactivos')
         nuevoCliente            = false
         tipoReparacion.value    = 'R'
@@ -111,6 +113,9 @@
         fechaReparacion.value   = hoy
         tecnico.disabled        = true
         tecnico.value           = '0'
+        formData.delete('nuevoCliente')
+        formData.delete('nuevoNroSerie')
+
         recuperaDatosPerfil()
     }
 
@@ -543,8 +548,11 @@
 
                     function (isConfirm) {
                         if (isConfirm) {
-                            let btnAceptarSwal      = document.querySelector('.confirm')
-                            btnAceptarSwal.disabled = true
+                            btnGenerarOrden.disabled    = true
+                            let progreso                = '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span>Generando orden... <br><i>Esta operación puede demorar unos segundos.</i></span>'
+                            respBtn.innerHTML           = progreso //Muestro un aviso de espera                    
+                            let btnAceptarSwal          = document.querySelector('.confirm')
+                            btnAceptarSwal.disabled     = true
                             collectData(inputs, formData)
                             formData.append('nuevoCliente', nuevoCliente)
                             formData.append('nuevoNroSerie', nuevoNroSerie)
@@ -554,6 +562,8 @@
                             xhr.send(formData)
                             xhr.addEventListener('load', () => {
                                 if(xhr.status == 200){
+                                    respBtn.innerHTML = ''
+                                    btnGenerarOrden.disabled = false
                                     let respuesta           = JSON.parse(xhr.response)
                                     btnAceptarSwal.disabled = false
 
@@ -603,7 +613,7 @@
                                             ticket2.window.print();
                                             ticket2.window.close();
 
-                                            //limpiezaBtnCancelarAceptar()
+                                            limpieza()
                                             break;
 
                                         case 'Sesión expirada':
