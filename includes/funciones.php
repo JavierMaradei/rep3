@@ -45,6 +45,23 @@
 	}
 
     /**
+     * Verifica si el usuario logueado es tecnico de calle
+     * @param {string} $email
+     * @return {string}
+     * @version 1.0
+     */
+    function soyTecnico($email){
+
+        $query 			= "SELECT tecnico, usuario_id FROM rep3_usuarios WHERE email = '{$email}'";
+
+        $conexion       = conectar(DB_DSN, DB_USER, DB_PASS);
+        $sentenciaSQL	= $conexion->prepare($query);
+        $sentenciaSQL	-> execute();
+        $tecnico 		= $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
+        return $tecnico;
+	}
+
+    /**
      * Template de los tipos de alimentacion de los equipos
      * @return {string}
      * @version 1.0

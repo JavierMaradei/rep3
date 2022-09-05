@@ -15,25 +15,13 @@
                 <div class="col-sm-12 mb-2">
                     <label for="filtroOrden" class="form-label">Orden</label>
                     <input type="text" class="form-control" id="filtroOrden"> 
-                </div>
-                <div class="col-sm-12 mb-2">
-                    <label for="filtroTipo" class="form-label">Tipo Ingreso</label>
-                    <select class="form-select" id="filtroTipo"><?php echo tiposReparacion(); ?></select>
-                </div>
-                <div class="col-sm-12 mb-2">
-                    <label for="filtroAtencion" class="form-label">Atención</label>
-                    <select class="form-select" id="filtroAtencion"><?php echo tiposAtencion(); ?></select>
-                </div>
-                <div class="col-sm-12 mb-2">
-                    <label for="filtroLugarRecepcion" class="form-label">Lugar de Recepción</label>
-                    <select class="form-select" id="filtroLugarRecepcion"></select>
-                </div>                    
+                </div>             
                 <div class="col-sm-12 mb-2">
                     <label for="filtroFechas" class="form-label">Fecha</label>
                     <div class="input-group mb-3">
-                        <input type="date" id="filtroDesde" class="form-control" value="<?php echo date('Y-m-d'); ?>">
+                        <input type="date" id="filtroDesde" class="form-control">
                         <span class="input-group-text">hasta</span>
-                        <input type="date" id="filtroHasta" class="form-control" value="<?php echo date('Y-m-d'); ?>">
+                        <input type="date" id="filtroHasta" class="form-control">
                     </div>
                 </div>
             </form>
