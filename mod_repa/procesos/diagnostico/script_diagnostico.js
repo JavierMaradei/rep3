@@ -1,12 +1,6 @@
 (function iniciaDiagnostico() {
-    let btnBuscarPrefiltro      = document.querySelector('#btnBuscarPrefiltro')
-    let btnCancelarPrefiltro    = document.querySelector('#btnCancelarPrefiltro')
-    let formPrefiltro           = document.querySelector('#formPrefiltro')
-    let inputsPrefiltro         = formPrefiltro.querySelectorAll('input,select,textarea')
-    let formData                = new FormData()
-    let filtroOrden             = document.querySelector('#filtroOrden')
-    let filtroDesde             = document.querySelector('#filtroDesde')
-    let filtroHasta             = document.querySelector('#filtroHasta')
+    let formData    = new FormData()
+    let sideBar     = document.querySelector('#root')
 
     //Declaración del complemento DataTable
     let tabla = $('#tabla_diagnostico').DataTable( {
@@ -24,8 +18,8 @@
         "order": [[1,'asc'], [0,'asc']],
         "columns": [  
             {"data" : "reparacion_id",
-            "render": function ( data, type, row, meta ) {
-                return '<a class="task-item" href="'+data+'">' + data + '</a>';
+                "render": function ( data, type, row, meta ) {
+                    return '<a class="reparacion-item" href="'+data+'">' + data + '</a>';
                 }, 
             },
             {"data" : "frecepcion"},
@@ -76,19 +70,65 @@
         },
     })
 
-    btnBuscarPrefiltro.addEventListener('click', e => {
+    //Tomo el link de la tabla con el ID del registro
+    $(document).on('click', '.reparacion-item', (e) => {
         e.preventDefault()
-        //collectData(inputs, formData)
-        tabla.ajax.reload()
-
+        console.log(e.target.innerText)
+        sideBar.classList.add("sb--show")
     })
 
-    btnCancelarPrefiltro. addEventListener('click', e => {
-        e.preventDefault()
-        filtroOrden.value = ''
-        filtroDesde.value = ''
-        filtroHasta.value = ''
-    })
+    function accionesPrefiltro(){
+        let btnPrefiltro            = document.querySelector('#btnPrefiltro')
+        let formPrefiltro           = document.querySelector('#formPrefiltro')
+        let filtroOrden             = document.querySelector('#filtroOrden')
+        let filtroDesde             = document.querySelector('#filtroDesde')
+        let filtroHasta             = document.querySelector('#filtroHasta')
+        let btnBuscarPrefiltro      = document.querySelector('#btnBuscarPrefiltro')
+        let btnCancelarPrefiltro    = document.querySelector('#btnCancelarPrefiltro')
+        let btnCerrarModalPrefiltro = document.querySelector('#btnCerrarModalPrefiltro')
+        let btnCloseModalPrefiltro  = document.querySelector('#btnCloseModalPrefiltro')
+        let inputsFiltro            = document.querySelectorAll('#filtroOrden, #filtroDesde, #filtroHasta')
+
+        btnPrefiltro.addEventListener('click', e => {
+            e.preventDefault()
+            $('#modalPrefiltro').show()
+        })
+
+        btnCerrarModalPrefiltro.addEventListener('click', e => {
+            e.preventDefault()
+            $('#modalPrefiltro').hide()
+        })
+
+        btnCloseModalPrefiltro.addEventListener('click', e => {
+            e.preventDefault()
+            $('#modalPrefiltro').hide()
+        })
+
+        btnBuscarPrefiltro.addEventListener('click', e => {
+            e.preventDefault()
+            tabla.ajax.reload()
+            $('#modalPrefiltro').hide()
+        })
+    
+        btnCancelarPrefiltro. addEventListener('click', e => {
+            e.preventDefault()
+            filtroOrden.value = ''
+            filtroDesde.value = ''
+            filtroHasta.value = ''
+            tabla.ajax.reload()
+        })
+
+        inputsFiltro.forEach(element => {
+            element.addEventListener('keypress', e => {
+                if(e.keyCode === 13){
+                    e.preventDefault()
+                    btnBuscarPrefiltro.click()
+                }
+            })
+        });
+    }
+
+    accionesPrefiltro()
 
 
 })()

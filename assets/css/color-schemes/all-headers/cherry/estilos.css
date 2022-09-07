@@ -2,3 +2,11 @@ input, select, textarea {
     color:black !important;
     font-size: 0.85rem !important;
 }
+
+.sb--show .sidebar {
+    width: 90% !important;
+}
+
+.shadow {
+    box-shadow: 0 0 10px grey !important;
+}

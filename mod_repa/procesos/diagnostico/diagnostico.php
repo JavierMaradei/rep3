@@ -6,14 +6,13 @@
             <div class="dropdown">
 
                 <!-- Toggler -->
-                <button class="header__btn btn btn-icon btn-sm" type="button" data-bs-toggle="dropdown" aria-label="User dropdown" aria-expanded="false">
+                <!-- <button class="header__btn btn btn-icon btn-sm" type="button" data-bs-toggle="dropdown" aria-label="User dropdown" aria-expanded="false">
                     <i class="demo-psi-male"></i>
-                </button>
+                </button> -->
 
-                <!-- User dropdown menu -->
-                <div class="dropdown-menu dropdown-menu-end w-md-600px">
-                    <?php include('mod_repa/prefiltro/prefiltro.php');?>
-                </div>
+                <button class="header__btn btn btn-icon btn-sm" type="button" id="btnPrefiltro">
+                    <i class="fa fa-search fa-2x"></i>
+                </button>
             </div>
             <!-- End - User dropdown -->
 
@@ -25,7 +24,7 @@
 
     <div class="col-md-12 mb-3">
         <div class="card h-100">
-            <h4 class="card-header bg-dark text-white text-center"><i>Tabla</i></h4>
+            <h4 class="card-header bg-dark text-white text-center"><i>Ordenes para diagnósticar</i></h4>
             <div class="card-body">
                 <div class="row mb-2">
                     <div class="table-responsive">
@@ -52,5 +51,7 @@
         </div>
     </div> 
 </div>
+
+<?php include('mod_repa/prefiltro/prefiltro.php');?>
 
 <script src="./mod_repa/procesos/diagnostico/script_diagnostico.js?v=<?php echo uniqid();?>"></script>
