@@ -94,9 +94,21 @@
                         </div>
                     </div>
                     <div class="row mb-2">
+                        <label for="diagnosticadorUsuarios" class="col-sm-2 col-form-label" title="Diagnosticador">Diag.</label>
+                        <div class="col-sm-10 text-center">
+                            <input type="checkbox" id="diagnosticadorUsuarios" class="form-check-input bigCheck">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
                         <label for="reparadorUsuarios" class="col-sm-2 col-form-label" title="Reparador">Repa.</label>
                         <div class="col-sm-10 text-center">
                             <input type="checkbox" id="reparadorUsuarios" class="form-check-input bigCheck">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <label for="embaladorUsuarios" class="col-sm-2 col-form-label" title="Embalador">Emb.</label>
+                        <div class="col-sm-10 text-center">
+                            <input type="checkbox" id="embaladorUsuarios" class="form-check-input bigCheck">
                         </div>
                     </div>
                     <div class="row mb-2">

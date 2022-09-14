@@ -543,11 +543,8 @@ function cargaPlantillaFicha(orden, lectura = false){
  */
 function datosFichaSolapa1(numero){
     return new Promise(function(resolve, reject) {
-
-        let equipoRecuperar = document.querySelector('#equipoRecuperar')
-
         let xhr = new XMLHttpRequest
-        xhr.open('GET', 'mod_sirep/admin/buscar/generica/reparaciones_single.php?id='+numero)
+        xhr.open('GET', 'mod_repa/querys/reparaciones_single.php?orden='+numero)
         xhr.send()
         xhr.addEventListener('load', () => {
             if(xhr.status == 200){
@@ -557,262 +554,45 @@ function datosFichaSolapa1(numero){
                 if (Object.entries(respuesta).length === 0) {
                     cleanInputs(inputsFicha)
                 } else {
-                    $('#tecnico').val(respuesta[0].tecnico_id);
-                    $('#anuladoFicha').val(respuesta[0].anulado);
-                    $('#finalizadoFicha').val(respuesta[0].finalizado);
-                    $('#ordenFicha').val(respuesta[0].numero);
-                    $('#ordenFicha2').val(respuesta[0].numero);
-                    respuesta[0].equipoRecuperado == 'S' ? $('#equipoRecuperar').prop('checked', true) : $('#equipoRecuperar').prop('checked', false);
-                    if(equipoRecuperar.disabled == true){
-                        equipoRecuperar.parentNode.title = 'Dato no modificable'
-                    } else {
-                        equipoRecuperar.parentNode.title = ''
-                    }
-                    $('#lugarFicha').val(respuesta[0].lugar);
-                    $('#clienteCodigoFicha').val(respuesta[0].codigo);
-                    $('#clienteFicha').val(respuesta[0].razonsocial);
-                    $('#clienteFicha2').val(respuesta[0].razonsocial);
-                    $('#clienteAntisarro').val(respuesta[0].clienteAntisarro);
-                    $('#telefonoFicha').val(respuesta[0].telefonoCliente);
-                    $('#celularFicha').val(respuesta[0].celularCliente);
-                    $('#clienteCelular').val(respuesta[0].celularCliente);
-                    $('#mailFicha').val(respuesta[0].mailCliente);
-                    $('#ubicacionFicha').val(respuesta[0].planta);
-                    $('#referenciaFicha').val(respuesta[0].referenciaCliente);
-                    $('#emisorFicha').val(respuesta[0].emisor);
-                    $('#fechaRetiro').val(respuesta[0].fretiro);
-                    $('#fechaRetiroFicha').val(respuesta[0].fretiro);
-                    $('#fechaRetiroFormatDate').val(respuesta[0].fretiroFormatDate);
-                    $('#fechaEmisionFicha').val(respuesta[0].frecepcion);
-                    $('#fechaReparacionFicha').val(respuesta[0].freparacion);
-                    $('#tipoFicha').val(respuesta[0].rep_pres);
-                    if(respuesta[0].rep_pres == 'N'){$('#sinRepararFicha').prop('checked', true)} else {$('#sinRepararFicha').prop('checked', false)}
-                    $('#atencionFicha').val(respuesta[0].tipo);
-                    $('#tipoAtencionFicha').val(respuesta[0].tipoAtencion_id);
-                    $('#garantiaFicha').val(respuesta[0].reclamagarantia);
-                    if(respuesta[0].reclamagarantia == 'S'){
-                        $('#garantiaFicha').css({'background':'#FF8080','font-weight':'bold'});
-                    } else {
-                        $('#garantiaFicha').css({'background':'#EEEEEE','font-weight':'normal'});
-                    }
-                    $('#fleteFicha').val(respuesta[0].flete);
-                    $('#antisarroFicha2').val(respuesta[0].antisarro);
-                    $('#reduccionTurbinaFicha2').val(respuesta[0].reduccion_turbina);
-                    $('#mediaUnion2').val(respuesta[0].media_union);
-                    $('#serviceFicha').val(respuesta[0].pedido_service);
-                    $('#productoFicha').val(respuesta[0].producto);
-                    $('#productoFicha2').val(respuesta[0].producto);
-                    $('#productoCodigo').val(respuesta[0].productocodigo);
-                    $('#codigoAdonix').val(respuesta[0].codigoAdonix);
-                    $('#productoDescripcion').val(respuesta[0].productoDescripcion);
-                    $('#nroDeSerieFicha').val(respuesta[0].nroserie);
-                    $('#nroDeSerieFicha2').val(respuesta[0].nroserie);
-                    $('#serieGarantiaFicha').val(respuesta[0].nroSerieGarantia);
-                    $('#problemaFicha').val(respuesta[0].problema);
-                    $('#observacionFicha').val(respuesta[0].observaciones);
-                    $('#costoFicha').val(respuesta[0].costo);
-                    $('#diagnosticoFicha').val(respuesta[8].combo);
-                    $('#diagnosticadorFicha').val(respuesta[0].diagnosticador_id);//Este dato se utiliza en la ficha_diagnostico para mostrar el diagnosticador en caso de ser un presupuesto
-                    $('#armoFicha').val(respuesta[9].codigo);
-                    $('#presupuestoFicha').val(respuesta[0].nropresupuesto);
-                    respuesta[9] ? $('#armadorNombreFicha').val(respuesta[9].combo) : $('#armadorNombreFicha').val('')
-                    respuesta[9] ? $('#armadorFicha').val(respuesta[9].codigo) : $('#armadorFicha').val('')
-                    $('#btnDatosClientes').val(respuesta[0].cliente_id);
-                    $('#btnHistorialService').val(respuesta[0].nroserie);
-                    $('#fdiagnostico').val(respuesta[0].fdiagnostico);
-                    $('#diagnostico').val(respuesta[8].combo);
-                    $('#estadoFicha').val(respuesta[0].estadoreparacion_id);
-                    $('#nombreEstadoFicha').val(respuesta[0].nombreestado);
-                    $('#motivoFicha').val(respuesta[0].motivocargoasignado);
-                    $('#motivoFichaResolucion').val(respuesta[0].motivoscargosasignados_id);
-                    respuesta[0].estadoreparacion_id == '2' ? $('#tipoReparacionFicha').val(respuesta[0].reparacion_recambio) : $('#tipoReparacionFicha');
-                    $('#observacionFichaEstado').val(respuesta[0].reparacion_detalle);
-                    $('#lugarFichaId').val(respuesta[0].lugarrecep_id);
-                    $('#codigoArmo').val(respuesta[9].codigo);
-                    $('#estanteFicha').val(respuesta[0].estante_id);
-                    $('#cajonFicha').val(respuesta[0].cajon);
-                    $('#embalo').val(respuesta[10].combo);
-                    respuesta[10] ? $('#embaloFicha').val(respuesta[10].codigo) : $('#embaloFicha').val('')
-                    $('#ordenDeCompraFicha').val(respuesta[0].oc_cliente);
-                    $('#cargoForma').val(respuesta[0].formasderetiro_id);
-                    if (respuesta[0].lugarrecep_id == '1' && respuesta[0].finalizado == 'S') {
-                        $('#divTicket').show()
-                        if(respuesta[0].retiroconticket == 'S'){
-                            $('#ticketS').prop('checked',true);
-                            $('#ticketN').attr('disabled', 'disabled');
-                        }else {
-                            $('#ticketN').prop('checked',true);
-                            $('#ticketS').attr('disabled', 'disabled');
-                        }
-                    } else {
-                        $('#divTicket').hide()
-                    }
+                    $('#ordenFicha').val(respuesta.reparacion_id);
+                    $('#lugarRecepcionFicha').val(respuesta.lugar_recepcion_id);
+                    $('#sucursalRecepcionFicha').val(respuesta.sucursal_id);
+                    $('#tecnicoFicha').val(respuesta.tecnico_id);
+                    $('#emisorFicha').val(respuesta.usuario_id);
+                    $('#fechaRecepcionFicha').val(respuesta.fechaRecepcionFinal);
+                    respuesta.fdiagnostico  == '1900-01-01 00:00:00' ? $('#fechaDiagnosticoFicha').val('')  : $('#fechaDiagnosticoFicha').val(respuesta.fechaDiagnosticoFinal);
+                    respuesta.freparacion   == '1900-01-01 00:00:00' ? $('#fechaReparacionFicha').val('')   : $('#fechaReparacionFicha').val(respuesta.fechaReparacionFinal);
+                    respuesta.fembalaje     == '1900-01-01 00:00:00' ? $('#fechaEmbalajeFicha').val('')     : $('#fechaEmbalajeFicha').val(respuesta.fechaEmbalajeFinal);
+                    respuesta.fresolucion   == '1900-01-01 00:00:00' ? $('#fechaCierreFicha').val('')       : $('#fechaCierreFicha').val(respuesta.fechaResolucionFinal);
+                    $('#clienteIdFicha').val(respuesta.cliente_id);
+                    $('#clienteDireccionFicha').val(respuesta.cliente_direccion);
+                    $('#clienteApellidoFicha').val(respuesta.cliente_apellido);
+                    $('#clienteNombreFicha').val(respuesta.cliente_nombre);
+                    $('#clienteTelCelFicha').val(respuesta.cliente_telefono+' - '+respuesta.cliente_celular);
+                    $('#clienteEmailFicha').val(respuesta.cliente_email);
+                    $('#tipoReparacionFicha').val(respuesta.tipo_ingreso);
+                    $('#atencionFicha').val(respuesta.tipo_atencion);
+                    respuesta.reclama_garantia  == 'S'  ? $('#garantiaFicha').val('Si') : $('#garantiaFicha').val('No');
+                    respuesta.flete == 'S'              ? $('#fleteFicha').val('Si')    : $('#fleteFicha').val('No');
+                    $('#remitoClienteFicha').val(respuesta.remito_cliente);
+                    $('#marcaProductoFicha').val(respuesta.producto_marca);
+                    $('#familiaProductoFicha').val(respuesta.producto_familia);
+                    $('#productoFicha').val(respuesta.producto_codigo+' - '+respuesta.producto_descripcion);
+                    $('#serieProductoFicha').val(respuesta.nro_serie);
+                    $('#problemaProductoFicha').val(respuesta.problema);
+                    $('#observacionesProductoFicha').val(respuesta.observaciones);
+                    $('#estadoFicha').val(respuesta.estado_id);
+                    $('#estanteFicha').val(respuesta.estante_id);
+                    $('#detalleEmbalajeFicha').val(respuesta.reparacion_detalle);
+                    $('#diagnosticadorFicha').val(respuesta.diagnosticador_id);
+                    $('#reparadorFicha').val(respuesta.reparador_id);
+                    $('#embaladorFicha').val(respuesta.embalador_id);
+                    $('#codigoProductoCanje').val(respuesta.embalador_id);
+                    $('#descripcionProductoCanje').val(respuesta.embalador_id);
+                    $('#remitoResolucionFicha').val(respuesta.remito_despacho);
 
-                    if (respuesta[0].lugarrecep_id == '1') {
-                        $('#divTicket').show()
-                        if(respuesta[0].retiroconticket == 'S'){
-                            $('#ticketSResolucion').prop('checked',true);
-                            /* $('#ticketNResolucion').attr('disabled', 'disabled'); */
-                        }else {
-                            $('#ticketNResolucion').prop('checked',true);
-                            /* $('#ticketSResolucion').attr('disabled', 'disabled'); */
-                        }
-                    } else {
-                        $('#divTicket').hide()
-                    }
 
-                    if(respuesta[10]){
-                        $('#embalo').val(respuesta[10].combo);
-                        if (respuesta[10].combo == "SIN DEFINIR"){
-                            $('#fechaEmbalo').val('');
-                        } else {
-                            $('#fechaEmbalo').val(respuesta[0].fechaEmbalaje);
-                        }
-                    }
-                    if (respuesta[1] == "") {
-                        //$('#divPresupuesto').hide();
-                        $('#cajon').val(respuesta[0].cajon);
-                        $('#cajonNumero').val(respuesta[0].nropresupuesto);
-                    } else {
-                        $('#presupuestoModal').val(respuesta[1].combo);
-                        $('#fechaPresupuesto').val(respuesta[1].fecha);
-                        $('#cajon').val(respuesta[0].cajon);
-                        $('#cajonNumero').val(respuesta[0].nropresupuesto);
-                        //$('#divPresupuesto').show();
-                    }
-                    switch (respuesta[0].RepPres) {
-                        case "PLAN CANJE":
-                            $('#resolucion').val("Canje por Producto");
-                            break;
-                        case "CAMBIO EQUIPO":
-                            $('#resolucion').val("Cambio de equipo");
-                            break;
-                        default:
-                            $('#resolucion').val(respuesta[3].formaderetiro);
-                            break;
-                    }
-                    if(respuesta[7] != ''){
-                        $('#codigoCanje').val(respuesta[7].codigo_adonix)
-                        $('#descripcionCanje').val(respuesta[7].descrip_adonix)
-                        $('#codigoCanjeResolucion').val(respuesta[7].codigo_adonix)
-                        $('#descripcionCanjeResolucion').val(respuesta[7].descrip_adonix)
-                        $('#divCanje').show()
-                        $('#btnBuscarBombaCanje').prop('disabled', true)
-                        $('#codigoCanje').prop('readonly', true)
-                    }else {
-                        $('#codigoCanje').val('')
-                        $('#descripcionCanje').val('')
-                        $('#codigoCanjeResolucion').val('')
-                        $('#descripcionCanjeResolucion').val('')
-                        $('#divCanje').hide()
-                        $('#btnBuscarBombaCanje').prop('disabled', false)
-                        $('#codigoCanje').prop('readonly', false)
-                    }
-                    $('#remitoPrefijo').val(respuesta[0].prefijo_remito);
-                    $('#remitoSufijo').val(respuesta[0].numero_remito);
-                    $('#remitoCliente').val(respuesta[0].remitoCliente);
-                    let fdespacho = moment(respuesta[0].fecha_despacho, 'DD/MM/YYYY').format('YYYY-MM-DD')
-                    let fhoy      = moment(new Date()).format ('YYYY-MM-DD')
-                    $('#fechaRemito').val(respuesta[0].fecha_despacho);
-                    $('#fechaRemito2').val(respuesta[0].fecha_despacho);
-                    if(respuesta[0].fecha_despacho == ''){
-                        $('#fechaRemito3').val(fhoy);
-                    } else {
-                        $('#fechaRemito3').val(fdespacho);
-                    }
-                    $('#formasRetiro').val(respuesta[3].formaderetiro);
-                    $('#productoIdFicha').val(respuesta[0].producto_id);
-                    $('#estanteDescripcionFicha').val(respuesta[0].estante2);
-                    $('#estanteDescripcionFicha2').val(respuesta[0].estante2);
-                    $('#armoDescripcionFicha').val(respuesta[9].combo);
-                    if(respuesta[5] != ''){
-                        $('#divFechaCierre').show();
-                        $('#fechaCierreFicha').val(respuesta[5].fecha_finalizado);
-                        template += `<div class="alert alert-warning text-center"><b>Orden cerrada por ${respuesta[5].usuario} el ${respuesta[5].fecha_finalizado}</b></div>`
-                    } else {
-                        $('#fechaCierreFicha').val('');
-                        $('#divFechaCierre').hide();
-                    }
-                    if(respuesta[11].media_union == 'S'){
-                        if(respuesta[0].media_union == 'S'){
-                            swal({
-                                title   : "Atención!!!",
-                                text    : `El equipo ingresó con media unión`,
-                                type    : "warning",
-                            });
-                            template += `<div class="alert alert-warning text-center"><b>El equipo ingresó con media unión</b></div>`
-                        }  else{
-                            template += `<div class="alert alert-warning text-center"><b>El equipo NO ingresó con media unión</b></div>`
-                        }
-                    }
-                    if(respuesta[0].suspension == 'S'){
-                        template += `<div class="alert alert-warning text-center"><b>Armado requiere suspensión</b></div>`
-                    }
-                    if(respuesta[0].antisarro == 'S'){
-                        $('#antisarroFicha').prop('checked', true);
-                        template += `<div class="alert alert-warning text-center"><b>ANTISARRO</b></div>`
-                    } else {
-                        $('#antisarroFicha').prop('checked', false);
-                    }
-                    if(respuesta[0].reduccion_turbina == 'S'){
-                        template += `<div class="alert alert-warning text-center"><b>REDUCCIÓN TURBINA</b></div>`
-                    }
-                    let conflicto = equipoConflictivo(respuesta[0].productocodigo, respuesta[0].nroserie)
-                    if(conflicto){
-                        template += `<div class="alert alert-danger text-center"><b>AVISAR A SERVICIO TÉCNICO</b></div>`
-                    }
-                    if(respuesta[0].estadoreparacion_id != '4'){
-                        if(respuesta[0].facturada == 'S' || respuesta[12] != ''){
-                            let fechaFpf = ''
-                            let fechaFac = ''
-                            if(respuesta[12].FECHA_FPF != '01/01/1900'){fechaFpf = respuesta[12].FECHA_FPF}
-                            if(respuesta[12].FECHA_FAC != '01/01/1900'){fechaFac = respuesta[12].FECHA_FAC}
-                            if(respuesta[0].facturada == 'S' && respuesta[12] == ''){
-                                swal({
-                                    title   : "Atención!!!",
-                                    text    : `Orden facturada!!!!`,
-                                    type    : "error",
-                                });
-                            } else {
-                                swal({
-                                    html    : true,
-                                    title   : "Atención, órden con proforma/factura!!!",
-                                    text    : ` <p><b>Proforma:</b> ${respuesta[12].NUMERO_FPF} - ${fechaFpf}</p>
-                                                <p><b>Factura:</b> ${respuesta[12].NUMERO_FAC} - ${fechaFac}</p>`,
-                                    type    : "error",
-                                });
-                            }
-                        }
-                    }
-                    $('#mensajesFicha').html(template)
-                    $('#pieFicha').empty();//Vacío el div de respuesta en pie de ficha
-                    $('#cargoAsignadoFicha').empty();//Vacío el div de respuesta del cargo asignado
-                    let divPie              = document.querySelector('#pieFicha')
-                    let divCargoAsignado    = document.querySelector('#cargoAsignadoFicha')
-
-                    if(respuesta[2] != ""){
-                        $('#ordenAnulada').empty();//Vacío el div de respuesta
-                        let anulacion = document.querySelector('#ordenAnulada')
-                        let respuestaQuery2 = document.createElement('h3')
-                        respuestaQuery2.style.color = 'red'
-                        respuestaQuery2.style.textAlign = 'center'
-                        respuestaQuery2.innerHTML = "Orden anulada por "+respuesta[2].usuario+" el "+respuesta[2].fanulado+" / "+respuesta[2].descripcion
-                        anulacion.appendChild(respuestaQuery2)
-                    }
-                    if(respuesta[4] != ""){//Aviso de cargo asignado
-                        let respuestaQuery4 = document.createElement('h3')
-                        respuestaQuery4.style.color = 'red'
-                        respuestaQuery4.style.textAlign = 'center'
-                        respuestaQuery4.innerHTML = "Cargo asignado por "+respuesta[4].usuario+" el "+respuesta[4].fecha
-                        divCargoAsignado.appendChild(respuestaQuery4)
-                    }
-                    if(respuesta[5] != ""){//Aviso de orden cerrada
-                        let respuestaQuery5 = document.createElement('h3')
-                        respuestaQuery5.style.color = 'red'
-                        respuestaQuery5.style.textAlign = 'center'
-                        respuestaQuery5.innerHTML = "Orden cerrada por "+respuesta[5].usuario+" el "+respuesta[5].fecha_finalizado
-                        divPie.appendChild(respuestaQuery5)
-                    }
+                    console.log(respuesta)
                 }
             } else {
                 reject()
@@ -1564,7 +1344,7 @@ function estadosDeReparacionEmbalaje(estado){
 function estadosDeReparacion(estado){
     return new Promise(function(resolve, reject) {
         let xhr = new XMLHttpRequest
-        xhr.open('GET', 'mod_sirep/admin/tablas/estadosReparacion/estadosReparacion_list.php')
+        xhr.open('GET', 'mod_repa/tablas/estadosReparacion/estadosReparacion_list.php')
         xhr.send()
         xhr.addEventListener('load', () => {
             if(xhr.status == 200){
@@ -1572,7 +1352,7 @@ function estadosDeReparacion(estado){
                 resolve(respuesta)
                 let template = '<option value selected>Seleccionar</option>'
                 respuesta.forEach(element => {
-                    template +=`<option value="${element.estadoreparacion_id}">${element.descripcion}</option>`
+                    template +=`<option value="${element.estado_id}">${element.descripcion}</option>`
                 });
                 estado.innerHTML = template
             } else {
@@ -1586,7 +1366,32 @@ function estadosDeReparacion(estado){
  * Carga el select de reparadores. Como parámetro se indica el id del select a utilizar
  * @param {string} campoReparadores
  */
-function listarReparadores(campoReparadores, activo = 's'){
+ function listarReparadoresActivos(campoReparadores, activo = 's'){
+    return new Promise(function(resolve, reject) {
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_sirep/admin/tablas/reparadores/reparadores_list.php?activo='+activo)
+        xhr.send()
+        xhr.addEventListener('load', () => {
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+                resolve(respuesta)
+                let template = '<option value="0" selected>Sin Definir</option>'
+                respuesta.forEach(element => {
+                    template +=`<option value="${element.CODIGO}">${element.APELLIDO+','+element.NOMBRE}</option>`
+                });
+                campoReparadores.innerHTML = template
+            } else {
+                reject()
+            }
+        })
+    })
+}
+
+/**
+ * Carga el select de reparadores. Como parámetro se indica el id del select a utilizar
+ * @param {string} campoReparadores
+ */
+ function listarReparadores(campoReparadores, activo = 's'){
     return new Promise(function(resolve, reject) {
         let xhr = new XMLHttpRequest
         xhr.open('GET', 'mod_sirep/admin/tablas/reparadores/reparadores_list.php?activo='+activo)
@@ -2332,6 +2137,109 @@ function cargaFormasDeResolucionOSCA(select){
 }
 
 /**
+ * Carga el select de Diagnosticadores
+ * @param {string} select
+ * @param {string} activo
+ */
+ function cargaDiagnosticadores(select){
+    return new Promise(function(resolve, reject) {
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_repa/configuracion/usuarios/usuariosDiagnosticadores_list.php')
+        xhr.send()
+        xhr.addEventListener('load', () => {
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+                resolve(respuesta)
+                let template = '<option value= "0"></option>'
+                respuesta.forEach(element => {
+                    template += `<option value= "${element.usuario_id}">${element.apellido+', '+element.nombre}</option>`
+                })
+                select.innerHTML = template
+            } else {
+                reject()
+            }
+        })
+    })
+}
+
+/**
+ * Carga el select de Reparadores
+ * @param {string} select
+ */
+ function cargaReparadores(select){
+    return new Promise(function(resolve, reject) {
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_repa/configuracion/usuarios/usuariosReparadores_list.php')
+        xhr.send()
+        xhr.addEventListener('load', () => {
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+                resolve(respuesta)
+                let template = '<option value= "0"></option>'
+                respuesta.forEach(element => {
+                    template += `<option value= "${element.usuario_id}">${element.apellido+', '+element.nombre}</option>`
+                })
+                select.innerHTML = template
+            } else {
+                reject()
+            }
+        })
+    })
+}
+
+/**
+ * Carga el select de Reparadores activos para el desplegable de diagnostico
+ * @param {string} select
+ * @param {string} activo
+ */
+ function cargaReparadoresActivos(select, activo = 's'){
+    return new Promise(function(resolve, reject) {
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_repa/configuracion/usuarios/usuariosReparadores_list.php?activo='+activo)
+        xhr.send()
+        xhr.addEventListener('load', () => {
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+                resolve(respuesta)
+                let template = '<option value= "0">Seleccionar</option>'
+                respuesta.forEach(element => {
+                    template += `<option value= "${element.usuario_id}">${element.apellido+', '+element.nombre}</option>`
+                })
+                select.innerHTML = template
+            } else {
+                reject()
+            }
+        })
+    })
+}
+
+/**
+ * Carga el select de Embaladores
+ * @param {string} select
+ * @param {string} activo
+ */
+ function cargaEmbaladores(select){
+    return new Promise(function(resolve, reject) {
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_repa/configuracion/usuarios/usuariosEmbaladores_list.php')
+        xhr.send()
+        xhr.addEventListener('load', () => {
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+                resolve(respuesta)
+                let template = '<option value= "0"></option>'
+                respuesta.forEach(element => {
+                    template += `<option value= "${element.usuario_id}">${element.apellido+', '+element.nombre}</option>`
+                })
+                select.innerHTML = template
+            } else {
+                reject()
+            }
+        })
+    })
+}
+
+/**
  * Carga el select de Familias
  * @param {string} select
  * @param {string} activo
@@ -2392,6 +2300,58 @@ function cargaFormasDeResolucionOSCA(select){
     return new Promise(function(resolve, reject) {
         let xhr = new XMLHttpRequest
         xhr.open('GET', 'mod_repa/configuracion/usuarios/usuariosTecnicos_list.php')
+        xhr.send()
+        xhr.addEventListener('load', () => {
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+                resolve(respuesta)
+                let template = '<option value= "0">Seleccionar</option>'
+                respuesta.forEach(element => {
+                    template += `<option value= "${element.usuario_id}">${element.apellido}, ${element.nombre}</option>`
+                })
+                select.innerHTML = template
+            } else {
+                reject()
+            }
+        })
+    })
+}
+
+/**
+ * Carga el select de Tecnicos
+ * @param {string} select
+ * @param {string} activo
+ */
+ function cargaTecnicosFicha(select){
+    return new Promise(function(resolve, reject) {
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_repa/configuracion/usuarios/usuariosTecnicos_list.php')
+        xhr.send()
+        xhr.addEventListener('load', () => {
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+                resolve(respuesta)
+                let template = '<option value= "0"></option>'
+                respuesta.forEach(element => {
+                    template += `<option value= "${element.usuario_id}">${element.apellido}, ${element.nombre}</option>`
+                })
+                select.innerHTML = template
+            } else {
+                reject()
+            }
+        })
+    })
+}
+
+/**
+ * Carga el select de Emisores
+ * @param {string} select
+ * @param {string} activo
+ */
+ function cargaEmisores(select){
+    return new Promise(function(resolve, reject) {
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_repa/configuracion/usuarios/usuariosEmisores_list.php')
         xhr.send()
         xhr.addEventListener('load', () => {
             if(xhr.status == 200){
@@ -2669,15 +2629,15 @@ function plantaUsuario(){
     function estanteList(campo) {
     return new Promise(function(resolve, reject) {
         let xhr = new XMLHttpRequest
-        xhr.open('GET', 'mod_sirep/admin/tablas/estantes/estantes_list.php?activo='+'S')
+        xhr.open('GET', 'mod_repa/tablas/estantes/estantes_list.php?activo='+'S')
         xhr.send()
         xhr.addEventListener('load', () => {
             if(xhr.status == 200){
                 let respuesta = JSON.parse(xhr.response)
                 resolve(respuesta)
-                let template = ''
+                let template = '<option value="0"></option>'
                 respuesta.forEach(element => {
-                    template +=`<option value='${element.estante_id}'>${element.nombre}</option>`
+                    template +=`<option value='${element.estante_id}'>${element.descripcion}</option>`
                 });
                 campo.innerHTML = template
             }

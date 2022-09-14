@@ -28,6 +28,7 @@
                             rep3_usuarios.emisor                as emisorUsuarios, 
                             rep3_usuarios.diagnosticador        as diagnosticadorUsuarios, 
                             rep3_usuarios.reparador             as reparadorUsuarios, 
+                            rep3_usuarios.embalador             as embaladorUsuarios, 
                             rep3_usuarios.tecnico               as tecnicoUsuarios, 
                             rep3_usuarios.sucursal_id           as sucursalUsuarios, 
                             rep3_sucursales.descripcion         as sucursal,

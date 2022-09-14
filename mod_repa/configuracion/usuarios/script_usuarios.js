@@ -25,7 +25,9 @@
         emailUsuarios           : {required: true, maxlength: 50, validated: 'email'},
         claveUsuarios           : {required: true, maxlength: 50, validated: true},
         emisorUsuarios          : {},
+        diagnosticadorUsuarios  : {},
         reparadorUsuarios       : {},
+        embaladorUsuarios       : {},
         tecnicoUsuarios         : {},
         activoUsuarios          : {}
     }

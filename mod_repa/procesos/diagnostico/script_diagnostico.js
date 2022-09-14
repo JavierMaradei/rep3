@@ -1,6 +1,8 @@
 (function iniciaDiagnostico() {
-    let formData    = new FormData()
-    let sideBar     = document.querySelector('#root')
+    let formData            = new FormData()
+    let sideBar             = document.querySelector('#root')
+
+
 
     //Declaración del complemento DataTable
     let tabla = $('#tabla_diagnostico').DataTable( {
@@ -70,11 +72,66 @@
         },
     })
 
+
+
     //Tomo el link de la tabla con el ID del registro
     $(document).on('click', '.reparacion-item', (e) => {
         e.preventDefault()
-        console.log(e.target.innerText)
+        let lugarRecepcionFicha         = document.querySelector('#lugarRecepcionFicha')
+        let sucursalRecepcionFicha      = document.querySelector('#sucursalRecepcionFicha')
+        let tecnicoFicha                = document.querySelector('#tecnicoFicha')
+        let emisorFicha                 = document.querySelector('#emisorFicha')
+        let familiaProductoFicha        = document.querySelector('#familiaProductoFicha')
+        let marcaProductoFicha          = document.querySelector('#marcaProductoFicha')
+        let estadoFicha                 = document.querySelector('#estadoFicha')
+        let estanteFicha                = document.querySelector('#estanteFicha')
+        let diagnosticadorFicha         = document.querySelector('#diagnosticadorFicha')
+        let reparadorFicha              = document.querySelector('#reparadorFicha')
+        let embaladorFicha              = document.querySelector('#embaladorFicha')
+        let reparadorFichaDiagnostico   = document.querySelector('#reparadorFichaDiagnostico')
+
+        $('#divDatosCliente').hide()
+        $('#divDatosRecepcion').hide()
+        $('#divEstadoOrden').hide()
+        $('#divDatosCanje').hide()
+        $('#divDatosRemito').hide()
+        $('#divDatosResolucion').hide()
+        $('#divDatosPresupuesto').hide()
+        $('#divMonitorPresupuesto').hide()
+        $('#divMonitorEmbalaje').hide()
+        $('#divMonitorResolucion').hide()    
+        //console.log(e.target.innerText)
+
+        cargaLugaresRecepcion(lugarRecepcionFicha).then(() => {
+            cargaSucursales(sucursalRecepcionFicha).then(() => {
+                cargaTecnicosFicha(tecnicoFicha).then(() => {
+                    cargaEmisores(emisorFicha).then(() => {
+                        cargaFamilias(familiaProductoFicha).then(() => {
+                            cargaMarcas(marcaProductoFicha).then(() => {
+                                estadosDeReparacion(estadoFicha).then(() => {
+                                    estanteList(estanteFicha).then(() => {
+                                        cargaDiagnosticadores(diagnosticadorFicha).then(() => {
+                                            cargaReparadores(reparadorFicha).then(() => {
+                                                cargaEmbaladores(embaladorFicha).then(() => {
+                                                    cargaReparadoresActivos(reparadorFichaDiagnostico).then(() => {
+                                                        datosFichaSolapa1(e.target.innerText).then(() =>{
+                                                        })   
+                                                    })                                              
+                                                }) 
+                                            }) 
+                                        })  
+                                    }) 
+                                }) 
+                            })
+                        })
+                    })
+                })
+            })
+        })    
+
+
         sideBar.classList.add("sb--show")
+
     })
 
     function accionesPrefiltro(){

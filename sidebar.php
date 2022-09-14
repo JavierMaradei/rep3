@@ -1,6 +1,5 @@
         <aside class="sidebar">
             <div class="sidebar__inner scrollable-content">
-
                 <!-- This element is only visible when sidebar Stick mode is active. -->
                 <div class="sidebar__stuck align-item-center mb-3 px-4">
                     <p class="m-0 text-danger">Close the sidebar =></p>
@@ -32,13 +31,11 @@
 
                 <!-- Sideabar tabs content -->
                 <div class="tab-content sidebar__wrap" id="nav-tabContent">
-
                     <!-- Chat tab Content -->
                     <div id="nav-datos" class="tab-pane fade py-4 show active" role="tabpanel" aria-labelledby="nav-chat-tab">
                         <div class="row p-3">
-
                             <!-- Card datos del ingreso -->
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3" id="divDatosGenerales">
                                 <div class="card h-100 shadow">
                                     <h4 class="card-header bg-danger text-white text-center"><i>Datos generales de Ingreso</i></h4>
                                     <div class="card-body">
@@ -56,7 +53,7 @@
                                                 <select id="sucursalRecepcionFicha" class="form-select" disabled></select>
                                             </div>
                                             <div class="col-sm-6 mb-2">
-                                                <label for="tecnicoFicha" class="form-label">Técnico</label>
+                                                <label for="tecnicoFicha" class="form-label">Técnico Domicilio asignado</label>
                                                 <select id="tecnicoFicha" class="form-select" disabled></select>
                                             </div>
                                             <div class="col-sm-6 mb-2">
@@ -68,7 +65,7 @@
                                 </div>
                             </div>
                             <!-- Card fechas -->
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3" id="divFechas">
                                 <div class="card h-100 shadow">
                                     <h4 class="card-header bg-danger text-white text-center"><i>Fechas generales</i></h4>
                                     <div class="card-body">
@@ -82,32 +79,40 @@
                                                 <input type="text" class="form-control" id="fechaDiagnosticoFicha" readonly> 
                                             </div>
                                             <div class="col-sm-6 mb-2">
+                                                <label for="fechaVisitaFicha" class="form-label">Fecha de visita a domicilio</label>
+                                                <input type="text" class="form-control" id="fechaVisitaFicha" readonly>  
+                                            </div>
+                                            <div class="col-sm-6 mb-2">
                                                 <label for="fechaReparacionFicha" class="form-label">Fecha de Reparación</label>
                                                 <input type="text" class="form-control" id="fechaReparacionFicha" readonly>  
                                             </div>
                                             <div class="col-sm-6 mb-2">
-                                                <label for="fechaEmbalajeFicha" class="form-label">Fecha de Embalaje</label>
-                                                <input type="text" class="form-control" id="fechaEmbalajeFicha" readonly> 
-                                            </div>
-                                            <div class="col-sm-6 mb-2">
                                                 <label for="fechaCierreFicha" class="form-label">Fecha de Cierre</label>
                                                 <input type="text" class="form-control" id="fechaCierreFicha" readonly> 
+                                            </div>
+                                            <div class="col-sm-6 mb-2">
+                                                <label for="fechaEmbalajeFicha" class="form-label">Fecha de Embalaje</label>
+                                                <input type="text" class="form-control" id="fechaEmbalajeFicha" readonly> 
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- Card datos del cliente -->
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3" id="divDatosCliente">
                                 <div class="card h-100 shadow">
                                     <h4 class="card-header bg-danger text-white text-center"><i>Datos Cliente</i></h4>
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-sm-4 mb-2">
+                                            <div class="col-sm-2 mb-2">
                                                 <label for="clienteIdFicha" class="form-label">ID Cliente</label>
                                                 <input type="text" class="form-control" id="clienteIdFicha" readonly> 
                                             </div>
-                                            <div class="col-sm-8 mb-2">
+                                            <div class="col-sm-10 mb-2">
+                                                <label for="clienteDireccionFicha" class="form-label">Dirección</label>
+                                                <input type="text" class="form-control" id="clienteDireccionFicha" readonly> 
+                                            </div>
+                                            <div class="col-sm-6 mb-2">
                                                 <label for="clienteApellidoFicha" class="form-label">Apellido</label>
                                                 <input type="text" class="form-control" id="clienteApellidoFicha" readonly> 
                                             </div>
@@ -116,24 +121,25 @@
                                                 <input type="text" class="form-control" id="clienteNombreFicha" readonly> 
                                             </div>
                                             <div class="col-sm-6 mb-2">
-                                                <label for="clienteDireccionFicha" class="form-label">Dirección</label>
-                                                <input type="text" class="form-control" id="clienteDireccionFicha" readonly> 
+                                                <label for="clienteTelCelFicha" class="form-label">Telefono/Celular</label>
+                                                <input type="text" class="form-control" id="clienteTelCelFicha" readonly> 
                                             </div>
-                                            <div class="col-sm-12 pt-4 text-center">
-                                                <button class="btn btn-outline-secondary" type="button" id="btnDatosClienteFIcha">+ Datos</button>
+                                            <div class="col-sm-6 mb-2">
+                                                <label for="clienteEmailFicha" class="form-label">Email</label>
+                                                <input type="text" class="form-control" id="clienteEmailFicha" readonly> 
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- Card Datos Reparación -->
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3" id="divDatosRecepcion">
                                 <div class="card h-100 shadow">
                                     <h4 class="card-header bg-danger text-white text-center"><i>Datos de Recepción</i></h4>
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-sm-6 mb-2">
-                                                <label for="tipoReparacionFicha" class="form-label">Tipo de Reparación</label>
+                                                <label for="tipoReparacionFicha" class="form-label">Tipo de ingreso</label>
                                                 <select id="tipoReparacionFicha" class="form-select" disabled><?php echo tiposReparacion(); ?></select>
                                             </div>
                                             <div class="col-sm-6 mb-2">
@@ -156,9 +162,8 @@
                                     </div>
                                 </div>
                             </div>
-
                             <!-- Card datos del producto -->
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3" id="divDatosProducto">
                                 <div class="card h-100 shadow">
                                     <h4 class="card-header bg-danger text-white text-center"><i>Datos del Producto</i></h4>
                                     <div class="card-body">
@@ -191,9 +196,8 @@
                                     </div>
                                 </div>
                             </div>
-
                             <!-- Card Estados -->
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3" id="divEstadoOrden">
                                 <div class="card h-100 shadow">
                                     <h4 class="card-header bg-danger text-white text-center"><i>Estado</i></h4>
                                     <div class="card-body">
@@ -204,7 +208,7 @@
                                             </div>
                                             <div class="col-sm-4 mb-2">
                                                 <label for="estanteFicha" class="form-label">Estante</label>
-                                                <input type="text" class="form-control" id="estanteFicha" readonly> 
+                                                <select id="estanteFicha" class="form-select" disabled></select>
                                             </div>
                                             <div class="col-sm-12 mb-2">
                                                 <label for="detalleEmbalajeFicha" class="form-label">Detalle del embalaje</label>
@@ -226,9 +230,8 @@
                                     </div>
                                 </div>
                             </div>
-
                             <!-- Card Producto destino Canje -->
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3" id="divDatosCanje">
                                 <div class="card h-100 shadow">
                                     <h4 class="card-header bg-danger text-white text-center"><i>Producto destino Canje</i></h4>
                                     <div class="card-body">
@@ -245,28 +248,22 @@
                                     </div>
                                 </div>
                             </div>
-
                             <!-- Card Remito -->
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3" id="divDatosRemito">
                                 <div class="card h-100 shadow">
                                     <h4 class="card-header bg-danger text-white text-center"><i>Remito</i></h4>
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-sm-8 mb-2">
+                                            <div class="col-sm-12 mb-2">
                                                 <label for="remitoResolucionFicha" class="form-label">Remito de Despacho</label>
                                                 <input type="text" class="form-control" id="remitoResolucionFicha" readonly> 
-                                            </div>
-                                            <div class="col-sm-4 mb-2">
-                                                <label for="remitoFechaResolucionFicha" class="form-label">Fecha</label>
-                                                <input type="text" id="remitoFechaResolucionFicha" class="form-control" readonly>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                             <!-- Card Resolución / cargo -->
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3" id="divDatosResolucion">
                                 <div class="card h-100 shadow">
                                     <h4 class="card-header bg-danger text-white text-center"><i>Resolución / Cargo</i></h4>
                                     <div class="card-body">
@@ -283,9 +280,8 @@
                                     </div>
                                 </div>
                             </div>
-
                             <!-- Card Presupuesto -->
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3" id="divDatosPresupuesto">
                                 <div class="card h-100 shadow">
                                     <h4 class="card-header bg-danger text-white text-center"><i>Presupuesto</i></h4>
                                     <div class="card-body">
@@ -310,274 +306,115 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <!-- Card Monitor Diagnostico -->
+                            <div class="col-md-6 mb-3" id="divMonitorDiagnostico">
+                                <div class="card h-100 shadow">
+                                    <form id="formAccionesDiagnostico">
+                                        <h4 class="card-header bg-danger text-white text-center"><i>Acciones Diagnóstico</i></h4>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-12 mb-2">
+                                                    <label for="reparadorFichaDiagnostico" class="form-label">Asignar Reparador:</label>
+                                                    <select class="form-select" id="reparadorFichaDiagnostico"></select>
+                                                </div>
+                                                <div class="col-sm-12 mb-2">
+                                                    <label for="cajonFichaDiagnostico" class="form-label">Cajón</label>
+                                                    <input type="text" id="cajonFichaDiagnostico" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- Card Monitor Presupuesto -->
+                            <div class="col-md-6 mb-3" id="divMonitorPresupuesto">
+                                <div class="card h-100 shadow">
+                                    <h4 class="card-header bg-danger text-white text-center"><i>Acciones Presupuesto</i></h4>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-12 mb-2">
+                                                <label for="tipoFichaPresupuesto" class="form-label">Tipo</label>
+                                                <select class="form-select" id="tipoFichaPresupuesto"></select>
+                                            </div>
+                                            <div class="col-sm-12 mb-2">
+                                                <label for="atencionFichaPresupuesto" class="form-label">Atención</label>
+                                                <select class="form-select" id="atencionFichaPresupuesto"></select>
+                                            </div>
+                                            <div class="col-sm-12 mb-2">
+                                                <label for="numeroFichaPresupuesto" class="form-label">Número de Presupuesto</label>
+                                                <input type="text" id="numeroFichaPresupuesto" class="form-control">
+                                            </div>
+                                            <div class="col-sm-12 mb-2">
+                                                <label for="cargoFichaPresupuesto" class="form-label">Cargo/Forma</label>
+                                                <select class="form-select" id="cargoFichaPresupuesto"></select>
+                                            </div>
+                                            <div class="col-sm-12 mb-2">
+                                                <label for="costoFichaPresupuesto" class="form-label">Costo</label>
+                                                <input type="text" id="costoFichaPresupuesto" class="form-control">
+                                            </div>
+                                            <div class="col-sm-12 mb-2">
+                                                <label for="observacionesFichaPresupuesto" class="form-label">Observaciones</label>
+                                                <textarea class="form-control" id="observacionesFichaPresupuesto" cols="30" rows="4"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Card Monitor Embalaje -->
+                            <div class="col-md-6 mb-3" id="divMonitorEmbalaje">
+                                <div class="card h-100 shadow">
+                                    <h4 class="card-header bg-danger text-white text-center"><i>Acciones Embalaje</i></h4>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-12 mb-2">
+                                                <label for="estadoFichaEmbalaje" class="form-label">Estado</label>
+                                                <select class="form-select" id="estadoFichaEmbalaje"></select>
+                                            </div>
+                                            <div class="col-sm-12 mb-2">
+                                                <label for="estanteFichaEmbalaje" class="form-label">Estante</label>
+                                                <select class="form-select" id="estanteFichaEmbalaje"></select>
+                                            </div>
+                                            <div class="col-sm-12 mb-2">
+                                                <label for="observacionesFichaEmbalaje" class="form-label">Observaciones</label>
+                                                <textarea class="form-control" id="observacionesFichaEmbalaje" cols="30" rows="4"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Card Monitor Resolución -->
+                            <div class="col-md-6 mb-3" id="divMonitorResolucion">
+                                <div class="card h-100 shadow">
+                                    <h4 class="card-header bg-danger text-white text-center"><i>Acciones Resolución</i></h4>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-12 mb-2">
+                                                <label for="cargoFichaResolucion" class="form-label">Cargo/Forma</label>
+                                                <select class="form-select" id="cargoFichaResolucion"></select>
+                                            </div>
+                                            <div class="col-sm-12 mb-2">
+                                                <label for="costoFichaResolucion" class="form-label">Costo</label>
+                                                <input type="text" id="costoFichaResolucion" class="form-control">
+                                            </div>
+                                            <div class="col-sm-12 mb-2">
+                                                <label for="numeroRemitoFicha" class="form-label">Remito</label>
+                                                <input type="text" id="numeroRemitoFicha" class="form-control">
+                                            </div>
+                                            <div class="col-sm-12 mb-2">
+                                                <label for="fechaRemitoFichaResolucion" class="form-label">Fecha</label>
+                                                <input type="text" id="fechaRemitoFichaResolucion" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- End - Chat tab content -->
 
                     <!-- Reports tab content -->
                     <div id="nav-ficha" class="tab-pane fade py-4" role="tabpanel" aria-labelledby="nav-reports-tab">
-
-                        <!-- Public Settings -->
-                        <div class="row p-3">
-                            <div class="col-sm-4">
-                                <div class="list-group list-group-borderless">
-                                    <div class="col-sm-12">
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbOnlineStatus">Monofásica</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbOnlineStatus" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbMuteNotifications">Trifásica</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbMuteNotifications" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbMyDevicesName">Tensión</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbOnlineStatus">Presión en cañería</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbOnlineStatus" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbMuteNotifications">Vol. tanque hidro</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbMuteNotifications" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbMyDevicesName">Estado Instalación</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbOnlineStatus">Ruido excesivo</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbOnlineStatus" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbMuteNotifications">Presión exceso</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbMuteNotifications" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbMyDevicesName">Presión baja</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbMyDevicesName">Caudal Bajo</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbMyDevicesName">Caudal bajo</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-4">
-                                <div class="list-group list-group-borderless">
-                                    <div class="col-sm-12">
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbOnlineStatus">No aspira</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbOnlineStatus" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbMuteNotifications">Válvula de retención</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbMuteNotifications" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbMyDevicesName">Medida tanque</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbOnlineStatus">Tanque elevado</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbOnlineStatus" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbMuteNotifications">Tanque cisterna</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbMuteNotifications" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbMyDevicesName">Funciona intermitente</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbOnlineStatus">No arranca</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbOnlineStatus" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbMuteNotifications">Exceso de consumo</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbMuteNotifications" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbMyDevicesName">Motor inundado</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbMyDevicesName">Press</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbMyDevicesName">Flow</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-4">
-                                <div class="list-group list-group-borderless">
-                                    <div class="col-sm-12">
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbOnlineStatus">Presostato</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbOnlineStatus" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbMuteNotifications">Capacitor</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbMuteNotifications" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbMyDevicesName">Roce impulsor</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbOnlineStatus">Inducción de motor</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbOnlineStatus" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbMuteNotifications">No varía la velocidad</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbMuteNotifications" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbMyDevicesName">Boluta pinchada</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbOnlineStatus">Sarro en bomba</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbOnlineStatus" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbMuteNotifications">Pérdidas</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbMuteNotifications" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbMyDevicesName">Diámetro cañería entrada</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="list-group-item d-flex justify-content-between mb-1">
-                                            <label class="form-check-label" for="_dm-sbMyDevicesName">Diametro cañería salida</label>
-                                            <div class="form-check form-switch">
-                                                <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Observaciones -->
-                            <div class="col-md-12 mb-3 mt-4">
-                                <div class="card border-2 border-danger">
-                                    <h4 class="card-header"><i>Observaciones</i></h4>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-sm-12 mb-2">
-                                                <textarea class="form-control" id="observacionesProductoFichaTecnica" cols="30" rows="6"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-        
+                        <!-- Include a ficha según service técnico o taller -->
                     </div>
                     <!-- End - Reports tab content -->
 
@@ -586,6 +423,16 @@
 
                     </div>
                     <!-- End - Settings content -->
+
+                    <!-- Action buttons -->
+                    <div class="card-footer">
+                        <div class="col-sm-12 text-center">
+                            <button class="btn btn-lg btn-danger" type="button" id="btnSalirFicha" hidden>Salir</button>
+                            <button class="btn btn-lg btn-danger" type="button" id="btnCancelarFicha">Cancelar</button>
+                            <button class="btn btn-lg btn-success" type="button" id="btnEnviarFicha">Enviar</button>
+                        </div>
+                    </div>
+                    <!-- End - Action buttons -->
 
                 </div>
                 <!-- End - Sidebar tabs content -->

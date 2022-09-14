@@ -26,7 +26,9 @@
         $email          = filter_var($_POST['emailUsuarios'], FILTER_SANITIZE_STRING);
         $clave          = filter_var($_POST['claveUsuarios'], FILTER_SANITIZE_STRING);
         $emisor         = $_POST['emisorUsuarios'] == 'true' ? 'S' : 'N';
+        $diagnosticador = $_POST['diagnosticadorUsuarios'] == 'true' ? 'S' : 'N';
         $reparador      = $_POST['reparadorUsuarios'] == 'true' ? 'S' : 'N';
+        $embalador      = $_POST['embaladorUsuarios'] == 'true' ? 'S' : 'N';
         $tecnico        = $_POST['tecnicoUsuarios'] == 'true' ? 'S' : 'N';
         $activo         = $_POST['activoUsuarios'] == 'true' ? 'S' : 'N';
         $perfilSirep    = recuperaPerfil($_SESSION['usuario_id']);
@@ -61,8 +63,9 @@
                                 perfil_id           = '{$perfil}', 
                                 clave               = '{$clave}', 
                                 emisor              = '{$emisor}', 
-                                diagnosticador      = 'N', 
+                                diagnosticador      = '{$diagnosticador}', 
                                 reparador           = '{$reparador}', 
+                                embalador           = '{$embalador}', 
                                 tecnico             = '{$tecnico}', 
                                 sucursal_id         = '{$sucursal}', 
                                 fultimocambio       = '{$formateadaArg}'
