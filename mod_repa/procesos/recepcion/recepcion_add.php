@@ -154,7 +154,7 @@
                             cajon, 
                             finalizado, 
                             ffinalizado, 
-                            remito, 
+                            remito_cliente, 
                             estado_id, 
                             lugar_recepcion_id, 
                             tipo_ingreso, 
