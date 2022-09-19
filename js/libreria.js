@@ -592,7 +592,7 @@ function datosFichaSolapa1(numero){
                     $('#remitoResolucionFicha').val(respuesta.remito_despacho);
 
 
-                    console.log(respuesta)
+                    //console.log(respuesta)
                 }
             } else {
                 reject()
@@ -604,436 +604,458 @@ function datosFichaSolapa1(numero){
 /**
  * Carga los valores de la solapa 2 del detalle de la ficha (Ventana desplegable lateral)
  * @param {string} nroReparacion
+ * @param {string} lugarRecepcion
  */
-function datosFichaSolapa2(nroReparacion){
+function datosFichaSolapa2(nroReparacion, lugarRecepcion){
     //TRAE LOS VALORES PARA COMPLETAR LA FICHA
     return new Promise(function(resolve, reject) {
+        if(lugarRecepcion == '2'){
+            $('#nav-ficha').load('mod_repa/fichas/fichaService.php')          
+        } else {
+            $('#nav-ficha').load('mod_repa/fichas/fichaTaller.php')
+        }
+
+        setTimeout(() => {
+            resolve(true)
+        }, 500);
+
         let xhr = new XMLHttpRequest
-        xhr.open('GET', 'mod_sirep/admin/procesos/diagnostico/info_search.php?id='+nroReparacion)
+        xhr.open('GET', 'mod_repa/querys/diagnostico_search.php?id='+nroReparacion)
         xhr.send()
         xhr.addEventListener('load', () => {
             if(xhr.status == 200){
                 let respuesta = JSON.parse(xhr.response)
-                if(respuesta.length > 0){
-                    let grupo = respuesta[0].grupo_id
+                /*if(respuesta.length > 0){
+                    resolve(respuesta)
+                    if(respuesta != null){
+                        if(lugarRecepcion == '2'){
 
-                    let xhr2 = new XMLHttpRequest
-                    let url2 = "mod_sirep/fichas/modal_fichas_sql.php?grupoId="+grupo+"&reparacionId="+nroReparacion
-                    xhr2.responseType = "json";
-                    xhr2.open("get",url2)
-                    xhr2.send()
-
-                    xhr2.addEventListener("load",()=>{
-                        if(xhr2.status == 200){
-                            let respuesta2 = xhr2.response;
-                            resolve(respuesta2)
-                            if(respuesta2 != null){
-                                $('#contenidoFichaTecnica').hide();
-                                if (respuesta2.abierto == 'S') {
-                                    $('#abierto').prop('checked',true);
-                                }
-                                if (respuesta2.anillo_mirilla == 'S') {
-                                    $('#anilloMirilla').prop('checked',true);
-                                }
-                                if (respuesta2.arandela_sup_inf == 'S') {
-                                    $('#arandelaSupInf').prop('checked',true);
-                                }
-                                if (respuesta2.bobinado == 'S') {
-                                    $('#bobinado').prop('checked',true);
-                                }
-                                if (respuesta2.buje_d == 'S') {
-                                    $('#bujeD').prop('checked',true);
-                                }
-                                if (respuesta2.buje_t == 'S') {
-                                    $('#bujeT').prop('checked',true);
-                                }
-                                if (respuesta2.cable_ficha == 'S') {
-                                    $('#cableFicha').prop('checked',true);
-                                }
-                                if (respuesta2.caja_conexiones == 'S') {
-                                    $('#cajaConexiones').prop('checked',true);
-                                }
-                                if (respuesta2.cajacubrecondensador == 'S') {
-                                    $('#cajaCubreCondensador').prop('checked',true);
-                                }
-                                if (respuesta2.condensador == 'S') {
-                                    $('#condensador').prop('checked',true);
-                                }
-                                if (respuesta2.conexionescliente == 'S') {
-                                    $('#conexAplicadasPorCliente').prop('checked',true);
-                                }
-                                if (respuesta2.conjuntomirilla_anillo == 'S') {
-                                    $('#conjuntoMirillaAnillo').prop('checked',true);
-                                }
-                                if (respuesta2.conjuntomirilla_tornillo == 'S') {
-                                    $('#conjuntoMirillaTornillo').prop('checked',true);
-                                }
-                                if (respuesta2.conjuntomirilla_vidrio == 'S') {
-                                    $('#conjuntoMirillaVidrio').prop('checked',true);
-                                }
-                                if (respuesta2.contactor_1na_nc_9a == 'S') {
-                                    $('#contactorNC9').prop('checked',true);
-                                }
-                                if (respuesta2.contactor_1na_nc_16a == 'S') {
-                                    $('#contactorNC16').prop('checked',true);
-                                }
-                                if (respuesta2.control_estanqueidad == 'S') {
-                                    $('#estanqueidadS').prop('checked',true);
-                                    $('#estanqueidadN').prop('checked',false);
-                                } else if(respuesta2.control_estanqueidad == 'N'){
-                                    $('#estanqueidadS').prop('checked',false);
-                                    $('#estanqueidadN').prop('checked',true);
-                                }
-                                if (respuesta2.conversionsanitaria == 'S') {
-                                    $('#conversionSanitaria').prop('checked',true);
-                                }
-                                if (respuesta2.cuerpoimpulsor == 'S') {
-                                    $('#cuerpoImpulsor').prop('checked',true);
-                                }
-                                if (respuesta2.cuerpomotor == 'S') {
-                                    $('#cuerpoMotor').prop('checked',true);
-                                }
-                                if (respuesta2.cuerpofl == 'S') {
-                                    $('#cuerpoFL').prop('checked',true);
-                                }
-                                if (respuesta2.cuerporpx == 'S') {
-                                    $('#cuerpoRPX').prop('checked',true);
-                                }
-                                if (respuesta2.cuerpoturbinadebronce == 'S') {
-                                    $('#cuerpoTurbinaBronce').prop('checked',true);
-                                }
-                                if (respuesta2.cuerpoturbinadefundicion == 'S') {
-                                    $('#cuerpoTurbinaFundicion').prop('checked',true);
-                                }
-                                if (respuesta2.cuerpoturbinadeplastico == 'S') {
-                                    $('#cuerpoTurbinaPlastico').prop('checked',true);
-                                }
-                                if (respuesta2.cuerpo_ctrl_aut == 'S') {
-                                    $('#cuerpo').prop('checked',true);
-                                }
-                                if (respuesta2.diafragma_sup_inf == 'S') {
-                                    $('#diafragmaSupInf').prop('checked',true);
-                                }
-                                if (respuesta2.difusor == 'S') {
-                                    $('#difusor').prop('checked',true);
-                                }
-                                if (respuesta2.discodeempuje == 'S') {
-                                    $('#discoDeEmpuje').prop('checked',true);
-                                }
-                                if (respuesta2.discomotor == 'S') {
-                                    $('#discoMotor').prop('checked',true);
-                                }
-                                if (respuesta2.discomotordebronce == 'S') {
-                                    $('#discoMotorDeBronce').prop('checked',true);
-                                }
-                                if (respuesta2.discomotordefundicion == 'S') {
-                                    $('#discoMotorDeFundicion').prop('checked',true);
-                                }
-                                if (respuesta2.discomotorinoxidable == 'S') {
-                                    $('#discoMotorInoxTango').prop('checked',true);
-                                }
-                                if (respuesta2.ejeconarandelaestrella == 'S') {
-                                    $('#ejeArandelaEstrella').prop('checked',true);
-                                }
-                                if (respuesta2.ejesolamente == 'S') {
-                                    $('#ejeSolamente').prop('checked',true);
-                                }
-                                switch (respuesta2.esferainoxidable) {
-                                    case 'V':
-                                        $('#esferaV').prop('checked',true);
-                                        $('#esferaH').prop('checked',false);
-                                        break;
-                                    case 'H':
-                                        $('#esferaV').prop('checked',false);
-                                        $('#esferaH').prop('checked',true);
-                                        break;
-                                    default:
-                                        $('#esferaV').prop('checked',false);
-                                        $('#esferaH').prop('checked',false);
-                                        break;
-                                }
-                                $('#esferaLitros').val(respuesta2.esferainoxidable_lts);
-
-                                if (respuesta2.flexibles == 'S') {
-                                    $('#flexibles').prop('checked',true);
-                                }
-                                if (respuesta2.flexibles_1_14 == 'S') {
-                                    $('#flexibles114').prop('checked',true);
-                                }
-                                if (respuesta2.flexibles_12 == 'S') {
-                                    $('#flexibles12').prop('checked',true);
-                                }
-                                if (respuesta2.gabinetepr354 == 'S') {
-                                    $('#gabinetePR').prop('checked',true);
-                                }
-                                if (respuesta2.impulsor == 'S') {
-                                    $('#impulsor').prop('checked',true);
-                                }
-                                if (respuesta2.interruptortermico2x20a == 'S') {
-                                    $('#interruptorTermico2x20').prop('checked',true);
-                                }
-                                if (respuesta2.interruptortermico3x10a == 'S') {
-                                    $('#interruptorTermico3x10').prop('checked',true);
-                                }
-                                if (respuesta2.inundada == 'S') {
-                                    $('#inundada').prop('checked',true);
-                                }
-                                if (respuesta2.juegodejuntas == 'S') {
-                                    $('#juegoDeJuntas').prop('checked',true);
-                                }
-                                if (respuesta2.manodeobra == 'S') {
-                                    $('#manoDeObra').prop('checked',true);
-                                }
-                                if (respuesta2.manometro == 'S') {
-                                    $('#manometroKgs').prop('checked',true);
-                                }
-                                if (respuesta2.membrana_tanque == 'S') {
-                                    $('#membranaTanque').prop('checked',true);
-                                }
-                                if (respuesta2.membrete == 'S') {
-                                    $('#membrete').prop('checked',true);
-                                }
-                                if (respuesta2.microinterruptor == 'S') {
-                                    $('#microinterruptor').prop('checked',true);
-                                }
-                                if (respuesta2.microswich == 'S') {
-                                    $('#microswitch').prop('checked',true);
-                                }
-                                $('#fichaProducto').val(respuesta2.modeloId);
-
-                                if (respuesta2.mono_trifasico == 'T') {
-                                    $('#alimentacionT').prop('checked',true);
-                                    $('#alimentacionM').prop('checked',false);
-                                } else if(respuesta2.mono_trifasico == 'M'){
-                                    $('#alimentacionT').prop('checked',false);
-                                    $('#alimentacionM').prop('checked',true);
-                                } else {
-                                    $('#alimentacionT').prop('checked',false);
-                                    $('#alimentacionM').prop('checked',false);
-                                }
-
-                                $('#observaciones').val(respuesta2.observaciones);
-
-                                /*if (respuesta2.oringtapasuperior == 'S') {
-                                    $('#oringTapaSuperior').prop('checked',true);
-                                }*/
-                                if (respuesta2.pegado == 'S') {
-                                    $('#pegado').prop('checked',true);
-                                }
-                                if (respuesta2.pintura == 'S') {
-                                    $('#pintura').prop('checked',true);
-                                }
-                                if (respuesta2.plaqueta_inteligent20 == 'S') {
-                                    $('#plaquetaInt').prop('checked',true);
-                                }
-                                if (respuesta2.plaqueta_rw9 == 'S') {
-                                    $('#plaquetaRw').prop('checked',true);
-                                }
-                                $('#presionDeArranque').val(respuesta2.presiondearranque);
-
-                                $('#presionDeCorte').val(respuesta2.presiondecorte);
-
-                                $('#presionDeHidroesfera').val(respuesta2.presionhidroesfera);
-
-                                if (respuesta2.presostatoyresorte == 'S') {
-                                    $('#presostatoYResorte').prop('checked',true);
-                                }
-                                if (respuesta2.repasoylimpieza == "S") {
-                                    $('#repasoYLimpieza').prop('checked',true);
-                                }
-                                if (respuesta2.resorte_sup_inf == 'S') {
-                                    $('#resorteSupInf').prop('checked',true);
-                                }
-                                if (respuesta2.rigidez == 'S') {
-                                    $('#rigidezS').prop('checked',true);
-                                } else if(respuesta2.rigidez == 'N'){
-                                    $('#rigidezN').prop('checked',true);
-                                }
-                                if (respuesta2.rotoryeje == 'S') {
-                                    $('#rotorYEje').prop('checked',true);
-                                }
-                                if (respuesta2.selec_palanca_7100n == 'S') {
-                                    $('#SelecPantalla').prop('checked',true);
-                                }
-                                if (respuesta2.senalled24rojo == 'S') {
-                                    $('#senalLuminicaR').prop('checked',true);
-                                }
-                                if (respuesta2.senalled24verde == 'S') {
-                                    $('#senalLuminicaV').prop('checked',true);
-                                }
-                                if (respuesta2.suciedadgeneral == 'S') {
-                                    $('#suciedadGeneral').prop('checked',true);
-                                }
-                                if (respuesta2.tablerocompleto == 'S') {
-                                    $('#tableroCompleto').prop('checked',true);
-                                }
-                                if (respuesta2.tapacajonconexion == 'S') {
-                                    $('#tapaCajaConexion').prop('checked',true);
-                                }
-                                if (respuesta2.tapaconexiones == 'S') {
-                                    $('#tapaConexiones').prop('checked',true);
-                                }
-                                if (respuesta2.tapainferior == 'S') {
-                                    $('#tapaInferior').prop('checked',true);
-                                }
-                                if (respuesta2.tapainferiorrpx == 'S') {
-                                    $('#tapaInferiorRPX').prop('checked',true);
-                                }
-                                if (respuesta2.tapasuperior_soporterpx == 'S') {
-                                    $('#tapaSupConSoporteRPX').prop('checked',true);
-                                }
-                                if (respuesta2.tapasuperior == 'S') {
-                                    $('#tapaSuperior').prop('checked',true);
-                                }
-                                if (respuesta2.tornillo_cuerpo == 'S') {
-                                    $('#tornilloDeCuerpo').prop('checked',true);
-                                }
-                                if (respuesta2.tornillos == 'S') {
-                                    $('#tornillos').prop('checked',true);
-                                }
-                                if (respuesta2.transformador_220 == 'S') {
-                                    $('#transformador220').prop('checked',true);
-                                }
-                                if (respuesta2.tuboseparador == 'S') {
-                                    $('#tuboSeparador').prop('checked',true);
-                                }
-                                if (respuesta2.turbina == 'S') {
-                                    $('#turbina').prop('checked',true);
-                                }
-                                if (respuesta2.valvulaabierta == 'S') {
-                                    $('#valvulaA').prop('checked',true);
-                                }else if(respuesta2.valvulaabierta == 'N'){
-                                    $('#valvulaC').prop('checked',true);
-                                }
-                                if (respuesta2.valvuladeretencion == 'S') {
-                                    $('#valvulaDeRetencion').prop('checked',true);
-                                }
-                                if (respuesta2.velocidad == '1') {
-                                    $('#velocidad1').prop('checked',true);
-                                }else if(respuesta2.velocidad == '3'){
-                                    $('#velocidad3').prop('checked',true);
-                                }
-                                if (respuesta2.vidrio_mirilla == 'S') {
-                                    $('#vidrioMirilla').prop('checked',true);
-                                }
-                                if (respuesta2.vinosincuerpo == 'S') {
-                                    $('#vinoSinCuerpo').prop('checked',true);
-                                }
-                                if (respuesta2.plaquetaQuemada == 'S') {
-                                    $('#plaquetaQuemada').prop('checked',true);
-                                }
-                                if (respuesta2.plaquetaInutil == 'S') {
-                                    $('#plaquetaInutil').prop('checked',true);
-                                }
-                                if (respuesta2.plaquetaDirecta == 'S') {
-                                    $('#plaquetaDirecta').prop('checked',true);
-                                }
-                                if (respuesta2.impulsorObstruido == 'S') {
-                                    $('#impulsorObstruido').prop('checked',true);
-                                }
-                                if (respuesta2.impulsorRoscaSuelta == 'S') {
-                                    $('#impulsorRoscaSuelta').prop('checked',true);
-                                }
-                                if (respuesta2.impulsorRoto == 'S') {
-                                    $('#impulsorRoto').prop('checked',true);
-                                }
-                                if (respuesta2.rotorYEjeGastado == 'S') {
-                                    $('#rotorYEjeGastado').prop('checked',true);
-                                }
-                                if (respuesta2.rotorYEjeRayado == 'S') {
-                                    $('#rotorYEjeRayado').prop('checked',true);
-                                }
-                                if (respuesta2.rotorYEjeEncSuelto == 'S') {
-                                    $('#rotorYEjeEncSuelto').prop('checked',true);
-                                }
-                                if (respuesta2.rotorYEjeDistSuelto == 'S') {
-                                    $('#rotorYEjeDistSuelto').prop('checked',true);
-                                }
-                                if (respuesta2.bujeGrafitoD == 'S') {
-                                    $('#bujeGrafitoD').prop('checked',true);
-                                }
-                                if (respuesta2.bujeBronceD == 'S') {
-                                    $('#bujeBronceD').prop('checked',true);
-                                }
-                                if (respuesta2.bujeGrafitoT == 'S') {
-                                    $('#bujeGrafitoT').prop('checked',true);
-                                }
-                                if (respuesta2.bujeBronceT == 'S') {
-                                    $('#bujeBronceT').prop('checked',true);
-                                }
-                                if (respuesta2.tapaSuperiorPerdida == 'S') {
-                                    $('#tapaSuperiorPerdida').prop('checked',true);
-                                }
-                                if (respuesta2.tapaSuperiorDesalineada == 'S') {
-                                    $('#tapaSuperiorDesalineada').prop('checked',true);
-                                }
-                                if (respuesta2.tapaSuperiorDuroDesplazar == 'S') {
-                                    $('#tapaSuperiorDuroDesplazar').prop('checked',true);
-                                }
-                                if (respuesta2.sensorFlujoPress == 'S') {
-                                    $('#sensorFlujoPress').prop('checked',true);
-                                }
-                                if (respuesta2.sensorDiafragmaDeformado == 'S') {
-                                    $('#sensorDiafragmaDeformado').prop('checked',true);
-                                }
-                                if (respuesta2.sensorDiafragmaRoto == 'S') {
-                                    $('#sensorDiafragmaRoto').prop('checked',true);
-                                }
-                                if (respuesta2.presostatoDiafragmaDeformado == 'S') {
-                                    $('#presostatoDiafragmaDeformado').prop('checked',true);
-                                }
-                                if (respuesta2.presostatoDiafragmaRoto == 'S') {
-                                    $('#presostatoDiafragmaRoto').prop('checked',true);
-                                }
-                                if (respuesta2.presostatoInundada == 'S') {
-                                    $('#presostatoInundada').prop('checked',true);
-                                }
-                                if (respuesta2.presostatoDuroDesplazar == 'S') {
-                                    $('#presostatoDuroDesplazar').prop('checked',true);
-                                }
-                                if (respuesta2.bobinadoBajaRigidez == 'S') {
-                                    $('#bobinadoBajaRigidez').prop('checked',true);
-                                }
-                                if (respuesta2.bobinadoEnCorto == 'S') {
-                                    $('#bobinadoEnCorto').prop('checked',true);
-                                }
-                                if (respuesta2.bobinadoSinContinuidad == 'S') {
-                                    $('#bobinadoSinContinuidad').prop('checked',true);
-                                }
-                                if (respuesta2.bobinadoPerdidaAislante == 'S') {
-                                    $('#bobinadoPerdidaAislante').prop('checked',true);
-                                }
-                                if (respuesta2.bobinadoReparadoAfuera == 'S') {
-                                    $('#bobinadoReparadoAfuera').prop('checked',true);
-                                }
-                                if (respuesta2.bobinadoAmperajeFueraRango == 'S') {
-                                    $('#bobinadoAmperajeFueraRango').prop('checked',true);
-                                }
-                                if (respuesta2.bobinadoGiroInvertido == 'S') {
-                                    $('#bobinadoGiroInvertido').prop('checked',true);
-                                }
-                                if (respuesta2.bobinadoSinKlixon == 'S') {
-                                    $('#bobinadoSinKlixon').prop('checked',true);
-                                }
-                                if (respuesta2.bobinadoCuerpoDeteriorado == 'S') {
-                                    $('#bobinadoCuerpoDeteriorado').prop('checked',true);
-                                }
-                            } else {
-                                let p = document.createElement('p')
-                                p.innerText = "El equipo aún no cuenta con un diagnóstico realizado"
-                                $('#contenidoFichaTecnica').show();
-                                $('#contenidoFichaTecnica').html(p);
-                            }
                         } else {
-                            reject()
+
                         }
-                    })
-                }
+
+                        $('#contenidoFichaTecnica').hide();
+                        if (respuesta2.abierto == 'S') {
+                            $('#abierto').prop('checked',true);
+                        }
+                        if (respuesta2.anillo_mirilla == 'S') {
+                            $('#anilloMirilla').prop('checked',true);
+                        }
+                        if (respuesta2.arandela_sup_inf == 'S') {
+                            $('#arandelaSupInf').prop('checked',true);
+                        }
+                        if (respuesta2.bobinado == 'S') {
+                            $('#bobinado').prop('checked',true);
+                        }
+                        if (respuesta2.buje_d == 'S') {
+                            $('#bujeD').prop('checked',true);
+                        }
+                        if (respuesta2.buje_t == 'S') {
+                            $('#bujeT').prop('checked',true);
+                        }
+                        if (respuesta2.cable_ficha == 'S') {
+                            $('#cableFicha').prop('checked',true);
+                        }
+                        if (respuesta2.caja_conexiones == 'S') {
+                            $('#cajaConexiones').prop('checked',true);
+                        }
+                        if (respuesta2.cajacubrecondensador == 'S') {
+                            $('#cajaCubreCondensador').prop('checked',true);
+                        }
+                        if (respuesta2.condensador == 'S') {
+                            $('#condensador').prop('checked',true);
+                        }
+                        if (respuesta2.conexionescliente == 'S') {
+                            $('#conexAplicadasPorCliente').prop('checked',true);
+                        }
+                        if (respuesta2.conjuntomirilla_anillo == 'S') {
+                            $('#conjuntoMirillaAnillo').prop('checked',true);
+                        }
+                        if (respuesta2.conjuntomirilla_tornillo == 'S') {
+                            $('#conjuntoMirillaTornillo').prop('checked',true);
+                        }
+                        if (respuesta2.conjuntomirilla_vidrio == 'S') {
+                            $('#conjuntoMirillaVidrio').prop('checked',true);
+                        }
+                        if (respuesta2.contactor_1na_nc_9a == 'S') {
+                            $('#contactorNC9').prop('checked',true);
+                        }
+                        if (respuesta2.contactor_1na_nc_16a == 'S') {
+                            $('#contactorNC16').prop('checked',true);
+                        }
+                        if (respuesta2.control_estanqueidad == 'S') {
+                            $('#estanqueidadS').prop('checked',true);
+                            $('#estanqueidadN').prop('checked',false);
+                        } else if(respuesta2.control_estanqueidad == 'N'){
+                            $('#estanqueidadS').prop('checked',false);
+                            $('#estanqueidadN').prop('checked',true);
+                        }
+                        if (respuesta2.conversionsanitaria == 'S') {
+                            $('#conversionSanitaria').prop('checked',true);
+                        }
+                        if (respuesta2.cuerpoimpulsor == 'S') {
+                            $('#cuerpoImpulsor').prop('checked',true);
+                        }
+                        if (respuesta2.cuerpomotor == 'S') {
+                            $('#cuerpoMotor').prop('checked',true);
+                        }
+                        if (respuesta2.cuerpofl == 'S') {
+                            $('#cuerpoFL').prop('checked',true);
+                        }
+                        if (respuesta2.cuerporpx == 'S') {
+                            $('#cuerpoRPX').prop('checked',true);
+                        }
+                        if (respuesta2.cuerpoturbinadebronce == 'S') {
+                            $('#cuerpoTurbinaBronce').prop('checked',true);
+                        }
+                        if (respuesta2.cuerpoturbinadefundicion == 'S') {
+                            $('#cuerpoTurbinaFundicion').prop('checked',true);
+                        }
+                        if (respuesta2.cuerpoturbinadeplastico == 'S') {
+                            $('#cuerpoTurbinaPlastico').prop('checked',true);
+                        }
+                        if (respuesta2.cuerpo_ctrl_aut == 'S') {
+                            $('#cuerpo').prop('checked',true);
+                        }
+                        if (respuesta2.diafragma_sup_inf == 'S') {
+                            $('#diafragmaSupInf').prop('checked',true);
+                        }
+                        if (respuesta2.difusor == 'S') {
+                            $('#difusor').prop('checked',true);
+                        }
+                        if (respuesta2.discodeempuje == 'S') {
+                            $('#discoDeEmpuje').prop('checked',true);
+                        }
+                        if (respuesta2.discomotor == 'S') {
+                            $('#discoMotor').prop('checked',true);
+                        }
+                        if (respuesta2.discomotordebronce == 'S') {
+                            $('#discoMotorDeBronce').prop('checked',true);
+                        }
+                        if (respuesta2.discomotordefundicion == 'S') {
+                            $('#discoMotorDeFundicion').prop('checked',true);
+                        }
+                        if (respuesta2.discomotorinoxidable == 'S') {
+                            $('#discoMotorInoxTango').prop('checked',true);
+                        }
+                        if (respuesta2.ejeconarandelaestrella == 'S') {
+                            $('#ejeArandelaEstrella').prop('checked',true);
+                        }
+                        if (respuesta2.ejesolamente == 'S') {
+                            $('#ejeSolamente').prop('checked',true);
+                        }
+                        switch (respuesta2.esferainoxidable) {
+                            case 'V':
+                                $('#esferaV').prop('checked',true);
+                                $('#esferaH').prop('checked',false);
+                                break;
+                            case 'H':
+                                $('#esferaV').prop('checked',false);
+                                $('#esferaH').prop('checked',true);
+                                break;
+                            default:
+                                $('#esferaV').prop('checked',false);
+                                $('#esferaH').prop('checked',false);
+                                break;
+                        }
+                        $('#esferaLitros').val(respuesta2.esferainoxidable_lts);
+
+                        if (respuesta2.flexibles == 'S') {
+                            $('#flexibles').prop('checked',true);
+                        }
+                        if (respuesta2.flexibles_1_14 == 'S') {
+                            $('#flexibles114').prop('checked',true);
+                        }
+                        if (respuesta2.flexibles_12 == 'S') {
+                            $('#flexibles12').prop('checked',true);
+                        }
+                        if (respuesta2.gabinetepr354 == 'S') {
+                            $('#gabinetePR').prop('checked',true);
+                        }
+                        if (respuesta2.impulsor == 'S') {
+                            $('#impulsor').prop('checked',true);
+                        }
+                        if (respuesta2.interruptortermico2x20a == 'S') {
+                            $('#interruptorTermico2x20').prop('checked',true);
+                        }
+                        if (respuesta2.interruptortermico3x10a == 'S') {
+                            $('#interruptorTermico3x10').prop('checked',true);
+                        }
+                        if (respuesta2.inundada == 'S') {
+                            $('#inundada').prop('checked',true);
+                        }
+                        if (respuesta2.juegodejuntas == 'S') {
+                            $('#juegoDeJuntas').prop('checked',true);
+                        }
+                        if (respuesta2.manodeobra == 'S') {
+                            $('#manoDeObra').prop('checked',true);
+                        }
+                        if (respuesta2.manometro == 'S') {
+                            $('#manometroKgs').prop('checked',true);
+                        }
+                        if (respuesta2.membrana_tanque == 'S') {
+                            $('#membranaTanque').prop('checked',true);
+                        }
+                        if (respuesta2.membrete == 'S') {
+                            $('#membrete').prop('checked',true);
+                        }
+                        if (respuesta2.microinterruptor == 'S') {
+                            $('#microinterruptor').prop('checked',true);
+                        }
+                        if (respuesta2.microswich == 'S') {
+                            $('#microswitch').prop('checked',true);
+                        }
+                        $('#fichaProducto').val(respuesta2.modeloId);
+
+                        if (respuesta2.mono_trifasico == 'T') {
+                            $('#alimentacionT').prop('checked',true);
+                            $('#alimentacionM').prop('checked',false);
+                        } else if(respuesta2.mono_trifasico == 'M'){
+                            $('#alimentacionT').prop('checked',false);
+                            $('#alimentacionM').prop('checked',true);
+                        } else {
+                            $('#alimentacionT').prop('checked',false);
+                            $('#alimentacionM').prop('checked',false);
+                        }
+
+                        $('#observaciones').val(respuesta2.observaciones);
+
+                        if (respuesta2.oringtapasuperior == 'S') {
+                            $('#oringTapaSuperior').prop('checked',true);
+                        }
+                        if (respuesta2.pegado == 'S') {
+                            $('#pegado').prop('checked',true);
+                        }
+                        if (respuesta2.pintura == 'S') {
+                            $('#pintura').prop('checked',true);
+                        }
+                        if (respuesta2.plaqueta_inteligent20 == 'S') {
+                            $('#plaquetaInt').prop('checked',true);
+                        }
+                        if (respuesta2.plaqueta_rw9 == 'S') {
+                            $('#plaquetaRw').prop('checked',true);
+                        }
+                        $('#presionDeArranque').val(respuesta2.presiondearranque);
+
+                        $('#presionDeCorte').val(respuesta2.presiondecorte);
+
+                        $('#presionDeHidroesfera').val(respuesta2.presionhidroesfera);
+
+                        if (respuesta2.presostatoyresorte == 'S') {
+                            $('#presostatoYResorte').prop('checked',true);
+                        }
+                        if (respuesta2.repasoylimpieza == "S") {
+                            $('#repasoYLimpieza').prop('checked',true);
+                        }
+                        if (respuesta2.resorte_sup_inf == 'S') {
+                            $('#resorteSupInf').prop('checked',true);
+                        }
+                        if (respuesta2.rigidez == 'S') {
+                            $('#rigidezS').prop('checked',true);
+                        } else if(respuesta2.rigidez == 'N'){
+                            $('#rigidezN').prop('checked',true);
+                        }
+                        if (respuesta2.rotoryeje == 'S') {
+                            $('#rotorYEje').prop('checked',true);
+                        }
+                        if (respuesta2.selec_palanca_7100n == 'S') {
+                            $('#SelecPantalla').prop('checked',true);
+                        }
+                        if (respuesta2.senalled24rojo == 'S') {
+                            $('#senalLuminicaR').prop('checked',true);
+                        }
+                        if (respuesta2.senalled24verde == 'S') {
+                            $('#senalLuminicaV').prop('checked',true);
+                        }
+                        if (respuesta2.suciedadgeneral == 'S') {
+                            $('#suciedadGeneral').prop('checked',true);
+                        }
+                        if (respuesta2.tablerocompleto == 'S') {
+                            $('#tableroCompleto').prop('checked',true);
+                        }
+                        if (respuesta2.tapacajonconexion == 'S') {
+                            $('#tapaCajaConexion').prop('checked',true);
+                        }
+                        if (respuesta2.tapaconexiones == 'S') {
+                            $('#tapaConexiones').prop('checked',true);
+                        }
+                        if (respuesta2.tapainferior == 'S') {
+                            $('#tapaInferior').prop('checked',true);
+                        }
+                        if (respuesta2.tapainferiorrpx == 'S') {
+                            $('#tapaInferiorRPX').prop('checked',true);
+                        }
+                        if (respuesta2.tapasuperior_soporterpx == 'S') {
+                            $('#tapaSupConSoporteRPX').prop('checked',true);
+                        }
+                        if (respuesta2.tapasuperior == 'S') {
+                            $('#tapaSuperior').prop('checked',true);
+                        }
+                        if (respuesta2.tornillo_cuerpo == 'S') {
+                            $('#tornilloDeCuerpo').prop('checked',true);
+                        }
+                        if (respuesta2.tornillos == 'S') {
+                            $('#tornillos').prop('checked',true);
+                        }
+                        if (respuesta2.transformador_220 == 'S') {
+                            $('#transformador220').prop('checked',true);
+                        }
+                        if (respuesta2.tuboseparador == 'S') {
+                            $('#tuboSeparador').prop('checked',true);
+                        }
+                        if (respuesta2.turbina == 'S') {
+                            $('#turbina').prop('checked',true);
+                        }
+                        if (respuesta2.valvulaabierta == 'S') {
+                            $('#valvulaA').prop('checked',true);
+                        }else if(respuesta2.valvulaabierta == 'N'){
+                            $('#valvulaC').prop('checked',true);
+                        }
+                        if (respuesta2.valvuladeretencion == 'S') {
+                            $('#valvulaDeRetencion').prop('checked',true);
+                        }
+                        if (respuesta2.velocidad == '1') {
+                            $('#velocidad1').prop('checked',true);
+                        }else if(respuesta2.velocidad == '3'){
+                            $('#velocidad3').prop('checked',true);
+                        }
+                        if (respuesta2.vidrio_mirilla == 'S') {
+                            $('#vidrioMirilla').prop('checked',true);
+                        }
+                        if (respuesta2.vinosincuerpo == 'S') {
+                            $('#vinoSinCuerpo').prop('checked',true);
+                        }
+                        if (respuesta2.plaquetaQuemada == 'S') {
+                            $('#plaquetaQuemada').prop('checked',true);
+                        }
+                        if (respuesta2.plaquetaInutil == 'S') {
+                            $('#plaquetaInutil').prop('checked',true);
+                        }
+                        if (respuesta2.plaquetaDirecta == 'S') {
+                            $('#plaquetaDirecta').prop('checked',true);
+                        }
+                        if (respuesta2.impulsorObstruido == 'S') {
+                            $('#impulsorObstruido').prop('checked',true);
+                        }
+                        if (respuesta2.impulsorRoscaSuelta == 'S') {
+                            $('#impulsorRoscaSuelta').prop('checked',true);
+                        }
+                        if (respuesta2.impulsorRoto == 'S') {
+                            $('#impulsorRoto').prop('checked',true);
+                        }
+                        if (respuesta2.rotorYEjeGastado == 'S') {
+                            $('#rotorYEjeGastado').prop('checked',true);
+                        }
+                        if (respuesta2.rotorYEjeRayado == 'S') {
+                            $('#rotorYEjeRayado').prop('checked',true);
+                        }
+                        if (respuesta2.rotorYEjeEncSuelto == 'S') {
+                            $('#rotorYEjeEncSuelto').prop('checked',true);
+                        }
+                        if (respuesta2.rotorYEjeDistSuelto == 'S') {
+                            $('#rotorYEjeDistSuelto').prop('checked',true);
+                        }
+                        if (respuesta2.bujeGrafitoD == 'S') {
+                            $('#bujeGrafitoD').prop('checked',true);
+                        }
+                        if (respuesta2.bujeBronceD == 'S') {
+                            $('#bujeBronceD').prop('checked',true);
+                        }
+                        if (respuesta2.bujeGrafitoT == 'S') {
+                            $('#bujeGrafitoT').prop('checked',true);
+                        }
+                        if (respuesta2.bujeBronceT == 'S') {
+                            $('#bujeBronceT').prop('checked',true);
+                        }
+                        if (respuesta2.tapaSuperiorPerdida == 'S') {
+                            $('#tapaSuperiorPerdida').prop('checked',true);
+                        }
+                        if (respuesta2.tapaSuperiorDesalineada == 'S') {
+                            $('#tapaSuperiorDesalineada').prop('checked',true);
+                        }
+                        if (respuesta2.tapaSuperiorDuroDesplazar == 'S') {
+                            $('#tapaSuperiorDuroDesplazar').prop('checked',true);
+                        }
+                        if (respuesta2.sensorFlujoPress == 'S') {
+                            $('#sensorFlujoPress').prop('checked',true);
+                        }
+                        if (respuesta2.sensorDiafragmaDeformado == 'S') {
+                            $('#sensorDiafragmaDeformado').prop('checked',true);
+                        }
+                        if (respuesta2.sensorDiafragmaRoto == 'S') {
+                            $('#sensorDiafragmaRoto').prop('checked',true);
+                        }
+                        if (respuesta2.presostatoDiafragmaDeformado == 'S') {
+                            $('#presostatoDiafragmaDeformado').prop('checked',true);
+                        }
+                        if (respuesta2.presostatoDiafragmaRoto == 'S') {
+                            $('#presostatoDiafragmaRoto').prop('checked',true);
+                        }
+                        if (respuesta2.presostatoInundada == 'S') {
+                            $('#presostatoInundada').prop('checked',true);
+                        }
+                        if (respuesta2.presostatoDuroDesplazar == 'S') {
+                            $('#presostatoDuroDesplazar').prop('checked',true);
+                        }
+                        if (respuesta2.bobinadoBajaRigidez == 'S') {
+                            $('#bobinadoBajaRigidez').prop('checked',true);
+                        }
+                        if (respuesta2.bobinadoEnCorto == 'S') {
+                            $('#bobinadoEnCorto').prop('checked',true);
+                        }
+                        if (respuesta2.bobinadoSinContinuidad == 'S') {
+                            $('#bobinadoSinContinuidad').prop('checked',true);
+                        }
+                        if (respuesta2.bobinadoPerdidaAislante == 'S') {
+                            $('#bobinadoPerdidaAislante').prop('checked',true);
+                        }
+                        if (respuesta2.bobinadoReparadoAfuera == 'S') {
+                            $('#bobinadoReparadoAfuera').prop('checked',true);
+                        }
+                        if (respuesta2.bobinadoAmperajeFueraRango == 'S') {
+                            $('#bobinadoAmperajeFueraRango').prop('checked',true);
+                        }
+                        if (respuesta2.bobinadoGiroInvertido == 'S') {
+                            $('#bobinadoGiroInvertido').prop('checked',true);
+                        }
+                        if (respuesta2.bobinadoSinKlixon == 'S') {
+                            $('#bobinadoSinKlixon').prop('checked',true);
+                        }
+                        if (respuesta2.bobinadoCuerpoDeteriorado == 'S') {
+                            $('#bobinadoCuerpoDeteriorado').prop('checked',true);
+                        }
+                        
+                    }else {
+                        let p = document.createElement('p')
+                        p.innerText = "El equipo aún no cuenta con un diagnóstico realizado"
+                        $('#contenidoFichaTecnica').show();
+                        $('#contenidoFichaTecnica').html(p);
+                    }                 
+                }*/
             }
         })
 
     })
 
+}
+
+/**
+ * Pone los inputs, textarea, select en Solo lectura o los habilita según parámetro.
+ * @param {string} formulario
+ * @param {boolean} soloLectura
+ */
+ function formEstadoInputs(formulario, soloLectura){
+    return new Promise(function(resolve, reject) {
+        let formSolapa2 = document.querySelector(formulario)
+        let inputs      = formSolapa2.querySelectorAll('input,textarea,select')
+
+        inputs.forEach(element => {
+            element.type == "radio" || element.type == "checkbox" || element.type == "select-one" ? element.disabled = soloLectura : element.readOnly = soloLectura;
+           
+        });
+
+        resolve(true)
+    })
 }
 
 /**

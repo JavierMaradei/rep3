@@ -10,7 +10,7 @@
                 <div class="sidebar__wrap">
                     <nav class="px-3">
                         <div class="nav nav-callout nav-fill flex-nowrap" id="nav-tab" role="tablist">
-                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#nav-datos" type="button" role="tab" aria-controls="nav-chat" aria-selected="true">
+                            <button class="nav-link active" id="solapaDatosFicha" data-bs-toggle="tab" data-bs-target="#nav-datos" type="button" role="tab" aria-controls="nav-chat" aria-selected="true">
                                 <i class="d-block demo-pli-information fs-3 mb-2"></i>
                                 <span>Datos</span>
                             </button>
@@ -20,7 +20,7 @@
                                 <span>Ficha</span>
                             </button>
 
-                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#nav-cerrar" type="button" role="tab" aria-controls="nav-settings" aria-selected="false">
+                            <button id="cerrarSidebar" class="nav-link" data-bs-toggle="tab" data-bs-target="#nav-cerrar" type="button" role="tab" aria-controls="nav-settings" aria-selected="false">
                                 <i class="d-block demo-pli-close fs-3 mb-2"></i>
                                 <span>Cerrar</span>
                             </button>

@@ -89,6 +89,18 @@
         let reparadorFicha              = document.querySelector('#reparadorFicha')
         let embaladorFicha              = document.querySelector('#embaladorFicha')
         let reparadorFichaDiagnostico   = document.querySelector('#reparadorFichaDiagnostico')
+        let cerrarSidebar               = document.querySelector('#cerrarSidebar')
+        let solapaDatosFicha            = document.querySelector('#solapaDatosFicha')
+
+        cerrarSidebar.addEventListener('click', e => {
+            e.preventDefault()
+            console.log('adsasd')
+            sideBar.classList.remove("sb--show")
+            cerrarSidebar.classList.remove("active")
+            solapaDatosFicha.classList.add("active")
+            //ver aria-selected (para poder mostrar la solapa 1 al momento de cerrar)
+
+        })
 
         $('#divDatosCliente').hide()
         $('#divDatosRecepcion').hide()
@@ -114,7 +126,11 @@
                                             cargaReparadores(reparadorFicha).then(() => {
                                                 cargaEmbaladores(embaladorFicha).then(() => {
                                                     cargaReparadoresActivos(reparadorFichaDiagnostico).then(() => {
-                                                        datosFichaSolapa1(e.target.innerText).then(() =>{
+                                                        datosFichaSolapa1(e.target.innerText).then((respuestaSolapa1) =>{                                                           
+                                                            datosFichaSolapa2('12345', respuestaSolapa1.lugar_recepcion_id).then(() =>{                                                              
+                                                                formEstadoInputs('#formSolapa2', true).then(() => {
+                                                                })
+                                                            })
                                                         })   
                                                     })                                              
                                                 }) 
