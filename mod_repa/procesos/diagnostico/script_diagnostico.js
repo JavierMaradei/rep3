@@ -1,7 +1,9 @@
 (function iniciaDiagnostico() {
     let formData            = new FormData()
     let sideBar             = document.querySelector('#root')
+    let arrayVal            = {
 
+    }
 
 
     //Declaración del complemento DataTable
@@ -89,15 +91,25 @@
         let reparadorFicha              = document.querySelector('#reparadorFicha')
         let embaladorFicha              = document.querySelector('#embaladorFicha')
         let reparadorFichaDiagnostico   = document.querySelector('#reparadorFichaDiagnostico')
+        
         let cerrarSidebar               = document.querySelector('#cerrarSidebar')
         let solapaDatosFicha            = document.querySelector('#solapaDatosFicha')
+        let navDatos                    = document.querySelector('#nav-datos')
+        let navCerrar                   = document.querySelector('#nav-cerrar')
+
+        cerrarSidebar.classList.remove("active")
+        navCerrar.classList.remove("active")
+        navCerrar.classList.remove("show")
+        solapaDatosFicha.classList.add("active")
+        navDatos.classList.add("active")
+        navDatos.classList.add("show")
+        cerrarSidebar.ariaSelected = "false"
+        solapaDatosFicha.ariaSelected = "true"
 
         cerrarSidebar.addEventListener('click', e => {
             e.preventDefault()
-            console.log('adsasd')
             sideBar.classList.remove("sb--show")
-            cerrarSidebar.classList.remove("active")
-            solapaDatosFicha.classList.add("active")
+            
             //ver aria-selected (para poder mostrar la solapa 1 al momento de cerrar)
 
         })
@@ -128,7 +140,84 @@
                                                     cargaReparadoresActivos(reparadorFichaDiagnostico).then(() => {
                                                         datosFichaSolapa1(e.target.innerText).then((respuestaSolapa1) =>{                                                           
                                                             datosFichaSolapa2('12345', respuestaSolapa1.lugar_recepcion_id).then(() =>{                                                              
-                                                                formEstadoInputs('#formSolapa2', true).then(() => {
+                                                                formEstadoInputs('#formSolapa2', false).then(() => {
+
+                                                                    let btnEnviarFicha  = document.querySelector('#btnEnviarFicha')
+                                                                    let formData        = new FormData()
+                                                                    let formulario      = document.querySelector('#formSolapa2')
+                                                                    let inputsSolapa2   = formulario.querySelectorAll('input,select,textarea')
+
+                                                                    btnEnviarFicha.addEventListener('click', e => {
+                                                                        e.preventDefault()
+                                                                        console.log(inputsSolapa2)
+
+                                                                        //let validacion  =  validateData(inputsSolapa2, arrayVal)
+                                                                        let validacion = true
+
+                                                                        if(validacion){
+                                                                            swal({
+                                                                                title               : "Confirma la grabación?",
+                                                                                type                : "warning",
+                                                                                showCancelButton    : true,
+                                                                                confirmButtonColor  : "#DD6B55",
+                                                                                confirmButtonText   : "Si, confirmar!",
+                                                                                cancelButtonText    : "No, Cancelar!",
+                                                                                closeOnConfirm      : false,
+                                                                                closeOnCancel       : false },
+                                                    
+                                                                                function (isConfirm) {
+                                                                                    if (isConfirm) {
+                                                                                        collectData(inputsSolapa2, formData)//Recolecto los datos
+                                                                                        formData.append(reparadorFichaDiagnostico.id, reparadorFichaDiagnostico.value)
+                                                                                        formData.append(cajonFichaDiagnostico.id, cajonFichaDiagnostico.value)
+                                                                                        formData.append(ordenFicha.id, ordenFicha.value)
+                                                    
+                                                                                        let xhr = new XMLHttpRequest
+                                                                                        xhr.open('POST', 'mod_repa/procesos/diagnostico/diagnostico_add.php')
+                                                                                        xhr.send(formData)
+                                                                                        xhr.addEventListener('load', ()=> {
+                                                                                            if (xhr.status == 200){
+                                                                                                let respuesta = JSON.parse(xhr.response)
+                                                                                                //Vacío el formData
+                                                                                                cleanFormData(inputsSolapa2, formData)
+                                                                                                formData.delete(reparadorFichaDiagnostico.id)
+                                                                                                formData.delete(cajonFichaDiagnostico.id)
+                                                                                                formData.delete(ordenFicha.id)
+                                                    
+                                                                                                switch (respuesta.estado) {
+                                                                                                    case 'Ok':
+                                                                                                        msgTransaccionExitosa()
+                                                                                                        cleanInputs(inputsSolapa2)
+                                                                                                        reparadorFichaDiagnostico.value = ''
+                                                                                                        cajonFichaDiagnostico.value     = ''
+                                                                                                        //sideBar.classList.remove("sidebar-open")
+                                                                                                        //collectData(inputs, formData)
+                                                                                                        //recargaTabla()
+                                                                                                        cleanFormData(inputs, formData)
+                                                                                                        break;
+                                                                                                    case 'Sesión expirada':
+                                                                                                        sesionExpiradaMensajeFlotante()
+                                                                                                        break;
+                                                                                                    case 'Error perfil':
+                                                                                                        msgErrorPerfil()
+                                                                                                        break;
+                                                                                                    default:
+                                                                                                        msgAlgoNoFueBien()
+                                                                                                        cleanFormData(inputsSolapa2, formData)
+                                                                                                        formData.delete(reparadorFichaDiagnostico.id)
+                                                                                                        formData.delete(cajonFichaDiagnostico.id)
+                                                                                                        formData.delete(ordenFicha.id)
+                                                                                                        break;
+                                                                                                }
+                                                                                            }
+                                                                                        })
+                                                                                    } else {
+                                                                                        msgCancelado()
+                                                                                    }
+                                                                                }
+                                                                            )
+                                                                        }
+                                                                    })
                                                                 })
                                                             })
                                                         })   

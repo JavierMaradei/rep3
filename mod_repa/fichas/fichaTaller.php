@@ -4,58 +4,58 @@
             <div class="list-group list-group-borderless">
                 <div class="col-sm-12">
                     <div class="list-group-item d-flex justify-content-between mb-1">
-                        <label class="form-check-label" for="_dm-sbOnlineStatus">Bobinado</label>
+                        <label class="form-check-label" for="bobinado">Bobinado</label>
                         <div class="form-check form-switch">
-                            <input id="_dm-sbOnlineStatus" class="form-check-input" type="checkbox">
+                            <input id="bobinado" class="form-check-input" type="checkbox">
                         </div>
                     </div>
 
                     <div class="list-group-item d-flex justify-content-between mb-1">
-                        <label class="form-check-label" for="_dm-sbMuteNotifications">Buje D.</label>
+                        <label class="form-check-label" for="buje_d">Buje D.</label>
                         <div class="form-check form-switch">
-                            <input id="_dm-sbMuteNotifications" class="form-check-input" type="checkbox">
+                            <input id="buje_d" class="form-check-input" type="checkbox">
                         </div>
                     </div>
 
                     <div class="list-group-item d-flex justify-content-between mb-1">
-                        <label class="form-check-label" for="_dm-sbMyDevicesName">Buje T.</label>
+                        <label class="form-check-label" for="buje_t">Buje T.</label>
                         <div class="form-check form-switch">
-                            <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
+                            <input id="buje_t" class="form-check-input" type="checkbox">
                         </div>
                     </div>
 
                     <div class="list-group-item d-flex justify-content-between mb-1">
-                        <label class="form-check-label" for="_dm-sbOnlineStatus">Impulsor</label>
+                        <label class="form-check-label" for="impulsor">Impulsor</label>
                         <div class="form-check form-switch">
-                            <input id="_dm-sbOnlineStatus" class="form-check-input" type="checkbox">
+                            <input id="impulsor" class="form-check-input" type="checkbox">
                         </div>
                     </div>
 
                     <div class="list-group-item d-flex justify-content-between mb-1">
-                        <label class="form-check-label" for="_dm-sbMuteNotifications">Rotor y eje</label>
+                        <label class="form-check-label" for="rotor_eje">Rotor y eje</label>
                         <div class="form-check form-switch">
-                            <input id="_dm-sbMuteNotifications" class="form-check-input" type="checkbox">
+                            <input id="rotor_eje" class="form-check-input" type="checkbox">
                         </div>
                     </div>
 
                     <div class="list-group-item d-flex justify-content-between mb-1">
-                        <label class="form-check-label" for="_dm-sbMyDevicesName">Juego de juntas</label>
+                        <label class="form-check-label" for="juego_juntas">Juego de juntas</label>
                         <div class="form-check form-switch">
-                            <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
+                            <input id="juego_juntas" class="form-check-input" type="checkbox">
                         </div>
                     </div>
 
                     <div class="list-group-item d-flex justify-content-between mb-1">
-                        <label class="form-check-label" for="_dm-sbOnlineStatus">Cable ficha</label>
+                        <label class="form-check-label" for="cable_ficha">Cable ficha</label>
                         <div class="form-check form-switch">
-                            <input id="_dm-sbOnlineStatus" class="form-check-input" type="checkbox">
+                            <input id="cable_ficha" class="form-check-input" type="checkbox">
                         </div>
                     </div>
 
                     <div class="list-group-item d-flex justify-content-between mb-1">
-                        <label class="form-check-label" for="_dm-sbOnlineStatus">Vaso de expansión</label>
+                        <label class="form-check-label" for="vaso_expansion">Vaso de expansión</label>
                         <div class="form-check form-switch">
-                            <input id="_dm-sbOnlineStatus" class="form-check-input" type="checkbox">
+                            <input id="vaso_expansion" class="form-check-input" type="checkbox">
                         </div>
                     </div>
 
@@ -67,51 +67,51 @@
             <div class="list-group list-group-borderless">
                 <div class="col-sm-12">
                     <div class="list-group-item d-flex justify-content-between mb-1">
-                        <label class="form-check-label" for="_dm-sbMuteNotifications">Pegado</label>
+                        <label class="form-check-label" for="pegado">Pegado</label>
                         <div class="form-check form-switch">
-                            <input id="_dm-sbMuteNotifications" class="form-check-input" type="checkbox">
+                            <input id="pegado" class="form-check-input" type="checkbox">
                         </div>
                     </div>
 
                     <div class="list-group-item d-flex justify-content-between mb-1">
-                        <label class="form-check-label" for="_dm-sbMyDevicesName">Flexibles</label>
+                        <label class="form-check-label" for="flexibles">Flexibles</label>
                         <div class="form-check form-switch">
-                            <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
+                            <input id="flexibles" class="form-check-input" type="checkbox">
                         </div>
                     </div>
 
                     <div class="list-group-item d-flex justify-content-between mb-1">
-                        <label class="form-check-label" for="_dm-sbOnlineStatus">Microswitch</label>
+                        <label class="form-check-label" for="microswitch">Microswitch</label>
                         <div class="form-check form-switch">
-                            <input id="_dm-sbOnlineStatus" class="form-check-input" type="checkbox">
+                            <input id="microswitch" class="form-check-input" type="checkbox">
                         </div>
                     </div>
 
                     <div class="list-group-item d-flex justify-content-between mb-1">
-                        <label class="form-check-label" for="_dm-sbMuteNotifications">Tapa superior</label>
+                        <label class="form-check-label" for="tapa_superior">Tapa superior</label>
                         <div class="form-check form-switch">
-                            <input id="_dm-sbMuteNotifications" class="form-check-input" type="checkbox">
+                            <input id="tapa_superior" class="form-check-input" type="checkbox">
                         </div>
                     </div>
 
                     <div class="list-group-item d-flex justify-content-between mb-1">
-                        <label class="form-check-label" for="_dm-sbMyDevicesName">Tapa inferior</label>
+                        <label class="form-check-label" for="tapa_inferior">Tapa inferior</label>
                         <div class="form-check form-switch">
-                            <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
+                            <input id="tapa_inferior" class="form-check-input" type="checkbox">
                         </div>
                     </div>
                     
                     <div class="list-group-item d-flex justify-content-between mb-1">
-                        <label class="form-check-label" for="_dm-sbMyDevicesName">Sensor superior/inferior</label>
+                        <label class="form-check-label" for="sensor_sup_inf">Sensor superior/inferior</label>
                         <div class="form-check form-switch">
-                            <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
+                            <input id="sensor_sup_inf" class="form-check-input" type="checkbox">
                         </div>
                     </div>
 
                     <div class="list-group-item d-flex justify-content-between mb-1">
-                        <label class="form-check-label" for="_dm-sbMyDevicesName">Aprobo estanqueidad</label>
+                        <label class="form-check-label" for="aprobo_estanqueidad">Aprobo estanqueidad</label>
                         <div class="form-check form-switch">
-                            <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
+                            <input id="aprobo_estanqueidad" class="form-check-input" type="checkbox">
                         </div>
                     </div>
                 </div>
@@ -122,51 +122,51 @@
             <div class="list-group list-group-borderless">
                 <div class="col-sm-12">
                     <div class="list-group-item d-flex justify-content-between mb-1">
-                        <label class="form-check-label" for="_dm-sbOnlineStatus">Condensador</label>
+                        <label class="form-check-label" for="capacitor">Capacitor</label>
                         <div class="form-check form-switch">
-                            <input id="_dm-sbOnlineStatus" class="form-check-input" type="checkbox">
+                            <input id="capacitor" class="form-check-input" type="checkbox">
                         </div>
                     </div>
 
                     <div class="list-group-item d-flex justify-content-between mb-1">
-                        <label class="form-check-label" for="_dm-sbMuteNotifications">Pintura</label>
+                        <label class="form-check-label" for="pintura">Pintura</label>
                         <div class="form-check form-switch">
-                            <input id="_dm-sbMuteNotifications" class="form-check-input" type="checkbox">
+                            <input id="pintura" class="form-check-input" type="checkbox">
                         </div>
                     </div>
 
                     <div class="list-group-item d-flex justify-content-between mb-1">
-                        <label class="form-check-label" for="_dm-sbMyDevicesName">Cuerpo motor</label>
+                        <label class="form-check-label" for="cuerpo_motor">Cuerpo motor</label>
                         <div class="form-check form-switch">
-                            <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
+                            <input id="cuerpo_motor" class="form-check-input" type="checkbox">
                         </div>
                     </div>
 
                     <div class="list-group-item d-flex justify-content-between mb-1">
-                        <label class="form-check-label" for="_dm-sbMuteNotifications">Tubo separador</label>
+                        <label class="form-check-label" for="tubo_separador">Tubo separador</label>
                         <div class="form-check form-switch">
-                            <input id="_dm-sbMuteNotifications" class="form-check-input" type="checkbox">
+                            <input id="tubo_separador" class="form-check-input" type="checkbox">
                         </div>
                     </div>
 
                     <div class="list-group-item d-flex justify-content-between mb-1">
-                        <label class="form-check-label" for="_dm-sbMyDevicesName">Disco de empuje</label>
+                        <label class="form-check-label" for="disco_empuje">Disco de empuje</label>
                         <div class="form-check form-switch">
-                            <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
+                            <input id="disco_empuje" class="form-check-input" type="checkbox">
                         </div>
                     </div>
 
                     <div class="list-group-item d-flex justify-content-between mb-1">
-                        <label class="form-check-label" for="_dm-sbMyDevicesName">Tornillos</label>
+                        <label class="form-check-label" for="tornillos">Tornillos</label>
                         <div class="form-check form-switch">
-                            <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
+                            <input id="tornillos" class="form-check-input" type="checkbox">
                         </div>
                     </div>
 
                     <div class="list-group-item d-flex justify-content-between mb-1">
-                        <label class="form-check-label" for="_dm-sbMyDevicesName">Cuerpo impulsor</label>
+                        <label class="form-check-label" for="cuerpo_impulsor">Cuerpo impulsor</label>
                         <div class="form-check form-switch">
-                            <input id="_dm-sbMyDevicesName" class="form-check-input" type="checkbox">
+                            <input id="cuerpo_impulsor" class="form-check-input" type="checkbox">
                         </div>
                     </div>
 
@@ -181,7 +181,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-12 mb-2">
-                            <textarea class="form-control" id="observacionesProductoFichaTecnica" cols="30" rows="6"></textarea>
+                            <textarea class="form-control" id="observaciones" cols="30" rows="6"></textarea>
                         </div>
                     </div>
                 </div>
