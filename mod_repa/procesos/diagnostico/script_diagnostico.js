@@ -190,9 +190,8 @@
                                                                                                         cleanInputs(inputsSolapa2)
                                                                                                         reparadorFichaDiagnostico.value = ''
                                                                                                         cajonFichaDiagnostico.value     = ''
-                                                                                                        //sideBar.classList.remove("sidebar-open")
-                                                                                                        //collectData(inputs, formData)
-                                                                                                        //recargaTabla()
+                                                                                                        tabla.ajax.reload()
+                                                                                                        sideBar.classList.remove("sb--show")
                                                                                                         cleanFormData(inputs, formData)
                                                                                                         break;
                                                                                                     case 'Sesión expirada':
