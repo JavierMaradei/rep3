@@ -15,7 +15,7 @@
                                 <span>Datos</span>
                             </button>
 
-                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#nav-ficha" type="button" role="tab" aria-controls="nav-reports" aria-selected="false">
+                            <button class="nav-link"  id="solapaFichaTecnica" data-bs-toggle="tab" data-bs-target="#nav-ficha" type="button" role="tab" aria-controls="nav-reports" aria-selected="false">
                                 <i class="d-block demo-pli-wrench fs-3 mb-2"></i>
                                 <span>Ficha</span>
                             </button>

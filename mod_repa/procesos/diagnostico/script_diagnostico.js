@@ -91,19 +91,31 @@
         let reparadorFicha              = document.querySelector('#reparadorFicha')
         let embaladorFicha              = document.querySelector('#embaladorFicha')
         let reparadorFichaDiagnostico   = document.querySelector('#reparadorFichaDiagnostico')
-        
         let cerrarSidebar               = document.querySelector('#cerrarSidebar')
         let solapaDatosFicha            = document.querySelector('#solapaDatosFicha')
+        let solapaFichaTecnica          = document.querySelector('#solapaFichaTecnica')
         let navDatos                    = document.querySelector('#nav-datos')
+        let navFicha                    = document.querySelector('#nav-ficha')
         let navCerrar                   = document.querySelector('#nav-cerrar')
 
-        cerrarSidebar.classList.remove("active")
+        // queda pendiente hacer scroll top al abrir el sidebar
+        
         navCerrar.classList.remove("active")
         navCerrar.classList.remove("show")
-        solapaDatosFicha.classList.add("active")
+
+        navFicha.classList.remove("active")
+        navFicha.classList.remove("show")
+
         navDatos.classList.add("active")
         navDatos.classList.add("show")
+
+        cerrarSidebar.classList.remove("active")
         cerrarSidebar.ariaSelected = "false"
+
+        solapaFichaTecnica.classList.remove("active")
+        solapaFichaTecnica.ariaSelected = "false"
+
+        solapaDatosFicha.classList.add("active")
         solapaDatosFicha.ariaSelected = "true"
 
         cerrarSidebar.addEventListener('click', e => {
@@ -192,7 +204,10 @@
                                                                                                         cajonFichaDiagnostico.value     = ''
                                                                                                         tabla.ajax.reload()
                                                                                                         sideBar.classList.remove("sb--show")
-                                                                                                        cleanFormData(inputs, formData)
+                                                                                                        cleanFormData(inputsSolapa2, formData)
+                                                                                                        formData.delete(reparadorFichaDiagnostico.id)
+                                                                                                        formData.delete(cajonFichaDiagnostico.id)
+                                                                                                        formData.delete(ordenFicha.id)
                                                                                                         break;
                                                                                                     case 'Sesión expirada':
                                                                                                         sesionExpiradaMensajeFlotante()
