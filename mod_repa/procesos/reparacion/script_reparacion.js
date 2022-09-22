@@ -1,21 +1,26 @@
-(function iniciaDiagnostico() {
+(function iniciaReparacion(){
     let formData            = new FormData()
     let sideBar             = document.querySelector('#root')
+    let chkTodasLasReparaciones = document.querySelector('#chkTodasLasReparaciones')
+    let chkTodasLasSucursales = document.querySelector('#chkTodasLasSucursales')
+    let filtro              = [chkTodasLasReparaciones, chkTodasLasSucursales]
     let arrayVal            = {
 
     }
 
     //Declaración del complemento DataTable
-    let tabla = $('#tabla_diagnostico').DataTable( {
+    let tabla = $('#tabla_reparaciones').DataTable( {
         "ajax": {
-            url: 'mod_repa/procesos/diagnostico/diagnostico_search.php',
+            url: 'mod_repa/procesos/reparacion/reparaciones_search.php',
             type: 'GET',
             dataSrc: "",
             //Envío de parámetros Ajax datatable.
             data: function(d){
-                d.orden     = filtroOrden.value;
-                d.fdesde    = filtroDesde.value;
-                d.fhasta    = filtroHasta.value;
+                d.orden                     = filtroOrden.value;
+                d.fdesde                    = filtroDesde.value;
+                d.fhasta                    = filtroHasta.value;
+                d.ordenesTotalesReparadores = chkTodasLasReparaciones.checked;
+                d.ordenesTotalesSucursales  = chkTodasLasSucursales.checked;
             }
         },
         "order": [[1,'asc'], [0,'asc']],
@@ -45,8 +50,8 @@
         buttons: [
             {extend: 'copy'},
             {extend: 'csv'},
-            {extend: 'excel', title: 'Lista de diagnósticos'},
-            {extend: 'pdf', title: 'Lista de diagnósticos'},
+            {extend: 'excel', title: 'Lista de reparaciones'},
+            {extend: 'pdf', title: 'Lista de reparaciones'},
             {extend: 'print',}
         ],
         "bLengthChange": false,
@@ -72,6 +77,13 @@
             }
         },
     })
+
+    filtro.forEach(element => {
+        element.addEventListener('change', e => {
+            e.preventDefault()
+            tabla.ajax.reload()
+        })
+    });
 
     //Tomo el link de la tabla con el ID del registro
     $(document).on('click', '.reparacion-item', (e) => {
@@ -105,7 +117,7 @@
             top: 1,
             left: 1,
             behavior: 'smooth'
-          }); */
+            }); */
         
         navCerrar.classList.remove("active")
         navCerrar.classList.remove("show")
@@ -133,7 +145,7 @@
         })
 
         $('#divDatosCliente').hide()
-        $('#divDatosRecepcion').hide()
+        //$('#divDatosRecepcion').hide()
         $('#divEstadoOrden').hide()
         $('#divDatosCanje').hide()
         $('#divDatosRemito').hide()
@@ -141,7 +153,9 @@
         $('#divDatosPresupuesto').hide()
         $('#divMonitorPresupuesto').hide()
         $('#divMonitorEmbalaje').hide()
-        $('#divMonitorResolucion').hide()    
+        $('#divMonitorResolucion').hide()
+        $('#divMonitorDiagnostico').hide()
+        
         //console.log(e.target.innerText)
 
         cargaLugaresRecepcion(lugarRecepcionFicha).then(() => {
@@ -156,9 +170,10 @@
                                             cargaReparadores(reparadorFicha).then(() => {
                                                 cargaEmbaladores(embaladorFicha).then(() => {
                                                     cargaReparadoresActivos(reparadorFichaDiagnostico).then(() => {
-                                                        datosFichaSolapa1(e.target.innerText).then((respuestaSolapa1) =>{                                                           
-                                                            datosFichaSolapa2('12345', respuestaSolapa1.lugar_recepcion_id).then(() =>{                                                              
-                                                                formEstadoInputs('#formSolapa2', false).then(() => {
+                                                        datosFichaSolapa1(e.target.innerText).then((respuestaSolapa1) =>{
+                                                                                                                      
+                                                            datosFichaSolapa2(e.target.innerText, respuestaSolapa1.lugar_recepcion_id).then(() =>{                                                              
+                                                                formEstadoInputs('#formSolapa2', true).then(() => {
 
                                                                     let btnEnviarFicha  = document.querySelector('#btnEnviarFicha')
                                                                     let formData        = new FormData()
@@ -240,6 +255,7 @@
                                                                     })
                                                                 })
                                                             })
+                                                        
                                                         })   
                                                     })                                              
                                                 }) 
@@ -311,6 +327,4 @@
     }
 
     accionesPrefiltro()
-
-
 })()

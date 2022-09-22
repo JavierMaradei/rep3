@@ -625,413 +625,76 @@ function datosFichaSolapa2(nroReparacion, lugarRecepcion){
         xhr.addEventListener('load', () => {
             if(xhr.status == 200){
                 let respuesta = JSON.parse(xhr.response)
-                /*if(respuesta.length > 0){
-                    resolve(respuesta)
-                    if(respuesta != null){
-                        if(lugarRecepcion == '2'){
+                
+                resolve(respuesta)
+                if(respuesta != null){
 
-                        } else {
+                    if(lugarRecepcion == '2'){
+                        respuesta.monofasica == 'S' ? $('#monofasica').prop('checked',true) : $('#monofasica').prop('checked',false);
+                        respuesta.trifasica == 'S' ? $('#trifasica').prop('checked',true) : $('#trifasica').prop('checked',false);
+                        respuesta.tension == 'S' ? $('#tension').prop('checked',true) : $('#tension').prop('checked',false);
+                        respuesta.presion_caneria == 'S' ? $('#presion_caneria').prop('checked',true) : $('#presion_caneria').prop('checked',false);
+                        respuesta.volumen_tanque_hidro == 'S' ? $('#volumen_tanque_hidro').prop('checked',true) : $('#volumen_tanque_hidro').prop('checked',false);
+                        respuesta.estado_instalacion == 'S' ? $('#estado_instalacion').prop('checked',true) : $('#estado_instalacion').prop('checked',false);
+                        respuesta.ruido_excesivo == 'S' ? $('#ruido_excesivo').prop('checked',true) : $('#ruido_excesivo').prop('checked',false);
+                        respuesta.presion_exceso == 'S' ? $('#presion_exceso').prop('checked',true) : $('#presion_exceso').prop('checked',false);
+                        respuesta.presion_baja == 'S' ? $('#presion_baja').prop('checked',true) : $('#presion_baja').prop('checked',false);
+                        respuesta.caudal_bajo == 'S' ? $('#caudal_bajo').prop('checked',true) : $('#caudal_bajo').prop('checked',false);
+                        respuesta.caudal_alto == 'S' ? $('#caudal_alto').prop('checked',true) : $('#caudal_alto').prop('checked',false);
+                        respuesta.no_aspira == 'S' ? $('#no_aspira').prop('checked',true) : $('#no_aspira').prop('checked',false);
+                        respuesta.valvula_retencion == 'S' ? $('#valvula_retencion').prop('checked',true) : $('#valvula_retencion').prop('checked',false);
+                        respuesta.medida_tanque == 'S' ? $('#medida_tanque').prop('checked',true) : $('#medida_tanque').prop('checked',false);
+                        respuesta.tanque_elevado == 'S' ? $('#tanque_elevado').prop('checked',true) : $('#tanque_elevado').prop('checked',false);
+                        respuesta.tanque_cisterna == 'S' ? $('#tanque_cisterna').prop('checked',true) : $('#tanque_cisterna').prop('checked',false);
+                        respuesta.funciona_intermitente == 'S' ? $('#funciona_intermitente').prop('checked',true) : $('#funciona_intermitente').prop('checked',false);
+                        respuesta.no_arranca == 'S' ? $('#no_arranca').prop('checked',true) : $('#no_arranca').prop('checked',false);
+                        respuesta.exceso_consumo == 'S' ? $('#exceso_consumo').prop('checked',true) : $('#exceso_consumo').prop('checked',false);
+                        respuesta.motor_inundado == 'S' ? $('#motor_inundado').prop('checked',true) : $('#motor_inundado').prop('checked',false);
+                        respuesta.press == 'S' ? $('#press').prop('checked',true) : $('#press').prop('checked',false);
+                        respuesta.flow == 'S' ? $('#flow').prop('checked',true) : $('#flow').prop('checked',false);
+                        respuesta.presostato == 'S' ? $('#presostato').prop('checked',true) : $('#presostato').prop('checked',false);
+                        respuesta.capacitor == 'S' ? $('#capacitor').prop('checked',true) : $('#capacitor').prop('checked',false);
+                        respuesta.roce_impulsor == 'S' ? $('#roce_impulsor').prop('checked',true) : $('#roce_impulsor').prop('checked',false);
+                        respuesta.induccion_motor == 'S' ? $('#induccion_motor').prop('checked',true) : $('#induccion_motor').prop('checked',false);
+                        respuesta.no_varia_velocidad == 'S' ? $('#no_varia_velocidad').prop('checked',true) : $('#no_varia_velocidad').prop('checked',false);
+                        respuesta.boluta_pinchada == 'S' ? $('#boluta_pinchada').prop('checked',true) : $('#boluta_pinchada').prop('checked',false);
+                        respuesta.sarro_en_bomba == 'S' ? $('#sarro_en_bomba').prop('checked',true) : $('#sarro_en_bomba').prop('checked',false);
+                        respuesta.perdidas == 'S' ? $('#perdidas').prop('checked',true) : $('#perdidas').prop('checked',false);
+                        respuesta.diametro_caneria_entrada == 'S' ? $('#diametro_caneria_entrada').prop('checked',true) : $('#diametro_caneria_entrada').prop('checked',false);
+                        respuesta.diametro_caneria_salida == 'S' ? $('#diametro_caneria_salida').prop('checked',true) : $('#diametro_caneria_salida').prop('checked',false);
+                        $('#observaciones').val(respuesta.observaciones);
 
-                        }
-
-                        $('#contenidoFichaTecnica').hide();
-                        if (respuesta2.abierto == 'S') {
-                            $('#abierto').prop('checked',true);
-                        }
-                        if (respuesta2.anillo_mirilla == 'S') {
-                            $('#anilloMirilla').prop('checked',true);
-                        }
-                        if (respuesta2.arandela_sup_inf == 'S') {
-                            $('#arandelaSupInf').prop('checked',true);
-                        }
-                        if (respuesta2.bobinado == 'S') {
-                            $('#bobinado').prop('checked',true);
-                        }
-                        if (respuesta2.buje_d == 'S') {
-                            $('#bujeD').prop('checked',true);
-                        }
-                        if (respuesta2.buje_t == 'S') {
-                            $('#bujeT').prop('checked',true);
-                        }
-                        if (respuesta2.cable_ficha == 'S') {
-                            $('#cableFicha').prop('checked',true);
-                        }
-                        if (respuesta2.caja_conexiones == 'S') {
-                            $('#cajaConexiones').prop('checked',true);
-                        }
-                        if (respuesta2.cajacubrecondensador == 'S') {
-                            $('#cajaCubreCondensador').prop('checked',true);
-                        }
-                        if (respuesta2.condensador == 'S') {
-                            $('#condensador').prop('checked',true);
-                        }
-                        if (respuesta2.conexionescliente == 'S') {
-                            $('#conexAplicadasPorCliente').prop('checked',true);
-                        }
-                        if (respuesta2.conjuntomirilla_anillo == 'S') {
-                            $('#conjuntoMirillaAnillo').prop('checked',true);
-                        }
-                        if (respuesta2.conjuntomirilla_tornillo == 'S') {
-                            $('#conjuntoMirillaTornillo').prop('checked',true);
-                        }
-                        if (respuesta2.conjuntomirilla_vidrio == 'S') {
-                            $('#conjuntoMirillaVidrio').prop('checked',true);
-                        }
-                        if (respuesta2.contactor_1na_nc_9a == 'S') {
-                            $('#contactorNC9').prop('checked',true);
-                        }
-                        if (respuesta2.contactor_1na_nc_16a == 'S') {
-                            $('#contactorNC16').prop('checked',true);
-                        }
-                        if (respuesta2.control_estanqueidad == 'S') {
-                            $('#estanqueidadS').prop('checked',true);
-                            $('#estanqueidadN').prop('checked',false);
-                        } else if(respuesta2.control_estanqueidad == 'N'){
-                            $('#estanqueidadS').prop('checked',false);
-                            $('#estanqueidadN').prop('checked',true);
-                        }
-                        if (respuesta2.conversionsanitaria == 'S') {
-                            $('#conversionSanitaria').prop('checked',true);
-                        }
-                        if (respuesta2.cuerpoimpulsor == 'S') {
-                            $('#cuerpoImpulsor').prop('checked',true);
-                        }
-                        if (respuesta2.cuerpomotor == 'S') {
-                            $('#cuerpoMotor').prop('checked',true);
-                        }
-                        if (respuesta2.cuerpofl == 'S') {
-                            $('#cuerpoFL').prop('checked',true);
-                        }
-                        if (respuesta2.cuerporpx == 'S') {
-                            $('#cuerpoRPX').prop('checked',true);
-                        }
-                        if (respuesta2.cuerpoturbinadebronce == 'S') {
-                            $('#cuerpoTurbinaBronce').prop('checked',true);
-                        }
-                        if (respuesta2.cuerpoturbinadefundicion == 'S') {
-                            $('#cuerpoTurbinaFundicion').prop('checked',true);
-                        }
-                        if (respuesta2.cuerpoturbinadeplastico == 'S') {
-                            $('#cuerpoTurbinaPlastico').prop('checked',true);
-                        }
-                        if (respuesta2.cuerpo_ctrl_aut == 'S') {
-                            $('#cuerpo').prop('checked',true);
-                        }
-                        if (respuesta2.diafragma_sup_inf == 'S') {
-                            $('#diafragmaSupInf').prop('checked',true);
-                        }
-                        if (respuesta2.difusor == 'S') {
-                            $('#difusor').prop('checked',true);
-                        }
-                        if (respuesta2.discodeempuje == 'S') {
-                            $('#discoDeEmpuje').prop('checked',true);
-                        }
-                        if (respuesta2.discomotor == 'S') {
-                            $('#discoMotor').prop('checked',true);
-                        }
-                        if (respuesta2.discomotordebronce == 'S') {
-                            $('#discoMotorDeBronce').prop('checked',true);
-                        }
-                        if (respuesta2.discomotordefundicion == 'S') {
-                            $('#discoMotorDeFundicion').prop('checked',true);
-                        }
-                        if (respuesta2.discomotorinoxidable == 'S') {
-                            $('#discoMotorInoxTango').prop('checked',true);
-                        }
-                        if (respuesta2.ejeconarandelaestrella == 'S') {
-                            $('#ejeArandelaEstrella').prop('checked',true);
-                        }
-                        if (respuesta2.ejesolamente == 'S') {
-                            $('#ejeSolamente').prop('checked',true);
-                        }
-                        switch (respuesta2.esferainoxidable) {
-                            case 'V':
-                                $('#esferaV').prop('checked',true);
-                                $('#esferaH').prop('checked',false);
-                                break;
-                            case 'H':
-                                $('#esferaV').prop('checked',false);
-                                $('#esferaH').prop('checked',true);
-                                break;
-                            default:
-                                $('#esferaV').prop('checked',false);
-                                $('#esferaH').prop('checked',false);
-                                break;
-                        }
-                        $('#esferaLitros').val(respuesta2.esferainoxidable_lts);
-
-                        if (respuesta2.flexibles == 'S') {
-                            $('#flexibles').prop('checked',true);
-                        }
-                        if (respuesta2.flexibles_1_14 == 'S') {
-                            $('#flexibles114').prop('checked',true);
-                        }
-                        if (respuesta2.flexibles_12 == 'S') {
-                            $('#flexibles12').prop('checked',true);
-                        }
-                        if (respuesta2.gabinetepr354 == 'S') {
-                            $('#gabinetePR').prop('checked',true);
-                        }
-                        if (respuesta2.impulsor == 'S') {
-                            $('#impulsor').prop('checked',true);
-                        }
-                        if (respuesta2.interruptortermico2x20a == 'S') {
-                            $('#interruptorTermico2x20').prop('checked',true);
-                        }
-                        if (respuesta2.interruptortermico3x10a == 'S') {
-                            $('#interruptorTermico3x10').prop('checked',true);
-                        }
-                        if (respuesta2.inundada == 'S') {
-                            $('#inundada').prop('checked',true);
-                        }
-                        if (respuesta2.juegodejuntas == 'S') {
-                            $('#juegoDeJuntas').prop('checked',true);
-                        }
-                        if (respuesta2.manodeobra == 'S') {
-                            $('#manoDeObra').prop('checked',true);
-                        }
-                        if (respuesta2.manometro == 'S') {
-                            $('#manometroKgs').prop('checked',true);
-                        }
-                        if (respuesta2.membrana_tanque == 'S') {
-                            $('#membranaTanque').prop('checked',true);
-                        }
-                        if (respuesta2.membrete == 'S') {
-                            $('#membrete').prop('checked',true);
-                        }
-                        if (respuesta2.microinterruptor == 'S') {
-                            $('#microinterruptor').prop('checked',true);
-                        }
-                        if (respuesta2.microswich == 'S') {
-                            $('#microswitch').prop('checked',true);
-                        }
-                        $('#fichaProducto').val(respuesta2.modeloId);
-
-                        if (respuesta2.mono_trifasico == 'T') {
-                            $('#alimentacionT').prop('checked',true);
-                            $('#alimentacionM').prop('checked',false);
-                        } else if(respuesta2.mono_trifasico == 'M'){
-                            $('#alimentacionT').prop('checked',false);
-                            $('#alimentacionM').prop('checked',true);
-                        } else {
-                            $('#alimentacionT').prop('checked',false);
-                            $('#alimentacionM').prop('checked',false);
-                        }
-
-                        $('#observaciones').val(respuesta2.observaciones);
-
-                        if (respuesta2.oringtapasuperior == 'S') {
-                            $('#oringTapaSuperior').prop('checked',true);
-                        }
-                        if (respuesta2.pegado == 'S') {
-                            $('#pegado').prop('checked',true);
-                        }
-                        if (respuesta2.pintura == 'S') {
-                            $('#pintura').prop('checked',true);
-                        }
-                        if (respuesta2.plaqueta_inteligent20 == 'S') {
-                            $('#plaquetaInt').prop('checked',true);
-                        }
-                        if (respuesta2.plaqueta_rw9 == 'S') {
-                            $('#plaquetaRw').prop('checked',true);
-                        }
-                        $('#presionDeArranque').val(respuesta2.presiondearranque);
-
-                        $('#presionDeCorte').val(respuesta2.presiondecorte);
-
-                        $('#presionDeHidroesfera').val(respuesta2.presionhidroesfera);
-
-                        if (respuesta2.presostatoyresorte == 'S') {
-                            $('#presostatoYResorte').prop('checked',true);
-                        }
-                        if (respuesta2.repasoylimpieza == "S") {
-                            $('#repasoYLimpieza').prop('checked',true);
-                        }
-                        if (respuesta2.resorte_sup_inf == 'S') {
-                            $('#resorteSupInf').prop('checked',true);
-                        }
-                        if (respuesta2.rigidez == 'S') {
-                            $('#rigidezS').prop('checked',true);
-                        } else if(respuesta2.rigidez == 'N'){
-                            $('#rigidezN').prop('checked',true);
-                        }
-                        if (respuesta2.rotoryeje == 'S') {
-                            $('#rotorYEje').prop('checked',true);
-                        }
-                        if (respuesta2.selec_palanca_7100n == 'S') {
-                            $('#SelecPantalla').prop('checked',true);
-                        }
-                        if (respuesta2.senalled24rojo == 'S') {
-                            $('#senalLuminicaR').prop('checked',true);
-                        }
-                        if (respuesta2.senalled24verde == 'S') {
-                            $('#senalLuminicaV').prop('checked',true);
-                        }
-                        if (respuesta2.suciedadgeneral == 'S') {
-                            $('#suciedadGeneral').prop('checked',true);
-                        }
-                        if (respuesta2.tablerocompleto == 'S') {
-                            $('#tableroCompleto').prop('checked',true);
-                        }
-                        if (respuesta2.tapacajonconexion == 'S') {
-                            $('#tapaCajaConexion').prop('checked',true);
-                        }
-                        if (respuesta2.tapaconexiones == 'S') {
-                            $('#tapaConexiones').prop('checked',true);
-                        }
-                        if (respuesta2.tapainferior == 'S') {
-                            $('#tapaInferior').prop('checked',true);
-                        }
-                        if (respuesta2.tapainferiorrpx == 'S') {
-                            $('#tapaInferiorRPX').prop('checked',true);
-                        }
-                        if (respuesta2.tapasuperior_soporterpx == 'S') {
-                            $('#tapaSupConSoporteRPX').prop('checked',true);
-                        }
-                        if (respuesta2.tapasuperior == 'S') {
-                            $('#tapaSuperior').prop('checked',true);
-                        }
-                        if (respuesta2.tornillo_cuerpo == 'S') {
-                            $('#tornilloDeCuerpo').prop('checked',true);
-                        }
-                        if (respuesta2.tornillos == 'S') {
-                            $('#tornillos').prop('checked',true);
-                        }
-                        if (respuesta2.transformador_220 == 'S') {
-                            $('#transformador220').prop('checked',true);
-                        }
-                        if (respuesta2.tuboseparador == 'S') {
-                            $('#tuboSeparador').prop('checked',true);
-                        }
-                        if (respuesta2.turbina == 'S') {
-                            $('#turbina').prop('checked',true);
-                        }
-                        if (respuesta2.valvulaabierta == 'S') {
-                            $('#valvulaA').prop('checked',true);
-                        }else if(respuesta2.valvulaabierta == 'N'){
-                            $('#valvulaC').prop('checked',true);
-                        }
-                        if (respuesta2.valvuladeretencion == 'S') {
-                            $('#valvulaDeRetencion').prop('checked',true);
-                        }
-                        if (respuesta2.velocidad == '1') {
-                            $('#velocidad1').prop('checked',true);
-                        }else if(respuesta2.velocidad == '3'){
-                            $('#velocidad3').prop('checked',true);
-                        }
-                        if (respuesta2.vidrio_mirilla == 'S') {
-                            $('#vidrioMirilla').prop('checked',true);
-                        }
-                        if (respuesta2.vinosincuerpo == 'S') {
-                            $('#vinoSinCuerpo').prop('checked',true);
-                        }
-                        if (respuesta2.plaquetaQuemada == 'S') {
-                            $('#plaquetaQuemada').prop('checked',true);
-                        }
-                        if (respuesta2.plaquetaInutil == 'S') {
-                            $('#plaquetaInutil').prop('checked',true);
-                        }
-                        if (respuesta2.plaquetaDirecta == 'S') {
-                            $('#plaquetaDirecta').prop('checked',true);
-                        }
-                        if (respuesta2.impulsorObstruido == 'S') {
-                            $('#impulsorObstruido').prop('checked',true);
-                        }
-                        if (respuesta2.impulsorRoscaSuelta == 'S') {
-                            $('#impulsorRoscaSuelta').prop('checked',true);
-                        }
-                        if (respuesta2.impulsorRoto == 'S') {
-                            $('#impulsorRoto').prop('checked',true);
-                        }
-                        if (respuesta2.rotorYEjeGastado == 'S') {
-                            $('#rotorYEjeGastado').prop('checked',true);
-                        }
-                        if (respuesta2.rotorYEjeRayado == 'S') {
-                            $('#rotorYEjeRayado').prop('checked',true);
-                        }
-                        if (respuesta2.rotorYEjeEncSuelto == 'S') {
-                            $('#rotorYEjeEncSuelto').prop('checked',true);
-                        }
-                        if (respuesta2.rotorYEjeDistSuelto == 'S') {
-                            $('#rotorYEjeDistSuelto').prop('checked',true);
-                        }
-                        if (respuesta2.bujeGrafitoD == 'S') {
-                            $('#bujeGrafitoD').prop('checked',true);
-                        }
-                        if (respuesta2.bujeBronceD == 'S') {
-                            $('#bujeBronceD').prop('checked',true);
-                        }
-                        if (respuesta2.bujeGrafitoT == 'S') {
-                            $('#bujeGrafitoT').prop('checked',true);
-                        }
-                        if (respuesta2.bujeBronceT == 'S') {
-                            $('#bujeBronceT').prop('checked',true);
-                        }
-                        if (respuesta2.tapaSuperiorPerdida == 'S') {
-                            $('#tapaSuperiorPerdida').prop('checked',true);
-                        }
-                        if (respuesta2.tapaSuperiorDesalineada == 'S') {
-                            $('#tapaSuperiorDesalineada').prop('checked',true);
-                        }
-                        if (respuesta2.tapaSuperiorDuroDesplazar == 'S') {
-                            $('#tapaSuperiorDuroDesplazar').prop('checked',true);
-                        }
-                        if (respuesta2.sensorFlujoPress == 'S') {
-                            $('#sensorFlujoPress').prop('checked',true);
-                        }
-                        if (respuesta2.sensorDiafragmaDeformado == 'S') {
-                            $('#sensorDiafragmaDeformado').prop('checked',true);
-                        }
-                        if (respuesta2.sensorDiafragmaRoto == 'S') {
-                            $('#sensorDiafragmaRoto').prop('checked',true);
-                        }
-                        if (respuesta2.presostatoDiafragmaDeformado == 'S') {
-                            $('#presostatoDiafragmaDeformado').prop('checked',true);
-                        }
-                        if (respuesta2.presostatoDiafragmaRoto == 'S') {
-                            $('#presostatoDiafragmaRoto').prop('checked',true);
-                        }
-                        if (respuesta2.presostatoInundada == 'S') {
-                            $('#presostatoInundada').prop('checked',true);
-                        }
-                        if (respuesta2.presostatoDuroDesplazar == 'S') {
-                            $('#presostatoDuroDesplazar').prop('checked',true);
-                        }
-                        if (respuesta2.bobinadoBajaRigidez == 'S') {
-                            $('#bobinadoBajaRigidez').prop('checked',true);
-                        }
-                        if (respuesta2.bobinadoEnCorto == 'S') {
-                            $('#bobinadoEnCorto').prop('checked',true);
-                        }
-                        if (respuesta2.bobinadoSinContinuidad == 'S') {
-                            $('#bobinadoSinContinuidad').prop('checked',true);
-                        }
-                        if (respuesta2.bobinadoPerdidaAislante == 'S') {
-                            $('#bobinadoPerdidaAislante').prop('checked',true);
-                        }
-                        if (respuesta2.bobinadoReparadoAfuera == 'S') {
-                            $('#bobinadoReparadoAfuera').prop('checked',true);
-                        }
-                        if (respuesta2.bobinadoAmperajeFueraRango == 'S') {
-                            $('#bobinadoAmperajeFueraRango').prop('checked',true);
-                        }
-                        if (respuesta2.bobinadoGiroInvertido == 'S') {
-                            $('#bobinadoGiroInvertido').prop('checked',true);
-                        }
-                        if (respuesta2.bobinadoSinKlixon == 'S') {
-                            $('#bobinadoSinKlixon').prop('checked',true);
-                        }
-                        if (respuesta2.bobinadoCuerpoDeteriorado == 'S') {
-                            $('#bobinadoCuerpoDeteriorado').prop('checked',true);
-                        }
-                        
-                    }else {
-                        let p = document.createElement('p')
-                        p.innerText = "El equipo aún no cuenta con un diagnóstico realizado"
-                        $('#contenidoFichaTecnica').show();
-                        $('#contenidoFichaTecnica').html(p);
-                    }                 
-                }*/
+                    } else {
+                        respuesta.bobinado == 'S' ? $('#bobinado').prop('checked',true) : $('#bobinado').prop('checked',false);
+                        respuesta.buje_d == 'S' ? $('#buje_d').prop('checked',true) : $('#buje_d').prop('checked',false);
+                        respuesta.buje_t == 'S' ? $('#buje_t').prop('checked',true) : $('#buje_t').prop('checked',false);
+                        respuesta.impulsor == 'S' ? $('#impulsor').prop('checked',true) : $('#impulsor').prop('checked',false);
+                        respuesta.rotor_eje == 'S' ? $('#rotor_eje').prop('checked',true) : $('#rotor_eje').prop('checked',false);
+                        respuesta.juego_juntas == 'S' ? $('#juego_juntas').prop('checked',true) : $('#juego_juntas').prop('checked',false);
+                        respuesta.cable_ficha == 'S' ? $('#cable_ficha').prop('checked',true) : $('#cable_ficha').prop('checked',false);
+                        respuesta.vaso_expansion == 'S' ? $('#vaso_expansion').prop('checked',true) : $('#vaso_expansion').prop('checked',false);
+                        respuesta.pegado == 'S' ? $('#pegado').prop('checked',true) : $('#pegado').prop('checked',false);
+                        respuesta.flexibles == 'S' ? $('#flexibles').prop('checked',true) : $('#flexibles').prop('checked',false);
+                        respuesta.microswitch == 'S' ? $('#microswitch').prop('checked',true) : $('#microswitch').prop('checked',false);
+                        respuesta.tapa_sup == 'S' ? $('#tapa_superior').prop('checked',true) : $('#tapa_superior').prop('checked',false);
+                        respuesta.tapa_inf == 'S' ? $('#tapa_inferior').prop('checked',true) : $('#tapa_inferior').prop('checked',false);
+                        respuesta.sensor_sup_inf == 'S' ? $('#sensor_sup_inf').prop('checked',true) : $('#sensor_sup_inf').prop('checked',false);
+                        respuesta.aprobo_estanqueidad == 'S' ? $('#aprobo_estanqueidad').prop('checked',true) : $('#aprobo_estanqueidad').prop('checked',false);
+                        respuesta.pintura == 'S' ? $('#pintura').prop('checked',true) : $('#pintura').prop('checked',false);
+                        respuesta.cuerpo_motor == 'S' ? $('#cuerpo_motor').prop('checked',true) : $('#cuerpo_motor').prop('checked',false);
+                        respuesta.tubo_separador == 'S' ? $('#tubo_separador').prop('checked',true) : $('#tubo_separador').prop('checked',false);
+                        respuesta.disco_empuje == 'S' ? $('#disco_empuje').prop('checked',true) : $('#disco_empuje').prop('checked',false);
+                        respuesta.tornillos == 'S' ? $('#tornillos').prop('checked',true) : $('#tornillos').prop('checked',false);
+                        respuesta.cuerpo_impulsor == 'S' ? $('#cuerpo_impulsor').prop('checked',true) : $('#cuerpo_impulsor').prop('checked',false);
+                        respuesta.capacitor == 'S' ? $('#capacitor').prop('checked',true) : $('#capacitor').prop('checked',false);
+                        $('#observaciones').val(respuesta.observaciones);
+                    }
+                }else {
+/*                         let p = document.createElement('p')
+                    p.innerText = "El equipo aún no cuenta con un diagnóstico realizado"
+                    $('#contenidoFichaTecnica').show();
+                    $('#contenidoFichaTecnica').html(p); */
+                }                  
             }
         })
 

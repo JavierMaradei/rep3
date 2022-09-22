@@ -203,3 +203,20 @@
 		$idUsuario		= $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
         return $idUsuario['usuario_id'];
 	}
+
+        /**
+     * Retorna el id del usuario logueado
+     * @param {string} $codigo
+     * @return {string}
+     * @version 1.0
+     */
+    function recuperaSucursalUsuario($email){
+
+        $query 			= "SELECT sucursal_id FROM rep3_usuarios WHERE email = '{$email}'";
+
+		$conexion 		= conectar(DB_DSN, DB_USER, DB_PASS);
+        $sentenciaSQL	= $conexion->prepare($query);
+        $sentenciaSQL	-> execute();
+		$sucUsuario		= $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
+        return $sucUsuario['sucursal_id'];
+	}
