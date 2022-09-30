@@ -250,13 +250,13 @@
                                         rep3_reparaciones.usuario_id,
                                         rep3_usuarios.nombre as nombre_usuario,
                                         rep3_usuarios.apellido as apellido_usuario,
-                                        Case rep3_reparaciones.tipo_ingreso_id
+                                        Case rep3_reparaciones.tipo_ingreso
                                         when 'R' then 'REPARACIÓN'
                                         when 'P' then 'PRESUPUESTO'
                                         when 'C' then 'PLAN CANJE'
                                         when 'E' then 'CAMBIO EQUIPO'
                                         end As tipo_ingreso,
-                                        Case rep3_reparaciones.tipo_atencion_id
+                                        Case rep3_reparaciones.tipo_atencion
                                         when '1' then 'REVISAR'
                                         when '2' then 'REPARAR EN EL MOMENTO'
                                         end As tipo_atencion
@@ -296,7 +296,7 @@
         echo json_encode($arrayRespuesta, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
 
         if($clienteEmail != '' && $arrayRespuesta['estado'] == 'Transacción exitosa'){
-            require_once('envioMail.php');
+            //require_once('envioMail.php');
         }
 
     };
