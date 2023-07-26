@@ -6,6 +6,9 @@
     </div>
 </div>
 <div class="row mt-3">
+    <div class="col-md-5 mb-3">
+        <?php include 'mod_repa/tablas/clientes/clientes_abm.php'; ?>
+    </div>
     <div class="col-md-7 mb-3">
         <div class="card h-100">
             <h4 class="card-header bg-dark text-white text-center"><i>Listado de Clientes</i></h4>
@@ -27,10 +30,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="col-md-5 mb-3">
-        <?php include 'mod_repa/tablas/clientes/clientes_abm.php'; ?>
     </div>
 </div>
 

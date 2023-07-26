@@ -118,9 +118,9 @@
                                     <li class="nav-item">
                                         <a href="?page=mod_repa/tablas/familias/familias" class="nav-link">Familias</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <!-- <li class="nav-item">
                                         <a href="?page=mod_repa/tablas/feriados/feriados" class="nav-link">Feriados</a>
-                                    </li>
+                                    </li> -->
                                     <li class="nav-item">
                                         <a href="?page=mod_repa/tablas/formasRetiro/formasRetiro" class="nav-link">Formas de retiro</a>
                                     </li>
@@ -132,6 +132,9 @@
                                     </li>
                                     <li class="nav-item">
                                         <a href="?page=mod_repa/tablas/motivosAnulacion/motivosAnulacion" class="nav-link">Motivos anulación</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="?page=mod_repa/tablas/piezas/piezas" class="nav-link">Piezas</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="?page=mod_repa/tablas/productos/productos" class="nav-link">Productos</a>

@@ -6,29 +6,6 @@
     </div>
 </div>
 <div class="row mt-3">
-    <div class="col-md-7 mb-3">
-        <div class="card h-100">
-        <h4 class="card-header bg-dark text-white text-center"><i>Listado de Lugares de Recepción</i></h4>
-            <div class="card-body">
-                <div class="row mb-2">
-                    <div class="table-responsive">
-                        <table id="tabla_lugaresRecepcion" class="table table-striped table-hover" style="font-size: 11px; font-weight: 400;">
-                            <thead>
-                                <th>Código</th>
-                                <th>Descripción</th>
-                                <th>Días de demora</th>
-                                <th>Activo</th>
-                                <th>Flete</th>                          
-                            </thead>
-                            <tbody id="tbodyLugaresRecepcionList">
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="col-md-5 mb-3">
         <div class="card h-100">
             <h4 class="card-header bg-dark text-white text-center"><i>Lugar de Recepción</i></h4>
@@ -71,6 +48,28 @@
                     <button id="btnCancelaLugaresRecepcion" class="btn btn-default btn-outline">Cancelar</button>
                 </div>
             </form>
+        </div>
+    </div>
+    <div class="col-md-7 mb-3">
+        <div class="card h-100">
+        <h4 class="card-header bg-dark text-white text-center"><i>Listado de Lugares de Recepción</i></h4>
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="table-responsive">
+                        <table id="tabla_lugaresRecepcion" class="table table-striped table-hover" style="font-size: 11px; font-weight: 400;">
+                            <thead>
+                                <th>Código</th>
+                                <th>Descripción</th>
+                                <th>Días de demora</th>
+                                <th>Activo</th>
+                                <th>Flete</th>                          
+                            </thead>
+                            <tbody id="tbodyLugaresRecepcionList">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
