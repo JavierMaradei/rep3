@@ -48,9 +48,15 @@
                 </div>
             </div>
             <div class="row mb-2">
-                <label for="productoSubirFoto" class="col-sm-2 col-form-label">Foto</label>
+                <label for="productoSubirFoto" class="col-sm-2 col-form-label" title="Foto del producto">Foto</label>
                 <div class="col-sm-10 text-center">
                     <input type="file" id="productoSubirFoto" class="form-control">
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="productoSubirFotoDespiece" class="col-sm-2 col-form-label" title="Foto del despiece">Desp.</label>
+                <div class="col-sm-10 text-center">
+                    <input type="file" id="productoSubirFotoDespiece" class="form-control">
                 </div>
             </div>
             <div class="row mb-2">
@@ -67,9 +73,16 @@
             </div>            
         </div>
         <div class="card-footer text-center">
-            <button id="btnGrabaProducto" class="btn btn-success btn-outline">Grabar</button>
-            <button id="btnEliminaProducto" class="btn btn-danger btn-outline">Eliminar</button>
-            <button id="btnCancelaProducto" class="btn btn-default btn-outline">Cancelar</button>
+            <div class="row">
+                <div class="col-sm-8 text-left mb-2">
+                    <button id="btnGrabaProducto" class="btn btn-success btn-outline">Grabar</button>
+                    <button id="btnEliminaProducto" class="btn btn-danger btn-outline">Eliminar</button>
+                    <button id="btnCancelaProducto" class="btn btn-outline-warning">Cancelar</button>
+                </div>
+                <div class="col-sm-4 text-right">
+                    <button id="btnDespieceProducto" class="btn btn-info">Despiece</button>
+                </div>
+            </div>
         </div>
     </form>
 </div>

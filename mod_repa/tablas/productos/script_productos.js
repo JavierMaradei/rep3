@@ -12,6 +12,9 @@
     let productoFamilia     = document.querySelector('#productoFamilia')//Captura de boton cancelar
     let productoSubirFoto   = document.querySelector('#productoSubirFoto')
     let productoImagen      = document.querySelector('#productoImagen')
+    let btnDespieceProducto = document.querySelector('#btnDespieceProducto')
+    let btnCloseModal       = document.querySelector('#btnCloseModal')
+    let btnCerrarModal      = document.querySelector('#btnCerrarModal')
     let edit                = false//flag de edición de registro existente o nuevo registro
     let id                  = ''
     let arrayVal = {
@@ -89,6 +92,32 @@
                 "previous": "Anterior"
             }
         }
+    })
+
+    function limpieza(){
+        cleanInputs(inputs)
+        productoMarca.value= 0
+        productoFamilia.value = 0
+        edit = false
+        $(btnEliminaProducto).hide()
+        productoActivo.checked = true
+        id = ''
+        productoImagen.src = '../../hdn/img/sinImagen.png'
+    }
+
+    btnDespieceProducto.addEventListener('click', e =>{
+        e.preventDefault()
+        $('#modalDespiece').show()
+    })
+
+    btnCerrarModal.addEventListener('click', e =>{
+        e.preventDefault()
+        $('#modalDespiece').hide()
+    })
+
+    btnCloseModal.addEventListener('click', e =>{
+        e.preventDefault()
+        $('#modalDespiece').hide()
     })
     
     //Tomo el link de la tabla con el ID del registro
@@ -238,11 +267,7 @@
     //Funcionalidad del botón de Cancelar
     btnCancelaProducto.addEventListener('click', e => {
         e.preventDefault()
-        cleanInputs(inputs)
-        edit = false
-        $(btnEliminaProducto).hide()
-        productoActivo.checked = true
-        id = ''
-        productoImagen.src = '../../hdn/img/sinImagen.png'
+        limpieza()
     })
+
 })()
