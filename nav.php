@@ -110,6 +110,9 @@
                                         <a href="?page=mod_repa/tablas/clientes/clientes" class="nav-link">Clientes</a>
                                     </li>
                                     <li class="nav-item">
+                                        <a href="?page=mod_repa/tablas/despieces/despieces" class="nav-link">Despieces</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a href="?page=mod_repa/tablas/estadosReparacion/estadosReparacion" class="nav-link">Estados reparación</a>
                                     </li>
                                     <li class="nav-item">
