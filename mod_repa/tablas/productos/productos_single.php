@@ -19,16 +19,18 @@
         $conexion   = conectar(DB_DSN, DB_USER, DB_PASS);
         
         $query      =   "SELECT 
-                            rep3_productos.producto_id      as productoId, 
-                            rep3_productos.codigo           as productoCodigo, 
-                            rep3_productos.marca_id         as productoMarca, 
-                            rep3_productos.familia_id       as productoFamilia, 
-                            rep3_productos.descripcion      as productoDescripcion, 
-                            rep3_productos.costo_estimado   as productoCosto, 
-                            rep3_productos.activo           as productoActivo, 
-                            rep3_productos.mono_tri         as productoMonoTri, 
-                            rep3_productos.canje_flag       as productoCanjeable, 
-                            rep3_productos.foto             as productoImagen 
+                            rep3_productos.producto_id                                          as productoId, 
+                            rep3_productos.codigo                                               as productoCodigo, 
+                            rep3_productos.marca_id                                             as productoMarca, 
+                            rep3_productos.familia_id                                           as productoFamilia, 
+                            rep3_productos.descripcion                                          as productoDescripcion, 
+                            rep3_productos.costo_estimado                                       as productoCosto, 
+                            rep3_productos.activo                                               as productoActivo, 
+                            rep3_productos.mono_tri                                             as productoMonoTri, 
+                            rep3_productos.canje_flag                                           as productoCanjeable, 
+                            rep3_productos.foto                                                 as productoImagen,
+                            rep3_productos.foto_despiece                                        as productoImagenDespiece,
+                            concat(rep3_productos.codigo, ' - ', rep3_productos.descripcion)    as productoCodDesc
                         FROM 
                             rep3_productos
                         WHERE 

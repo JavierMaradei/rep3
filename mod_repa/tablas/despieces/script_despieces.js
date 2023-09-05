@@ -1,23 +1,23 @@
-(function iniciarProductos(){
-    let formulario          = document.querySelector('#formProductos')//Captura del formulario
-    let inputs              = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
-    let formData            = new FormData() //Creo el formData para transferencia de información con el Backend
-    let btnGrabaProducto    = document.querySelector('#btnGrabaProducto')//Captura de boton grabar
-    let btnEliminaProducto  = document.querySelector('#btnEliminaProducto')//Captura de boton eliminar
-    let btnCancelaProducto  = document.querySelector('#btnCancelaProducto')//Captura de boton cancelar
-    let btnBuscarPieza      = document.querySelector('#btnBuscarPieza')
-    let productoCodigo      = document.querySelector('#productoCodigo')
-    let productoDescripcion = document.querySelector('#productoDescripcion')
-    let productoCosto       = document.querySelector('#productoCosto')
-    let productoMarca       = document.querySelector('#productoMarca')//Captura de boton cancelar
-    let productoFamilia     = document.querySelector('#productoFamilia')//Captura de boton cancelar
-    let productoSubirFoto   = document.querySelector('#productoSubirFoto')
-    let productoImagen      = document.querySelector('#productoImagen')
-    let btnDespieceProducto = document.querySelector('#btnDespieceProducto')
-    let btnCloseModal       = document.querySelector('#btnCloseModal')
-    let btnCerrarModal      = document.querySelector('#btnCerrarModal')
-    let edit                = false//flag de edición de registro existente o nuevo registro
-    let id                  = ''
+(() => {
+    let formulario              = document.querySelector('#formDespiece')//Captura del formulario
+    let inputs                  = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
+    let formData                = new FormData() //Creo el formData para transferencia de información con el Backend
+    let btnGrabaProducto        = document.querySelector('#btnGrabaProducto')//Captura de boton grabar
+    let btnVerDespieceProducto  = document.querySelector('#btnVerDespieceProducto')//Captura de boton grabar
+    let btnCancelaProducto      = document.querySelector('#btnCancelaProducto')//Captura de boton cancelar
+    let btnBuscarPieza          = document.querySelector('#btnBuscarPieza')
+    let productoCodigo          = document.querySelector('#productoCodigo')
+    let productoDescripcion     = document.querySelector('#productoDescripcion')
+    let productoCosto           = document.querySelector('#productoCosto')
+    let productoMarca           = document.querySelector('#productoMarca')//Captura de boton cancelar
+    let productoFamilia         = document.querySelector('#productoFamilia')//Captura de boton cancelar
+    let productoSubirFoto       = document.querySelector('#productoSubirFoto')
+    let productoImagen          = document.querySelector('#productoImagen')
+    let btnDespieceProducto     = document.querySelector('#btnDespieceProducto')
+    let btnCloseModal           = document.querySelector('#btnCloseModal')
+    let btnCerrarModal          = document.querySelector('#btnCerrarModal')
+    let edit                    = false//flag de edición de registro existente o nuevo registro
+    let id                      = ''
     let arrayVal = {
         productoId          : {},
         productoCodigo      : {required: true, maxlength: 30, validated: true},
@@ -37,7 +37,6 @@
     cargaFamilias(productoFamilia)
     cargaMarcas(productoMarca)
     productoActivo.checked = true */
-    $(btnEliminaProducto).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
 
     //Declaración del complemento DataTable
     let tabla = $('#tabla_productos').DataTable( {
@@ -91,12 +90,81 @@
         }
     })
 
+    let tablaPiezas = $('#tabla_piezas').DataTable( {
+        columnDefs: [
+            {
+                "targets": 4,
+                "render": function ( data, type, row, meta ) {
+                    return '<a class="icon-delete" href="'+data+'"><i class="fa fa-trash fa-2x"></i></a>';
+                },
+            }
+        ],
+        processing: true,
+        paging: true,
+        bLengthChange: false,
+        iDisplayLength: 10,
+        bInfo: false,
+        bAutoWidth: false,
+        dom:
+            "<'row'<'col-sm-12'f>>" +
+            "<'row'<'col-sm-12'tr>>" +
+            "<'row'<'col-sm-6'i><'col-sm-6'p>>",
+        buttons: [
+            {extend: 'excel', title: 'Lista de piezas', text: 'Exportar a Excel'}  
+        ],
+        language: {
+            "decimal": "",
+            "emptyTable": "No hay información",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+            "infoPostFix": "",
+            "thousands": ",",
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+            "loadingRecords": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Cargando...</span> ',
+            "processing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Procesando...</span>',
+            "search": "Buscar:",
+            "zeroRecords": "Sin resultados encontrados",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        }
+    })
+
+    function recargaTabla(productoId){
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_repa/tablas/despieces/piezasRelProductos_search.php?productoId='+productoId)//Envío la información del filtro
+        xhr.send()
+
+        xhr.addEventListener('load', () => { //Cuando me vuelven los datos de la query armo la tabla
+            tablaPiezas.clear() // Primero la vacío de registros preexistentes
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+                respuesta.forEach(element => {
+                    tablaPiezas.row.add([ //Agrego las nuevas filas
+                        element.piezaCodigo,
+                        element.piezaDescripcion,
+                        element.piezaReferencia,
+                        element.marcaDescripcion,
+                        element.pieza_producto_id
+                    ])
+                });
+                tablaPiezas.draw() //Imprimo la tabla en pantalla
+            }
+        })
+    }
+
     function limpieza(){
         cleanInputs(inputs)
         edit = false
-        $(btnEliminaProducto).hide()
         id = ''
+        btnVerDespieceProducto.disabled = true
+        btnVerDespieceProducto.hidden   = true
         productoImagen.src = '../../hdn/img/sinImagen.png'
+        tablaPiezas.clear().draw()
     }
 
     function busquedaPorPieza(){
@@ -171,6 +239,12 @@
         })
     }
 
+    $('#tabla_piezas').on( 'click', '.icon-delete', e => {
+        e.preventDefault()
+        let fila = e.target.parentNode.parentNode.parentNode
+        tablaPiezas.row(fila).remove().draw()
+    } );
+
     btnBuscarPieza.addEventListener('click', e => {
         e.preventDefault()
         busquedaPorPieza().then(() => {
@@ -217,9 +291,41 @@
             } else {
                 productoImagen.src = '../../hdn/img/sinImagen.png'
             }
+            if(r.productoImagenDespiece != ''){
+                btnVerDespieceProducto.hidden   = false
+                btnVerDespieceProducto.disabled = false
+            } else {
+                btnVerDespieceProducto.hidden   = true
+                btnVerDespieceProducto.disabled = true
+            }    
         })
-        $(btnEliminaProducto).show()
+        recargaTabla(id)
         edit = true
+    })
+
+    btnVerDespieceProducto.addEventListener('click', e =>{
+        e.preventDefault()
+        $('#modalDespiece').show()
+        $('#bodyDespiece').empty()
+        $('#titulo').text('Despiece del producto')
+
+        let template = ''
+        template = `
+                    <div class="col-sm-12 text-center dataBasica">
+                        <img id="productoImagenDespiece" src="../../hdn/img/sinImagen.png" alt="Despiece Producto" class="imagen-escalada">
+                    </div>
+                `
+        url = 'mod_repa/tablas/productos/productos_single.php'
+        showDataReloaded(id, url, inputs).then((r) => {
+            if(r.productoImagenDespiece != ''){
+                productoImagenDespiece.src = `mod_repa/tablas/productos/adjuntos/${r.productoImagenDespiece}`
+            } else {
+                productoImagenDespiece.src = '../../hdn/img/sinImagen.png'
+            }
+        })
+
+        $('#bodyDespiece').html(template)
+
     })
 
     //Funcionalidad del botón de Grabar
@@ -243,7 +349,6 @@
                     case 'Transacción exitosa':
                         msgTransaccionExitosa()
                         tabla.ajax.reload();
-                        $(btnEliminaProducto).hide()
                         cleanInputs(inputs)
                         cleanFormData(inputs, formData)
                         formData.delete('archivoAdjunto')
@@ -280,75 +385,7 @@
             })
         }
     })
-    
-    //Funcionalidad del botón de Eliminar
-    btnEliminaProducto.addEventListener('click', e => {
-        e.preventDefault()
-        let xhr2 = new XMLHttpRequest
-        let url2 = 'mod_repa/tablas/productos/productos_use.php?id='+id
-        xhr2.open('GET', url2)
-        xhr2.send()
-        xhr2.addEventListener('load', () => {
-            if(xhr2.status == 200){
-                let respuesta = JSON.parse(xhr2.response)
-                if(respuesta == ''){
-                    swal({
-                        title: "Estás seguro?",
-                        text: "Si lo eliminas, el registro no podrá ser recuperado!",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Si, eliminar!",
-                        cancelButtonText: "No, Cancelar!",
-                        closeOnConfirm: false,
-                        closeOnCancel: false },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            
-                            let xhr = new XMLHttpRequest
-                            let url = 'mod_repa/tablas/productos/productos_delete.php'
-                            xhr.open('GET', url+'?id='+id)
-                            xhr.send()
-                            xhr.addEventListener('load', () => {
-                                if(xhr.status == 200){ 
-                                    let respuesta = JSON.parse(xhr.response)
-                                    switch (respuesta.estado) {
-                                        case 'Transacción exitosa':
-                                            msgEliminado()
-                                            tabla.ajax.reload();
-                                            $(btnEliminaProducto).hide()
-                                            cleanInputs(inputs)
-                                            cleanFormData(inputs, formData)
-                                            productoActivo.checked = true
-                                            id = ''
-                                            edit = false
-                                            productoImagen.src = '../../hdn/img/sinImagen.png'
-                                            break;
-                                        case 'Sesión expirada':
-                                            sesionExpiradaMensajeFlotante()
-                                            break;
-                                        case 'Error perfil':
-                                            msgErrorPerfil()
-                                            cleanFormData(inputs, formData)
-                                            break;
-                                        default:
-                                            msgAlgoNoFueBien()
-                                            cleanFormData(inputs, formData)
-                                            break;
-                                    }
-                                }
-                            }) 
-                        } else {
-                            msgCancelado()
-                        }
-                    });
-                } else {
-                    swal("Cancelado", "El registro no se puede eliminar porque se encuentra en uso", "error");
-                }
-            }
-        })
-    })
-    
+        
     //Funcionalidad del botón de Cancelar
     btnCancelaProducto.addEventListener('click', e => {
         e.preventDefault()

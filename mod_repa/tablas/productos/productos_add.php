@@ -14,29 +14,36 @@
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-        $conexion               = conectar(DB_DSN, DB_USER, DB_PASS);
-        $productoCodigo         = filter_var($_POST['productoCodigo'], FILTER_SANITIZE_STRING);
-        $productoMarca          = filter_var($_POST['productoMarca'], FILTER_SANITIZE_STRING);
-        $productoFamilia        = filter_var($_POST['productoFamilia'], FILTER_SANITIZE_STRING);
-        $productoDescripcion    = filter_var($_POST['productoDescripcion'], FILTER_SANITIZE_STRING);
-        $productoCosto          = filter_var($_POST['productoCosto'], FILTER_SANITIZE_STRING);
-        $productoMonoTri        = filter_var($_POST['productoMonoTri'], FILTER_SANITIZE_STRING);
-        $productoSubirFoto      = filter_var($_POST['productoSubirFoto'], FILTER_SANITIZE_STRING);
-        $productoActivo         = filter_var($_POST['productoActivo'], FILTER_SANITIZE_STRING);
-        $productoCanjeable      = filter_var($_POST['productoCanjeable'], FILTER_SANITIZE_STRING);
-        $productoActivo         = $productoActivo == 'true' ? 'S' : 'N';
-        $productoCanjeable      = $productoCanjeable == 'true' ? 'S' : 'N';
-        $fecha                  = new DateTime();
-        $formateadaArg          = $fecha->format('Y-m-d');
-        $perfilSirep            = recuperaPerfil($_SESSION['usuario_id']);
-        $archivoAdjunto['0']    = false;
-        $archivoAdjunto['2']    = '';
+        $conexion                       = conectar(DB_DSN, DB_USER, DB_PASS);
+        $productoCodigo                 = filter_var($_POST['productoCodigo'], FILTER_SANITIZE_STRING);
+        $productoMarca                  = filter_var($_POST['productoMarca'], FILTER_SANITIZE_STRING);
+        $productoFamilia                = filter_var($_POST['productoFamilia'], FILTER_SANITIZE_STRING);
+        $productoDescripcion            = filter_var($_POST['productoDescripcion'], FILTER_SANITIZE_STRING);
+        $productoCosto                  = filter_var($_POST['productoCosto'], FILTER_SANITIZE_STRING);
+        $productoMonoTri                = filter_var($_POST['productoMonoTri'], FILTER_SANITIZE_STRING);
+        $productoSubirFoto              = filter_var($_POST['productoSubirFoto'], FILTER_SANITIZE_STRING);
+        $productoSubirFotoDespiece      = filter_var($_POST['productoSubirFotoDespiece'], FILTER_SANITIZE_STRING);
+        $productoActivo                 = filter_var($_POST['productoActivo'], FILTER_SANITIZE_STRING);
+        $productoCanjeable              = filter_var($_POST['productoCanjeable'], FILTER_SANITIZE_STRING);
+        $productoActivo                 = $productoActivo == 'true' ? 'S' : 'N';
+        $productoCanjeable              = $productoCanjeable == 'true' ? 'S' : 'N';
+        $fecha                          = new DateTime();
+        $formateadaArg                  = $fecha->format('Y-m-d');
+        $perfilSirep                    = recuperaPerfil($_SESSION['usuario_id']);
+        $archivoAdjunto['0']            = false;
+        $archivoAdjunto['2']            = '';
+        $archivoAdjuntoDespiece['0']    = false;
+        $archivoAdjuntoDespiece['2']    = '';
 
         if($productoSubirFoto != ''){
             $archivoAdjunto = subirArchivo($_FILES['archivoAdjunto']['error'], $_FILES['archivoAdjunto']['type'], $_FILES['archivoAdjunto']['tmp_name'], $_FILES['archivoAdjunto']['name']);
         }
 
-        if($archivoAdjunto['0'] == false){
+        if($productoSubirFotoDespiece != ''){
+            $archivoAdjuntoDespiece = subirArchivo($_FILES['archivoAdjuntoDespiece']['error'], $_FILES['archivoAdjuntoDespiece']['type'], $_FILES['archivoAdjuntoDespiece']['tmp_name'], $_FILES['archivoAdjuntoDespiece']['name']);
+        }
+
+        if($archivoAdjunto['0'] == false && $archivoAdjuntoDespiece['0'] == false){
             if($perfilSirep == 1){
 
                 $query1 = " INSERT INTO rep3_productos (
@@ -49,7 +56,8 @@
                                 fmodificacion,
                                 mono_tri,
                                 canje_flag,
-                                foto
+                                foto,
+                                foto_despiece
                             ) VALUES (
                                 '{$productoCodigo}', 
                                 '{$productoMarca}', 
@@ -60,7 +68,8 @@
                                 '{$formateadaArg}', 
                                 '{$productoMonoTri}', 
                                 '{$productoCanjeable}', 
-                                '{$archivoAdjunto[2]}'     
+                                '{$archivoAdjunto[2]}',     
+                                '{$archivoAdjuntoDespiece[2]}'     
                             )
                         ";
     
@@ -78,7 +87,7 @@
             }
         } else {
             $arrayRespuesta['estado'] = "Error adjunto";
-            $arrayRespuesta['msgError'] = $archivoAdjunto['1'];
+            $arrayRespuesta['msgError'] = $archivoAdjunto['1'].' '.$archivoAdjuntoDespiece['1'];
         }
 
         header("Content-type: aplication/json");

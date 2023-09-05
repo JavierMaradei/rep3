@@ -1,33 +1,35 @@
 (function iniciarProductos(){
-    let formulario          = document.querySelector('#formProductos')//Captura del formulario
-    let inputs              = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
-    let formData            = new FormData() //Creo el formData para transferencia de información con el Backend
-    let btnGrabaProducto    = document.querySelector('#btnGrabaProducto')//Captura de boton grabar
-    let btnEliminaProducto  = document.querySelector('#btnEliminaProducto')//Captura de boton eliminar
-    let btnCancelaProducto  = document.querySelector('#btnCancelaProducto')//Captura de boton cancelar
-    let productoCodigo      = document.querySelector('#productoCodigo')
-    let productoDescripcion = document.querySelector('#productoDescripcion')
-    let productoCosto       = document.querySelector('#productoCosto')
-    let productoMarca       = document.querySelector('#productoMarca')//Captura de boton cancelar
-    let productoFamilia     = document.querySelector('#productoFamilia')//Captura de boton cancelar
-    let productoSubirFoto   = document.querySelector('#productoSubirFoto')
-    let productoImagen      = document.querySelector('#productoImagen')
-    let btnDespieceProducto = document.querySelector('#btnDespieceProducto')
-    let btnCloseModal       = document.querySelector('#btnCloseModal')
-    let btnCerrarModal      = document.querySelector('#btnCerrarModal')
-    let edit                = false//flag de edición de registro existente o nuevo registro
-    let id                  = ''
+    let formulario                  = document.querySelector('#formProductos')//Captura del formulario
+    let inputs                      = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
+    let formData                    = new FormData() //Creo el formData para transferencia de información con el Backend
+    let btnGrabaProducto            = document.querySelector('#btnGrabaProducto')//Captura de boton grabar
+    let btnEliminaProducto          = document.querySelector('#btnEliminaProducto')//Captura de boton eliminar
+    let btnCancelaProducto          = document.querySelector('#btnCancelaProducto')//Captura de boton cancelar
+    let productoCodigo              = document.querySelector('#productoCodigo')
+    let productoDescripcion         = document.querySelector('#productoDescripcion')
+    let productoCosto               = document.querySelector('#productoCosto')
+    let productoMarca               = document.querySelector('#productoMarca')//Captura de boton cancelar
+    let productoFamilia             = document.querySelector('#productoFamilia')//Captura de boton cancelar
+    let productoSubirFoto           = document.querySelector('#productoSubirFoto')
+    let productoSubirFotoDespiece   = document.querySelector('#productoSubirFotoDespiece')
+    let productoImagen              = document.querySelector('#productoImagen')
+    let btnDespieceProducto         = document.querySelector('#btnDespieceProducto')
+    let btnCloseModal               = document.querySelector('#btnCloseModal')
+    let btnCerrarModal              = document.querySelector('#btnCerrarModal')
+    let edit                        = false//flag de edición de registro existente o nuevo registro
+    let id                          = ''
     let arrayVal = {
-        productoId          : {},
-        productoCodigo      : {required: true, maxlength: 30, validated: true},
-        productoMarca       : {required: true, validated: true, noCero: true},
-        productoFamilia     : {required: true, validated: true, noCero: true},
-        productoDescripcion : {required: true, maxlength: 100, validated: true},
-        productoCosto       : {maxlength: 21, validated: true},
-        productoMonoTri     : {required: true, validated: true},
-        productoSubirFoto   : {maxlength: 100},
-        productoActivo      : {validated: true},
-        productoCanjeable   : {validated: true}
+        productoId                  : {},
+        productoCodigo              : {required: true, maxlength: 30, validated: true},
+        productoMarca               : {required: true, validated: true, noCero: true},
+        productoFamilia             : {required: true, validated: true, noCero: true},
+        productoDescripcion         : {required: true, maxlength: 100, validated: true},
+        productoCosto               : {maxlength: 21, validated: true},
+        productoMonoTri             : {required: true, validated: true},
+        productoSubirFoto           : {maxlength: 100},
+        productoSubirFotoDespiece   : {maxlength: 100},
+        productoActivo              : {validated: true},
+        productoCanjeable           : {validated: true}
     }
 
     limitaCaracteres(productoCodigo, 30)
@@ -146,6 +148,7 @@
         if(validacion){
             collectData(inputs, formData)
             formData.append('archivoAdjunto', productoSubirFoto.files[0])
+            formData.append('archivoAdjuntoDespiece', productoSubirFotoDespiece.files[0])
 
             let agregar = 'mod_repa/tablas/productos/productos_add.php'
             let editar = 'mod_repa/tablas/productos/productos_edit.php'
@@ -162,6 +165,7 @@
                         cleanInputs(inputs)
                         cleanFormData(inputs, formData)
                         formData.delete('archivoAdjunto')
+                        formData.delete('archivoAdjuntoDespiece')
                         productoActivo.checked = true
                         productoImagen.src = '../../hdn/img/sinImagen.png'
                         id = ''
@@ -185,6 +189,7 @@
                         });
                         cleanFormData(inputs, formData)
                         formData.delete('archivoAdjunto')
+                        formData.delete('archivoAdjuntoDespiece')
                         break;
 
                     default:
