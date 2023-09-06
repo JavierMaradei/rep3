@@ -93,12 +93,13 @@
     let tablaPiezas = $('#tabla_piezas').DataTable( {
         columnDefs: [
             {
-                "targets": 4,
+                "targets": 5,
                 "render": function ( data, type, row, meta ) {
                     return '<a class="icon-delete" href="'+data+'"><i class="fa fa-trash fa-2x"></i></a>';
                 },
             }
         ],
+        order: [[3,'asc']],
         processing: true,
         paging: true,
         bLengthChange: false,
@@ -145,6 +146,7 @@
                 let respuesta = JSON.parse(xhr.response)
                 respuesta.forEach(element => {
                     tablaPiezas.row.add([ //Agrego las nuevas filas
+                        element.pieza_id,
                         element.piezaCodigo,
                         element.piezaDescripcion,
                         element.piezaReferencia,
@@ -243,6 +245,48 @@
         e.preventDefault()
         let fila = e.target.parentNode.parentNode.parentNode
         tablaPiezas.row(fila).remove().draw()
+    } );
+
+    $(document).on( 'click', '.pieza-item', e => {
+        e.preventDefault()
+        let seleccion = e.target.innerText
+        let stateSeleccion = false
+
+        //validar si ya existe ese código en el despiece
+        tablaPiezas.rows().data().each(function (value) {
+            let codigo = value[1];
+            
+            if(codigo == seleccion){
+                stateSeleccion = true
+            }
+        });
+        
+        if(stateSeleccion == false){
+            $('#modalDespiece').hide()
+
+            let xhr = new XMLHttpRequest
+            xhr.open('GET', 'mod_repa/tablas/piezas/piezas_search.php?code='+seleccion)//Envío la información del filtro
+            xhr.send()
+    
+            xhr.addEventListener('load', () => { //Cuando me vuelven los datos de la query armo la tabla
+                if(xhr.status == 200){
+                    let respuesta = JSON.parse(xhr.response)
+
+                    tablaPiezas.row.add([ //Agrego las nuevas filas
+                        respuesta.pieza_id,
+                        respuesta.codigo,
+                        respuesta.descripcion,
+                        respuesta.referencia,
+                        respuesta.marca,
+                        respuesta.pieza_id
+                    ])
+
+                    tablaPiezas.draw() //Imprimo la tabla en pantalla
+                }
+            })
+        } else {
+            alert('Código existente')
+        }
     } );
 
     btnBuscarPieza.addEventListener('click', e => {

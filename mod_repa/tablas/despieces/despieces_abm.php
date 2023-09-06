@@ -21,6 +21,7 @@
                     <div class="table-responsive">
                         <table id="tabla_piezas" class="table table-striped table-hover" style="font-size: 11px; font-weight: 400;">
                             <thead>
+                                <th>Id</th>
                                 <th>Codigo</th>
                                 <th>Desc.</th>
                                 <th>Referencia</th>
