@@ -110,6 +110,26 @@
     btnDespieceProducto.addEventListener('click', e =>{
         e.preventDefault()
         $('#modalDespiece').show()
+        $('#bodyDespiece').empty()
+        $('#titulo').text('Despiece del producto')
+
+        let template = ''
+        template = `
+                    <div class="col-sm-12 text-center dataBasica">
+                        <img id="productoImagenDespiece" src="../../hdn/img/sinImagen.png" alt="Despiece Producto" class="imagen-escalada">
+                    </div>
+                `
+        url = 'mod_repa/tablas/productos/productos_single.php'
+        showDataReloaded(id, url, inputs).then((r) => {
+            if(r.productoImagenDespiece != ''){
+                productoImagenDespiece.src = `mod_repa/tablas/productos/adjuntos/${r.productoImagenDespiece}`
+            } else {
+                productoImagenDespiece.src = '../../hdn/img/sinImagen.png'
+            }
+        })
+
+        $('#bodyDespiece').html(template)
+
     })
 
     btnCerrarModal.addEventListener('click', e =>{

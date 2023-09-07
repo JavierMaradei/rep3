@@ -39,8 +39,8 @@
         <div class="card-footer text-center">
             <div class="row">
                 <div class="col-sm-12 text-center mb-2">
-                    <button id="btnGrabaProducto" class="btn btn-success btn-outline">Grabar</button>
-                    <button id="btnCancelaProducto" class="btn btn-outline-warning">Cancelar</button>
+                    <button id="btnGrabaDespiece" class="btn btn-success btn-outline" disabled>Grabar</button>
+                    <button id="btnCancelaDespiece" class="btn btn-outline-warning">Cancelar</button>
                     <button class="btn btn-outline-secondary" type="button" id="btnVerDespieceProducto" disabled hidden>Ver despiece</button>
                 </div>
             </div>

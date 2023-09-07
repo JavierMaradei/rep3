@@ -2,9 +2,9 @@
     let formulario              = document.querySelector('#formDespiece')//Captura del formulario
     let inputs                  = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
     let formData                = new FormData() //Creo el formData para transferencia de información con el Backend
-    let btnGrabaProducto        = document.querySelector('#btnGrabaProducto')//Captura de boton grabar
+    let btnGrabaDespiece        = document.querySelector('#btnGrabaDespiece')//Captura de boton grabar
+    let btnCancelaDespiece      = document.querySelector('#btnCancelaDespiece')//Captura de boton cancelar
     let btnVerDespieceProducto  = document.querySelector('#btnVerDespieceProducto')//Captura de boton grabar
-    let btnCancelaProducto      = document.querySelector('#btnCancelaProducto')//Captura de boton cancelar
     let btnBuscarPieza          = document.querySelector('#btnBuscarPieza')
     let productoCodigo          = document.querySelector('#productoCodigo')
     let productoDescripcion     = document.querySelector('#productoDescripcion')
@@ -30,6 +30,8 @@
         productoActivo      : {validated: true},
         productoCanjeable   : {validated: true}
     }
+
+    btnGrabaDespiece.disabled = true
 
     /* limitaCaracteres(productoCodigo, 30)
     limitaCaracteres(productoDescripcion, 100)
@@ -167,6 +169,9 @@
         btnVerDespieceProducto.hidden   = true
         productoImagen.src = '../../hdn/img/sinImagen.png'
         tablaPiezas.clear().draw()
+        formData.delete('detalleProductoDespiece')
+        formData.delete('productoId')
+        btnGrabaDespiece.disabled = true
     }
 
     function busquedaPorPieza(){
@@ -241,17 +246,26 @@
         })
     }
 
+    function habilitarBtnGrabar(){
+        if(tablaPiezas.rows().count() > 0){
+            btnGrabaDespiece.disabled = false
+        } else {
+            btnGrabaDespiece.disabled = true
+        }
+
+    }
+
     $('#tabla_piezas').on( 'click', '.icon-delete', e => {
         e.preventDefault()
         let fila = e.target.parentNode.parentNode.parentNode
         tablaPiezas.row(fila).remove().draw()
+        habilitarBtnGrabar()
     } );
 
     $(document).on( 'click', '.pieza-item', e => {
         e.preventDefault()
         let seleccion = e.target.innerText
         let stateSeleccion = false
-
         //validar si ya existe ese código en el despiece
         tablaPiezas.rows().data().each(function (value) {
             let codigo = value[1];
@@ -287,6 +301,7 @@
         } else {
             alert('Código existente')
         }
+        habilitarBtnGrabar()
     } );
 
     btnBuscarPieza.addEventListener('click', e => {
@@ -373,65 +388,70 @@
     })
 
     //Funcionalidad del botón de Grabar
-    btnGrabaProducto.addEventListener('click', e => {
+    btnGrabaDespiece.addEventListener('click', e => {
         e.preventDefault()
-        
-        let validacion = validateData(inputs, arrayVal)
-        
-        if(validacion){
-            collectData(inputs, formData)
-            formData.append('archivoAdjunto', productoSubirFoto.files[0])
 
-            let agregar = 'mod_repa/tablas/productos/productos_add.php'
-            let editar = 'mod_repa/tablas/productos/productos_edit.php'
+        swal({
+            title               : "Confirma la grabación?",
+            type                : "warning",
+            showCancelButton    : true,
+            confirmButtonColor  : "#DD6B55",
+            confirmButtonText   : "Si, confirmar!",
+            cancelButtonText    : "No, Cancelar!",
+            closeOnConfirm      : false,
+            closeOnCancel       : false
+            },
+            function (isConfirm) {
+                if (isConfirm) {
 
-            let estado = enviarData(agregar, editar, formData, edit, id)
+                    let arrayProductoDespiece = {}
+                    tablaPiezas.rows().data().each(function (value, index ) {
+                        arrayProductoDespiece[index] = {
+                            'idPieza'       : value[0],
+                            'idProducto'    : id
+                        }
+                    });
             
-            estado.then((respuesta) => {
-                switch (respuesta.estado) {
+                    let datosProductoDespiece = JSON.stringify(arrayProductoDespiece)
 
-                    case 'Transacción exitosa':
-                        msgTransaccionExitosa()
-                        tabla.ajax.reload();
-                        cleanInputs(inputs)
-                        cleanFormData(inputs, formData)
-                        formData.delete('archivoAdjunto')
-                        productoActivo.checked = true
-                        productoImagen.src = '../../hdn/img/sinImagen.png'
-                        id = ''
-                        edit = false
-                        break;
+                    formData.append('detalleProductoDespiece', datosProductoDespiece)
+                    formData.append('productoId', id)
+            
+                    let xhr = new XMLHttpRequest
+                    xhr.open('POST', 'mod_repa/tablas/despieces/despieces_add.php')//Envío la información del formulario
+                    xhr.send(formData)
+                    xhr.addEventListener('load', ()=> {
+                        if (xhr.status == 200){
+                            let respuesta = JSON.parse(xhr.response)
+                            switch (respuesta.estado) {
+                                case 'Transacción exitosa':
+                                    msgTransaccionExitosa()
+                                    limpieza()
+                                    break;
+                                case 'Sesión expirada':
+                                    sesionExpiradaMensajeFlotante()
+                                    break;
+                                case 'Error perfil':
+                                    msgErrorPerfil()
+                                    limpieza()
+                                    break;
+                                default:
+                                    msgAlgoNoFueBien()
+                                    limpieza()
+                                    break;
+                            }
+                        }
+                    })
 
-                    case 'Sesión expirada':
-                        sesionExpiradaMensajeFlotante()
-                        break;
-
-                    case 'Error perfil':
-                        msgErrorPerfil()
-                        cleanFormData(inputs, formData)
-                        break;
-
-                    case 'Error adjunto':
-                        swal({
-                            title   : "Error :( !",
-                            text    : respuesta.msgError+' (Formatos permitidos: pdf, png y jpg.)',
-                            type    : "error",
-                        });
-                        cleanFormData(inputs, formData)
-                        formData.delete('archivoAdjunto')
-                        break;
-
-                    default:
-                        msgAlgoNoFueBien()
-                        cleanFormData(inputs, formData)
-                        break;
+                } else {
+                    msgCancelado()
                 }
-            })
-        }
+            }
+        )
     })
         
     //Funcionalidad del botón de Cancelar
-    btnCancelaProducto.addEventListener('click', e => {
+    btnCancelaDespiece.addEventListener('click', e => {
         e.preventDefault()
         limpieza()
     })

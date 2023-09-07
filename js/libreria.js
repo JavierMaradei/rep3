@@ -73,7 +73,7 @@ const CODIGO_LENGTH = 12;
                     respuesta = respuesta[0]
                     resolve(respuesta)
                     for (let [key, value] of Object.entries(respuesta)) {
-                        if(value != null){//Algunos datos vienen en null y tira error al hacer el matcheo
+                        if(value != null && typeof value != 'object'){//Algunos datos vienen en null y tira error al hacer el matcheo
                             if(value.match(/([12]\d{3}\/(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01]))/)){
                                 //SI el formato del valor de respesta cumple esta condicion yyyy/mm/dd entro acá
                                 let date = value.replace('/','-')
