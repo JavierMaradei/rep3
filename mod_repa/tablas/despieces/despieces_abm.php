@@ -13,10 +13,12 @@
         <hr>
         <div class="col-md-12 mb-3">
             <div class="card-body">
-                <div class="col-sm-12 text-left mb-2">
-                    <button class="btn btn-info" id="btnBuscarPieza">Agregar pieza</button>
+                <div class="row">
+                    <div class="col-sm-12 text-left mb-2">
+                        <button class="btn btn-info" id="btnBuscarPieza">Agregar pieza</button>
+                        <button class="btn btn-outline-secondary" type="button" id="btnVerDespieceProducto" disabled hidden>Foto despiece</button>
+                    </div>
                 </div>
-
                 <div class="row mb-2">
                     <div class="table-responsive">
                         <table id="tabla_piezas" class="table table-striped table-hover" style="font-size: 11px; font-weight: 400;">
@@ -41,7 +43,6 @@
                 <div class="col-sm-12 text-center mb-2">
                     <button id="btnGrabaDespiece" class="btn btn-success btn-outline" disabled>Grabar</button>
                     <button id="btnCancelaDespiece" class="btn btn-outline-warning">Cancelar</button>
-                    <button class="btn btn-outline-secondary" type="button" id="btnVerDespieceProducto" disabled hidden>Ver despiece</button>
                 </div>
             </div>
         </div>

@@ -183,26 +183,24 @@
             let template = ''
             template = `
                 <div class="row">
-                    <form id="formModalPiezas">
-                        <div class="row g-3">
-                            <div class="form-group col-sm-4">
-                                <label for="marcaPiezaModal">Marca</label>
-                                <select id="marcaPiezaModal" class="form-control"></select>
-                            </div>
-                            <div class="form-group col-sm-8">
-                                <label for="buscadorModal">Buscador</label>
-                                <input id="buscadorModal" type="text" class="form-control">
-                            </div>
-                            <div class="form-group col-sm-12 text-center">
-                                <button id="btnBuscarPiezaModal" type="button" class="btn btn-primary">Buscar
-                            </div>
+                    <div class="row g-3">
+                        <div class="form-group col-sm-4">
+                            <label for="marcaPiezaModal">Marca</label>
+                            <select id="marcaPiezaModal" class="form-control"></select>
                         </div>
-                    </form>
+                        <div class="form-group col-sm-8">
+                            <label for="buscadorModal">Buscador por descripción</label>
+                            <input id="buscadorModal" type="text" class="form-control">
+                        </div>
+                        <div class="form-group col-sm-12 text-center">
+                            <button id="btnBuscarPiezaModal" type="button" class="btn btn-primary">Buscar
+                        </div>
+                    </div>
                 </div>
                 <div class="col-sm-12">
                     <div class="row">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                        <div class="table-responsive-sm">
+                            <table class="table table-striped table-hover table-sm">
                                 <thead>
                                     <th>Código</th>
                                     <th>Descripción</th>
@@ -247,12 +245,13 @@
     }
 
     function habilitarBtnGrabar(){
-        if(tablaPiezas.rows().count() > 0){
-            btnGrabaDespiece.disabled = false
-        } else {
-            btnGrabaDespiece.disabled = true
-        }
-
+        setTimeout(() => {
+            if(tablaPiezas.rows().count() > 0){
+                btnGrabaDespiece.disabled = false
+            } else {
+                btnGrabaDespiece.disabled = true
+            } 
+        }, 200);
     }
 
     $('#tabla_piezas').on( 'click', '.icon-delete', e => {
@@ -316,9 +315,12 @@
 
             let filtros = document.querySelectorAll('#marcaPiezaModal, #buscadorModal')
             filtros.forEach(element => {
-                if(element.keyCode === 13){
-                    btnBuscarPiezaModal.click()
-                } 
+                element.addEventListener('keyup', e => {
+                    e.preventDefault()
+                    if(e.keyCode === 13){
+                        btnBuscarPiezaModal.click()
+                    }
+                })
             });
 
             btnBuscarPiezaModal.addEventListener('click', e => {
@@ -341,6 +343,7 @@
     //Tomo el link de la tabla con el ID del registro
     $(document).on('click', '.task-item', (e) => {
         e.preventDefault()
+        btnGrabaDespiece.disabled = true
         cleanInputs(inputs)
         id= e.target.innerText
         url = 'mod_repa/tablas/productos/productos_single.php'

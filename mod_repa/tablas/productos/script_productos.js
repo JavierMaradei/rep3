@@ -105,6 +105,7 @@
         productoActivo.checked = true
         id = ''
         productoImagen.src = '../../hdn/img/sinImagen.png'
+        btnDespieceProducto.hidden = true
     }
 
     btnDespieceProducto.addEventListener('click', e =>{
@@ -113,22 +114,60 @@
         $('#bodyDespiece').empty()
         $('#titulo').text('Despiece del producto')
 
-        let template = ''
-        template = `
-                    <div class="col-sm-12 text-center dataBasica">
-                        <img id="productoImagenDespiece" src="../../hdn/img/sinImagen.png" alt="Despiece Producto" class="imagen-escalada">
-                    </div>
-                `
-        url = 'mod_repa/tablas/productos/productos_single.php'
-        showDataReloaded(id, url, inputs).then((r) => {
-            if(r.productoImagenDespiece != ''){
-                productoImagenDespiece.src = `mod_repa/tablas/productos/adjuntos/${r.productoImagenDespiece}`
-            } else {
-                productoImagenDespiece.src = '../../hdn/img/sinImagen.png'
+        let xhr = new XMLHttpRequest
+        let url = 'mod_repa/tablas/productos/productos_single.php?id='+id
+        xhr.open('GET', url)
+        xhr.send()
+        xhr.addEventListener('load', () => {
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+                let template = ''
+                if(respuesta != ''){
+
+                    if(respuesta[0].productoImagenDespiece != ''){
+                        productoImagenDespiece = `mod_repa/tablas/productos/adjuntos/${respuesta[0].productoImagenDespiece}`
+                    } else {
+                        productoImagenDespiece = '../../hdn/img/sinImagen.png'
+                    }
+
+                    template = `
+                                <div class="col-sm-12 text-center dataBasica" style="margin-bottom: 20px;">
+                                    <img id="productoImagenDespiece" src="${productoImagenDespiece}" alt="Despiece Producto" class="imagen-escalada">
+                                </div>
+                                <div class="table-responsive-sm">
+                                    <table class="table table-sm table-striped table-hover">
+                                        <thead class="bg-dark">
+                                            <tr>
+                                                <th style="color: white">Referencia</th>
+                                                <th style="color: white">Código</th>
+                                                <th style="color: white">Descripción</th>
+                                                <th style="color: white">Precio</th>
+                                            </tr>
+                                        </thead>
+                            `
+                        respuesta[0].despiece.forEach(element => {
+                        template += `
+                                        <tbody>
+                                            <tr>
+                                                <td>${element.referencia}</td>
+                                                <td>${element.codigo}</td>
+                                                <td>${element.descripcion}</td>
+                                                <td>${element.costo}</td>
+                                            </tr>
+                                        </tbody>
+                        `
+                        });        
+                            `
+                                    </table>
+                                </div>
+                            `
+                }  
+        $('#bodyDespiece').html(template)
+
             }
         })
 
-        $('#bodyDespiece').html(template)
+
 
     })
 
@@ -149,6 +188,12 @@
         id= e.target.innerText
         url = 'mod_repa/tablas/productos/productos_single.php'
         showDataReloaded(id, url, inputs).then((r) => {
+            if(r.despiece != ''){
+                btnDespieceProducto.hidden = false
+            } else {
+                btnDespieceProducto.hidden = true
+            }
+
             if(r.productoImagen != ''){
                 productoImagen.src = `mod_repa/tablas/productos/adjuntos/${r.productoImagen}`
             } else {

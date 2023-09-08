@@ -38,7 +38,7 @@
 
 <!--Modal despiece-->
 <div id="modalDespiece" class="modal" role="dialog" tabindex="-1" >
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
 
         <!-- Modal content-->
         <div class="modal-content">

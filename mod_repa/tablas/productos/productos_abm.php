@@ -80,7 +80,7 @@
                     <button id="btnCancelaProducto" class="btn btn-outline-warning">Cancelar</button>
                 </div>
                 <div class="col-sm-4 text-right">
-                    <button id="btnDespieceProducto" class="btn btn-info">Despiece</button>
+                    <button id="btnDespieceProducto" class="btn btn-info" hidden>Despiece</button>
                 </div>
             </div>
         </div>
