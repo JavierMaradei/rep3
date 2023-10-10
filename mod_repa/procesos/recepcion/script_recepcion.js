@@ -79,6 +79,11 @@
         descripcionProductoCanje    : {readOnly : true}
     }
 
+
+listaProvincias()
+
+
+
     function inputsClienteEstado(estado){
         datosClienteEditable.forEach(element => {
             estado == 'activos' ? element.readOnly = false : element.readOnly = true
