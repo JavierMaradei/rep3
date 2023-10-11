@@ -15,23 +15,23 @@
 
     //Creamos la conexión
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
-       
-        $id             = $_GET['id'];
+
         $conexion       = conectar(DB_DSN, DB_USER, DB_PASS);
-        $descripcion    = filter_var($_POST['descripcionEstantes'], FILTER_SANITIZE_STRING);
-        $activo         = $_POST['activoEstantes'] == 'true' ? 'S' : 'N';
+        $id             = $_GET['id'];
+        $descripcion    = filter_var($_POST['descripcionProvincia'], FILTER_SANITIZE_STRING);
+        $activo         = $_POST['activoProvincia'] == 'true' ? 'S' : 'N';
         $perfilSirep    = recuperaPerfil($_SESSION['usuario_id']);
 
         if($perfilSirep == 1){
 
             if($descripcion != ''){
                 $query = "  UPDATE 
-                                rep3_estantes 
+                                rep3_provincias 
                             SET 
-                                descripcion = '{$descripcion}', 
-                                activo      = '{$activo}' 
+                                descripcion     = '{$descripcion}', 
+                                activo          = '{$activo}' 
                             WHERE 
-                                estante_id = '{$id}'
+                                provincia_id    = '{$id}'
                         ";           
                 
                 $sentenciaSQL= $conexion->prepare($query);

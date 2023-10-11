@@ -17,18 +17,21 @@
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $conexion       = conectar(DB_DSN, DB_USER, DB_PASS);
-        $descripcion    = filter_var($_POST['descripcionEstantes'], FILTER_SANITIZE_STRING);
-        $activo         = $_POST['activoEstantes'] == 'true' ? 'S' : 'N';
+        $descripcion    = filter_var($_POST['descripcionLocalidad'], FILTER_SANITIZE_STRING);
+        $provincia      = filter_var($_POST['provincia'], FILTER_SANITIZE_STRING);
+        $activo         = $_POST['activoLocalidad'] == 'true' ? 'S' : 'N';
         $perfilSirep    = recuperaPerfil($_SESSION['usuario_id']);
 
         if($perfilSirep == 1){
 
             if(!empty($descripcion)){
-                $query = "  INSERT INTO rep3_estantes (
+                $query = "  INSERT INTO rep3_localidades (
                                 descripcion, 
+                                provincia_id, 
                                 activo
                             ) VALUES (
                                 '{$descripcion}', 
+                                '{$provincia}', 
                                 '{$activo}'
                             )
                         ";           

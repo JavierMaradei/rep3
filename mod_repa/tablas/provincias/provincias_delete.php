@@ -21,7 +21,7 @@
 
         if($perfilSirep == 1){
 
-            $query0 = "DELETE FROM rep3_estantes WHERE estante_id = '{$id}'";
+            $query0 = "DELETE FROM rep3_provincias WHERE provincia_id = '{$id}'";
             $sentenciaSQL= $conexion->prepare($query0);
             $sentenciaSQL->execute();
             

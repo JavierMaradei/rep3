@@ -8,7 +8,7 @@
         $id             = $_GET['id'];
         $conexion       = conectar(DB_DSN, DB_USER, DB_PASS);
 
-        $query          = " SELECT reparacion_id FROM rep3_reparaciones WHERE estante_id = '{$id}'";           
+        $query          = " SELECT reparacion_id FROM rep3_reparaciones WHERE localidad_id = '{$id}'";           
         $sentenciaSQL   = $conexion->prepare($query);
         $sentenciaSQL   ->execute();
         $resultado      = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);

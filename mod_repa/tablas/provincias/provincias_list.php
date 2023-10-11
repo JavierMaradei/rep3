@@ -14,17 +14,17 @@
     //Creamos la conexión
     $conexion   = conectar(DB_DSN, DB_USER, DB_PASS);
     $query      = " SELECT 
-                        estante_id, 
+                        provincia_id, 
                         descripcion, 
                         activo 
                     FROM 
-                        rep3_estantes 
-                    WHERE 
-                        estante_id >= 0
+                        rep3_provincias
                 ";
     if(isset($_GET['activo'])){
-        $query .= "AND activo = 'S'";
-    }           
+        $query .= "WHERE activo = 'S'";
+    }   
+    $query .= "ORDER BY descripcion ASC";
+            
     $sentenciaSQL= $conexion->prepare($query);
     $sentenciaSQL->execute();
 

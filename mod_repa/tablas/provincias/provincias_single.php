@@ -15,14 +15,15 @@
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $id         = $_GET['id'];
         $conexion   = conectar(DB_DSN, DB_USER, DB_PASS);
+
         $query      = " SELECT 
-                            estante_id  as idEstantes, 
-                            descripcion as descripcionEstantes, 
-                            activo      as activoEstantes
+                            provincia_id    as idProvincia, 
+                            descripcion     as descripcionProvincia, 
+                            activo          as activoProvincia
                         FROM 
-                            rep3_estantes
+                            rep3_provincias
                         WHERE 
-                            estante_id  = '{$id}'
+                            provincia_id    = '{$id}'
                     ";           
         $sentenciaSQL= $conexion->prepare($query);
         $sentenciaSQL->execute();

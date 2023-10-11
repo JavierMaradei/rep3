@@ -1,33 +1,33 @@
-(function iniciarEstantes(){
-    let formulario          = document.querySelector('#formEstantes')//Captura del formulario
-    let inputs              = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
-    let formData            = new FormData() //Creo el formData para transferencia de información con el Backend
-    let descripcionEstantes = document.querySelector('#descripcionEstantes')
-    let btnGrabaEstantes    = document.querySelector('#btnGrabaEstantes')//Captura de boton grabar
-    let btnEliminaEstantes  = document.querySelector('#btnEliminaEstantes')//Captura de boton eliminar
-    let btnCancelaEstantes  = document.querySelector('#btnCancelaEstantes')//Captura de boton cancelar
-    let activoEstantes      = document.querySelector('#activoEstantes')//Captura de boton cancelar
-    let edit                = false//flag de edición de registro existente o nuevo registro
-    let id                  = ''
-    let arrayVal = {
-        idEstantes          : {readonly : true},
-        descripcionEstantes : {required: true, maxlength: 10, validated: true},
-        activoEstantes      : {}
+(() => {
+    let formulario              = document.querySelector('#formProvincias')//Captura del formulario
+    let inputs                  = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
+    let formData                = new FormData() //Creo el formData para transferencia de información con el Backend
+    let descripcionProvincia    = document.querySelector('#descripcionProvincia')
+    let btnGrabar               = document.querySelector('#btnGrabar')//Captura de boton grabar
+    let btnEliminar             = document.querySelector('#btnEliminar')//Captura de boton eliminar
+    let btnCancelar             = document.querySelector('#btnCancelar')//Captura de boton cancelar
+    let activoProvincia         = document.querySelector('#activoProvincia')//Captura de boton cancelar
+    let edit                    = false//flag de edición de registro existente o nuevo registro
+    let id                      = ''
+    let arrayVal                = {
+        idProvincia             : {readonly : true},
+        descripcionProvincia    : {required: true, maxlength: 50, validated: true},
+        activoProvincia         : {}
     }
     
-    $(btnEliminaEstantes).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
-    limitaCaracteres(descripcionEstantes, 50)
-    activoEstantes.checked = true
+    $(btnEliminar).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
+    limitaCaracteres(descripcionProvincia, 50)
+    activoProvincia.checked = true
 
     //Declaración del complemento DataTable
-    let tabla = $('#tabla_estantes').DataTable( {
+    let tabla = $('#tabla_provincias').DataTable( {
         "ajax": {
-            url: 'mod_repa/tablas/estantes/estantes_list.php',
+            url: 'mod_repa/tablas/provincias/provincias_list.php',
             type: 'GET',
             dataSrc: ""
         },
         "columns": [  
-            {"data" : "estante_id",
+            {"data" : "provincia_id",
                 "render": function ( data, type, row, meta ) {
                     return '<a class="task-item" href="'+data+'">' + data + '</a>';
                     }, 
@@ -46,7 +46,7 @@
             "<'row'<'col-sm-12'tr>>" +
             "<'row'<'col-sm-6'i><'col-sm-6'p>>",
         buttons: [
-            {extend: 'excel', title: 'Lista de estantes', text: 'Exportar a Excel'},
+            {extend: 'excel', title: 'Lista de provincias', text: 'Exportar a Excel'},
         ],
         language: {
             "decimal": "",
@@ -75,30 +75,30 @@
         e.preventDefault()
         cleanInputs(inputs)
         id= e.target.innerText
-        url = 'mod_repa/tablas/estantes/estantes_single.php'
+        url = 'mod_repa/tablas/provincias/provincias_single.php'
         showData(id, url, inputs)
-        $(btnEliminaEstantes).show()
+        $(btnEliminar).show()
         edit = true
     })
 
     //Funcionalidad del botón de Grabar
-    btnGrabaEstantes.addEventListener('click', e => {
+    btnGrabar.addEventListener('click', e => {
         e.preventDefault()
         let validacion = validateData(inputs, arrayVal)
         if(validacion){
             collectData(inputs, formData)
-            let agregar = 'mod_repa/tablas/estantes/estantes_add.php'
-            let editar = 'mod_repa/tablas/estantes/estantes_edit.php'
+            let agregar = 'mod_repa/tablas/provincias/provincias_add.php'
+            let editar = 'mod_repa/tablas/provincias/provincias_edit.php'
             let estado = enviarData(agregar, editar, formData, edit, id)
             estado.then((respuesta) => {
                 switch (respuesta.estado) {
                     case 'Transacción exitosa':
                         msgTransaccionExitosa()
                         tabla.ajax.reload();
-                        $(btnEliminaEstantes).hide()
+                        $(btnEliminar).hide()
                         cleanInputs(inputs)
                         cleanFormData(inputs, formData)
-                        activoEstantes.checked = true
+                        activoProvincia.checked = true
                         id = ''
                         edit = false
                         break;
@@ -119,10 +119,10 @@
     })
     
     //Funcionalidad del botón de Eliminar
-    btnEliminaEstantes.addEventListener('click', e => {
+    btnEliminar.addEventListener('click', e => {
         e.preventDefault()
         let xhr2 = new XMLHttpRequest
-        let url2 = 'mod_repa/tablas/estantes/estantes_use.php?id='+id
+        let url2 = 'mod_repa/tablas/provincias/provincias_use.php?id='+id
         xhr2.open('GET', url2)
         xhr2.send()
         xhr2.addEventListener('load', () => {
@@ -142,7 +142,7 @@
                     function (isConfirm) {
                         if (isConfirm) {
                             let xhr = new XMLHttpRequest
-                            let url = 'mod_repa/tablas/estantes/estantes_delete.php'
+                            let url = 'mod_repa/tablas/provincias/provincias_delete.php'
                             xhr.open('GET', url+'?id='+id)
                             xhr.send()
                             xhr.addEventListener('load', () => {
@@ -152,10 +152,10 @@
                                         case 'Transacción exitosa':
                                             msgEliminado()
                                             tabla.ajax.reload();
-                                            $(btnEliminaEstantes).hide()
+                                            $(btnEliminar).hide()
                                             cleanInputs(inputs)
                                             cleanFormData(inputs, formData)
-                                            activoEstantes.checked = true
+                                            activoProvincia.checked = true
                                             id = ''
                                             edit = false
                                             break;
@@ -185,12 +185,12 @@
     })
     
     //Funcionalidad del botón de Cancelar
-    btnCancelaEstantes.addEventListener('click', e => {
+    btnCancelar.addEventListener('click', e => {
         e.preventDefault()
         cleanInputs(inputs)
         edit = false
-        activoEstantes.checked = true
-        $(btnEliminaEstantes).hide()
+        activoProvincia.checked = true
+        $(btnEliminar).hide()
         id = ''
     })
 })()

@@ -3,6 +3,7 @@
     let inputs                  = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
     let formData                = new FormData() //Creo el formData para transferencia de información con el Backend
     let descripcionLocalidad    = document.querySelector('#descripcionLocalidad')
+    let provincia               = document.querySelector('#provincia')
     let btnGrabar               = document.querySelector('#btnGrabar')//Captura de boton grabar
     let btnEliminar             = document.querySelector('#btnEliminar')//Captura de boton eliminar
     let btnCancelar             = document.querySelector('#btnCancelar')//Captura de boton cancelar
@@ -10,14 +11,16 @@
     let edit                    = false//flag de edición de registro existente o nuevo registro
     let id                      = ''
     let arrayVal                = {
-        idLocalidad          : {readonly : true},
-        descripcionLocalidad : {required: true, maxlength: 10, validated: true},
-        activoLocalidad      : {}
+        idLocalidad             : {readonly : true},
+        descripcionLocalidad    : {required: true, maxlength: 50, validated: true},
+        provincia               : {required: true},
+        activoLocalidad         : {}
     }
     
     $(btnEliminar).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
     limitaCaracteres(descripcionLocalidad, 50)
     activoLocalidad.checked = true
+    listaProvincias(provincia, 'S')
 
     //Declaración del complemento DataTable
     let tabla = $('#tabla_localidades').DataTable( {
@@ -33,6 +36,7 @@
                     }, 
             },
             {"data" : "descripcion"},
+            {"data" : "provinciaDescripcion"},
             {"data" : "activo"}
         ],
         processing: true,
@@ -122,7 +126,7 @@
     btnEliminar.addEventListener('click', e => {
         e.preventDefault()
         let xhr2 = new XMLHttpRequest
-        let url2 = 'mod_repa/tablas/estantes/estantes_use.php?id='+id
+        let url2 = 'mod_repa/tablas/localidades/localidades_use.php?id='+id
         xhr2.open('GET', url2)
         xhr2.send()
         xhr2.addEventListener('load', () => {
@@ -142,7 +146,7 @@
                     function (isConfirm) {
                         if (isConfirm) {
                             let xhr = new XMLHttpRequest
-                            let url = 'mod_repa/tablas/estantes/estantes_delete.php'
+                            let url = 'mod_repa/tablas/localidades/localidades_delete.php'
                             xhr.open('GET', url+'?id='+id)
                             xhr.send()
                             xhr.addEventListener('load', () => {

@@ -24,6 +24,13 @@
                         </div>
                     </div>
                     <div class="row mb-2">
+                        <label for="provincia" class="col-sm-2 col-form-label" title="Provincia">Prov.</label>
+                        <div class="col-sm-10">
+                            <select class="form-select" id="provincia">    
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
                         <label for="activoLocalidad" class="col-sm-2 col-form-label">Activo</label>
                         <div class="col-sm-10 text-center">
                             <input type="checkbox" id="activoLocalidad" class="form-check-input bigCheck">
@@ -48,6 +55,7 @@
                             <thead>
                                 <th>Id</th>
                                 <th>Descripción</th>
+                                <th>Provincia</th>
                                 <th>Activo</th>                          
                             </thead>
                             <tbody id="tbodyLocalidadesList">

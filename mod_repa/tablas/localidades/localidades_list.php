@@ -14,12 +14,18 @@
     //Creamos la conexión
     $conexion   = conectar(DB_DSN, DB_USER, DB_PASS);
     $query      = " SELECT 
-                        localidad_id, 
-                        descripcion, 
-                        provincia_id,
-                        activo 
+                        rep3_localidades.localidad_id, 
+                        rep3_localidades.descripcion, 
+                        rep3_localidades.provincia_id,
+                        rep3_provincias.descripcion as provinciaDescripcion,
+                        rep3_localidades.activo 
                     FROM 
-                        rep3_localidades 
+                        rep3_localidades
+                    INNER JOIN
+                        rep3_provincias
+                    ON
+                        rep3_localidades.provincia_id = rep3_provincias.provincia_id
+
                 ";
     if(isset($_GET['activo'])){
         $query .= "AND activo = 'S'";

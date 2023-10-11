@@ -2378,6 +2378,30 @@ function plantaUsuario(){
 }
 
 /**
+ * Completa el desplegable de fletes
+ * @param {string} campo
+ */
+function listaProvincias(campo, activo = 'N'){
+    return new Promise(function(resolve, reject) {
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_repa/tablas/provincias/provincias_list.php?activo='+activo)
+        xhr.send()
+        xhr.addEventListener('load', () => {
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+                resolve(respuesta)
+                //console.log(respuesta.data)
+                let template = `<option value='' selected>Seleccionar</option>`
+                respuesta.forEach(element => {
+                    template +=`<option value='${element.provincia_id}'>${element.descripcion}</option>`
+                });
+                campo.innerHTML = template
+            }
+        })
+    })
+}
+
+/**
  * Completa el desplegable de grupos de equipos
  * @param {string} campo
  */
