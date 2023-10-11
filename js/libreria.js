@@ -2761,20 +2761,3 @@ function leerCookie(nombre) {
     return valor;
 }
 
-
-function listaProvincias() {
-
-    let xhr = new XMLHttpRequest
-    xhr.withCredentials = true;
-    xhr.open('GET', 'https://apis.datos.gob.ar/georef/api/provincias')
-    xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-    xhr.setRequestHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    xhr.send()
-    xhr.addEventListener('load', () => {
-        if(xhr.status == 200){
-            let respuesta = JSON.parse(xhr.response)
-            console.log(respuesta)
-        }
-    })
-
-}

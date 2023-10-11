@@ -84,8 +84,20 @@
                         <input type="text" class="form-control" id="clienteCelular"> 
                     </div>
                     <div class="col-sm-12 mb-2">
-                        <label for="clienteDireccion" class="form-label">Dirección</label>
-                        <input type="text" class="form-control" id="clienteDireccion"> 
+                        <label for="provincia" class="form-label">Provincia</label>
+                        <select class="form-select" id="provincia"></select>
+                    </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="localidad" class="form-label">Localidad</label>
+                        <select class="form-select" id="localidad"></select>
+                    </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="calle" class="form-label">Calle</label>
+                        <input type="text" class="form-control" id="calle"> 
+                    </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="numeroCalle" class="form-label">Número</label>
+                        <input type="text" class="form-control" id="numeroCalle"> 
                     </div>
                     <div class="col-sm-12 mb-2">
                         <label for="clienteEmail" class="form-label">Email</label>
@@ -214,3 +226,4 @@
 </div>
 
 <script src="./mod_repa/procesos/recepcion/script_recepcion.js?v=<?php echo uniqid();?>"></script>
+

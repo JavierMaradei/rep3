@@ -128,6 +128,9 @@
                                         <a href="?page=mod_repa/tablas/formasRetiro/formasRetiro" class="nav-link">Formas de retiro</a>
                                     </li>
                                     <li class="nav-item">
+                                        <a href="?page=mod_repa/tablas/localidades/localidades" class="nav-link">Localidades</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a href="?page=mod_repa/tablas/lugaresRecepcion/lugaresRecepcion" class="nav-link">Lugar recepción</a>
                                     </li>
                                     <li class="nav-item">
@@ -141,6 +144,9 @@
                                     </li>
                                     <li class="nav-item">
                                         <a href="?page=mod_repa/tablas/productos/productos" class="nav-link">Productos</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="?page=mod_repa/tablas/provincias/provincias" class="nav-link">Provincias</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="?page=mod_repa/tablas/sucursales/sucursales" class="nav-link">Sucursales</a>
