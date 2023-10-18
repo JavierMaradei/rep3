@@ -18,10 +18,11 @@
                         <table id="tabla_clientes" class="table table-striped table-hover" style="font-size: 11px; font-weight: 400;">
                             <thead>
                                 <th>Id</th>
-                                <th>Razón Social 1</th>
-                                <th>Razón Social 2</th>
-                                <th>Dirección</th>  
+                                <th>R.S.1/Nombre</th>
+                                <th>R.S.2/Apellido</th>
                                 <th>Teléfono</th>                          
+                                <th>Celular</th>                          
+                                <th>Email</th>                          
                             </thead>
                             <tbody id="tbodyClientesList">
                             </tbody>

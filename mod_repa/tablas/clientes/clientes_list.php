@@ -11,7 +11,10 @@
                         telefono,
                         celular,
                         email,
-                        direccion,
+                        localidad_id,
+                        calle,
+                        nro_calle,
+                        dpto,
                         activo
                     FROM 
                         rep3_clientes 

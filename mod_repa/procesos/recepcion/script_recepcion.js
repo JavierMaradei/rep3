@@ -40,8 +40,8 @@
     let respBtn                     = document.querySelector('#respuesta')//Div para mostrar los avisos de espera
     let nuevoNroSerie               = false
     let nuevoCliente                = false
-    let datosCliente                = [clienteId, clienteApellido, clienteNombre, clienteTelefono, clienteCelular, clienteDireccion, clienteEmail]
-    let datosClienteEditable        = [clienteApellido, clienteNombre, clienteTelefono, clienteCelular, clienteDireccion, clienteEmail]
+    let datosCliente                = [clienteId, clienteApellido, clienteNombre, clienteTelefono, clienteCelular, clienteEmail, provincia, localidad, calle, numeroCalle, dpto]
+    let datosClienteEditable        = [clienteApellido, clienteNombre, clienteTelefono, clienteCelular, clienteEmail, provincia, localidad, calle, numeroCalle, dpto]
     let datosCanje                  = [codigoProdCanje, buscarProductoCanje]
     let hoy                         = moment(new Date(), 'DD-MM-YYYY').format('YYYY-MM-DD')
     let modal                       = document.querySelector('#modalRecepcion')
@@ -81,7 +81,7 @@
 
     function inputsClienteEstado(estado){
         datosClienteEditable.forEach(element => {
-            estado == 'activos' ? element.readOnly = false : element.readOnly = true
+            estado == 'activos' ? element.disabled = false : element.disabled = true
         });  
     }
 
@@ -217,7 +217,6 @@
     inputsClienteEstado('inactivos')
     limitaCaracteres(clienteNombre, 50)
     limitaCaracteres(clienteApellido, 50)
-    limitaCaracteres(clienteDireccion, 100)
     limitaCaracteres(clienteTelefono, 60)
     limitaCaracteres(clienteCelular, 25)
     limitaCaracteres(clienteEmail, 50)

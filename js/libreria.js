@@ -2311,7 +2311,7 @@ function plantaUsuario(){
  * Completa el desplegable de estantes con los estantes activos
  * @param {string} campo
  */
-    function estanteList(campo) {
+function estanteList(campo) {
     return new Promise(function(resolve, reject) {
         let xhr = new XMLHttpRequest
         xhr.open('GET', 'mod_repa/tablas/estantes/estantes_list.php?activo='+'S')
@@ -2334,7 +2334,7 @@ function plantaUsuario(){
  * Completa el desplegable de técnicos
  * @param {string} campo
  */
- function tecnicosList(campo) {
+function tecnicosList(campo) {
     return new Promise(function(resolve, reject) {
         let xhr = new XMLHttpRequest
         xhr.open('GET', 'mod_sirep/busquedas/tecnicos_list.php')
@@ -2357,7 +2357,7 @@ function plantaUsuario(){
  * Completa el desplegable de fletes
  * @param {string} campo
  */
- function fletes(campo){
+function fletes(campo){
     return new Promise(function(resolve, reject) {
         let xhr = new XMLHttpRequest
         xhr.open('GET', 'mod_compras/busquedas/fletes_list.php')
@@ -2394,6 +2394,31 @@ function listaProvincias(campo, activo = 'N'){
                 let template = `<option value='' selected>Seleccionar</option>`
                 respuesta.forEach(element => {
                     template +=`<option value='${element.provincia_id}'>${element.descripcion}</option>`
+                });
+                campo.innerHTML = template
+            }
+        })
+    })
+}
+
+/**
+ * Completa el desplegable de localidades
+ * @param {string} campo
+ * @param {string} activo
+ */
+function listaLocalidades(campo, idProvincia, activo = 'N') {
+    return new Promise(function(resolve, reject) {
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_repa/tablas/localidades/localidades_list.php?activo='+activo+'&provincia='+idProvincia)
+        xhr.send()
+        xhr.addEventListener('load', () => {
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+                resolve(respuesta)
+                let template = ''
+                template +=`<option value='' selected >Seleccionar</option>`
+                respuesta.forEach(element => {
+                    template +=`<option value='${element.localidad_id}'>${element.descripcion}</option>`
                 });
                 campo.innerHTML = template
             }

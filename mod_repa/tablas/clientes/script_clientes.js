@@ -2,12 +2,18 @@
     let formulario          = document.querySelector('#formClientes')//Captura del formulario
     let inputs              = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
     let formData            = new FormData() //Creo el formData para transferencia de información con el Backend
-    let clienteNombre       = document.querySelector('#clienteNombre')//Captura de boton grabar
-    let clienteApellido     = document.querySelector('#clienteApellido')//Captura de boton grabar
-    let clienteDireccion    = document.querySelector('#clienteDireccion')//Captura de boton grabar
-    let clienteTelefono     = document.querySelector('#clienteTelefono')//Captura de boton grabar
-    let clienteCelular      = document.querySelector('#clienteCelular')//Captura de boton grabar
-    let clienteEmail        = document.querySelector('#clienteEmail')//Captura de boton grabar
+    let clienteId           = document.querySelector('#clienteId')
+    let clienteNombre       = document.querySelector('#clienteNombre')
+    let clienteApellido     = document.querySelector('#clienteApellido')
+    let clienteTelefono     = document.querySelector('#clienteTelefono')
+    let clienteCelular      = document.querySelector('#clienteCelular')
+    let clienteEmail        = document.querySelector('#clienteEmail')
+    let provincia           = document.querySelector('#provincia')
+    let localidad           = document.querySelector('#localidad')
+    let calle               = document.querySelector('#calle')
+    let numeroCalle         = document.querySelector('#numeroCalle')
+    let dpto                = document.querySelector('#dpto')
+    let clienteActivo       = document.querySelector('#clienteActivo')
     let btnGrabaCliente     = document.querySelector('#btnGrabaCliente')//Captura de boton grabar
     let btnEliminaCliente   = document.querySelector('#btnEliminaCliente')//Captura de boton eliminar
     let btnCancelaCliente   = document.querySelector('#btnCancelaCliente')//Captura de boton cancelar
@@ -19,21 +25,34 @@
         clienteId           : {},
         clienteNombre       : {required: true, maxlength: 50, validated: true},
         clienteApellido     : {required: true, maxlength: 50, validated: true},
-        clienteDireccion    : {required: true, maxlength: 100, validated: true},
         clienteTelefono     : {required: true, maxlength: 60, validated: true},
         clienteCelular      : {maxlength: 25, validated: true},
         clienteEmail        : {required: true, validated: 'email', maxlength: 50},
+        provincia           : {required: true, validated: true},
+        localidad           : {required: true, validated: true},
+        calle               : {required: true, validated: true, maxlength: 50},
+        numeroCalle         : {required: true, validated: true, maxlength: 10},
+        dpto                : {required: true, validated: true, maxlength: 10},
         clienteActivo       : {}
     }
 
     activoCliente.checked = true
     limitaCaracteres(clienteNombre, 50)
     limitaCaracteres(clienteApellido, 50)
-    limitaCaracteres(clienteDireccion, 100)
     limitaCaracteres(clienteTelefono, 60)
     limitaCaracteres(clienteCelular, 25)
     limitaCaracteres(clienteEmail, 50)
+    limitaCaracteres(calle, 50)
+    limitaCaracteres(numeroCalle, 10)
+    limitaCaracteres(dpto, 10)
     $(btnEliminaCliente).hide() //Oculto el botón eliminar hasta que no se selecciona algún elemento de la tabla
+
+    listaProvincias(provincia, 'S')
+
+    provincia.addEventListener('change', e => {
+        e.preventDefault()
+        listaLocalidades(localidad,e.target.value, 'S')
+    })
 
     //Declaración del complemento DataTable
     let tabla = $('#tabla_clientes').DataTable( {
@@ -50,8 +69,9 @@
             },
             {"data" : "nombre"},
             {"data" : "apellido"},
-            {"data" : "direccion"},
-            {"data" : "telefono"}
+            {"data" : "telefono"},
+            {"data" : "celular"},
+            {"data" : "email"}
         ],
         processing: true,
         paging: true,
@@ -93,8 +113,29 @@
         e.preventDefault()
         cleanInputs(inputs)
         id= e.target.innerText
-        url = 'mod_repa/tablas/clientes/clientes_single.php'
-        showData(id, url, inputs)
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_repa/tablas/clientes/clientes_single.php?id='+id)
+        xhr.send()
+        xhr.addEventListener('load', () => {
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+
+                listaLocalidades(localidad,respuesta[0].provincia, 'S').then((r) => {
+                    clienteId.value         =  respuesta[0].clienteId        
+                    clienteNombre.value     =  respuesta[0].clienteNombre
+                    clienteApellido.value   =  respuesta[0].clienteApellido
+                    clienteTelefono.value   =  respuesta[0].clienteTelefono
+                    clienteCelular.value    =  respuesta[0].clienteCelular
+                    clienteEmail.value      =  respuesta[0].clienteEmail
+                    provincia.value         =  respuesta[0].provincia
+                    localidad.value         =  respuesta[0].localidad
+                    calle.value             =  respuesta[0].calle
+                    numeroCalle.value       =  respuesta[0].numeroCalle
+                    dpto.value              =  respuesta[0].dpto
+                    respuesta[0].clienteActivo == 'S'? clienteActivo.checked = true : clienteActivo.checked = false
+                })
+            }
+        })
         $(btnEliminaCliente).show()
         edit = true
     })
@@ -215,5 +256,6 @@
         $(btnEliminaCliente).hide()
         activoCliente.checked = true
         id = ''
+        listaLocalidades(localidad,0, 'S')
     })
 })()

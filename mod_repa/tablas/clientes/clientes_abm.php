@@ -21,12 +21,6 @@
                 </div>
             </div>
             <div class="row mb-2">
-                <label for="clienteDireccion" class="col-sm-2 col-form-label">Dirección</label>
-                <div class="col-sm-10">
-                    <input type="text" id="clienteDireccion" class="form-control input-sm">
-                </div>
-            </div>
-            <div class="row mb-2">
                 <label for="clienteTelefono" class="col-sm-2 col-form-label">Teléfono</label>
                 <div class="col-sm-10">
                     <input type="text" id="clienteTelefono" class="form-control input-sm">
@@ -42,6 +36,36 @@
                 <label for="clienteEmail" class="col-sm-2 col-form-label">Email</label>
                 <div class="col-sm-10">
                     <input type="text" id="clienteEmail" class="form-control input-sm">
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="provincia" class="col-sm-2 col-form-label">Provincia</label>
+                <div class="col-sm-10">
+                    <select class="form-select" id="provincia"></select>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="localidad" class="col-sm-2 col-form-label">Localidad</label>
+                <div class="col-sm-10">
+                    <select class="form-select" id="localidad"></select>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="calle" class="col-sm-2 col-form-label">Calle</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="calle"> 
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="numeroCalle" class="col-sm-2 col-form-label">Número</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="numeroCalle"> 
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="dpto" class="col-sm-2 col-form-label">Dpto.</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="dpto"> 
                 </div>
             </div>
             <div class="row mb-2">

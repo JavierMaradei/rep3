@@ -10,41 +10,57 @@
 
         <div class="col-md-6 mb-3">
             <div class="card h-100">
-                <h4 class="card-header bg-dark text-white text-center"><i>Datos del Producto</i></h4>
+                <h4 class="card-header bg-dark text-white text-center"><i>Datos generales de Ingreso</i></h4>
                 <div class="card-body">
                     <div class="col-sm-12 mb-2">
-                        <label for="codigoProducto" class="form-label">Código</label>
-                        <input type="text" class="form-control" id="codigoProducto"> 
+                        <label for="fechaRecepcion" class="form-label">Fecha</label>
+                        <input type="date" class="form-control" id="fechaRecepcion" value="<?php echo date('Y-m-d'); ?>" readonly>
                     </div>
                     <div class="col-sm-12 mb-2">
-                        <label for="descripcionProducto" class="form-label">Descripción</label>
-                        <div class="input-group">
-                            <input type="text" id="descripcionProducto" class="form-control" readonly>
-                            <button class="btn btn-outline-secondary" type="button" id="btnBuscarProducto">Buscar</button>
+                        <label for="sucursalRecepcion" class="form-label">Sucursal</label>
+                        <select id="sucursalRecepcion" class="form-select"></select>
+                    </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="lugarRecepcion" class="form-label">Lugar de Recepción</label>
+                        <select id="lugarRecepcion" class="form-select"></select>
+                    </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="tipoReparacion" class="form-label">Tipo de Reparación</label>
+                        <select id="tipoReparacion" class="form-select"><?php echo tiposReparacion(); ?></select>
+                    </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="atencion" class="form-label">Atención</label>
+                        <select id="atencion" class="form-select"><?php echo tiposAtencion(); ?></select>
+                    </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="remitoCliente" class="form-label">Remito</label>
+                        <input type="text" class="form-control" id="remitoCliente"> 
+                    </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="fechaReparacion" class="form-label">Fecha de Reparación / Visita técnica</label>
+                        <input type="date" class="form-control" id="fechaReparacion">
+                    </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="tecnico" class="form-label">Técnico Asignado</label>
+                        <select id="tecnico" class="form-select" disabled></select>
+                    </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="costoProducto" class="form-label">Costo</label>
+                        <input type="text" class="form-control" id="costoProducto">
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-12 pt-3 text-center">
+                            <div class="form-check form-check-inline">
+                                <input id="garantia" class="form-check-input" type="checkbox">
+                                <label for="garantia" class="form-check-label">Reclama garantía</label>
+                            </div>
+
+                            <div class="form-check form-check-inline">
+                                <input id="flete" class="form-check-input" type="checkbox">
+                                <label for="flete" class="form-check-label">Flete</label>
+                            </div>
+
                         </div>
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="marcaProducto" class="form-label">Marca</label>
-                        <input type="text" class="form-control" id="marcaProducto" disabled> 
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="familiaProducto" class="form-label">Familia</label>
-                        <input type="text" class="form-control" id="familiaProducto" disabled> 
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="serieProducto" class="form-label">Serie</label>
-                        <div class="input-group">
-                            <input type="text" id="serieProducto" class="form-control">
-                            <button class="btn btn-outline-secondary" type="button" id="btnGenerarNroSerie">Generar serie</button>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="problemaProducto" class="form-label">Problema</label>
-                        <input type="text" class="form-control" id="problemaProducto"> 
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="observacionesProducto" class="form-label">Observaciones</label>
-                        <textarea class="form-control" id="observacionesProducto" cols="30" rows="6"></textarea>
                     </div>
                 </div>
             </div>
@@ -84,6 +100,10 @@
                         <input type="text" class="form-control" id="clienteCelular"> 
                     </div>
                     <div class="col-sm-12 mb-2">
+                        <label for="clienteEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="clienteEmail"> 
+                    </div>
+                    <div class="col-sm-12 mb-2">
                         <label for="provincia" class="form-label">Provincia</label>
                         <select class="form-select" id="provincia"></select>
                     </div>
@@ -100,95 +120,76 @@
                         <input type="text" class="form-control" id="numeroCalle"> 
                     </div>
                     <div class="col-sm-12 mb-2">
-                        <label for="clienteEmail" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="clienteEmail"> 
+                        <label for="dpto" class="form-label">Dpto.</label>
+                        <input type="text" class="form-control" id="dpto"> 
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6 mb-3">
+
+
+        <div class="col-md-12 mb-3">
             <div class="card h-100">
-                <h4 class="card-header bg-dark text-white text-center"><i>Datos generales de Ingreso</i></h4>
+                <h4 class="card-header bg-dark text-white text-center"><i>Datos del Producto</i></h4>
                 <div class="card-body">
-                    <div class="col-sm-12 mb-2">
-                        <label for="fechaRecepcion" class="form-label">Fecha</label>
-                        <input type="date" class="form-control" id="fechaRecepcion" value="<?php echo date('Y-m-d'); ?>" readonly>
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="sucursalRecepcion" class="form-label">Sucursal</label>
-                        <select id="sucursalRecepcion" class="form-select"></select>
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="lugarRecepcion" class="form-label">Lugar de Recepción</label>
-                        <select id="lugarRecepcion" class="form-select"></select>
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="tipoReparacion" class="form-label">Tipo de Reparación</label>
-                        <select id="tipoReparacion" class="form-select"><?php echo tiposReparacion(); ?></select>
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="atencion" class="form-label">Atención</label>
-                        <select id="atencion" class="form-select"><?php echo tiposAtencion(); ?></select>
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="remitoCliente" class="form-label">Remito</label>
-                        <input type="text" class="form-control" id="remitoCliente"> 
-                    </div>
-                    <div class="row mb-2">
-                        <label class="col-sm-3 col-form-label">Adicionales</label>
-                        <div class="col-sm-9 pt-3">
-                            <div class="form-check form-check-inline">
-                                <input id="garantia" class="form-check-input" type="checkbox">
-                                <label for="garantia" class="form-check-label">Reclama garantía</label>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="col-sm-12 mb-2">
+                                <label for="codigoProducto" class="form-label">Código</label>
+                                <input type="text" class="form-control" id="codigoProducto"> 
                             </div>
-
-                            <div class="form-check form-check-inline">
-                                <input id="flete" class="form-check-input" type="checkbox">
-                                <label for="flete" class="form-check-label">Flete</label>
+                            <div class="col-sm-12 mb-2">
+                                <label for="descripcionProducto" class="form-label">Descripción</label>
+                                <div class="input-group">
+                                    <input type="text" id="descripcionProducto" class="form-control" readonly>
+                                    <button class="btn btn-outline-secondary" type="button" id="btnBuscarProducto">Buscar</button>
+                                </div>
                             </div>
-
+                            <div class="col-sm-12 mb-2">
+                                <label for="serieProducto" class="form-label">Serie</label>
+                                <div class="input-group">
+                                    <input type="text" id="serieProducto" class="form-control">
+                                    <button class="btn btn-outline-secondary" type="button" id="btnGenerarNroSerie">Generar serie</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 mb-2">
+                                <label for="observacionesProducto" class="form-label">Observaciones</label>
+                                <textarea class="form-control" id="observacionesProducto" cols="30" rows="7"></textarea>
+                            </div>
                         </div>
-                    </div>
+                        <div class="col-sm-6">
+                            <div class="col-sm-12 mb-2">
+                                <label for="marcaProducto" class="form-label">Marca</label>
+                                <input type="text" class="form-control" id="marcaProducto" disabled> 
+                            </div>
+                            <div class="col-sm-12 mb-2">
+                                <label for="familiaProducto" class="form-label">Familia</label>
+                                <input type="text" class="form-control" id="familiaProducto" disabled> 
+                            </div>
+                            <div class="col-sm-12 mb-2">
+                                <label for="problemaProducto" class="form-label">Problema</label>
+                                <input type="text" class="form-control" id="problemaProducto"> 
+                            </div>
+                            <h4 class="text-center pt-3"><i>Producto destino Canje</i></h4>
+                            <div class="col-sm-12 mb-2">
+                                <label for="codigoProductoCanje" class="form-label">Código</label>
+                                <input type="text" class="form-control" id="codigoProductoCanje" disabled> 
+                            </div>
+                            <div class="col-sm-12 mb-2">
+                                <label for="descripcionProductoCanje" class="form-label">Descripción</label>
+                                <div class="input-group">
+                                    <input type="text" id="descripcionProductoCanje" class="form-control" readonly>
+                                    <button class="btn btn-outline-secondary" type="button" id="buscarProductoCanje" disabled>Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                 
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6 mb-3">
-            <div class="card h-60 mb-3">
-                <h4 class="card-header bg-dark text-white text-center"><i>Datos Reparación</i></h4>
-                <div class="card-body">
-                    <div class="col-sm-12 mb-2">
-                        <label for="fechaReparacion" class="form-label">Fecha de Reparación / Visita técnica</label>
-                        <input type="date" class="form-control" id="fechaReparacion">
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="tecnico" class="form-label">Técnico Asignado</label>
-                        <select id="tecnico" class="form-select" disabled></select>
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="costoProducto" class="form-label">Costo</label>
-                        <input type="text" class="form-control" id="costoProducto">
-                    </div>
-                </div>
-            </div>
-            <div class="card h-40">
-                <h4 class="card-header bg-dark text-white text-center"><i>Producto destino Canje</i></h4>
-                <div class="card-body">
-                    <div class="col-sm-12 mb-2">
-                        <label for="codigoProductoCanje" class="form-label">Código</label>
-                        <input type="text" class="form-control" id="codigoProductoCanje" disabled> 
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="descripcionProductoCanje" class="form-label">Descripción</label>
-                        <div class="input-group">
-                            <input type="text" id="descripcionProductoCanje" class="form-control" readonly>
-                            <button class="btn btn-outline-secondary" type="button" id="buscarProductoCanje" disabled>Buscar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
         <div class="col-md-12 mb-3">
             <div class="card h-100">

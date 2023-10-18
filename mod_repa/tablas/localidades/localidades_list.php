@@ -13,24 +13,45 @@
 
     //Creamos la conexión
     $conexion   = conectar(DB_DSN, DB_USER, DB_PASS);
-    $query      = " SELECT 
-                        rep3_localidades.localidad_id, 
-                        rep3_localidades.descripcion, 
-                        rep3_localidades.provincia_id,
-                        rep3_provincias.descripcion as provinciaDescripcion,
-                        rep3_localidades.activo 
-                    FROM 
-                        rep3_localidades
-                    INNER JOIN
-                        rep3_provincias
-                    ON
-                        rep3_localidades.provincia_id = rep3_provincias.provincia_id
+    $arrayProv  = array();
+    $activo     = $_GET['activo'];
+    $provincia  = $_GET['provincia'];
 
-                ";
-    if(isset($_GET['activo'])){
-        $query .= "AND activo = 'S'";
+    if(isset($provincia)){
+        $stringProvincias = $provincia;
+    } else {
+
+        $query00 =" SELECT provincia_id FROM rep3_provincias ";
+        $sentenciaSQL   = $conexion->prepare($query00);
+        $sentenciaSQL   ->execute();
+        $provinciasAll  = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($provinciasAll as $key => $value) {
+            array_push($arrayProv, $value['provincia_id']);
+        }
+        $stringProvincias    = implode("', '", $arrayProv);
+    }
+
+    $query  = " SELECT 
+                    rep3_localidades.localidad_id, 
+                    rep3_localidades.descripcion, 
+                    rep3_localidades.provincia_id,
+                    rep3_provincias.descripcion as provinciaDescripcion,
+                    rep3_localidades.activo 
+                FROM 
+                    rep3_localidades
+                INNER JOIN
+                    rep3_provincias
+                ON
+                    rep3_localidades.provincia_id = rep3_provincias.provincia_id
+                WHERE
+                    rep3_localidades.provincia_id  IN ('{$stringProvincias}')
+            ";
+    if($activo == "S"){
+        $query .= "AND rep3_localidades.activo = 'S'";
     }           
     $sentenciaSQL= $conexion->prepare($query);
+    //var_dump($sentenciaSQL);
     $sentenciaSQL->execute();
 
     $resultado= $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
