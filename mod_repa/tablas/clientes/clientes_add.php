@@ -14,7 +14,11 @@
 
     $clienteNombre      = filter_var($_POST['clienteNombre'], FILTER_SANITIZE_STRING);
     $clienteApellido    = filter_var($_POST['clienteApellido'], FILTER_SANITIZE_STRING);
-    $clienteDireccion   = filter_var($_POST['clienteDireccion'], FILTER_SANITIZE_STRING);
+    $provincia          = filter_var($_POST['provincia'], FILTER_SANITIZE_STRING);
+    $localidad          = filter_var($_POST['localidad'], FILTER_SANITIZE_STRING);
+    $calle              = filter_var($_POST['calle'], FILTER_SANITIZE_STRING);
+    $numeroCalle        = filter_var($_POST['numeroCalle'], FILTER_SANITIZE_STRING);
+    $dpto               = filter_var($_POST['dpto'], FILTER_SANITIZE_STRING);
     $clienteTelefono    = filter_var($_POST['clienteTelefono'], FILTER_SANITIZE_STRING);
     $clienteCelular     = filter_var($_POST['clienteCelular'], FILTER_SANITIZE_STRING);
     $clienteEmail       = filter_var($_POST['clienteEmail'], FILTER_SANITIZE_STRING);
@@ -30,18 +34,24 @@
             $query1 = " INSERT INTO rep3_clientes (
                             nombre, 
                             apellido, 
-                            direccion, 
                             telefono, 
                             celular, 
                             email,
+                            localidad_id,
+                            calle, 
+                            nro_calle,
+                            dpto,
                             activo
                         ) VALUES (
                             '{$clienteNombre}', 
                             '{$clienteApellido}', 
-                            '{$clienteDireccion}', 
                             '{$clienteTelefono}', 
                             '{$clienteCelular}', 
-                            '{$clienteEmail}', 
+                            '{$clienteEmail}',
+                            '{$localidad}', 
+                            '{$calle}', 
+                            '{$numeroCalle}', 
+                            '{$dpto}',  
                             '{$activo}'
                         )
                     ";

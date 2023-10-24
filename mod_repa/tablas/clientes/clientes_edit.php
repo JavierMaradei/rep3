@@ -18,7 +18,10 @@
         $conexion           = conectar(DB_DSN, DB_USER, DB_PASS);
         $clienteNombre      = filter_var($_POST['clienteNombre'], FILTER_SANITIZE_STRING);
         $clienteApellido    = filter_var($_POST['clienteApellido'], FILTER_SANITIZE_STRING);
-        $clienteDireccion   = filter_var($_POST['clienteDireccion'], FILTER_SANITIZE_STRING);
+        $localidad          = filter_var($_POST['localidad'], FILTER_SANITIZE_STRING);
+        $calle              = filter_var($_POST['calle'], FILTER_SANITIZE_STRING);
+        $numeroCalle        = filter_var($_POST['numeroCalle'], FILTER_SANITIZE_STRING);
+        $dpto               = filter_var($_POST['dpto'], FILTER_SANITIZE_STRING);
         $clienteTelefono    = filter_var($_POST['clienteTelefono'], FILTER_SANITIZE_STRING);
         $clienteCelular     = filter_var($_POST['clienteCelular'], FILTER_SANITIZE_STRING);
         $clienteEmail       = filter_var($_POST['clienteEmail'], FILTER_SANITIZE_STRING);
@@ -30,15 +33,18 @@
             $query = "  UPDATE 
                             rep3_clientes 
                         SET 
-                            nombre      = '{$clienteNombre}',
-                            apellido    = '{$clienteApellido}', 
-                            direccion   = '{$clienteDireccion}', 
-                            telefono    = '{$clienteTelefono}',
-                            celular     = '{$clienteCelular}', 
-                            email       = '{$clienteEmail}',
-                            activo      = '{$activo}'      
+                            nombre          = '{$clienteNombre}',
+                            apellido        = '{$clienteApellido}', 
+                            telefono        = '{$clienteTelefono}',
+                            celular         = '{$clienteCelular}', 
+                            email           = '{$clienteEmail}',
+                            localidad_id    = '{$localidad}',
+                            calle           = '{$calle}',
+                            nro_calle       = '{$numeroCalle}',
+                            dpto            = '{$dpto}',
+                            activo          = '{$activo}'      
                         WHERE 
-                            cliente_id  = '{$id}'
+                            cliente_id      = '{$id}'
                     ";
 
             $sentenciaSQL   = $conexion->prepare($query);
