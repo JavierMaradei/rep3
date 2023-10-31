@@ -30,6 +30,10 @@
         $clienteCelular             = filter_var($_POST['clienteCelular'], FILTER_SANITIZE_STRING);
         $clienteDireccion           = filter_var($_POST['clienteDireccion'], FILTER_SANITIZE_STRING);
         $clienteEmail               = filter_var($_POST['clienteEmail'], FILTER_SANITIZE_STRING);
+        $localidad                  = filter_var($_POST['localidad'], FILTER_SANITIZE_STRING);
+        $calle                      = filter_var($_POST['calle'], FILTER_SANITIZE_STRING);
+        $numeroCalle                = filter_var($_POST['numeroCalle'], FILTER_SANITIZE_STRING);
+        $dpto                       = filter_var($_POST['dpto'], FILTER_SANITIZE_STRING);
         $sucursalRecepcion          = filter_var($_POST['sucursalRecepcion'], FILTER_SANITIZE_STRING);
         $lugarRecepcion             = filter_var($_POST['lugarRecepcion'], FILTER_SANITIZE_STRING);
         $tipoReparacion             = filter_var($_POST['tipoReparacion'], FILTER_SANITIZE_STRING);
@@ -88,23 +92,29 @@
                 $serieProducto  = ++$serieNuevo['valor'];
             }
 
-            if($nuevoCliente == 'S' && $clienteId == ''){
+            if($nuevoCliente == 'S' && $clienteId == ''){                  
 
                 $query4 = " INSERT INTO rep3_clientes (
                                 nombre, 
                                 apellido, 
-                                direccion, 
                                 telefono, 
                                 celular, 
                                 email,
+                                localidad_id,
+                                calle, 
+                                nro_calle,
+                                dpto,
                                 activo
                             ) VALUES (
                                 '{$clienteNombre}', 
                                 '{$clienteApellido}', 
-                                '{$clienteDireccion}', 
                                 '{$clienteTelefono}', 
                                 '{$clienteCelular}', 
                                 '{$clienteEmail}', 
+                                '{$localidad}', 
+                                '{$calle}', 
+                                '{$numeroCalle}', 
+                                '{$dpto}', 
                                 'S'
                             )
                         ";
@@ -120,12 +130,15 @@
                 $query4 = " UPDATE 
                                 rep3_clientes 
                             SET 
-                                nombre      = '{$clienteNombre}',
-                                apellido    = '{$clienteApellido}', 
-                                direccion   = '{$clienteDireccion}', 
-                                telefono    = '{$clienteTelefono}',
-                                celular     = '{$clienteCelular}', 
-                                email       = '{$clienteEmail}'
+                                nombre          = '{$clienteNombre}', 
+                                apellido        = '{$clienteApellido}', 
+                                telefono        = '{$clienteTelefono}', 
+                                celular         = '{$clienteCelular}',
+                                email           = '{$clienteEmail}',
+                                localidad_id    = '{$localidad}',
+                                calle           = '{$calle}',
+                                nro_calle       = '{$numeroCalle}',
+                                dpto            = '{$dpto}'
                             WHERE 
                                 cliente_id  = '{$clienteId}'
                         ";

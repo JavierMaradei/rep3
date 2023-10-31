@@ -39,13 +39,13 @@
                 </div>
             </div>
             <div class="row mb-2">
-                <label for="provincia" class="col-sm-2 col-form-label">Provincia</label>
+                <label for="provincia" class="col-sm-2 col-form-label" title="Provincia">Prov.</label>
                 <div class="col-sm-10">
                     <select class="form-select" id="provincia"></select>
                 </div>
             </div>
             <div class="row mb-2">
-                <label for="localidad" class="col-sm-2 col-form-label">Localidad</label>
+                <label for="localidad" class="col-sm-2 col-form-label" title="Localidad">Loc.</label>
                 <div class="col-sm-10">
                     <select class="form-select" id="localidad"></select>
                 </div>

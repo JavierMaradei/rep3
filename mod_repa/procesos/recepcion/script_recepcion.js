@@ -13,13 +13,17 @@
     let btnNuevoCliente             = document.querySelector('#btnNuevoCliente')
     let searchCliente               = document.querySelector('#searchCliente')
     let btnBuscarCliente            = document.querySelector('#btnBuscarCliente')
-    let clienteCodigo               = document.querySelector('#clienteCodigo')
+    let clienteId                   = document.querySelector('#clienteId')
     let clienteApellido             = document.querySelector('#clienteApellido')
     let clienteNombre               = document.querySelector('#clienteNombre')
     let clienteTelefono             = document.querySelector('#clienteTelefono')
     let clienteCelular              = document.querySelector('#clienteCelular')
-    let clienteDireccion            = document.querySelector('#clienteDireccion')
     let clienteEmail                = document.querySelector('#clienteEmail')
+    let provincia                   = document.querySelector('#provincia')
+    let localidad                   = document.querySelector('#localidad')
+    let calle                       = document.querySelector('#calle')
+    let numeroCalle                 = document.querySelector('#numeroCalle')
+    let dpto                        = document.querySelector('#dpto')
     let codigoProducto              = document.querySelector('#codigoProducto')
     let descripcionProducto         = document.querySelector('#descripcionProducto')
     let btnBuscarProducto           = document.querySelector('#btnBuscarProducto')
@@ -63,8 +67,12 @@
         clienteNombre               : {required : true, validated : true},
         clienteTelefono             : {validated : true},
         clienteCelular              : {validated : true},
-        clienteDireccion            : {validated : true},
         clienteEmail                : {validated : 'email'},
+        provincia                   : {required : false, validated : true},
+        localidad                   : {required : false, validated : true},
+        calle                       : {required : false, validated : true},
+        numeroCalle                 : {required : false, validated : true},
+        dpto                        : {required : false, validated : true},
         codigoProducto              : {required : true, validated : true},
         descripcionProducto         : {required : true, readOnly : true},
         marcaProducto               : {readOnly : true},
@@ -115,7 +123,7 @@
         tecnico.value           = '0'
         formData.delete('nuevoCliente')
         formData.delete('nuevoNroSerie')
-
+        listaLocalidades(localidad,0, 'S')
         recuperaDatosPerfil()
     }
 
@@ -234,6 +242,12 @@
         })
     })
     cargaTecnicos(tecnico)
+    listaProvincias(provincia, 'S')
+
+    provincia.addEventListener('change', e => {
+        e.preventDefault()
+        listaLocalidades(localidad,e.target.value, 'S')
+    })
 
     fechaReparacion.value = hoy
 
@@ -396,10 +410,12 @@
                                         <th>Id</th>
                                         <th>Nombre</th>
                                         <th>Apellido</th>
-                                        <th>Dirección</th>
                                         <th>Teléfono</th>
                                         <th>Celular</th>
                                         <th>Email</th>
+                                        <th>Calle</th>
+                                        <th>Nro</th>
+
                                     </thead>
                                     <tbody>`
                             respuesta.forEach(element => {
@@ -408,10 +424,11 @@
                                             <td><a class="client-item" href="${element.cliente_id}">${element.cliente_id}</td>
                                             <td>${element.nombre}</td>
                                             <td>${element.apellido}</td>
-                                            <td>${element.direccion}</td>
                                             <td>${element.telefono}</td>
                                             <td>${element.celular}</td>
                                             <td>${element.email}</td>
+                                            <td>${element.calle}</td>
+                                            <td>${element.nro_calle}</td>
                                         </tr>`
                             })
                             template += `
@@ -421,17 +438,24 @@
                             $('#bodyRecepcion').html(template)
 
                         } else {
-                            $('#clienteId').val(respuesta[0].cliente_id)
-                            $('#clienteNombre').val(respuesta[0].nombre)
-                            $('#clienteApellido').val(respuesta[0].apellido)
-                            $('#clienteTelefono').val(respuesta[0].telefono)
-                            $('#clienteCelular').val(respuesta[0].celular)
-                            $('#clienteDireccion').val(respuesta[0].direccion)
-                            $('#clienteEmail').val(respuesta[0].email)
-                            inputsClienteEstado('activos')
+                            listaLocalidades(localidad,respuesta[0].provincia_id, 'S').then((r) => {
+                                if(r != ''){
+                                    $('#clienteId').val(respuesta[0].cliente_id)
+                                    $('#clienteNombre').val(respuesta[0].nombre)
+                                    $('#clienteApellido').val(respuesta[0].apellido)
+                                    $('#clienteTelefono').val(respuesta[0].telefono)
+                                    $('#clienteCelular').val(respuesta[0].celular)
+                                    $('#clienteEmail').val(respuesta[0].email)
+                                    $('#provincia').val(respuesta[0].provincia_id)
+                                    $('#localidad').val(respuesta[0].localidad_id)
+                                    $('#calle').val(respuesta[0].calle)
+                                    $('#numeroCalle').val(respuesta[0].nro_calle)
+                                    $('#dpto').val(respuesta[0].dpto)
+                                    inputsClienteEstado('activos')
+                                }
+                            })
                         }
                     }
-
                     searchCliente.value = ''
                 }
             })
@@ -446,13 +470,35 @@
         e.preventDefault()
         nuevoCliente = false
         id  = e.target.innerText
-        url = 'mod_repa/tablas/clientes/clientes_single.php'
         $('#modalRecepcion').hide()
         datosCliente.forEach(element => {
             element.value = ''
         });
         inputsClienteEstado('activos')
-        showDataReloaded(id, url, inputs)
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_repa/tablas/clientes/clientes_single.php?id='+id)
+        xhr.send()
+        xhr.addEventListener('load', () => {
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+
+                listaLocalidades(localidad,respuesta[0].provincia, 'S').then((r) => {
+                    if(r != ''){
+                        clienteId.value         =  respuesta[0].clienteId        
+                        clienteNombre.value     =  respuesta[0].clienteNombre
+                        clienteApellido.value   =  respuesta[0].clienteApellido
+                        clienteTelefono.value   =  respuesta[0].clienteTelefono
+                        clienteCelular.value    =  respuesta[0].clienteCelular
+                        clienteEmail.value      =  respuesta[0].clienteEmail
+                        provincia.value         =  respuesta[0].provincia
+                        localidad.value         =  respuesta[0].localidad
+                        calle.value             =  respuesta[0].calle
+                        numeroCalle.value       =  respuesta[0].numeroCalle
+                        dpto.value              =  respuesta[0].dpto 
+                    }
+                })
+            }
+        })
     })
 
     ///////////////// FIN CLIENTES /////////////////

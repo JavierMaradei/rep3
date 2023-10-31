@@ -32,7 +32,7 @@
         localidad           : {required: true, validated: true},
         calle               : {required: true, validated: true, maxlength: 50},
         numeroCalle         : {required: true, validated: true, maxlength: 10},
-        dpto                : {required: true, validated: true, maxlength: 10},
+        dpto                : {required: false, validated: true, maxlength: 10},
         clienteActivo       : {}
     }
 

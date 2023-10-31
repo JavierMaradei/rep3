@@ -76,7 +76,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="text" id="searchCliente" class="form-control" placeholder="Ingrese Id, nombre, apellido, telefono, email o dirección">
+                        <input type="text" id="searchCliente" class="form-control" placeholder="Ingrese Id, nombre, apellido, telefono, email o calle">
                         <button class="btn btn-outline-secondary" type="button" id="btnBuscarCliente">Buscar cliente</button>
                     </div>
                     <div class="col-sm-12 mb-2">
