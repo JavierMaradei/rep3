@@ -168,11 +168,11 @@
                     $respuesta1     = $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
                     
                     if($respuesta1['tipo_ingreso'] == 'P'){
-                        $estadoReparacion = 2;
-                    } else if ($respuesta1['tipo_ingreso'] == 'R'){
                         $estadoReparacion = 3;
-                    } else {
+                    } else if ($respuesta1['tipo_ingreso'] == 'R'){
                         $estadoReparacion = 4;
+                    } else {
+                        $estadoReparacion = 5;
                     }
         
                     $query2 = " UPDATE 

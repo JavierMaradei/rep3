@@ -48,6 +48,7 @@
         $nuevoNroSerie              = $_POST['nuevoNroSerie'] == 'true' ? 'S' : 'N';
         $garantia                   = $_POST['garantia'] == 'true' ? 'S' : 'N';
         $flete                      = $_POST['flete'] == 'true' ? 'S' : 'N';
+        $estado                     = $_POST['lugarRecepcion'] == '2' ? '1' : '2';
         $perfilSirep                = recuperaPerfil($_SESSION['usuario_id']);
         $fecha                      = new DateTime();
         $formateadaArg              = $fecha->format("Y-m-d H:i:s");
@@ -208,7 +209,7 @@
                             'N',
                             '{$fechaDefault}',
                             '{$remitoCliente}',
-                            '1',
+                            '{$estado}',
                             '{$lugarRecepcion}',
                             '{$tipoReparacion}',
                             '{$atencion}',

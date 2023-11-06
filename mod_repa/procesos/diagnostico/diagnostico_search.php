@@ -65,7 +65,7 @@
                     ON
                         rep3_reparaciones.sucursal_id = rep3_sucursales.sucursal_id
                     WHERE
-                        rep3_reparaciones.estado_id = 1
+                        rep3_reparaciones.estado_id = 2
                     AND
                         rep3_reparaciones.anulado <> 'S'
                     AND
