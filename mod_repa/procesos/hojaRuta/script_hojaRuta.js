@@ -3,8 +3,8 @@
     let inputs              = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
     let formData            = new FormData() //Creo el formData para transferencia de información con el Backend
     let nombreCliente       = document.querySelector('#nombreCliente')
-    let provincia           = document.querySelector('#provincia')
-    let localidad           = document.querySelector('#localidad')
+    let provincia           = document.querySelector('#provincia_id')
+    let localidad           = document.querySelector('#localidad_id')
     let calle               = document.querySelector('#calle')
     let numeroCalle         = document.querySelector('#numeroCalle')
     let dpto                = document.querySelector('#dpto')
@@ -25,7 +25,9 @@
         tecnico         : {required : true},
         hojaRuta        : {}
     }
-    
+
+    cargaTecnicos(tecnico)
+    listaProvincias(provincia, 'S')
     hojaRuta.checked = false
 
     //Declaración del complemento DataTable
@@ -89,7 +91,10 @@
         cleanInputs(inputs)
         id= e.target.innerText
         url = 'mod_repa/procesos/hojaRuta/hojaRuta_single.php'
-        showData(id, url, inputs)
+        showDataReloaded(id, url, inputs).then((r) =>{
+            listaLocalidades(localidad,r.provincia_id, 'S')    
+        })
+
         edit = true
     })
 
