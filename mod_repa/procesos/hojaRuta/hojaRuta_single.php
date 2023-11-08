@@ -26,7 +26,8 @@
                             rep3_localidades.provincia_id, 
                             rep3_localidades.descripcion as localidad,
                             rep3_provincias.descripcion as provincia,
-                            rep3_reparaciones.tecnico_id as tecnico
+                            rep3_reparaciones.tecnico_id as tecnico,
+                            rep3_reparaciones.hoja_ruta as hojaRuta
                         FROM 
                             rep3_reparaciones
                         INNER JOIN

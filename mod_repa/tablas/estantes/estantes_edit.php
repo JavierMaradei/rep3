@@ -42,11 +42,10 @@
                 } else {
                     $arrayRespuesta['estado'] = "Algo salió mal";
                 } 
+            } 
 
-            } else {
-                $arrayRespuesta['estado'] = "Error perfil"; 
-            }
-
+        } else {
+            $arrayRespuesta['estado'] = "Error perfil"; 
         }
         
         header("Content-type: aplication/json");

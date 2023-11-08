@@ -18,35 +18,32 @@
        
         $id             = $_GET['id'];
         $conexion       = conectar(DB_DSN, DB_USER, DB_PASS);
-        $descripcion    = filter_var($_POST['descripcionEstantes'], FILTER_SANITIZE_STRING);
-        $activo         = $_POST['activoEstantes'] == 'true' ? 'S' : 'N';
+        $tecnico        = filter_var($_POST['tecnico'], FILTER_SANITIZE_STRING);
+        $hojaRuta       = $_POST['hojaRuta'] == 'true' ? 'S' : 'N';
         $perfilSirep    = recuperaPerfil($_SESSION['usuario_id']);
 
         if($perfilSirep == 1){
 
-            if($descripcion != ''){
-                $query = "  UPDATE 
-                                rep3_estantes 
-                            SET 
-                                descripcion = '{$descripcion}', 
-                                activo      = '{$activo}' 
-                            WHERE 
-                                estante_id = '{$id}'
-                        ";           
-                
-                $sentenciaSQL= $conexion->prepare($query);
-                $respuesta = $sentenciaSQL->execute();
+            $query = "  UPDATE 
+                            rep3_reparaciones 
+                        SET 
+                            tecnico_id      = {$tecnico},
+                            hoja_ruta       = '{$hojaRuta}'
+                        WHERE 
+                            reparacion_id   = '{$id}'
+                    ";           
             
-                if($respuesta){
-                    $arrayRespuesta['estado'] = "Transacción exitosa";
-                } else {
-                    $arrayRespuesta['estado'] = "Algo salió mal";
-                } 
-
+            $sentenciaSQL= $conexion->prepare($query);
+            $respuesta = $sentenciaSQL->execute();
+        
+            if($respuesta){
+                $arrayRespuesta['estado'] = "Transacción exitosa";
             } else {
-                $arrayRespuesta['estado'] = "Error perfil"; 
-            }
+                $arrayRespuesta['estado'] = "Algo salió mal";
+            } 
 
+        } else {
+            $arrayRespuesta['estado'] = "Error perfil"; 
         }
         
         header("Content-type: aplication/json");

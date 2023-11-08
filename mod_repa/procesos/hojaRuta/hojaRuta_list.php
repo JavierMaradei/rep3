@@ -23,7 +23,9 @@
                         rep3_clientes.dpto,
                         rep3_localidades.provincia_id, 
                         rep3_localidades.descripcion as localidad,
-                        rep3_provincias.descripcion as provincia
+                        rep3_provincias.descripcion as provincia,
+                        CONCAT(trim(rep3_usuarios.apellido),', ',trim(rep3_usuarios.nombre)) as tecnico, 
+                        rep3_reparaciones.hoja_ruta as hojaRuta
                     FROM 
                         rep3_reparaciones
                     INNER JOIN
@@ -38,12 +40,18 @@
                         rep3_provincias
                     ON
                         rep3_localidades.provincia_id = rep3_provincias.provincia_id
+                    LEFT JOIN
+                        rep3_usuarios
+                    ON
+                        rep3_reparaciones.tecnico_id = rep3_usuarios.usuario_id
                     WHERE 
-                        estado_id = '1'
+                        rep3_reparaciones.estado_id = '1'
                     AND
-                        lugar_recepcion_id = '2'
+                        rep3_reparaciones.lugar_recepcion_id = '2'
                     AND
-                        anulado <> 'S'
+                        rep3_reparaciones.anulado <> 'S'
+                    AND
+                        rep3_reparaciones.envio_mail = 'N'
                 ";          
     $sentenciaSQL= $conexion->prepare($query);
     $sentenciaSQL->execute();

@@ -12,23 +12,34 @@
     let hojaRuta            = document.querySelector('#hojaRuta')//Captura de boton cancelar
     let btnGrabar           = document.querySelector('#btnGrabar')//Captura de boton grabar
     let btnCancelar         = document.querySelector('#btnCancelar')//Captura de boton cancelar
+    let btnPrefiltro        = document.querySelector('#btnPrefiltro')
     let edit                = false//flag de edición de registro existente o nuevo registro
     let id                  = ''
     let arrayVal = {
-        idPedido        : {readonly : true},
-        nombreCliente   : {readonly : true},
-        provincia       : {readonly : true},
-        localidad       : {readonly : true},
-        calle           : {readonly : true},
-        numeroCalle     : {readonly : true},
-        dpto            : {readonly : true},
-        tecnico         : {required : true},
+        idPedido        : {},
+        nombreCliente   : {},
+        provincia_id    : {},
+        localidad_id    : {},
+        calle           : {},
+        numeroCalle     : {},
+        dpto            : {},
+        tecnico         : {noCero: true, required : true},
         hojaRuta        : {}
     }
 
     cargaTecnicos(tecnico)
     listaProvincias(provincia, 'S')
     hojaRuta.checked = false
+
+    function limpieza(){
+        cleanInputs(inputs) 
+        cleanFormData(inputs, formData)
+        tabla.ajax.reload();
+        hojaRuta.checked    = false
+        btnGrabar.disabled  = true
+        id                  = ''
+        edit                = false
+    }
 
     //Declaración del complemento DataTable
     let tabla = $('#tabla').DataTable( {
@@ -43,6 +54,8 @@
                     return '<a class="task-item" href="'+data+'">' + data + '</a>';
                     }, 
             },
+            {"data" : "tecnico"},
+            {"data" : "hojaRuta"},
             {"data" : "cliente"},
             {"data" : "provincia"},
             {"data" : "localidad"},
@@ -92,32 +105,29 @@
         id= e.target.innerText
         url = 'mod_repa/procesos/hojaRuta/hojaRuta_single.php'
         showDataReloaded(id, url, inputs).then((r) =>{
-            listaLocalidades(localidad,r.provincia_id, 'S')    
+            console.log(r)
+            listaLocalidades(localidad,r.provincia_id, 'S').then(() => {
+                $('#localidad_id').val(r.localidad_id)
+            })    
         })
-
         edit = true
+        btnGrabar.disabled = false
     })
 
     //Funcionalidad del botón de Grabar
     btnGrabar.addEventListener('click', e => {
         e.preventDefault()
-/*         let validacion = validateData(inputs, arrayVal)
+        let validacion = validateData(inputs, arrayVal)
         if(validacion){
             collectData(inputs, formData)
-            let agregar = 'mod_repa/tablas/estantes/estantes_add.php'
-            let editar = 'mod_repa/tablas/estantes/estantes_edit.php'
+            let agregar = ''
+            let editar = 'mod_repa/procesos/hojaRuta/hojaRuta_edit.php'
             let estado = enviarData(agregar, editar, formData, edit, id)
             estado.then((respuesta) => {
                 switch (respuesta.estado) {
                     case 'Transacción exitosa':
                         msgTransaccionExitosa()
-                        tabla.ajax.reload();
-                        $(btnEliminaEstantes).hide()
-                        cleanInputs(inputs)
-                        cleanFormData(inputs, formData)
-                        activoEstantes.checked = true
-                        id = ''
-                        edit = false
+                        limpieza()
                         break;
                     case 'Sesión expirada':
                         sesionExpiradaMensajeFlotante()
@@ -132,15 +142,17 @@
                         break;
                 }
             })
-        } */
+        }
+    })
+
+    btnPrefiltro.addEventListener('click', e =>{
+        e.preventDefault()
+
     })
     
     //Funcionalidad del botón de Cancelar
     btnCancelar.addEventListener('click', e => {
         e.preventDefault()
-        /* cleanInputs(inputs)
-        edit = false
-        activoEstantes.checked = true
-        id = '' */
+        limpieza()
     })
 })()

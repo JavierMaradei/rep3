@@ -1,7 +1,17 @@
 <div class="content__boxed bg-gray-500">
     <div class="content__wrap">
-        <div class="mb-3 mt-3 text-end">
-            <h2><i>Hoja de Ruta</i></h2>
+        <div class="mb-3 mt-3">
+            <div class="row">
+                <div class="dropdown col-md-4">
+                    <button class="btn btn-warning btn-sm" type="button" id="btnPrefiltro">
+                        Cantidad pedidos por técnico
+                    </button>
+                </div>
+
+                <div class="col-md-8 text-end">
+                    <h2><i>Hoja de Ruta</i></h2>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -14,43 +24,43 @@
                     <div class="row mb-2">
                         <label for="idPedido" class="col-sm-2 col-form-label">Id</label>
                         <div class="col-sm-10">
-                            <input type="text" id="idPedido" class="form-control input-sm" readonly>
+                            <input type="text" id="idPedido" class="form-control input-sm" disabled>
                         </div>
                     </div>
                     <div class="row mb-2">
                         <label for="nombreCliente" class="col-sm-2 col-form-label" title="Cliente">Cli.</label>
                         <div class="col-sm-10">
-                            <input type="text" id="nombreCliente" class="form-control input-sm">
+                            <input type="text" id="nombreCliente" class="form-control input-sm" disabled>
                         </div>
                     </div>
                     <div class="row mb-2">
                         <label for="provincia" class="col-sm-2 col-form-label" title="Provincia">Prov.</label>
                         <div class="col-sm-10">
-                            <select class="form-select" id="provincia_id"></select>
+                            <select class="form-select" id="provincia_id" disabled></select>
                         </div>
                     </div>
                     <div class="row mb-2">
                         <label for="localidad" class="col-sm-2 col-form-label" title="Localidad">Loc.</label>
                         <div class="col-sm-10">
-                            <select class="form-select" id="localidad_id"></select>
+                            <select class="form-select" id="localidad_id" disabled></select>
                         </div>
                     </div>
                     <div class="row mb-2">
                         <label for="calle" class="col-sm-2 col-form-label">Calle</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="calle"> 
+                            <input type="text" class="form-control" id="calle" disabled> 
                         </div>
                     </div>
                     <div class="row mb-2">
                         <label for="numeroCalle" class="col-sm-2 col-form-label">Nro.</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="numeroCalle"> 
+                            <input type="text" class="form-control" id="numeroCalle" disabled> 
                         </div>
                     </div>
                     <div class="row mb-2">
                         <label for="dpto" class="col-sm-2 col-form-label">Dpto.</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="dpto"> 
+                            <input type="text" class="form-control" id="dpto" disabled> 
                         </div>
                     </div>
                     <div class="row mb-2">
@@ -67,7 +77,7 @@
                     </div>
                 </div>
                 <div class="card-footer text-center">
-                    <button id="btnGrabar" class="btn btn-success btn-outline">Grabar</button>
+                    <button id="btnGrabar" class="btn btn-success btn-outline" disabled>Grabar</button>
                     <button id="btnCancelar" class="btn btn-default btn-outline">Cancelar</button>
                 </div>
             </form>
@@ -78,10 +88,12 @@
             <h4 class="card-header bg-dark text-white text-center"><i>Listado de Pedidos de Service</i></h4>
             <div class="card-body">
                 <div class="row mb-2">
-                    <div class="table-responsive">
-                        <table id="tabla" class="table table-striped table-hover" style="font-size: 11px; font-weight: 400;">
+                    <div class="table-responsive" style="width: 100%; overflow-y:auto; overflow-x:auto;">
+                        <table id="tabla" class="table table-striped table-hover nowrap" style="font-size: 11px; font-weight: 400;">
                             <thead>
                                 <th>Id</th>
+                                <th>Técnico</th>
+                                <th>H.Ruta</th>
                                 <th>Nombre</th>
                                 <th>Provincia</th>                          
                                 <th>Localidad</th>                          

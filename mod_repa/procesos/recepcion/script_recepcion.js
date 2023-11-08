@@ -550,8 +550,8 @@
         e.preventDefault()
         if(lugarRecepcion.value == '2'){
             tecnico.disabled            = false
-            arrayVal.tecnico.required   = true
-            arrayVal.tecnico.noCero     = true
+            arrayVal.tecnico.required   = false
+            arrayVal.tecnico.noCero     = false
         } else {
             tecnico.disabled            = true
             tecnico.value               = '0'
