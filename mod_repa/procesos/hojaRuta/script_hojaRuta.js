@@ -195,7 +195,7 @@
     btnEnviarHR.addEventListener('click', e => {
         e.preventDefault()
         let xhr = new XMLHttpRequest
-        xhr.open('GET', 'mod_repa/procesos/hojaRuta/hojaRuta_send.php')
+        xhr.open('GET', 'mod_repa/procesos/hojaRuta/workflowPorTecnico.php')
         xhr.send()
         xhr.addEventListener('load', ()=> {
             if (xhr.status == 200){

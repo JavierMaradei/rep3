@@ -139,7 +139,7 @@
                     </table>
                 ";
 
-                //echo $tabla;
+                echo $tabla;
                 require('envioWorkflow.php');
             }
         }
