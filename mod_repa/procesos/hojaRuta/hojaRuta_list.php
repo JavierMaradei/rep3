@@ -16,16 +16,17 @@
     $query      = " SELECT 
                         rep3_reparaciones.reparacion_id,
                         rep3_reparaciones.cliente_id,
-                        CONCAT(trim(rep3_clientes.apellido),', ',trim(rep3_clientes.nombre)) as cliente, 
+                        CONVERT(rep3_reparaciones.freparacion, DATE)                            as fechaReparacion,
+                        CONCAT(trim(rep3_clientes.apellido),', ',trim(rep3_clientes.nombre))    as cliente, 
                         rep3_clientes.localidad_id, 
                         rep3_clientes.calle, 
                         rep3_clientes.nro_calle, 
                         rep3_clientes.dpto,
                         rep3_localidades.provincia_id, 
-                        rep3_localidades.descripcion as localidad,
-                        rep3_provincias.descripcion as provincia,
-                        CONCAT(trim(rep3_usuarios.apellido),', ',trim(rep3_usuarios.nombre)) as tecnico, 
-                        rep3_reparaciones.hoja_ruta as hojaRuta
+                        rep3_localidades.descripcion                                            as localidad,
+                        rep3_provincias.descripcion                                             as provincia,
+                        CONCAT(trim(rep3_usuarios.apellido),', ',trim(rep3_usuarios.nombre))    as tecnico, 
+                        rep3_reparaciones.hoja_ruta                                             as hojaRuta
                     FROM 
                         rep3_reparaciones
                     INNER JOIN

@@ -64,6 +64,12 @@
                         </div>
                     </div>
                     <div class="row mb-2">
+                        <label for="fechaReparacion" class="col-sm-2 col-form-label" title="Fecha de visita">F.Vis.</label>
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control" id="fechaReparacion"> 
+                        </div>
+                    </div>
+                    <div class="row mb-2">
                         <label for="tecnico" class="col-sm-2 col-form-label" title="Técnico">Téc.</label>
                         <div class="col-sm-10">
                             <select class="form-select" id="tecnico"></select>
@@ -92,6 +98,7 @@
                         <table id="tabla" class="table table-striped table-hover nowrap" style="font-size: 11px; font-weight: 400;">
                             <thead>
                                 <th>Id</th>
+                                <th>F.Visita</th>
                                 <th>Técnico</th>
                                 <th>H.Ruta</th>
                                 <th>Nombre</th>
@@ -107,6 +114,44 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal-->
+<div id="modal" class="modal" role="dialog" tabindex="-1" >
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button id="btnCloseModal" type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Pedidos por técnico</h4>
+            </div>
+            <form id="formPrefiltro">
+                <div class="modal-body">
+                    <div style="overflow-x: auto;">
+                        <div class="row m-3">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="card-title" id="cardTitleModal"></div>
+                                        <div class="d-flex flex-column gap-3" id="detalleTecnicosModal">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-sm-12 text-center">
+                        <button class="btn btn-success" type="button" id="btnEnviarHR">Enviar Hoja de Ruta</button>
+                        <button id="btnCerrarModal" type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

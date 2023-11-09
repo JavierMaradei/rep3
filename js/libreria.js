@@ -2239,6 +2239,17 @@ function msgEliminado(){
 }
 
 /**
+ * Sweet Alert - Mensaje error de fecha
+ */
+function msgErrorFecha(){
+    swal({
+        title   : "Atención!",
+        text    : "La fecha no puede ser menor a la actual.",
+        type    : "warning",
+    });
+}
+
+/**
  * Sweet Alert - Mensaje en uso
  */
  function msgEnUso(){

@@ -16,18 +16,19 @@
         $id         = $_GET['id'];
         $conexion   = conectar(DB_DSN, DB_USER, DB_PASS);
         $query      = " SELECT 
-                            rep3_reparaciones.reparacion_id as idPedido,
+                            rep3_reparaciones.reparacion_id                                         as idPedido,
                             rep3_reparaciones.cliente_id,
-                            CONCAT(trim(rep3_clientes.apellido),', ',trim(rep3_clientes.nombre)) as nombreCliente, 
+                            CONVERT(rep3_reparaciones.freparacion, DATE)                            as fechaReparacion,
+                            CONCAT(trim(rep3_clientes.apellido),', ',trim(rep3_clientes.nombre))    as nombreCliente, 
                             rep3_clientes.localidad_id, 
                             rep3_clientes.calle, 
-                            rep3_clientes.nro_calle as numeroCalle, 
+                            rep3_clientes.nro_calle                                                 as numeroCalle, 
                             rep3_clientes.dpto,
                             rep3_localidades.provincia_id, 
-                            rep3_localidades.descripcion as localidad,
-                            rep3_provincias.descripcion as provincia,
-                            rep3_reparaciones.tecnico_id as tecnico,
-                            rep3_reparaciones.hoja_ruta as hojaRuta
+                            rep3_localidades.descripcion                                            as localidad,
+                            rep3_provincias.descripcion                                             as provincia,
+                            rep3_reparaciones.tecnico_id                                            as tecnico,
+                            rep3_reparaciones.hoja_ruta                                             as hojaRuta
                         FROM 
                             rep3_reparaciones
                         INNER JOIN

@@ -1,20 +1,25 @@
 (() => {
-    let formulario          = document.querySelector('#form')//Captura del formulario
-    let inputs              = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
-    let formData            = new FormData() //Creo el formData para transferencia de información con el Backend
-    let nombreCliente       = document.querySelector('#nombreCliente')
-    let provincia           = document.querySelector('#provincia_id')
-    let localidad           = document.querySelector('#localidad_id')
-    let calle               = document.querySelector('#calle')
-    let numeroCalle         = document.querySelector('#numeroCalle')
-    let dpto                = document.querySelector('#dpto')
-    let tecnico             = document.querySelector('#tecnico')
-    let hojaRuta            = document.querySelector('#hojaRuta')//Captura de boton cancelar
-    let btnGrabar           = document.querySelector('#btnGrabar')//Captura de boton grabar
-    let btnCancelar         = document.querySelector('#btnCancelar')//Captura de boton cancelar
-    let btnPrefiltro        = document.querySelector('#btnPrefiltro')
-    let edit                = false//flag de edición de registro existente o nuevo registro
-    let id                  = ''
+    let formulario              = document.querySelector('#form')//Captura del formulario
+    let inputs                  = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
+    let formData                = new FormData() //Creo el formData para transferencia de información con el Backend
+    let nombreCliente           = document.querySelector('#nombreCliente')
+    let provincia               = document.querySelector('#provincia_id')
+    let localidad               = document.querySelector('#localidad_id')
+    let calle                   = document.querySelector('#calle')
+    let numeroCalle             = document.querySelector('#numeroCalle')
+    let dpto                    = document.querySelector('#dpto')
+    let tecnico                 = document.querySelector('#tecnico')
+    let hojaRuta                = document.querySelector('#hojaRuta')//Captura de boton cancelar
+    let btnGrabar               = document.querySelector('#btnGrabar')//Captura de boton grabar
+    let btnCancelar             = document.querySelector('#btnCancelar')//Captura de boton cancelar
+    let btnPrefiltro            = document.querySelector('#btnPrefiltro')
+    let detalleTecnicosModal    = document.querySelector('#detalleTecnicosModal')
+    let cardTitleModal          = document.querySelector('#cardTitleModal')
+    let btnEnviarHR             = document.querySelector('#btnEnviarHR')
+    let btnCerrarModal          = document.querySelector('#btnCerrarModal')
+    let btnCloseModal           = document.querySelector('#btnCloseModal')
+    let edit                    = false//flag de edición de registro existente o nuevo registro
+    let id                      = ''
     let arrayVal = {
         idPedido        : {},
         nombreCliente   : {},
@@ -23,6 +28,7 @@
         calle           : {},
         numeroCalle     : {},
         dpto            : {},
+        fechaReparacion : {required : true},
         tecnico         : {noCero: true, required : true},
         hojaRuta        : {}
     }
@@ -54,6 +60,7 @@
                     return '<a class="task-item" href="'+data+'">' + data + '</a>';
                     }, 
             },
+            {"data" : "fechaReparacion"},
             {"data" : "tecnico"},
             {"data" : "hojaRuta"},
             {"data" : "cliente"},
@@ -62,6 +69,12 @@
             {"data" : "calle"},
             {"data" : "nro_calle"},
             {"data" : "dpto"}
+        ],
+        "columnDefs": [
+            {
+                "targets"   : [1],
+                "render"    : $.fn.dataTable.render.moment('YYYY-MM-DD', 'DD/MM/YYYY')
+            }
         ],
         processing: true,
         paging: true,
@@ -125,15 +138,19 @@
             let estado = enviarData(agregar, editar, formData, edit, id)
             estado.then((respuesta) => {
                 switch (respuesta.estado) {
-                    case 'Transacción exitosa':
+                    case 'ok':
                         msgTransaccionExitosa()
                         limpieza()
                         break;
                     case 'Sesión expirada':
                         sesionExpiradaMensajeFlotante()
                         break;
-                    case 'Error perfil':
+                    case 'err perfil':
                         msgErrorPerfil()
+                        cleanFormData(inputs, formData)
+                        break;
+                    case 'err fecha':
+                        msgErrorFecha()
                         cleanFormData(inputs, formData)
                         break;
                     default:
@@ -147,7 +164,56 @@
 
     btnPrefiltro.addEventListener('click', e =>{
         e.preventDefault()
+        let template = ''
+        let xhr = new XMLHttpRequest
+        xhr.open('POST', 'mod_repa/procesos/hojaRuta/visitas_list.php')
+        xhr.send(formData)
+        xhr.addEventListener('load', ()=> {
+            if (xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
 
+                respuesta.detalle.forEach(element => {
+                    let contador    = parseInt(element.contador)
+                    let total       = parseInt(respuesta.total.total)
+                    let porcentaje  = (contador * 100) / total
+                    cardTitleModal.innerHTML = `TOTAL DE PEDIDOS PENDIENTES: ${total}`
+                    template += `
+                        <div class="mb-3">
+                            <h6>${element.tecnico}</h6>
+                            <div class="progress progress-xl">
+                                <div class="progress-bar" role="progressbar" style="width: ${porcentaje}%;" aria-valuenow="${porcentaje}" aria-valuemin="0" aria-valuemax="100">${element.contador}</div>
+                            </div>
+                        </div>
+                    `
+                });
+                detalleTecnicosModal.innerHTML = template
+            }
+        })
+        $('#modal').show()
+    })
+
+    btnEnviarHR.addEventListener('click', e => {
+        e.preventDefault()
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_repa/procesos/hojaRuta/hojaRuta_send.php')
+        xhr.send()
+        xhr.addEventListener('load', ()=> {
+            if (xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+
+                
+            }
+        })
+    })
+
+    btnCerrarModal.addEventListener('click', e => {
+        e.preventDefault()
+        $('#modal').hide()
+    })
+
+    btnCloseModal.addEventListener('click', e => {
+        e.preventDefault()
+        $('#modal').hide()
     })
     
     //Funcionalidad del botón de Cancelar
