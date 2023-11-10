@@ -29,7 +29,7 @@
                         rep3_clientes.calle, 
                         rep3_clientes.nro_calle, 
                         rep3_clientes.dpto,
-                        rep3_clientes.email                                                     as mail,
+                        rep3_usuarios.email                                                     as mail,
                         rep3_localidades.provincia_id, 
                         rep3_localidades.descripcion                                            as localidad,
                         rep3_provincias.descripcion                                             as provincia,
@@ -40,31 +40,33 @@
                     INNER JOIN
                         rep3_clientes
                     ON
-                        rep3_reparaciones.cliente_id = rep3_clientes.cliente_id
+                        rep3_reparaciones.cliente_id            = rep3_clientes.cliente_id
                     INNER JOIN
                         rep3_localidades
                     ON
-                        rep3_clientes.localidad_id = rep3_localidades.localidad_id
+                        rep3_clientes.localidad_id              = rep3_localidades.localidad_id
                     INNER JOIN
                         rep3_provincias
                     ON
-                        rep3_localidades.provincia_id = rep3_provincias.provincia_id
+                        rep3_localidades.provincia_id           = rep3_provincias.provincia_id
                     INNER JOIN
                         rep3_productos
                     ON
-                        rep3_reparaciones.producto_id = rep3_productos.producto_id
+                        rep3_reparaciones.producto_id           = rep3_productos.producto_id
                     LEFT JOIN
                         rep3_usuarios
                     ON
-                        rep3_reparaciones.tecnico_id = rep3_usuarios.usuario_id
+                        rep3_reparaciones.tecnico_id            = rep3_usuarios.usuario_id
                     WHERE 
-                        rep3_reparaciones.estado_id = '1'
+                        rep3_reparaciones.estado_id             = '1'
                     AND
-                        rep3_reparaciones.lugar_recepcion_id = '2'
+                        rep3_reparaciones.lugar_recepcion_id    = '2'
                     AND
-                        rep3_reparaciones.anulado <> 'S'
+                        rep3_reparaciones.anulado               <> 'S'
                     AND
-                        rep3_reparaciones.envio_mail = 'N'
+                        rep3_reparaciones.envio_mail            = 'N'
+                    AND
+                        rep3_reparaciones.hoja_ruta             = 'S'
                 ";
 
         $sentenciaSQL   = $conexion->prepare($query);
@@ -72,8 +74,8 @@
         $resultado      = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 
         $contadorFilas  = count($resultado);
-
         $arrayEnvios    = array();
+
         foreach ($resultado as $key => $value) {
 
             $count = 0;
@@ -93,14 +95,12 @@
 
         foreach ($arrayEnvios as $email => $agrupados) {
 
-            $codRazonSocialCliente = '';
-
             if(filter_var($email, FILTER_VALIDATE_EMAIL)){
                 $tabla = "
                     <table rules='all' style='border: 2px solid #000'; font-size: '11px;'>
                         <tr>
                             <th>Nro. de Orden</th>
-                            <th>Fecha Reparación</th>
+                            <th>Fecha Visita</th>
                             <th>Cliente</th>
                             <th>Calle</th>
                             <th>Nro</th>
@@ -113,6 +113,8 @@
                         </tr>
                 ";
                 foreach ($agrupados as $key => $value) {
+
+                    $razonSocialCliente = $value[2];
 
                     $tabla .=   "
                         <tr>
@@ -130,7 +132,14 @@
                         </tr>
                     ";
 
-                    $query99        =    " UPDATE rep3_reparaciones SET envio_mail = 'S' WHERE reparacion_id = {$value[0]} ";
+                    $query99= " UPDATE 
+                                    rep3_reparaciones 
+                                SET 
+                                    estado_id       = 2,
+                                    envio_mail      = 'S' 
+                                WHERE 
+                                    reparacion_id   = {$value[0]} 
+                            ";
                     $sentenciaSQL   = $conexion->prepare($query99);
                     $sentenciaSQL   ->execute();
                 }
@@ -139,15 +148,16 @@
                     </table>
                 ";
 
-                echo $tabla;
-                require('envioWorkflow.php');
+                //echo $tabla;
+                require('hojaRuta_send.php');
             }
         }
+
         $arrayRespuesta['respuesta']        = 'Ok';
         $arrayRespuesta['cantRegistros']    = $contadorFilas;
         $arrayRespuesta['mailOk']           = $countEnvioOk;
         $arrayRespuesta['mailError']        = $countEnvioError;
 
         header("Content-type: aplication/json");
-        echo json_encode($arrayRespuesta/* , JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR */);
+        echo json_encode($arrayRespuesta);
     }

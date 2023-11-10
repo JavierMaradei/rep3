@@ -87,7 +87,7 @@
             "<'row'<'col-sm-12'tr>>" +
             "<'row'<'col-sm-6'i><'col-sm-6'p>>",
         buttons: [
-            {extend: 'excel', title: 'Lista de estantes', text: 'Exportar a Excel'},
+            {extend: 'excel', title: 'Hoja de ruta', text: 'Exportar a Excel'},
         ],
         language: {
             "decimal": "",
@@ -165,6 +165,8 @@
     btnPrefiltro.addEventListener('click', e =>{
         e.preventDefault()
         let template = ''
+        detalleTecnicosModal.innerHTML = ''
+        $('#btnEnviarHR').hide()
         let xhr = new XMLHttpRequest
         xhr.open('POST', 'mod_repa/procesos/hojaRuta/visitas_list.php')
         xhr.send(formData)
@@ -172,21 +174,25 @@
             if (xhr.status == 200){
                 let respuesta = JSON.parse(xhr.response)
 
-                respuesta.detalle.forEach(element => {
-                    let contador    = parseInt(element.contador)
-                    let total       = parseInt(respuesta.total.total)
-                    let porcentaje  = (contador * 100) / total
-                    cardTitleModal.innerHTML = `TOTAL DE PEDIDOS PENDIENTES: ${total}`
-                    template += `
-                        <div class="mb-3">
-                            <h6>${element.tecnico}</h6>
-                            <div class="progress progress-xl">
-                                <div class="progress-bar" role="progressbar" style="width: ${porcentaje}%;" aria-valuenow="${porcentaje}" aria-valuemin="0" aria-valuemax="100">${element.contador}</div>
+                cardTitleModal.innerHTML = `TOTAL DE PEDIDOS PENDIENTES PARA ENVIAR EN HOJA DE RUTA: ${respuesta.total.total}`
+
+                if(respuesta.total.total != '0'){
+                    $('#btnEnviarHR').show()
+                    respuesta.detalle.forEach(element => {
+                        let contador    = parseInt(element.contador)
+                        let total       = parseInt(respuesta.total.total)
+                        let porcentaje  = (contador * 100) / total
+                        template += `
+                            <div class="mb-3">
+                                <h6>${element.tecnico}</h6>
+                                <div class="progress progress-xl">
+                                    <div class="progress-bar" role="progressbar" style="width: ${porcentaje}%;" aria-valuenow="${porcentaje}" aria-valuemin="0" aria-valuemax="100">${element.contador}</div>
+                                </div>
                             </div>
-                        </div>
-                    `
-                });
-                detalleTecnicosModal.innerHTML = template
+                        `
+                    });
+                    detalleTecnicosModal.innerHTML = template
+                } 
             }
         })
         $('#modal').show()
@@ -194,16 +200,51 @@
 
     btnEnviarHR.addEventListener('click', e => {
         e.preventDefault()
-        let xhr = new XMLHttpRequest
-        xhr.open('GET', 'mod_repa/procesos/hojaRuta/workflowPorTecnico.php')
-        xhr.send()
-        xhr.addEventListener('load', ()=> {
-            if (xhr.status == 200){
-                let respuesta = JSON.parse(xhr.response)
+        swal({
+            title               : "Confirma la grabación?",
+            type                : "warning",
+            showCancelButton    : true,
+            confirmButtonColor  : "#DD6B55",
+            confirmButtonText   : "Si, confirmar!",
+            cancelButtonText    : "No, Cancelar!",
+            closeOnConfirm      : false,
+            closeOnCancel       : false
+            },
 
-                
+            function (isConfirm) {
+                if (isConfirm) {
+
+                    let btnAceptarSwal      = document.querySelector('.confirm')
+                    btnAceptarSwal.disabled = true
+
+                    let xhr = new XMLHttpRequest
+                    xhr.open('GET', 'mod_repa/procesos/hojaRuta/workflowPorTecnico.php')
+                    xhr.send()
+                    xhr.addEventListener('load', () => {
+                        if(xhr.status == 200){
+                            let respuesta = JSON.parse(xhr.response)
+                            btnAceptarSwal.disabled     = false
+                            if(respuesta.respuesta == 'Ok'){
+                                swal({
+                                    html    : true,
+                                    title: "Se ejecutó el proceso correctamente",
+                                    text: ` <b>Órdenes afectadas: ${respuesta.cantRegistros}</b><br>
+                                            <b>Correos enviados : ${respuesta.mailOk}</b><br>
+                                            <b>Correos NO enviados: ${respuesta.mailError}</b>`,
+                                    type: "success",
+                                });
+                                tabla.ajax.reload();
+                                $('#modal').hide()
+                            } else {
+                                msgAlgoNoFueBien()
+                            }
+                        }
+                    })
+                } else {
+                    swal('Cancelado!','El envío de workflow fue cancelado','warning')
+                }
             }
-        })
+        )
     })
 
     btnCerrarModal.addEventListener('click', e => {

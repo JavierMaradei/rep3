@@ -11,10 +11,12 @@
         exit();
     }
 
-    $orden      = $_GET['orden'];
-    $fdesde     = $_GET['fdesde'];
-    $fhasta     = $_GET['fhasta'];
-    $tecnico    = soyTecnico($_SESSION['usuario_id']);
+    $orden          = $_GET['orden'];
+    $fdesde         = $_GET['fdesde'];
+    $fhasta         = $_GET['fhasta'];
+    $tecnico        = soyTecnico($_SESSION['usuario_id']);
+    $perfilSirep    = recuperaPerfil($_SESSION['usuario_id']);
+    $sucursal       = recuperaSucursalUsuario($_SESSION['usuario_id']);
 
     //Creamos la conexión
     $conexion   = conectar(DB_DSN, DB_USER, DB_PASS);
@@ -79,9 +81,14 @@
         $query .= " AND rep3_reparaciones.frecepcion BETWEEN '{$fdesde}' AND '{$fhasta}'"; 
     } 
 
-    if($tecnico['tecnico'] == 'S') {
-        $query .= " AND rep3_reparaciones.tecnico_id = '{$tecnico['usuario_id']}'"; 
+    if($perfilSirep != 1){
+        if($tecnico['tecnico'] == 'S') {
+            $query .= " AND rep3_reparaciones.tecnico_id = '{$tecnico['usuario_id']}'"; 
+        } else {
+            $query .= " AND rep3_reparaciones.tecnico_id = '0' AND rep3_reparaciones.sucursal_id = {$sucursal} "; 
+        }
     }
+
 
     $sentenciaSQL= $conexion->prepare($query);
     $sentenciaSQL->execute();

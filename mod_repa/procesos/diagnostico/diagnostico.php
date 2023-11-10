@@ -1,21 +1,16 @@
 <div class="content__boxed bg-gray-500">
     <div class="content__wrap">
-        <div class="mb-3 mt-3 text-end">
-            <h2><i>Diagnóstico</i></h2>
-            <!-- User dropdown -->
-            <div class="dropdown">
-
-                <!-- Toggler -->
-                <!-- <button class="header__btn btn btn-icon btn-sm" type="button" data-bs-toggle="dropdown" aria-label="User dropdown" aria-expanded="false">
-                    <i class="demo-psi-male"></i>
-                </button> -->
-
-                <button class="header__btn btn btn-icon btn-sm" type="button" id="btnPrefiltro">
-                    <i class="fa fa-search fa-2x"></i>
-                </button>
+        <div class="mb-3 mt-3">
+            <div class="row">
+                <div class="dropdown col-md-4">
+                    <button class="btn btn-warning btn-sm" type="button" id="btnPrefiltro">
+                        <i class="fa fa-search"> Prefiltro</i>
+                    </button>
+                </div>
+                <div class="col-md-8 text-end">
+                    <h2><i>Diagnóstico</i></h2>
+                </div>
             </div>
-            <!-- End - User dropdown -->
-
         </div>
     </div>
 </div>

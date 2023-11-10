@@ -20,6 +20,8 @@
                     WHERE 
                         rep3_reparaciones.estado_id = '1'
                     AND
+                        rep3_reparaciones.hoja_ruta = 'S'
+                    AND
                         rep3_reparaciones.lugar_recepcion_id = '2'
                     AND
                         rep3_reparaciones.anulado <> 'S'

@@ -17,7 +17,7 @@
 
                             <button class="nav-link"  id="solapaFichaTecnica" data-bs-toggle="tab" data-bs-target="#nav-ficha" type="button" role="tab" aria-controls="nav-reports" aria-selected="false">
                                 <i class="d-block demo-pli-wrench fs-3 mb-2"></i>
-                                <span>Ficha</span>
+                                <span>Despiece</span>
                             </button>
 
                             <button id="cerrarSidebar" class="nav-link" data-bs-toggle="tab" data-bs-target="#nav-cerrar" type="button" role="tab" aria-controls="nav-settings" aria-selected="false">

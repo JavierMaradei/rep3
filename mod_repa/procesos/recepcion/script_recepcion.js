@@ -238,7 +238,14 @@
 
     cargaSucursales(sucursalRecepcion).then(() => {
         cargaLugaresRecepcion(lugarRecepcion).then(() => {
-            recuperaDatosPerfil()
+            recuperaDatosPerfil().then((r) =>{
+                if(r.lugarRecepcionUsuarios == '2'){
+                    arrayVal.provincia.required     = true                   
+                    arrayVal.localidad.required     = true                   
+                    arrayVal.calle.required         = true                       
+                    arrayVal.numeroCalle.required   = true   
+                } 
+            })
         })
     })
     cargaTecnicos(tecnico)
@@ -549,14 +556,23 @@
     lugarRecepcion.addEventListener('change', e => {
         e.preventDefault()
         if(lugarRecepcion.value == '2'){
-            tecnico.disabled            = false
-            arrayVal.tecnico.required   = false
-            arrayVal.tecnico.noCero     = false
+            tecnico.disabled                = false
+            arrayVal.tecnico.required       = false
+            arrayVal.tecnico.noCero         = false
+            arrayVal.provincia.required     = true                   
+            arrayVal.localidad.required     = true                   
+            arrayVal.calle.required         = true                       
+            arrayVal.numeroCalle.required   = true                 
+    
         } else {
-            tecnico.disabled            = true
-            tecnico.value               = '0'
-            arrayVal.tecnico.required   = false
-            arrayVal.tecnico.noCero     = false
+            tecnico.disabled                = true
+            tecnico.value                   = '0'
+            arrayVal.tecnico.required       = false
+            arrayVal.tecnico.noCero         = false
+            arrayVal.provincia.required     = false                   
+            arrayVal.localidad.required     = false                   
+            arrayVal.calle.required         = false                       
+            arrayVal.numeroCalle.required   = false   
         } 
     })
 

@@ -565,7 +565,7 @@ function datosFichaSolapa1(numero){
                     respuesta.fembalaje     == '1900-01-01 00:00:00' ? $('#fechaEmbalajeFicha').val('')     : $('#fechaEmbalajeFicha').val(respuesta.fechaEmbalajeFinal);
                     respuesta.fresolucion   == '1900-01-01 00:00:00' ? $('#fechaCierreFicha').val('')       : $('#fechaCierreFicha').val(respuesta.fechaResolucionFinal);
                     $('#clienteIdFicha').val(respuesta.cliente_id);
-                    $('#clienteDireccionFicha').val(respuesta.cliente_direccion);
+                    $('#clienteDireccionFicha').val('');
                     $('#clienteApellidoFicha').val(respuesta.cliente_apellido);
                     $('#clienteNombreFicha').val(respuesta.cliente_nombre);
                     $('#clienteTelCelFicha').val(respuesta.cliente_telefono+' - '+respuesta.cliente_celular);
@@ -2456,6 +2456,24 @@ function listaLocalidades(campo, idProvincia, activo = 'N') {
                     template +=`<option value='${element.GRUPO_ID}'>${element.DESCRIPCION}</option>`
                 });
                 campo.innerHTML = template
+            }
+        })
+    })
+}
+
+/**
+ * Trae el despiece según el id del producto
+ * @param {string} productoId
+ */
+function despiece(productoId){
+    return new Promise(function(resolve, reject) {
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_repa/tablas/productos/productos_single.php?id='+productoId)
+        xhr.send()
+        xhr.addEventListener('load', () => {
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+                resolve(respuesta)
             }
         })
     })
