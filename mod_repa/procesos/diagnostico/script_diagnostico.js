@@ -94,6 +94,8 @@
         let navDatos                    = document.querySelector('#nav-datos')
         let navFicha                    = document.querySelector('#nav-ficha')
         let navCerrar                   = document.querySelector('#nav-cerrar')
+        let bodySolapa2                 = document.querySelector('#bodySolapa2')
+        let productoImagenDespiece      = document.querySelector('#productoImagenDespiece')
 
         /*FALTANTES -> Adjuntos
                     -> Check retiro de equipos
@@ -128,8 +130,6 @@
         cerrarSidebar.addEventListener('click', e => {
             e.preventDefault()
             sideBar.classList.remove("sb--show")
-            
-
         })
 
         $('#divDatosCliente').hide()
@@ -158,7 +158,49 @@
                                                     cargaReparadoresActivos(reparadorFichaDiagnostico).then(() => {
                                                         datosFichaSolapa1(e.target.innerText).then((respuestaSolapa1) =>{ 
                                                             despiece(respuestaSolapa1.producto_id).then((respuestaDespiece) =>{
-                                                                console.log(respuestaDespiece)                                                              
+                                                                //console.log(respuestaDespiece)
+                                                                if(respuestaDespiece[0].productoImagenDespiece != ''){
+                                                                    productoImagenDespiece.src = `mod_repa/tablas/productos/adjuntos/${respuestaDespiece[0].productoImagenDespiece}`
+                                                                } else {
+                                                                    productoImagenDespiece.src = '../../hdn/img/sinImagen.png'
+                                                                }
+
+                                                                let template = ''
+                                                                if(respuestaDespiece[0].despiece.length > 0){
+                                                                    respuestaDespiece[0].despiece.forEach(element => {
+                                                                        template += `
+                                                                            <tr>
+                                                                                <td>${element.referencia}</td>
+                                                                                <td>${element.codigo}</td>
+                                                                                <td>${element.descripcion}</td>
+                                                                                <td>${element.costo}</td>
+                                                                                <td><input type="text" class="cantDiagnostico" value="0"></input></td>
+                                                                                <td class="subtotal">0</td>
+                                                                            </tr>
+                                                                        ` 
+                                                                    });
+                                                                    template += `
+                                                                    <tr>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td><b>Total:</b></td>
+                                                                        <td><b id="valorTotal">0</b></td>
+                                                                    </tr>`
+                                                                    bodySolapa2.innerHTML = template
+    
+                                                                    let cantDiagnostico = document.querySelectorAll(".cantDiagnostico")
+                                                                    cantDiagnostico.forEach(element => {
+                                                                        soloNumeros(element)
+                                                                    });
+                                                                } else {
+                                                                    template += `
+                                                                    <tr class="text-center">
+                                                                        <td colspan="6">El equipo no posee despiece. El mismo debe realizarse desde Tablas->Despieces</td>
+                                                                    </tr>`
+                                                                    bodySolapa2.innerHTML = template
+                                                                }
                                                             })
                                                         })   
                                                     })                                              
@@ -173,7 +215,6 @@
                 })
             })
         })    
-
 
         sideBar.classList.add("sb--show")
 
@@ -231,6 +272,55 @@
     }
 
     accionesPrefiltro()
+    
+    $(document).on('keyup', '.cantDiagnostico', (e) => {
+        e.preventDefault()
+        let cantidad = e.target.value
+        let td = e.target.parentNode.parentNode
+        let linea = td.querySelector("td:nth-of-type(4)").innerText
+        td.querySelector("td:nth-of-type(6)").innerText = linea * cantidad
+        let valorTotal = document.querySelector('#valorTotal')
 
+        let contadorTotal = 0
+        let subtotales = document.querySelectorAll('.subtotal')
+        subtotales.forEach(element => {
+            contadorTotal = contadorTotal + parseInt(element.innerText)
+        });
+        valorTotal.innerText = "$"+contadorTotal
+    })
+
+    setTimeout(() => {
+        let btnGrabar           = document.querySelector('#btnEnviarFicha')
+        btnGrabar.addEventListener('click', e => {
+            e.preventDefault()
+            let validateDatosTabla = true
+            let tablaDiagnostico = document.querySelectorAll('#bodySolapa2 tr')
+            tablaDiagnostico.forEach(element, index => {
+                console.log(element)
+/*                 let codigo      = element.querySelector("td:nth-of-type(2)").innerText
+                let cantidad    = element.querySelector("td:nth-of-type(5)")
+                cantidad        = cantidad.querySelector("input").value
+
+                if(cantidad == ''){
+                    validateDatosTabla = false
+                }
+
+                arrayTabla[index] = {
+                    'codigo'    : codigo,
+                    'cantidad'  : cantidad
+                } */
+            });
+
+            /* let datosTabla = JSON.stringify(arrayTabla)
+
+            if(validateDatosTabla) {
+                //envia data al back
+                console.log(datosTabla)
+            } else {
+                alert("Atención!, debe seleccionar alguna pieza")
+            } */
+
+        })
+    }, 500);
 
 })()

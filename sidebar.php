@@ -40,6 +40,7 @@
                     <!-- FICHA TECNICA tab content -->
                     <div id="nav-ficha" class="tab-pane fade py-4" role="tabpanel" aria-labelledby="nav-reports-tab">
                         <!-- Include a ficha según service técnico o taller -->
+                        <?php include 'mod_repa/fichas/fichaSolapa2.php';?>
                     </div>
                     <!-- End - FICHA TECNICA tab content -->
 

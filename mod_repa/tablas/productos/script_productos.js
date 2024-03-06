@@ -144,26 +144,26 @@
                                                 <th style="color: white">Precio</th>
                                             </tr>
                                         </thead>
+                                        <tbody>
                             `
                         respuesta[0].despiece.forEach(element => {
                         template += `
-                                        <tbody>
                                             <tr>
                                                 <td>${element.referencia}</td>
                                                 <td>${element.codigo}</td>
                                                 <td>${element.descripcion}</td>
                                                 <td>${element.costo}</td>
                                             </tr>
-                                        </tbody>
                         `
                         });        
                             `
+                                        </tbody>
                                     </table>
                                 </div>
                             `
                 }  
-        $('#bodyDespiece').html(template)
 
+                $('#bodyDespiece').html(template)
             }
         })
 
