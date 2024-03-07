@@ -96,7 +96,10 @@
         let navCerrar                   = document.querySelector('#nav-cerrar')
         let bodySolapa2                 = document.querySelector('#bodySolapa2')
         let productoImagenDespiece      = document.querySelector('#productoImagenDespiece')
+        let totalTabla                  = document.querySelector('#totalTabla')
 
+        totalTabla.innerText            = "Total: $0"
+        
         /*FALTANTES -> Adjuntos
                     -> Check retiro de equipos
                     -> Scroll top
@@ -179,15 +182,7 @@
                                                                             </tr>
                                                                         ` 
                                                                     });
-                                                                    template += `
-                                                                    <tr>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td><b>Total:</b></td>
-                                                                        <td><b id="valorTotal">0</b></td>
-                                                                    </tr>`
+
                                                                     bodySolapa2.innerHTML = template
     
                                                                     let cantDiagnostico = document.querySelectorAll(".cantDiagnostico")
@@ -200,6 +195,8 @@
                                                                         <td colspan="6">El equipo no posee despiece. El mismo debe realizarse desde Tablas->Despieces</td>
                                                                     </tr>`
                                                                     bodySolapa2.innerHTML = template
+
+                                                                    totalTabla.innerText = ""
                                                                 }
                                                             })
                                                         })   
@@ -275,50 +272,55 @@
     
     $(document).on('keyup', '.cantDiagnostico', (e) => {
         e.preventDefault()
-        let cantidad = e.target.value
-        let td = e.target.parentNode.parentNode
-        let linea = td.querySelector("td:nth-of-type(4)").innerText
+        let cantidad    = e.target.value
+        let td          = e.target.parentNode.parentNode
+        let linea       = td.querySelector("td:nth-of-type(4)").innerText
         td.querySelector("td:nth-of-type(6)").innerText = linea * cantidad
-        let valorTotal = document.querySelector('#valorTotal')
 
         let contadorTotal = 0
         let subtotales = document.querySelectorAll('.subtotal')
         subtotales.forEach(element => {
             contadorTotal = contadorTotal + parseInt(element.innerText)
         });
-        valorTotal.innerText = "$"+contadorTotal
+        totalTabla.innerText = "Total: $"+contadorTotal
     })
 
     setTimeout(() => {
         let btnGrabar           = document.querySelector('#btnEnviarFicha')
         btnGrabar.addEventListener('click', e => {
             e.preventDefault()
-            let validateDatosTabla = true
-            let tablaDiagnostico = document.querySelectorAll('#bodySolapa2 tr')
-            tablaDiagnostico.forEach(element, index => {
-                console.log(element)
-/*                 let codigo      = element.querySelector("td:nth-of-type(2)").innerText
+            let validateDatosTabla  = true
+            let tablaDiagnostico    = document.querySelectorAll('#bodySolapa2 tr')
+            let arrayTabla          = {}
+
+            tablaDiagnostico.forEach( (element, index) => {
+                let codigo      = element.querySelector("td:nth-of-type(2)").innerText
                 let cantidad    = element.querySelector("td:nth-of-type(5)")
                 cantidad        = cantidad.querySelector("input").value
 
-                if(cantidad == ''){
+                console.log(cantidad)
+
+                if(cantidad == '' || cantidad == 0){
                     validateDatosTabla = false
                 }
 
                 arrayTabla[index] = {
-                    'codigo'    : codigo,
-                    'cantidad'  : cantidad
-                } */
+                    'codigo'        : codigo,
+                    'cantidad'      : cantidad,
+                    'validacion'    : validateDatosTabla
+                } 
             });
 
-            /* let datosTabla = JSON.stringify(arrayTabla)
+            //OJO que la última línea de td tiene el código vacío. Validar en backend
 
+            let datosTabla = JSON.stringify(arrayTabla)
+            
             if(validateDatosTabla) {
                 //envia data al back
-                console.log(datosTabla)
+                //console.log(datosTabla)
             } else {
                 alert("Atención!, debe seleccionar alguna pieza")
-            } */
+            }
 
         })
     }, 500);

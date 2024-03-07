@@ -1,4 +1,4 @@
-<div id="bodyDespiece" style="overflow-x: auto;">
+<div id="bodyDespiece" style="overflow-x: auto;" class="p-3">
     <div class="col-sm-12 text-center dataBasica" style="margin-bottom: 20px;">
         <img id="productoImagenDespiece" alt="Despiece Producto" class="imagen-escalada" style="max-width: 50%">
     </div>
@@ -17,5 +17,8 @@
             <tbody id="bodySolapa2">
             </tbody>
         </table>
+    </div>
+    <div class="col-sm-12 text-end">
+        <h3 id="totalTabla"></h3>
     </div>
 </div>
