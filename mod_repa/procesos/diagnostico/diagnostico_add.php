@@ -4,6 +4,9 @@
     include_once('../../../includes/funciones.php');
     include_once('../../../includes/config.php');
 
+    var_dump($_POST);
+    exit();
+
     $arrayRespuesta     = array();
     $array              = array();
     $usuarioId          = recuperaIdUsuario($_SESSION['usuario_id']);

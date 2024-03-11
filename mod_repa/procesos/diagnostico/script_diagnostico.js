@@ -1,6 +1,8 @@
 (function iniciaDiagnostico() {
     let formData            = new FormData()
     let sideBar             = document.querySelector('#root')
+    let id                  = ''
+    let tipoIngreso         = ''
     let arrayVal            = {
 
     }
@@ -76,6 +78,7 @@
     //Tomo el link de la tabla con el ID del registro
     $(document).on('click', '.reparacion-item', (e) => {
         e.preventDefault()
+        id                              = e.target.innerText
         let lugarRecepcionFicha         = document.querySelector('#lugarRecepcionFicha')
         let sucursalRecepcionFicha      = document.querySelector('#sucursalRecepcionFicha')
         let tecnicoFicha                = document.querySelector('#tecnicoFicha')
@@ -88,6 +91,7 @@
         let reparadorFicha              = document.querySelector('#reparadorFicha')
         let embaladorFicha              = document.querySelector('#embaladorFicha')
         let reparadorFichaDiagnostico   = document.querySelector('#reparadorFichaDiagnostico')
+        let cajonFichaDiagnostico       = document.querySelector('#cajonFichaDiagnostico')
         let cerrarSidebar               = document.querySelector('#cerrarSidebar')
         let solapaDatosFicha            = document.querySelector('#solapaDatosFicha')
         let solapaFichaTecnica          = document.querySelector('#solapaFichaTecnica')
@@ -160,8 +164,9 @@
                                                 cargaEmbaladores(embaladorFicha).then(() => {
                                                     cargaReparadoresActivos(reparadorFichaDiagnostico).then(() => {
                                                         datosFichaSolapa1(e.target.innerText).then((respuestaSolapa1) =>{ 
+                                                            tipoIngreso = respuestaSolapa1.tipo_ingreso
                                                             despiece(respuestaSolapa1.producto_id).then((respuestaDespiece) =>{
-                                                                //console.log(respuestaDespiece)
+                                                                console.log(respuestaSolapa1)
                                                                 if(respuestaDespiece[0].productoImagenDespiece != ''){
                                                                     productoImagenDespiece.src = `mod_repa/tablas/productos/adjuntos/${respuestaDespiece[0].productoImagenDespiece}`
                                                                 } else {
@@ -289,7 +294,7 @@
         let btnGrabar           = document.querySelector('#btnEnviarFicha')
         btnGrabar.addEventListener('click', e => {
             e.preventDefault()
-            let validateDatosTabla  = true
+            let validateDatosTabla  = false
             let tablaDiagnostico    = document.querySelectorAll('#bodySolapa2 tr')
             let arrayTabla          = {}
 
@@ -298,26 +303,38 @@
                 let cantidad    = element.querySelector("td:nth-of-type(5)")
                 cantidad        = cantidad.querySelector("input").value
 
-                console.log(cantidad)
-
-                if(cantidad == '' || cantidad == 0){
-                    validateDatosTabla = false
+                if(cantidad != 0){
+                    validateDatosTabla = true
+                    arrayTabla[index] = {
+                        'codigo'        : codigo,
+                        'cantidad'      : cantidad
+                    }
                 }
-
-                arrayTabla[index] = {
-                    'codigo'        : codigo,
-                    'cantidad'      : cantidad,
-                    'validacion'    : validateDatosTabla
-                } 
             });
 
-            //OJO que la última línea de td tiene el código vacío. Validar en backend
-
             let datosTabla = JSON.stringify(arrayTabla)
-            
             if(validateDatosTabla) {
+                formData.append('data', datosTabla)
+                formData.append('orden', id)
+                formData.append('tipoIngreso', tipoIngreso)
+                formData.append('reparador', reparadorFichaDiagnostico.value)
+                formData.append('cajon', cajonFichaDiagnostico.value)
+
                 //envia data al back
-                //console.log(datosTabla)
+                let xhr = new XMLHttpRequest
+                xhr.open('POST', 'mod_repa/procesos/diagnostico/diagnostico_add.php')
+                xhr.send(formData)
+                xhr.addEventListener('load', () => {
+                    if(xhr.status == 200){
+                        let respuesta = JSON.parse(xhr.response)
+                        console.log(respuesta)
+                        formData.delete('data')
+                        formData.delete('orden')
+                        formData.delete('tipoIngreso')
+                        formData.delete('reparador')
+                        formData.delete('cajon')
+                    }
+                })
             } else {
                 alert("Atención!, debe seleccionar alguna pieza")
             }
