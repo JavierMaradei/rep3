@@ -220,3 +220,18 @@
 		$sucUsuario		= $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
         return $sucUsuario['sucursal_id'];
 	}
+
+    /**
+     * Retorna el id de pieza
+     * @param {string} $codigo
+     * @return {string}
+     * @version 1.0
+     */
+    function recuperaIdPieza($codigo){
+        $conexion       = conectar(DB_DSN, DB_USER, DB_PASS);
+        $query0         = "SELECT pieza_id FROM rep3_piezas WHERE codigo = '{$codigo}'";
+        $sentenciaSQL   = $conexion->prepare($query0);
+        $respuesta0     = $sentenciaSQL->execute();
+        $respuesta0     = $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
+        return $respuesta0['pieza_id'];
+    }

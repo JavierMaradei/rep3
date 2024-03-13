@@ -3,6 +3,7 @@
     let sideBar             = document.querySelector('#root')
     let id                  = ''
     let tipoIngreso         = ''
+    let equipoConDespiece   = false
     let arrayVal            = {
 
     }
@@ -101,7 +102,8 @@
         let bodySolapa2                 = document.querySelector('#bodySolapa2')
         let productoImagenDespiece      = document.querySelector('#productoImagenDespiece')
         let totalTabla                  = document.querySelector('#totalTabla')
-
+        reparadorFichaDiagnostico.value = ''   
+        cajonFichaDiagnostico.value     = '' 
         totalTabla.innerText            = "Total: $0"
         
         /*FALTANTES -> Adjuntos
@@ -166,7 +168,6 @@
                                                         datosFichaSolapa1(e.target.innerText).then((respuestaSolapa1) =>{ 
                                                             tipoIngreso = respuestaSolapa1.tipo_ingreso
                                                             despiece(respuestaSolapa1.producto_id).then((respuestaDespiece) =>{
-                                                                console.log(respuestaSolapa1)
                                                                 if(respuestaDespiece[0].productoImagenDespiece != ''){
                                                                     productoImagenDespiece.src = `mod_repa/tablas/productos/adjuntos/${respuestaDespiece[0].productoImagenDespiece}`
                                                                 } else {
@@ -175,6 +176,7 @@
 
                                                                 let template = ''
                                                                 if(respuestaDespiece[0].despiece.length > 0){
+                                                                    equipoConDespiece = true
                                                                     respuestaDespiece[0].despiece.forEach(element => {
                                                                         template += `
                                                                             <tr>
@@ -298,47 +300,73 @@
             let tablaDiagnostico    = document.querySelectorAll('#bodySolapa2 tr')
             let arrayTabla          = {}
 
-            tablaDiagnostico.forEach( (element, index) => {
-                let codigo      = element.querySelector("td:nth-of-type(2)").innerText
-                let cantidad    = element.querySelector("td:nth-of-type(5)")
-                cantidad        = cantidad.querySelector("input").value
-
-                if(cantidad != 0){
-                    validateDatosTabla = true
-                    arrayTabla[index] = {
-                        'codigo'        : codigo,
-                        'cantidad'      : cantidad
+            if(equipoConDespiece){
+                if(cajonFichaDiagnostico.value != '' && reparadorFichaDiagnostico.value != ''){
+                    tablaDiagnostico.forEach( (element, index) => {
+                        let codigo      = element.querySelector("td:nth-of-type(2)").innerText
+                        let cantidad    = element.querySelector("td:nth-of-type(5)")
+                        cantidad        = cantidad.querySelector("input").value
+        
+                        if(cantidad != 0){
+                            validateDatosTabla = true
+                            arrayTabla[index] = {
+                                'codigo'        : codigo,
+                                'cantidad'      : cantidad
+                            }
+                        }
+                    });
+        
+                    let datosTabla = JSON.stringify(arrayTabla)
+                    if(validateDatosTabla) {
+                        formData.append('data', datosTabla)
+                        formData.append('orden', id)
+                        formData.append('tipoIngreso', tipoIngreso)
+                        formData.append('reparador', reparadorFichaDiagnostico.value)
+                        formData.append('cajon', cajonFichaDiagnostico.value)
+        
+                        //envia data al back
+                        let xhr = new XMLHttpRequest
+                        xhr.open('POST', 'mod_repa/procesos/diagnostico/diagnostico_add.php')
+                        xhr.send(formData)
+                        xhr.addEventListener('load', () => {
+                            if(xhr.status == 200){
+                                let respuesta = JSON.parse(xhr.response)
+                                formData.delete('data')
+                                formData.delete('orden')
+                                formData.delete('tipoIngreso')
+                                formData.delete('reparador')
+                                formData.delete('cajon')
+        
+                                switch (respuesta.estado) {
+                                    case 'Ok':
+                                        msgTransaccionExitosa()
+                                        sideBar.classList.remove("sb--show")
+                                        tabla.ajax.reload()
+                                        reparadorFichaDiagnostico.value = ''   
+                                        cajonFichaDiagnostico.value     = ''  
+                                        equipoConDespiece               = false   
+                                        break;
+                                    case 'Sesión expirada':
+                                        sesionExpiradaMensajeFlotante()
+                                        break;
+                                    case 'Error perfil':
+                                        msgErrorPerfil()
+                                        break;                        
+                                    default:
+                                        msgAlgoNoFueBien()
+                                        break;
+                                }
+                            }
+                        })
+                    } else {
+                        swal('Atención', 'Debe seleccionar alguna pieza', 'warning')
                     }
+                } else {
+                    swal('Atención', 'Ingrese reparador y nro de cajón', 'warning')
                 }
-            });
-
-            let datosTabla = JSON.stringify(arrayTabla)
-            if(validateDatosTabla) {
-                formData.append('data', datosTabla)
-                formData.append('orden', id)
-                formData.append('tipoIngreso', tipoIngreso)
-                formData.append('reparador', reparadorFichaDiagnostico.value)
-                formData.append('cajon', cajonFichaDiagnostico.value)
-
-                //envia data al back
-                let xhr = new XMLHttpRequest
-                xhr.open('POST', 'mod_repa/procesos/diagnostico/diagnostico_add.php')
-                xhr.send(formData)
-                xhr.addEventListener('load', () => {
-                    if(xhr.status == 200){
-                        let respuesta = JSON.parse(xhr.response)
-                        console.log(respuesta)
-                        formData.delete('data')
-                        formData.delete('orden')
-                        formData.delete('tipoIngreso')
-                        formData.delete('reparador')
-                        formData.delete('cajon')
-                    }
-                })
             } else {
-                alert("Atención!, debe seleccionar alguna pieza")
+                swal('Atención', 'El equipo seleccionado no posee despiece', 'warning') 
             }
-
         })
     }, 500);
 
