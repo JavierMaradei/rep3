@@ -82,13 +82,28 @@
      */
     function tiposReparacion(){
         $template = '
-            <option value="R" selected>Reparación</option>
+            <option value="R">Reparación</option>
             <option value="P">Presupuesto</option>
             <option value="C">Plan canje</option>
-            <option value="E">Cambio de equipo</option>
         ';
         return $template;
 	}
+        
+    /**
+     * Template de los tipos de reparación en la recepción de productos
+     * @return {string}
+     * @version 1.0
+     */
+    function tiposReparacionFicha(){
+        $template = '
+            <option value="R">Reparación</option>
+            <option value="P">Presupuesto</option>
+            <option value="C">Plan canje</option>
+            <option value="S">Sin reparar</option>
+        ';
+        return $template;
+	}
+
 
     /**
      * Template de los tipos de reparación en la recepción de productos

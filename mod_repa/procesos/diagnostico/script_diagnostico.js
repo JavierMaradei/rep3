@@ -1,11 +1,10 @@
-(function iniciaDiagnostico() {
+(() => {
     let formData            = new FormData()
     let sideBar             = document.querySelector('#root')
     let id                  = ''
     let tipoIngreso         = ''
     let equipoConDespiece   = false
     let arrayVal            = {
-
     }
 
     //Declaración del complemento DataTable
@@ -25,7 +24,7 @@
         "columns": [  
             {"data" : "reparacion_id",
                 "render": function ( data, type, row, meta ) {
-                    return '<a class="reparacion-item" href="'+data+'">' + data + '</a>';
+                    return '<a class="diagnostico-item" href="'+data+'">' + data + '</a>';
                 }, 
             },
             {"data" : "frecepcion"},
@@ -77,7 +76,7 @@
     })
 
     //Tomo el link de la tabla con el ID del registro
-    $(document).on('click', '.reparacion-item', (e) => {
+    $(document).on('click', '.diagnostico-item', (e) => {
         e.preventDefault()
         id                              = e.target.innerText
         let lugarRecepcionFicha         = document.querySelector('#lugarRecepcionFicha')
@@ -102,9 +101,15 @@
         let bodySolapa2                 = document.querySelector('#bodySolapa2')
         let productoImagenDespiece      = document.querySelector('#productoImagenDespiece')
         let totalTabla                  = document.querySelector('#totalTabla')
+        let btnCancelarFicha            = document.querySelector('#btnCancelarFicha')
         reparadorFichaDiagnostico.value = ''   
         cajonFichaDiagnostico.value     = '' 
         totalTabla.innerText            = "Total: $0"
+
+        btnCancelarFicha.addEventListener('click', e =>{
+            e.preventDefault()
+            limpieza()
+        })
         
         /*FALTANTES -> Adjuntos
                     -> Check retiro de equipos
@@ -224,6 +229,14 @@
 
     })
 
+    function limpieza(){
+        sideBar.classList.remove("sb--show")
+        tabla.ajax.reload()
+        reparadorFichaDiagnostico.value = ''   
+        cajonFichaDiagnostico.value     = ''  
+        equipoConDespiece               = false   
+    }
+
     function accionesPrefiltro(){
         let btnPrefiltro            = document.querySelector('#btnPrefiltro')
         let formPrefiltro           = document.querySelector('#formPrefiltro')
@@ -340,11 +353,8 @@
                                 switch (respuesta.estado) {
                                     case 'Ok':
                                         msgTransaccionExitosa()
-                                        sideBar.classList.remove("sb--show")
                                         tabla.ajax.reload()
-                                        reparadorFichaDiagnostico.value = ''   
-                                        cajonFichaDiagnostico.value     = ''  
-                                        equipoConDespiece               = false   
+                                        limpieza() 
                                         break;
                                     case 'Sesión expirada':
                                         sesionExpiradaMensajeFlotante()

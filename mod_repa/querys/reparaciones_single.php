@@ -37,6 +37,7 @@
                         rep3_reparaciones.fresolucion,
                         date_format(rep3_reparaciones.fresolucion, '%d/%m/%Y  %T hs') as fechaResolucionFinal,
                         rep3_reparaciones.reparacion_detalle,
+                        rep3_reparaciones.numero_presupuesto,
                         rep3_reparaciones.anulado,
                         rep3_reparaciones.fanulado,
                         rep3_reparaciones.cajon,

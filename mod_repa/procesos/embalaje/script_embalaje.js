@@ -1,17 +1,18 @@
 (() =>{
-    let formData                = new FormData()
-    let sideBar                 = document.querySelector('#root')
-    let chkTodasLasReparaciones = document.querySelector('#chkTodasLasReparaciones')
-    let chkTodasLasSucursales   = document.querySelector('#chkTodasLasSucursales')
-    let filtro                  = [chkTodasLasReparaciones, chkTodasLasSucursales]
-    let arrayVal                = {
+    let formData                    = new FormData()
+    let sideBar                     = document.querySelector('#root')
+    let chkTodasLasSucursales       = document.querySelector('#chkTodasLasSucursales')
+    let estanteFichaEmbalaje        = ''
+    let observacionesFichaEmbalaje  = ''
+    let filtro                      = [chkTodasLasSucursales]
+    let arrayVal                    = {
 
     }
 
     //Declaración del complemento DataTable
-    let tabla = $('#tabla_reparaciones').DataTable( {
+    let tabla = $('#tabla_embalajes').DataTable( {
         "ajax": {
-            url: 'mod_repa/procesos/reparacion/reparaciones_search.php',
+            url: 'mod_repa/procesos/embalaje/embalaje_search.php',
             type: 'GET',
             dataSrc: "",
             //Envío de parámetros Ajax datatable.
@@ -19,7 +20,6 @@
                 d.orden                     = filtroOrden.value;
                 d.fdesde                    = filtroDesde.value;
                 d.fhasta                    = filtroHasta.value;
-                d.ordenesTotalesReparadores = chkTodasLasReparaciones.checked;
                 d.ordenesTotalesSucursales  = chkTodasLasSucursales.checked;
             }
         },
@@ -27,7 +27,7 @@
         "columns": [  
             {"data" : "reparacion_id",
                 "render": function ( data, type, row, meta ) {
-                    return '<a class="reparacion-item" href="'+data+'">' + data + '</a>';
+                    return '<a class="embalaje-item" href="'+data+'">' + data + '</a>';
                 }, 
             },
             {"data" : "frecepcion"},
@@ -50,8 +50,8 @@
         buttons: [
             {extend: 'copy'},
             {extend: 'csv'},
-            {extend: 'excel', title: 'Lista de reparaciones'},
-            {extend: 'pdf', title: 'Lista de reparaciones'},
+            {extend: 'excel', title: 'Lista de embalajes'},
+            {extend: 'pdf', title: 'Lista de embalajes'},
             {extend: 'print',}
         ],
         "bLengthChange": false,
@@ -86,7 +86,7 @@
     });
 
     //Tomo el link de la tabla con el ID del registro
-    $(document).on('click', '.reparacion-item', (e) => {
+    $(document).on('click', '.embalaje-item', (e) => {
         e.preventDefault()
         id                              = e.target.innerText
         let lugarRecepcionFicha         = document.querySelector('#lugarRecepcionFicha')
@@ -102,7 +102,6 @@
         let reparadorFicha              = document.querySelector('#reparadorFicha')
         let embaladorFicha              = document.querySelector('#embaladorFicha')
         let reparadorFichaDiagnostico   = document.querySelector('#reparadorFichaDiagnostico')
-        let cajonFichaDiagnostico       = document.querySelector('#cajonFichaDiagnostico')
         let cerrarSidebar               = document.querySelector('#cerrarSidebar')
         let solapaDatosFicha            = document.querySelector('#solapaDatosFicha')
         let solapaFichaTecnica          = document.querySelector('#solapaFichaTecnica')
@@ -112,8 +111,8 @@
         let bodySolapa2                 = document.querySelector('#bodySolapa2')
         let productoImagenDespiece      = document.querySelector('#productoImagenDespiece')
         let btnCancelarFicha            = document.querySelector('#btnCancelarFicha')
-        reparadorFichaDiagnostico.value = ''   
-        cajonFichaDiagnostico.value     = '' 
+        estanteFichaEmbalaje            = document.querySelector('#estanteFichaEmbalaje')
+        observacionesFichaEmbalaje      = document.querySelector('#observacionesFichaEmbalaje')
 
         btnCancelarFicha.addEventListener('click', e =>{
             e.preventDefault()
@@ -161,7 +160,7 @@
         $('#divDatosRemito').hide()
         $('#divDatosResolucion').hide()
         $('#divEstadoOrden').hide()
-        $('#divMonitorEmbalaje').hide()
+        $('#divDatosPresupuesto').hide()
         $('#divMonitorResolucion').hide()
         $('#divMonitorDiagnostico').hide()
         $('#divMonitorPresupuesto').hide()
@@ -170,65 +169,71 @@
         $('#totalTabla').hide()
         
         //console.log(e.target.innerText)
-
-        cargaLugaresRecepcion(lugarRecepcionFicha).then(() => {
-            cargaSucursales(sucursalRecepcionFicha).then(() => {
-                cargaTecnicosFicha(tecnicoFicha).then(() => {
-                    cargaEmisores(presupuestadorFicha).then(() => {
-                        cargaEmisores(emisorFicha).then(() => {
-                            cargaFamilias(familiaProductoFicha).then(() => {
-                                cargaMarcas(marcaProductoFicha).then(() => {
-                                    estadosDeReparacion(estadoFicha).then(() => {
-                                        estanteList(estanteFicha).then(() => {
-                                            cargaDiagnosticadores(diagnosticadorFicha).then(() => {
-                                                cargaReparadores(reparadorFicha).then(() => {
-                                                    cargaEmbaladores(embaladorFicha).then(() => {
-                                                        cargaReparadoresActivos(reparadorFichaDiagnostico).then(() => {
-                                                            datosFichaSolapa1(e.target.innerText).then((respuestaSolapa1) =>{ 
-                                                                tipoIngreso = respuestaSolapa1.tipo_ingreso
-                                                                despieceDiagnostico(id, respuestaSolapa1.producto_id).then((respuestaDespieceDiagnostico) =>{
-                                                                    if(respuestaDespieceDiagnostico.productoImagenDespiece != ''){
-                                                                        productoImagenDespiece.src = `mod_repa/tablas/productos/adjuntos/${respuestaDespieceDiagnostico.productoImagenDespiece}`
-                                                                    } else {
-                                                                        productoImagenDespiece.src = '../../hdn/img/sinImagen.png'
-                                                                    }
-    
-                                                                    let template = ''
-                                                                    if(respuestaDespieceDiagnostico.despiece.length > 0){
-                                                                        respuestaDespieceDiagnostico.despiece.forEach(element => {
-                                                                            template += `
-                                                                                <tr>
-                                                                                    <td>${element.referencia}</td>
-                                                                                    <td>${element.codigo}</td>
-                                                                                    <td>${element.descripcion}</td>
-                                                                                    <td>${element.cantidad}</td>
-                                                                                    <td></td>
-                                                                                    <td></td>
-                                                                                </tr>
-                                                                            ` 
-                                                                        });
-    
-                                                                        bodySolapa2.innerHTML = template
-                                                                    } 
-                                                                })                                                          
-                                                            })   
-                                                        })                                              
+        estanteList(estanteFichaEmbalaje).then(() =>{
+            cargaLugaresRecepcion(lugarRecepcionFicha).then(() => {
+                cargaSucursales(sucursalRecepcionFicha).then(() => {
+                    cargaTecnicosFicha(tecnicoFicha).then(() => {
+                        cargaEmisores(presupuestadorFicha).then(() => {
+                            cargaEmisores(emisorFicha).then(() => {
+                                cargaFamilias(familiaProductoFicha).then(() => {
+                                    cargaMarcas(marcaProductoFicha).then(() => {
+                                        estadosDeReparacion(estadoFicha).then(() => {
+                                            estanteList(estanteFicha).then(() => {
+                                                cargaDiagnosticadores(diagnosticadorFicha).then(() => {
+                                                    cargaReparadores(reparadorFicha).then(() => {
+                                                        cargaEmbaladores(embaladorFicha).then(() => {
+                                                            cargaReparadoresActivos(reparadorFichaDiagnostico).then(() => {
+                                                                datosFichaSolapa1(e.target.innerText).then((respuestaSolapa1) =>{ 
+                                                                    despieceDiagnostico(id, respuestaSolapa1.producto_id).then((respuestaDespieceDiagnostico) =>{
+                                                                        if(respuestaDespieceDiagnostico.productoImagenDespiece != ''){
+                                                                            productoImagenDespiece.src = `mod_repa/tablas/productos/adjuntos/${respuestaDespieceDiagnostico.productoImagenDespiece}`
+                                                                        } else {
+                                                                            productoImagenDespiece.src = '../../hdn/img/sinImagen.png'
+                                                                        }
+        
+                                                                        let template = ''
+                                                                        if(respuestaDespieceDiagnostico.despiece.length > 0){
+                                                                            respuestaDespieceDiagnostico.despiece.forEach(element => {
+                                                                                template += `
+                                                                                    <tr>
+                                                                                        <td>${element.referencia}</td>
+                                                                                        <td>${element.codigo}</td>
+                                                                                        <td>${element.descripcion}</td>
+                                                                                        <td>${element.cantidad}</td>
+                                                                                        <td></td>
+                                                                                        <td></td>
+                                                                                    </tr>
+                                                                                ` 
+                                                                            });
+        
+                                                                            bodySolapa2.innerHTML = template
+                                                                        } 
+                                                                    })                                                          
+                                                                })   
+                                                            })                                              
+                                                        }) 
                                                     }) 
-                                                }) 
-                                            })  
+                                                })  
+                                            }) 
                                         }) 
-                                    }) 
+                                    })
                                 })
                             })
                         })
                     })
                 })
-            })
-        })    
+            })    
+        })
 
         sideBar.classList.add("sb--show")
 
     })
+
+    function limpieza(){
+        sideBar.classList.remove("sb--show")
+        estanteFichaEmbalaje        = ''
+        observacionesFichaEmbalaje  = ''
+    }
 
     function accionesPrefiltro(){
         let btnPrefiltro            = document.querySelector('#btnPrefiltro')
@@ -287,58 +292,46 @@
         let btnGrabar           = document.querySelector('#btnEnviarFicha')
         btnGrabar.addEventListener('click', e => {
             e.preventDefault()
-            swal({
-                title               : "Confirma la grabación?",
-                type                : "warning",
-                showCancelButton    : true,
-                confirmButtonColor  : "#DD6B55",
-                confirmButtonText   : "Si, confirmar!",
-                cancelButtonText    : "No, Cancelar!",
-                closeOnConfirm      : true,
-                closeOnCancel       : true
-                },
 
-                function (isConfirm) {
-                    if (isConfirm) {
-                        let btnAceptarSwal          = document.querySelector('.confirm')
-                        btnAceptarSwal.disabled     = true
-                        btnGrabar.disabled          = true
-                        formData.append('orden', id)
-        
-                        //envia data al back
-                        let xhr = new XMLHttpRequest
-                        xhr.open('POST', 'mod_repa/procesos/reparacion/reparacion_edit.php')
-                        xhr.send(formData)
-                        xhr.addEventListener('load', () => {
-                            if(xhr.status == 200){
-                                let respuesta = JSON.parse(xhr.response)
-                                btnAceptarSwal.disabled     = false
-                                btnGrabar.disabled          = false        
-                                formData.delete('orden')
-        
-                                switch (respuesta.estado) {
-                                    case 'ok':
-                                        setTimeout(() => {
-                                            msgTransaccionExitosa()
-                                        }, 500);
-                                        sideBar.classList.remove("sb--show")
-                                        tabla.ajax.reload()
-                                        break;
-                                    case 'Sesión expirada':
-                                        sesionExpiradaMensajeFlotante()
-                                        break;
-                                    case 'Error perfil':
-                                        msgErrorPerfil()
-                                        break;                        
-                                    default:
-                                        msgAlgoNoFueBien()
-                                        break;
-                                }
-                            }
-                        })
+            if(estanteFichaEmbalaje.value != ''){
+                formData.append('orden', id)
+                formData.append('estanteFichaEmbalaje', estanteFichaEmbalaje.value)
+                formData.append('observacionesFichaEmbalaje', observacionesFichaEmbalaje.value)
+
+                //envia data al back
+                let xhr = new XMLHttpRequest
+                xhr.open('POST', 'mod_repa/procesos/embalaje/embalaje_edit.php')
+                xhr.send(formData)
+                xhr.addEventListener('load', () => {
+                    if(xhr.status == 200){
+                        let respuesta = JSON.parse(xhr.response)
+                        formData.delete('orden')
+                        formData.delete('estanteFichaEmbalaje')
+                        formData.delete('observacionesFichaEmbalaje')
+
+                        switch (respuesta.estado) {
+                            case 'ok':
+                                msgTransaccionExitosa()
+                                tabla.ajax.reload()
+                                limpieza() 
+                                break;
+                            case 'Sesión expirada':
+                                sesionExpiradaMensajeFlotante()
+                                break;
+                            case 'Error perfil':
+                                msgErrorPerfil()
+                                break;                        
+                            default:
+                                msgAlgoNoFueBien()
+                                break;
+                        }
                     }
-                }
-            )
+                })
+                
+            } else {
+                swal('Atención', 'Debe seleccionar un estante', 'warning')
+            }
         })
     }, 500);
+
 })()

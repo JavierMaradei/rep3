@@ -1,4 +1,4 @@
-(function iniciarRecepcion(){
+(() =>{
     let formulario                  = document.querySelector('#formRecepcion')//Captura del formulario
     let inputs                      = formulario.querySelectorAll('input,textarea,select')//Captura los inputs del formulario
     let formData                    = new FormData() //Creo el formData para transferencia de información con el Backend
@@ -115,7 +115,7 @@
         cleanInputs(inputs)
         inputsClienteEstado('inactivos')
         nuevoCliente            = false
-        tipoReparacion.value    = 'R'
+        tipoReparacion.value    = 'P'
         atencion.value          = '1'
         fechaRecepcion.value    = hoy
         fechaReparacion.value   = hoy
@@ -235,6 +235,7 @@
     limitaCaracteres(observacionesProducto, 500)
     limitaCaracteres(costoProducto, 15)
     limitaCaracteres(codigoProdCanje, CODIGO_LENGTH)
+    tipoReparacion.value = 'P'
 
     cargaSucursales(sucursalRecepcion).then(() => {
         cargaLugaresRecepcion(lugarRecepcion).then(() => {

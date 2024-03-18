@@ -71,13 +71,13 @@
                                         <a href="?page=mod_repa/procesos/diagnostico/diagnostico" class="nav-link active">Diagnóstico</a>
                                     </li>
                                     <li class="nav-item">
+                                        <a href="?page=mod_repa/procesos/presupuesto/presupuesto" class="nav-link active">Presupuesto</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a href="?page=mod_repa/procesos/reparacion/reparacion" class="nav-link active">Reparación</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="?page=mod_repa/procesos/embalaje/embalaje" class="nav-link active">Embalaje</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="?page=mod_repa/procesos/presupuesto/presupuesto" class="nav-link active">Presupuesto</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="?page=mod_repa/procesos/resolucion/resolucion" class="nav-link active">Resolución</a>

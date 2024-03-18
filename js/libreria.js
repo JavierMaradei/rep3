@@ -590,7 +590,17 @@ function datosFichaSolapa1(numero){
                     $('#codigoProductoCanje').val(respuesta.embalador_id);
                     $('#descripcionProductoCanje').val(respuesta.embalador_id);
                     $('#remitoResolucionFicha').val(respuesta.remito_despacho);
-
+                    $('#tipoFichaPresupuesto').val(respuesta.tipo_ingreso);
+                    $('#atencionFichaPresupuesto').val(respuesta.tipo_atencion);
+                    $('#cargoFichaPresupuesto').val(respuesta.forma_retiro_id);
+                    $('#cargoFichaResolucion').val(respuesta.forma_retiro_id);
+                    $('#numeroFichaPresupuesto').val(respuesta.numero_presupuesto);
+                    $('#observacionesFichaPresupuesto').val(respuesta.observaciones);
+                    $('#presupuestadorFicha').val(respuesta.presupuestador_id);
+                    $('#fechaPresupuestoFicha').val(respuesta.fechaPresupuestoFinal);
+                    $('#numeroPresupuestoFicha').val(respuesta.numero_presupuesto);
+                    $('#cajonPresupuestoFicha').val(respuesta.cajon);
+                    $('#costoFichaResolucion').val(respuesta.costo);
 
                     //console.log(respuesta)
                 }
@@ -843,6 +853,32 @@ function cargaZonasDespacho(select){
                     template += `<option value= "${element.impresora_id}">${element.nombreImpresora}</option>`
                 })
                 select.innerHTML = template
+            } else {
+                reject()
+            }
+        })
+    })
+}
+
+/**
+ * Carga el select de impresoras. Admite un solo parámetro con el cual se define el input en donde se cargará
+ * @param {string} campo
+ * @param {string} activo
+ */
+function cargaFormasDeRetiro(campo, activo = 'N'){
+    return new Promise(function(resolve, reject) {
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_repa/tablas/formasRetiro/formasRetiro_list.php?activo='+activo)
+        xhr.send()
+        xhr.addEventListener('load', () => {
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+                resolve(respuesta)
+                let template = '<option value= "0" selected>S/D</option>'
+                respuesta.forEach(element => {
+                    template += `<option value= "${element.forma_retiro_id}">${element.descripcion}</option>`
+                })
+                campo.innerHTML = template
             } else {
                 reject()
             }
@@ -2042,7 +2078,7 @@ function cargaFormasDeResolucionOSCA(select){
             if(xhr.status == 200){
                 let respuesta = JSON.parse(xhr.response)
                 resolve(respuesta)
-                let template = '<option value= "0">Seleccionar</option>'
+                let template = '<option value= "0">S/D</option>'
                 respuesta.forEach(element => {
                     template += `<option value= "${element.usuario_id}">${element.apellido}, ${element.nombre}</option>`
                 })
@@ -2331,7 +2367,7 @@ function estanteList(campo) {
             if(xhr.status == 200){
                 let respuesta = JSON.parse(xhr.response)
                 resolve(respuesta)
-                let template = '<option value="0"></option>'
+                let template = '<option value="">Seleccionar</option>'
                 respuesta.forEach(element => {
                     template +=`<option value='${element.estante_id}'>${element.descripcion}</option>`
                 });
@@ -2469,6 +2505,24 @@ function despiece(productoId){
     return new Promise(function(resolve, reject) {
         let xhr = new XMLHttpRequest
         xhr.open('GET', 'mod_repa/tablas/productos/productos_single.php?id='+productoId)
+        xhr.send()
+        xhr.addEventListener('load', () => {
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+                resolve(respuesta)
+            }
+        })
+    })
+}
+
+/**
+ * Trae el despiece según el id del producto
+ * @param {string} productoId
+ */
+function despieceDiagnostico(orden, producto){
+    return new Promise(function(resolve, reject) {
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_repa/querys/despieceDiagnostico_single.php?orden='+orden+'&producto='+producto)
         xhr.send()
         xhr.addEventListener('load', () => {
             if(xhr.status == 200){

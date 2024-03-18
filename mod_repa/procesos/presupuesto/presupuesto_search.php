@@ -70,13 +70,11 @@
                     ON
                         rep3_reparaciones.sucursal_id           = rep3_sucursales.sucursal_id
                     WHERE
-                        rep3_reparaciones.estado_id             = 4
+                        rep3_reparaciones.estado_id             = 3
                     AND
                         rep3_reparaciones.anulado               <> 'S'
                     AND
                         rep3_reparaciones.finalizado            <> 'S'
-                    AND
-                        rep3_reparaciones.armado                = 'N'
                 "; 
     if(!empty($orden)){
         $query .= " AND rep3_reparaciones.reparacion_id = '{$orden}'"; 
@@ -85,10 +83,6 @@
     if(!empty($fdesde) && !empty($fhasta)){
         $query .= " AND rep3_reparaciones.frecepcion BETWEEN '{$fdesde}' AND '{$fhasta}'"; 
     } 
-
-    if($ordenesTotalesReparadores == 'false') {
-        $query .= " AND rep3_reparaciones.reparador_id = '{$usuarioId}'"; 
-    }
 
     if($ordenesTotalesSucursales == 'false') {
         $query .= " AND rep3_reparaciones.sucursal_id = '{$sucursalId}'"; 

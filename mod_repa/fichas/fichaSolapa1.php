@@ -18,6 +18,10 @@
                         <select id="sucursalRecepcionFicha" class="form-select" disabled></select>
                     </div>
                     <div class="col-sm-6 mb-2">
+                        <label for="tipoReparacionFicha" class="form-label">Tipo de ingreso</label>
+                        <select id="tipoReparacionFicha" class="form-select" disabled><?php echo tiposReparacion(); ?></select>
+                    </div>
+                    <div class="col-sm-6 mb-2">
                         <label for="tecnicoFicha" class="form-label">Técnico Domicilio asignado</label>
                         <select id="tecnicoFicha" class="form-select" disabled></select>
                     </div>
@@ -103,10 +107,6 @@
             <h4 class="card-header bg-danger text-white text-center"><i>Datos de Recepción</i></h4>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-sm-6 mb-2">
-                        <label for="tipoReparacionFicha" class="form-label">Tipo de ingreso</label>
-                        <select id="tipoReparacionFicha" class="form-select" disabled><?php echo tiposReparacion(); ?></select>
-                    </div>
                     <div class="col-sm-6 mb-2">
                         <label for="atencionFicha" class="form-label">Atención</label>
                         <select id="atencionFicha" class="form-select" disabled><?php echo tiposAtencion(); ?></select>
@@ -299,11 +299,11 @@
                 <div class="row">
                     <div class="col-sm-12 mb-2">
                         <label for="tipoFichaPresupuesto" class="form-label">Tipo</label>
-                        <select class="form-select" id="tipoFichaPresupuesto"></select>
+                        <select class="form-select" id="tipoFichaPresupuesto"><?php echo tiposReparacionFicha(); ?></select>
                     </div>
                     <div class="col-sm-12 mb-2">
                         <label for="atencionFichaPresupuesto" class="form-label">Atención</label>
-                        <select class="form-select" id="atencionFichaPresupuesto"></select>
+                        <select class="form-select" id="atencionFichaPresupuesto"><?php echo tiposAtencion(); ?></select>
                     </div>
                     <div class="col-sm-12 mb-2">
                         <label for="numeroFichaPresupuesto" class="form-label">Número de Presupuesto</label>
@@ -321,6 +321,20 @@
                         <label for="observacionesFichaPresupuesto" class="form-label">Observaciones</label>
                         <textarea class="form-control" id="observacionesFichaPresupuesto" cols="30" rows="4"></textarea>
                     </div>
+                    <div id="divPlanCanjePresupuesto" style="display: none;">
+                        <h4 class="text-center pt-3"><i>Producto destino Canje</i></h4>
+                        <div class="col-sm-12 mb-2">
+                            <label for="codigoProductoCanjePresupuesto" class="form-label">Código</label>
+                            <input type="text" class="form-control" id="codigoProductoCanjePresupuesto"> 
+                        </div>
+                        <div class="col-sm-12 mb-2">
+                            <label for="descripcionProductoCanjePresupuesto" class="form-label">Descripción</label>
+                            <div class="input-group">
+                                <input type="text" id="descripcionProductoCanjePresupuesto" class="form-control" readonly>
+                                <button class="btn btn-outline-secondary" type="button" id="buscarProductoCanjePresupuesto">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -332,15 +346,11 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12 mb-2">
-                        <label for="estadoFichaEmbalaje" class="form-label">Estado</label>
-                        <select class="form-select" id="estadoFichaEmbalaje"></select>
-                    </div>
-                    <div class="col-sm-12 mb-2">
                         <label for="estanteFichaEmbalaje" class="form-label">Estante</label>
                         <select class="form-select" id="estanteFichaEmbalaje"></select>
                     </div>
                     <div class="col-sm-12 mb-2">
-                        <label for="observacionesFichaEmbalaje" class="form-label">Observaciones</label>
+                        <label for="observacionesFichaEmbalaje" class="form-label">Reparación Detalle</label>
                         <textarea class="form-control" id="observacionesFichaEmbalaje" cols="30" rows="4"></textarea>
                     </div>
                 </div>
@@ -365,9 +375,19 @@
                         <label for="numeroRemitoFicha" class="form-label">Remito</label>
                         <input type="text" id="numeroRemitoFicha" class="form-control">
                     </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="fechaRemitoFichaResolucion" class="form-label">Fecha</label>
-                        <input type="text" id="fechaRemitoFichaResolucion" class="form-control">
+                    <div id="divPlanCanjeResolucion" style="display: none;">
+                        <h4 class="text-center pt-3"><i>Producto destino Canje</i></h4>
+                        <div class="col-sm-12 mb-2">
+                            <label for="codigoProductoCanjeResolucion" class="form-label">Código</label>
+                            <input type="text" class="form-control" id="codigoProductoCanjeResolucion"> 
+                        </div>
+                        <div class="col-sm-12 mb-2">
+                            <label for="descripcionProductoCanjeResolucion" class="form-label">Descripción</label>
+                            <div class="input-group">
+                                <input type="text" id="descripcionProductoCanjeResolucion" class="form-control" readonly>
+                                <button class="btn btn-outline-secondary" type="button" id="buscarProductoCanjeResolucion">Buscar</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

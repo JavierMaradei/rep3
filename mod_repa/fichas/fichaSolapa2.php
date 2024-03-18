@@ -9,9 +9,9 @@
                     <th style="color: white">Referencia</th>
                     <th style="color: white">Código</th>
                     <th style="color: white">Descripción</th>
-                    <th style="color: white">Precio</th>
+                    <th id="precioDespiece" style="color: white">Precio</th>
                     <th style="color: white">Cantidad</th>
-                    <th style="color: white">SubTotal</th>
+                    <th id="subTotalDespiece" style="color: white">SubTotal</th>
                 </tr>
             </thead>        
             <tbody id="bodySolapa2">
