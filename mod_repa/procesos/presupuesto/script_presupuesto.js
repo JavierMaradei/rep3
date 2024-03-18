@@ -1,16 +1,13 @@
 (() =>{
-    let formData                        = new FormData()
-    let sideBar                         = document.querySelector('#root')
-    let chkTodasLasReparaciones         = document.querySelector('#chkTodasLasReparaciones')
-    let chkTodasLasSucursales           = document.querySelector('#chkTodasLasSucursales')
-    let tipoFichaPresupuesto            = ''
-    let atencionFichaPresupuesto        = ''
-    let numeroFichaPresupuesto          = ''
-    let cargoFichaPresupuesto           = ''
-    let costoFichaPresupuesto           = ''
-    let observacionesFichaPresupuesto   = ''
-
+    let formData                = new FormData()
+    let sideBar                 = document.querySelector('#root')
+    let chkTodasLasSucursales   = document.querySelector('#chkTodasLasSucursales')
     let filtro                  = [chkTodasLasSucursales]
+    let id                      = ''
+    let modal                   = document.querySelector('#modal')
+    let modalBody               = document.querySelector('#body')
+    let modalTitulo             = document.querySelector('#titulo')
+    let producto                = ''
 
     //Declaración del complemento DataTable
     let tabla = $('#tabla_presupuesto').DataTable( {
@@ -88,214 +85,18 @@
         })
     });
 
-    //Tomo el link de la tabla con el ID del registro
-    $(document).on('click', '.presupuesto-item', (e) => {
-        e.preventDefault()
-        tipoFichaPresupuesto.value          = ''
-        atencionFichaPresupuesto.value      = ''
-        numeroFichaPresupuesto.value        = ''
-        cargoFichaPresupuesto.value         = ''
-        costoFichaPresupuesto.value         = ''
-        observacionesFichaPresupuesto.value = ''
-        id                                  = e.target.innerText
-        let lugarRecepcionFicha             = document.querySelector('#lugarRecepcionFicha')
-        let sucursalRecepcionFicha          = document.querySelector('#sucursalRecepcionFicha')
-        let tecnicoFicha                    = document.querySelector('#tecnicoFicha')
-        let emisorFicha                     = document.querySelector('#emisorFicha')
-        let familiaProductoFicha            = document.querySelector('#familiaProductoFicha')
-        let marcaProductoFicha              = document.querySelector('#marcaProductoFicha')
-        let estadoFicha                     = document.querySelector('#estadoFicha')
-        let estanteFicha                    = document.querySelector('#estanteFicha')
-        let diagnosticadorFicha             = document.querySelector('#diagnosticadorFicha')
-        let reparadorFicha                  = document.querySelector('#reparadorFicha')
-        let embaladorFicha                  = document.querySelector('#embaladorFicha')
-        let reparadorFichaDiagnostico       = document.querySelector('#reparadorFichaDiagnostico')
-        let cajonFichaDiagnostico           = document.querySelector('#cajonFichaDiagnostico')
-        let cerrarSidebar                   = document.querySelector('#cerrarSidebar')
-        let solapaDatosFicha                = document.querySelector('#solapaDatosFicha')
-        let solapaFichaTecnica              = document.querySelector('#solapaFichaTecnica')
-        let navDatos                        = document.querySelector('#nav-datos')
-        let navFicha                        = document.querySelector('#nav-ficha')
-        let navCerrar                       = document.querySelector('#nav-cerrar')
-        let bodySolapa2                     = document.querySelector('#bodySolapa2')
-        let productoImagenDespiece          = document.querySelector('#productoImagenDespiece')
-        let totalTabla                      = document.querySelector('#totalTabla')
-        let btnCancelarFicha                = document.querySelector('#btnCancelarFicha')
-        tipoFichaPresupuesto                = document.querySelector('#tipoFichaPresupuesto')
-        atencionFichaPresupuesto            = document.querySelector('#atencionFichaPresupuesto')
-        numeroFichaPresupuesto              = document.querySelector('#numeroFichaPresupuesto')
-        cargoFichaPresupuesto               = document.querySelector('#cargoFichaPresupuesto')
-        costoFichaPresupuesto               = document.querySelector('#costoFichaPresupuesto')
-        observacionesFichaPresupuesto       = document.querySelector('#observacionesFichaPresupuesto')
-        reparadorFichaDiagnostico.value     = ''   
-        cajonFichaDiagnostico.value         = '' 
-        totalTabla.innerText                = "Total: $0"
-
-        btnCancelarFicha.addEventListener('click', e =>{
-            e.preventDefault()
-            sideBar.classList.remove("sb--show")
-        })
-        
-        /*FALTANTES -> Adjuntos
-                    -> Check retiro de equipos
-                    -> Scroll top
-                    -> Hacer arrayVal
-        */
-
-/*         solapaDatosFicha.scrollTo({
-            top: 1,
-            left: 1,
-            behavior: 'smooth'
-            }); */
-        
-        navCerrar.classList.remove("active")
-        navCerrar.classList.remove("show")
-
-        navFicha.classList.remove("active")
-        navFicha.classList.remove("show")
-
-        navDatos.classList.add("active")
-        navDatos.classList.add("show")
-
-        cerrarSidebar.classList.remove("active")
-        cerrarSidebar.ariaSelected = "false"
-
-        solapaFichaTecnica.classList.remove("active")
-        solapaFichaTecnica.ariaSelected = "false"
-
-        solapaDatosFicha.classList.add("active")
-        solapaDatosFicha.ariaSelected = "true"
-
-        cerrarSidebar.addEventListener('click', e => {
-            e.preventDefault()
-            sideBar.classList.remove("sb--show")
-        })
-
-        $('#divDatosCliente').hide()
-        $('#divDatosRecepcion').hide()
-        $('#divDatosCanje').hide()
-        $('#divDatosRemito').hide()
-        $('#divDatosResolucion').hide()
-        $('#divDatosPresupuesto').hide()
-        $('#divMonitorEmbalaje').hide()
-        $('#divMonitorResolucion').hide()
-        $('#divMonitorDiagnostico').hide()
-        $('#divEstadoOrden').hide()
-        
-        //console.log(e.target.innerText)
-        cargaFormasDeRetiro(cargoFichaPresupuesto, 'S').then(() =>{
-            cargaLugaresRecepcion(lugarRecepcionFicha).then(() => {
-                cargaSucursales(sucursalRecepcionFicha).then(() => {
-                    cargaTecnicosFicha(tecnicoFicha).then(() => {
-                        cargaEmisores(emisorFicha).then(() => {
-                            cargaFamilias(familiaProductoFicha).then(() => {
-                                cargaMarcas(marcaProductoFicha).then(() => {
-                                    estadosDeReparacion(estadoFicha).then(() => {
-                                        estanteList(estanteFicha).then(() => {
-                                            cargaDiagnosticadores(diagnosticadorFicha).then(() => {
-                                                cargaReparadores(reparadorFicha).then(() => {
-                                                    cargaEmbaladores(embaladorFicha).then(() => {
-                                                        cargaReparadoresActivos(reparadorFichaDiagnostico).then(() => {
-                                                            datosFichaSolapa1(e.target.innerText).then((respuestaSolapa1) =>{ 
-                                                        
-                                                                despieceDiagnostico(id, respuestaSolapa1.producto_id).then((respuestaDespieceDiagnostico) =>{
-                                                                    if(respuestaDespieceDiagnostico.productoImagenDespiece != ''){
-                                                                        productoImagenDespiece.src = `mod_repa/tablas/productos/adjuntos/${respuestaDespieceDiagnostico.productoImagenDespiece}`
-                                                                    } else {
-                                                                        productoImagenDespiece.src = '../../hdn/img/sinImagen.png'
-                                                                    }
-
-                                                                    let template    = ''
-                                                                    let Subtotal    = 0
-                                                            
-                                                                    if(respuestaDespieceDiagnostico.despiece.length > 0){
-                                                                        respuestaDespieceDiagnostico.despiece.forEach(element => {
-                                                                            Subtotal  = (element.cantidad * element.costo);
-                                                                            template += `
-                                                                                <tr>
-                                                                                    <td>${element.referencia}</td>
-                                                                                    <td>${element.codigo}</td>
-                                                                                    <td>${element.descripcion}</td>
-                                                                                    <td>${element.costo}</td>
-                                                                                    <td>${element.cantidad}</td>
-                                                                                    <td class="subtotal">${Subtotal}</td>
-                                                                                </tr>
-                                                                            ` 
-                                                                        });
-
-                                                                        bodySolapa2.innerHTML = template
-                                                                    } 
-
-                                                                    let total       = 0
-                                                                    let subtotales  = document.querySelectorAll('.subtotal')
-                                                                    subtotales.forEach(element => {
-                                                                        total = total + parseInt(element.innerText)
-                                                                    });
-                                                                    totalTabla.innerText = "Total: $"+total
-                                                                    if(respuestaSolapa1.costo == '1.00'){
-                                                                        costoFichaPresupuesto.value = total
-                                                                    } else {
-                                                                        costoFichaPresupuesto.value = respuestaSolapa1.costo
-                                                                    }
-
-                                                                    tipoFichaPresupuesto.addEventListener('change', e =>{
-                                                                        e.preventDefault()
-                                                                        switch (e.target.value) {
-                                                                            case 'S':
-                                                                                cargoFichaPresupuesto.disabled  = true
-                                                                                costoFichaPresupuesto.disabled  = true
-                                                                                cargoFichaPresupuesto.value     = '2'
-                                                                                costoFichaPresupuesto.value     = '0'
-                                                                                $('#divPlanCanjePresupuesto').hide()
-                                                                                break;
-                                                                            case 'C':
-                                                                                cargoFichaPresupuesto.disabled  = true
-                                                                                costoFichaPresupuesto.disabled  = false
-                                                                                cargoFichaPresupuesto.value     = '1'
-                                                                                $('#divPlanCanjePresupuesto').show()
-                                                                                break;
-                                                                            default:
-                                                                                $('#divPlanCanjePresupuesto').hide()
-                                                                                cargoFichaPresupuesto.disabled  = false
-                                                                                costoFichaPresupuesto.disabled  = false 
-                                                                                cargoFichaPresupuesto.value     = respuestaSolapa1.forma_retiro_id
-                                                                                if(respuestaSolapa1.costo == '1.00'){
-                                                                                    costoFichaPresupuesto.value = total
-                                                                                } else {
-                                                                                    costoFichaPresupuesto.value = respuestaSolapa1.costo
-                                                                                }
-                                                                                break;
-                                                                        }
-                                                                    })    
-                                                                })                                                          
-                                                            })   
-                                                        })                                              
-                                                    }) 
-                                                }) 
-                                            })  
-                                        }) 
-                                    }) 
-                                })
-                            })
-                        })
-                    })
-                })
-            }) 
-        })
-   
-        sideBar.classList.add("sb--show")
-
-    })
-
-
     function limpieza(){
-        sideBar.classList.remove("sb--show")
-        tipoFichaPresupuesto.value          = ''
-        atencionFichaPresupuesto.value      = ''
-        numeroFichaPresupuesto.value        = ''
-        cargoFichaPresupuesto.value         = ''
-        costoFichaPresupuesto.value         = ''
-        observacionesFichaPresupuesto.value = ''
+        id                                          = ''
+        producto                                    = ''
+        tipoFichaPresupuesto.value                  = ''
+        atencionFichaPresupuesto.value              = ''
+        numeroFichaPresupuesto.value                = ''
+        cargoFichaPresupuesto.value                 = ''
+        costoFichaPresupuesto.value                 = ''
+        observacionesFichaPresupuesto.value         = ''
+        codigoProductoCanjePresupuesto.value        = ''
+        descripcionProductoCanjePresupuesto.value   = ''
+        $('#divPlanCanjePresupuesto').hide()
     }
 
     function accionesPrefiltro(){
@@ -352,19 +153,50 @@
     accionesPrefiltro()
 
     setTimeout(() => {
-        let btnGrabar           = document.querySelector('#btnEnviarFicha')
-        btnGrabar.addEventListener('click', e => {
-            e.preventDefault()
+        let btnGrabar                       = document.querySelector('#btnEnviarFicha')
+        let btnCancelarFicha                = document.querySelector('#btnCancelarFicha')
+        let codigoProductoCanjePresupuesto  = document.querySelector('#codigoProductoCanjePresupuesto')
+        let descripcionProductoCanjePresupuesto = document.querySelector('#descripcionProductoCanjePresupuesto')
+        let lugarRecepcionFicha             = document.querySelector('#lugarRecepcionFicha')
+        let sucursalRecepcionFicha          = document.querySelector('#sucursalRecepcionFicha')
+        let tecnicoFicha                    = document.querySelector('#tecnicoFicha')
+        let emisorFicha                     = document.querySelector('#emisorFicha')
+        let familiaProductoFicha            = document.querySelector('#familiaProductoFicha')
+        let marcaProductoFicha              = document.querySelector('#marcaProductoFicha')
+        let estadoFicha                     = document.querySelector('#estadoFicha')
+        let estanteFicha                    = document.querySelector('#estanteFicha')
+        let diagnosticadorFicha             = document.querySelector('#diagnosticadorFicha')
+        let reparadorFicha                  = document.querySelector('#reparadorFicha')
+        let embaladorFicha                  = document.querySelector('#embaladorFicha')
+        let reparadorFichaDiagnostico       = document.querySelector('#reparadorFichaDiagnostico')
+        let cerrarSidebar                   = document.querySelector('#cerrarSidebar')
+        let solapaDatosFicha                = document.querySelector('#solapaDatosFicha')
+        let solapaFichaTecnica              = document.querySelector('#solapaFichaTecnica')
+        let navDatos                        = document.querySelector('#nav-datos')
+        let navFicha                        = document.querySelector('#nav-ficha')
+        let navCerrar                       = document.querySelector('#nav-cerrar')
+        let bodySolapa2                     = document.querySelector('#bodySolapa2')
+        let productoImagenDespiece          = document.querySelector('#productoImagenDespiece')
+        let totalTabla                      = document.querySelector('#totalTabla')
+        let tipoFichaPresupuesto            = document.querySelector('#tipoFichaPresupuesto')
+        let atencionFichaPresupuesto        = document.querySelector('#atencionFichaPresupuesto')
+        let numeroFichaPresupuesto          = document.querySelector('#numeroFichaPresupuesto')
+        let cargoFichaPresupuesto           = document.querySelector('#cargoFichaPresupuesto')
+        let costoFichaPresupuesto           = document.querySelector('#costoFichaPresupuesto')
+        let observacionesFichaPresupuesto   = document.querySelector('#observacionesFichaPresupuesto')
+        let buscarProductoCanjePresupuesto  = document.querySelector('#buscarProductoCanjePresupuesto')
 
+        function grabarDatos(){
             if(cargoFichaPresupuesto.value != '0'){
                 formData.append('orden', id)
+                formData.append('producto', producto)
                 formData.append('tipoFichaPresupuesto', tipoFichaPresupuesto.value)
                 formData.append('atencionFichaPresupuesto', atencionFichaPresupuesto.value)
                 formData.append('numeroFichaPresupuesto', numeroFichaPresupuesto.value)
                 formData.append('cargoFichaPresupuesto', cargoFichaPresupuesto.value)
                 formData.append('costoFichaPresupuesto', costoFichaPresupuesto.value)
                 formData.append('observacionesFichaPresupuesto', observacionesFichaPresupuesto.value)
-
+                formData.append('codigoProductoCanjePresupuesto', codigoProductoCanjePresupuesto.value)
                 //envia data al back
                 let xhr = new XMLHttpRequest
                 xhr.open('POST', 'mod_repa/procesos/presupuesto/presupuesto_add.php')
@@ -373,18 +205,21 @@
                     if(xhr.status == 200){
                         let respuesta = JSON.parse(xhr.response)
                         formData.delete('orden')
+                        formData.delete('producto')
                         formData.delete('tipoFichaPresupuesto')
                         formData.delete('atencionFichaPresupuesto')
                         formData.delete('numeroFichaPresupuesto')
                         formData.delete('cargoFichaPresupuesto')
                         formData.delete('costoFichaPresupuesto')
                         formData.delete('observacionesFichaPresupuesto')
+                        formData.delete('codigoProductoCanjePresupuesto')
 
                         switch (respuesta.estado) {
                             case 'ok':
                                 msgTransaccionExitosa()
                                 tabla.ajax.reload()
                                 limpieza() 
+                                sideBar.classList.remove("sb--show")
                                 break;
                             case 'Sesión expirada':
                                 sesionExpiradaMensajeFlotante()
@@ -402,8 +237,203 @@
             } else {
                 swal('Atención', 'Debe seleccionar un cargo/forma', 'warning')
             }
-           
+        }
+
+        //Tomo el link de la tabla con el ID del registro
+        $(document).on('click', '.presupuesto-item', (e) => {
+            e.preventDefault()
+            limpieza()
+            id                      = e.target.innerText
+            totalTabla.innerText    = "Total: $0"
+
+            navCerrar.classList.remove("active")
+            navCerrar.classList.remove("show")
+
+            navFicha.classList.remove("active")
+            navFicha.classList.remove("show")
+
+            navDatos.classList.add("active")
+            navDatos.classList.add("show")
+
+            cerrarSidebar.classList.remove("active")
+            cerrarSidebar.ariaSelected = "false"
+
+            solapaFichaTecnica.classList.remove("active")
+            solapaFichaTecnica.ariaSelected = "false"
+
+            solapaDatosFicha.classList.add("active")
+            solapaDatosFicha.ariaSelected = "true"
+
+            cerrarSidebar.addEventListener('click', e => {
+                e.preventDefault()
+                sideBar.classList.remove("sb--show")
+            })
+
+            $('#divDatosCliente').hide()
+            $('#divDatosRecepcion').hide()
+            $('#divDatosCanje').hide()
+            $('#divDatosRemito').hide()
+            $('#divDatosResolucion').hide()
+            $('#divDatosPresupuesto').hide()
+            $('#divMonitorEmbalaje').hide()
+            $('#divMonitorResolucion').hide()
+            $('#divMonitorDiagnostico').hide()
+            $('#divEstadoOrden').hide()
+            
+            //console.log(e.target.innerText)
+            cargaFormasDeRetiro(cargoFichaPresupuesto, 'S').then(() =>{
+                cargaLugaresRecepcion(lugarRecepcionFicha).then(() => {
+                    cargaSucursales(sucursalRecepcionFicha).then(() => {
+                        cargaTecnicosFicha(tecnicoFicha).then(() => {
+                            cargaEmisores(emisorFicha).then(() => {
+                                cargaFamilias(familiaProductoFicha).then(() => {
+                                    cargaMarcas(marcaProductoFicha).then(() => {
+                                        estadosDeReparacion(estadoFicha).then(() => {
+                                            estanteList(estanteFicha).then(() => {
+                                                cargaDiagnosticadores(diagnosticadorFicha).then(() => {
+                                                    cargaReparadores(reparadorFicha).then(() => {
+                                                        cargaEmbaladores(embaladorFicha).then(() => {
+                                                            cargaReparadoresActivos(reparadorFichaDiagnostico).then(() => {
+                                                                datosFichaSolapa1(e.target.innerText).then((respuestaSolapa1) =>{ 
+                                                                    producto = respuestaSolapa1.producto_id
+                                                                    despieceDiagnostico(id, respuestaSolapa1.producto_id).then((respuestaDespieceDiagnostico) =>{
+                                                                        if(respuestaDespieceDiagnostico.productoImagenDespiece != ''){
+                                                                            productoImagenDespiece.src = `mod_repa/tablas/productos/adjuntos/${respuestaDespieceDiagnostico.productoImagenDespiece}`
+                                                                        } else {
+                                                                            productoImagenDespiece.src = '../../hdn/img/sinImagen.png'
+                                                                        }
+
+                                                                        let template    = ''
+                                                                        let Subtotal    = 0
+                                                                
+                                                                        if(respuestaDespieceDiagnostico.despiece.length > 0){
+                                                                            respuestaDespieceDiagnostico.despiece.forEach(element => {
+                                                                                Subtotal  = (element.cantidad * element.costo);
+                                                                                template += `
+                                                                                    <tr>
+                                                                                        <td>${element.referencia}</td>
+                                                                                        <td>${element.codigo}</td>
+                                                                                        <td>${element.descripcion}</td>
+                                                                                        <td>${element.costo}</td>
+                                                                                        <td>${element.cantidad}</td>
+                                                                                        <td class="subtotal">${Subtotal}</td>
+                                                                                    </tr>
+                                                                                ` 
+                                                                            });
+
+                                                                            bodySolapa2.innerHTML = template
+                                                                        } 
+
+                                                                        let total       = 0
+                                                                        let subtotales  = document.querySelectorAll('.subtotal')
+                                                                        subtotales.forEach(element => {
+                                                                            total = total + parseInt(element.innerText)
+                                                                        });
+                                                                        totalTabla.innerText = "Total: $"+total
+                                                                        if(respuestaSolapa1.costo == '1.00'){
+                                                                            costoFichaPresupuesto.value = total
+                                                                        } else {
+                                                                            costoFichaPresupuesto.value = respuestaSolapa1.costo
+                                                                        }   
+                                                                    })                                                          
+                                                                })   
+                                                            })                                              
+                                                        }) 
+                                                    }) 
+                                                })  
+                                            }) 
+                                        }) 
+                                    })
+                                })
+                            })
+                        })
+                    })
+                }) 
+            })
+    
+            sideBar.classList.add("sb--show")
+
         })
+
+        btnGrabar.addEventListener('click', e => {
+            e.preventDefault()
+
+            if(tipoFichaPresupuesto.value == 'C'){
+                if(descripcionProductoCanjePresupuesto.value != ''){
+                    grabarDatos()
+                } else {
+                    swal('Atención', 'Debe seleccionar un producto de destino', 'warning')
+                }
+            } else {
+                grabarDatos()
+            } 
+        })
+
+        btnCancelarFicha.addEventListener('click', e =>{
+            e.preventDefault()
+            sideBar.classList.remove("sb--show")
+        })
+
+        modalBuscarBombaCanje(modal, modalBody, modalTitulo, buscarProductoCanjePresupuesto, 'codigoProductoCanjePresupuesto', 'descripcionProductoCanjePresupuesto')
+
+        codigoProductoCanjePresupuesto.addEventListener('keyup', e => {
+            e.preventDefault()
+            if(e.keyCode === 13){
+                buscarProductoCanjePresupuesto.click()
+            }
+    
+            if(codigoProductoCanjePresupuesto.value.length == CODIGO_LENGTH){
+                let xhr = new XMLHttpRequest
+                xhr.open('GET', 'mod_repa/tablas/productos/productos_search.php?code='+codigoProductoCanjePresupuesto.value)
+                xhr.send()
+                xhr.addEventListener('load', () => {
+                    if(xhr.status == 200){
+                        let respuesta = JSON.parse(xhr.response)
+                        if(respuesta != null && respuesta != false && respuesta.canje_flag == 'S'){
+                            descripcionProductoCanjePresupuesto.value  = respuesta.descripcion
+                        } else {
+                            descripcionProductoCanjePresupuesto.value  = ''
+                            codigoProdCanje.value       = ''
+                            alert('Código inexistente o inválido :(')
+                        }
+                    }
+                })
+            } else {
+                descripcionProductoCanjePresupuesto.value  = ''
+            }
+    
+        })
+
+        tipoFichaPresupuesto.addEventListener('change', e =>{
+            e.preventDefault()
+            switch (e.target.value) {
+                case 'S':
+                    cargoFichaPresupuesto.disabled  = true
+                    costoFichaPresupuesto.disabled  = true
+                    cargoFichaPresupuesto.value     = '2'
+                    costoFichaPresupuesto.value     = '0'
+                    $('#divPlanCanjePresupuesto').hide()
+                    break;
+                case 'C':
+                    cargoFichaPresupuesto.disabled  = true
+                    costoFichaPresupuesto.disabled  = false
+                    cargoFichaPresupuesto.value     = '1'
+                    $('#divPlanCanjePresupuesto').show()
+                    break;
+                default:
+                    $('#divPlanCanjePresupuesto').hide()
+                    cargoFichaPresupuesto.disabled  = false
+                    costoFichaPresupuesto.disabled  = false 
+                    cargoFichaPresupuesto.value     = respuestaSolapa1.forma_retiro_id
+                    if(respuestaSolapa1.costo == '1.00'){
+                        costoFichaPresupuesto.value = total
+                    } else {
+                        costoFichaPresupuesto.value = respuestaSolapa1.costo
+                    }
+                    break;
+            }
+        }) 
+
     }, 500);
 
 })()

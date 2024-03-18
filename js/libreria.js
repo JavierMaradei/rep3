@@ -1551,8 +1551,10 @@ function modalBuscarBomba(idModal, idBodyModal, idTituloModal){
  * @param {string} idModal
  * @param {string} idBodyModal
  * @param {string} idTituloModal
+ * @param {string} codCanje
+ * @param {string} descCanje
  */
- function modalBuscarBombaCanje(idModal, idBodyModal, idTituloModal, botonAccion){
+ function modalBuscarBombaCanje(idModal, idBodyModal, idTituloModal, botonAccion, codCanje, descCanje){
     botonAccion.addEventListener('click', e => {
         e.preventDefault()
         $(idModal).show()
@@ -1646,8 +1648,8 @@ function modalBuscarBomba(idModal, idBodyModal, idTituloModal){
                     $(document).on('click', '.equipoCanje-item', (e) => {
                         e.preventDefault()
                         let tr              = e.target.parentNode.parentNode
-                        let codProdCanje    = document.querySelector('#codigoProductoCanje')
-                        let descProdCanje   = document.querySelector('#descripcionProductoCanje')
+                        let codProdCanje    = document.querySelector('#'+codCanje)
+                        let descProdCanje   = document.querySelector('#'+descCanje)
                     
                         codProdCanje.value  = tr.querySelector("td:nth-of-type(2)").innerText
                         descProdCanje.value = tr.querySelector("td:nth-of-type(3)").innerText

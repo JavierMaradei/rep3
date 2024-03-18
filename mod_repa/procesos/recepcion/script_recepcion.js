@@ -521,7 +521,7 @@
     })
 
     //Funcionalidad botón buscar canje
-    modalBuscarBombaCanje(modal, modalBody, modalTitulo, buscarProductoCanje)
+    modalBuscarBombaCanje(modal, modalBody, modalTitulo, buscarProductoCanje, 'codigoProductoCanje', 'descripcionProductoCanje')
 
     //Funcionalidad campo código canje
     codigoProdCanje.addEventListener('keyup', e => {

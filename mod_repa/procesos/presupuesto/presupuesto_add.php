@@ -5,12 +5,14 @@
     include_once('../../../includes/config.php');
 
     $orden                          = filter_var($_POST['orden'], FILTER_SANITIZE_STRING);
+    $productoId                     = filter_var($_POST['producto'], FILTER_SANITIZE_STRING);
     $tipoFichaPresupuesto           = filter_var($_POST['tipoFichaPresupuesto'], FILTER_SANITIZE_STRING);
     $atencionFichaPresupuesto       = filter_var($_POST['atencionFichaPresupuesto'], FILTER_SANITIZE_STRING);
     $numeroFichaPresupuesto         = filter_var($_POST['numeroFichaPresupuesto'], FILTER_SANITIZE_STRING);
     $cargoFichaPresupuesto          = filter_var($_POST['cargoFichaPresupuesto'], FILTER_SANITIZE_STRING);
     $costoFichaPresupuesto          = filter_var($_POST['costoFichaPresupuesto'], FILTER_SANITIZE_STRING);
     $observacionesFichaPresupuesto  = filter_var($_POST['observacionesFichaPresupuesto'], FILTER_SANITIZE_STRING);
+    $codigoProductoCanjePresupuesto = filter_var($_POST['codigoProductoCanjePresupuesto'], FILTER_SANITIZE_STRING);
     $usuarioId                      = recuperaIdUsuario($_SESSION['usuario_id']);
     $conexion                       = conectar(DB_DSN, DB_USER, DB_PASS);
     $fecha                          = new DateTime();
@@ -18,12 +20,27 @@
     $perfilSirep                    = recuperaPerfil($_SESSION['usuario_id']);
     $arrayRespuesta                 = array();
 
-    if($tipoFichaPresupuesto == 'P'){
-        $estadoReparacion = 3;
-    } else if ($tipoFichaPresupuesto == 'R'){
-        $estadoReparacion = 4;
-    } else {
-        $estadoReparacion = 5;
+    switch ($tipoFichaPresupuesto) {
+        case 'P':
+            $estadoReparacion   = 3;
+            $armado             = 'N';
+            $idCanje            = 0;
+            break;
+        case 'R':
+            $estadoReparacion   = 4;
+            $armado             = 'N';
+            $idCanje            = 0;
+            break; 
+        case 'C':
+            $estadoReparacion   = 6;
+            $armado             = 'S';
+            $idCanje            = recuperaIdProducto($codigoProductoCanjePresupuesto);
+            break;       
+        default:
+            $estadoReparacion   = 5;
+            $armado             = 'N';
+            $idCanje            = 0;
+            break;
     }
 
     if(empty($_SESSION['usuario_id'])){
@@ -48,7 +65,9 @@
                             fpresupuesto        = '{$formateadaArg}',
                             costo               = {$costoFichaPresupuesto},
                             observaciones       = '{$observacionesFichaPresupuesto}',
-                            estado_id           = '{$estadoReparacion}' 
+                            estado_id           = '{$estadoReparacion}',
+                            armado              = '{$armado}',
+                            producto_canje_id   = {$idCanje} 
                         WHERE
                             reparacion_id       = '{$orden}'     
                     ";
@@ -67,7 +86,9 @@
                                 forma_retiro_id,
                                 costo,
                                 observaciones,
-                                estado_id
+                                estado_id,
+                                producto_id,
+                                producto_canje_id
                             ) VALUES (
                                 '{$orden}',
                                 '{$formateadaArg}',
@@ -77,7 +98,9 @@
                                 {$cargoFichaPresupuesto},
                                 {$costoFichaPresupuesto},
                                 '{$observacionesFichaPresupuesto}',
-                                '{$estadoReparacion}'
+                                '{$estadoReparacion}',
+                                {$productoId},
+                                {$idCanje}
                             )
                         ";
 
