@@ -43,34 +43,43 @@
 
         if($archivoAdjunto['0'] == false){
             if($perfilSirep == 1){
-                $query = "  UPDATE 
-                                rep3_piezas 
-                            SET 
-                                codigo          = '{$piezaCodigo}', 
-                                marca_id        = '{$piezaMarca}', 
-                                referencia      = '{$piezaRef}', 
-                                descripcion     = '{$piezaDescripcion}', 
-                                costo           = '{$piezaCosto}', 
-                                activo          = '{$piezaActivo}',
-                                fmodificacion   = '{$formateadaArg}',
-                                foto            = '{$archivoAdjunto['2']}'     
-                            WHERE 
-                                pieza_id     = '{$id}'
-                        ";
-    
-                $sentenciaSQL   = $conexion->prepare($query);
-                $respuesta      = $sentenciaSQL->execute();
-    
-                if($respuesta){
-                    $arrayRespuesta['estado'] = "Transacción exitosa";
-                    if($piezaSubirFoto != ''){
-                        chdir('./adjuntos');
-                        unlink($respuesta0['foto']);
-                    }
+
+                $query00 = "SELECT codigo FROM rep3_piezas WHERE codigo = '{$piezaCodigo}' AND pieza_id <> '{$id}' AND marca_id = '{$piezaMarca}'";
+                $sentenciaSQL= $conexion->prepare($query00);
+                $sentenciaSQL->execute();
+                $respuesta00 = $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
+
+                if(empty($respuesta00)){
+                    $query = "  UPDATE 
+                                    rep3_piezas 
+                                SET 
+                                    codigo          = '{$piezaCodigo}', 
+                                    marca_id        = '{$piezaMarca}', 
+                                    referencia      = '{$piezaRef}', 
+                                    descripcion     = '{$piezaDescripcion}', 
+                                    costo           = '{$piezaCosto}', 
+                                    activo          = '{$piezaActivo}',
+                                    fmodificacion   = '{$formateadaArg}',
+                                    foto            = '{$archivoAdjunto['2']}'     
+                                WHERE 
+                                    pieza_id        = '{$id}'
+                            ";
+
+                    $sentenciaSQL   = $conexion->prepare($query);
+                    $respuesta      = $sentenciaSQL->execute();
+
+                    if($respuesta){
+                        $arrayRespuesta['estado'] = "Transacción exitosa";
+                        if($piezaSubirFoto != ''){
+                            chdir('./adjuntos');
+                            unlink($respuesta0['foto']);
+                        }
+                    } else {
+                        $arrayRespuesta['estado'] = "Algo salió mal";
+                    } 
                 } else {
-                    $arrayRespuesta['estado'] = "Algo salió mal";
+                    $arrayRespuesta['estado'] = "duplicado";  
                 } 
-    
             } else {
                 
                 $arrayRespuesta['estado'] = "Error perfil";  

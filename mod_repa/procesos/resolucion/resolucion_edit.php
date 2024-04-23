@@ -5,17 +5,19 @@
     include_once('../../../includes/funciones.php');
     include_once('../../../includes/config.php');
 
-    $orden                      = filter_var($_POST['orden'], FILTER_SANITIZE_STRING);
-    $cargoFichaResolucion       = filter_var($_POST['cargoFichaResolucion'], FILTER_SANITIZE_STRING);
-    $costoFichaResolucion       = filter_var($_POST['costoFichaResolucion'], FILTER_SANITIZE_STRING);
-    $numeroRemitoFicha          = filter_var($_POST['numeroRemitoFicha'], FILTER_SANITIZE_STRING);
-    $usuarioId                  = recuperaIdUsuario($_SESSION['usuario_id']);
-    $conexion                   = conectar(DB_DSN, DB_USER, DB_PASS);
-    $fecha                      = new DateTime();
-    $formateadaArg              = $fecha->format("Y-m-d H:i:s");
-    $perfilSirep                = recuperaPerfil($_SESSION['usuario_id']);
-    $estadoReparacion           = 7; //Entregado
-    $arrayRespuesta             = array();
+    $orden                          = filter_var($_POST['orden'], FILTER_SANITIZE_STRING);
+    $cargoFichaResolucion           = filter_var($_POST['cargoFichaResolucion'], FILTER_SANITIZE_STRING);
+    $costoFichaResolucion           = filter_var($_POST['costoFichaResolucion'], FILTER_SANITIZE_STRING);
+    $numeroRemitoFicha              = filter_var($_POST['numeroRemitoFicha'], FILTER_SANITIZE_STRING);
+    $codigoProductoCanjeResolucion  = filter_var($_POST['codigoProductoCanjeResolucion'], FILTER_SANITIZE_STRING);
+    $idCanje                        = $codigoProductoCanjeResolucion != '' ? recuperaIdProducto($codigoProductoCanjeResolucion) : 0;
+    $usuarioId                      = recuperaIdUsuario($_SESSION['usuario_id']);
+    $conexion                       = conectar(DB_DSN, DB_USER, DB_PASS);
+    $fecha                          = new DateTime();
+    $formateadaArg                  = $fecha->format("Y-m-d H:i:s");
+    $perfilSirep                    = recuperaPerfil($_SESSION['usuario_id']);
+    $estadoReparacion               = 7; //Entregado
+    $arrayRespuesta                 = array();
 
     if(empty($_SESSION['usuario_id'])){
         $arrayRespuesta['estado'] = "Sesión expirada";
@@ -35,9 +37,10 @@
                             costo               = {$costoFichaResolucion},
                             remito_despacho     = '{$numeroRemitoFicha}',
                             finalizador_id      = {$usuarioId},
-                            ffinalizado         = '{$formateadaArg}',
+                            fresolucion         = '{$formateadaArg}',
                             estado_id           = {$estadoReparacion},
-                            finalizado          = 'S'
+                            finalizado          = 'S',
+                            producto_canje_id   = {$idCanje}
                         WHERE
                             reparacion_id       = '{$orden}'     
                     ";

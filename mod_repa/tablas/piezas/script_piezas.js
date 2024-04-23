@@ -121,29 +121,26 @@
             
             estado.then((respuesta) => {
                 switch (respuesta.estado) {
-
                     case 'Transacción exitosa':
                         msgTransaccionExitosa()
                         tabla.ajax.reload();
                         $(btnEliminaPieza).hide()
                         cleanInputs(inputs)
                         cleanFormData(inputs, formData)
+                        piezaMarca.value    = '0'
                         formData.delete('archivoAdjunto')
                         piezaActivo.checked = true
                         piezaImagen.src = '../../hdn/img/sinImagen.png'
                         id = ''
                         edit = false
                         break;
-
                     case 'Sesión expirada':
                         sesionExpiradaMensajeFlotante()
                         break;
-
                     case 'Error perfil':
                         msgErrorPerfil()
                         cleanFormData(inputs, formData)
                         break;
-
                     case 'Error adjunto':
                         swal({
                             title   : "Error :( !",
@@ -153,7 +150,10 @@
                         cleanFormData(inputs, formData)
                         formData.delete('archivoAdjunto')
                         break;
-
+                    case 'duplicado':
+                        msgRegistroDuplicado()
+                        cleanFormData(inputs, formData)
+                        break;
                     default:
                         msgAlgoNoFueBien()
                         cleanFormData(inputs, formData)
@@ -201,6 +201,7 @@
                                             $(btnEliminaPieza).hide()
                                             cleanInputs(inputs)
                                             cleanFormData(inputs, formData)
+                                            piezaMarca.value    = '0'
                                             piezaActivo.checked = true
                                             id = ''
                                             edit = false
@@ -237,6 +238,7 @@
         cleanInputs(inputs)
         edit = false
         $(btnEliminaPieza).hide()
+        piezaMarca.value    = '0'
         piezaActivo.checked = true
         id = ''
         piezaImagen.src = '../../hdn/img/sinImagen.png'

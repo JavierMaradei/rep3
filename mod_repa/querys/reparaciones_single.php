@@ -32,21 +32,26 @@
                         date_format(rep3_reparaciones.freparacion, '%d/%m/%Y  %T hs') as fechaReparacionFinal,
                         rep3_reparaciones.fembalaje,
                         date_format(rep3_reparaciones.fembalaje, '%d/%m/%Y  %T hs') as fechaEmbalajeFinal,
+                        rep3_reparaciones.farmado,
+                        date_format(rep3_reparaciones.farmado, '%d/%m/%Y  %T hs') as fechaArmadoFinal,
                         rep3_reparaciones.fpresupuesto,
                         date_format(rep3_reparaciones.fpresupuesto, '%d/%m/%Y  %T hs') as fechaPresupuestoFinal,
                         rep3_reparaciones.fresolucion,
                         date_format(rep3_reparaciones.fresolucion, '%d/%m/%Y  %T hs') as fechaResolucionFinal,
+                        rep3_reparaciones.fanulado,
+                        date_format(rep3_reparaciones.fanulado, '%d/%m/%Y  %T hs') as fechaAnulacionFinal,
                         rep3_reparaciones.reparacion_detalle,
+                        rep3_reparaciones.diagnostico_detalle,
                         rep3_reparaciones.numero_presupuesto,
                         rep3_reparaciones.anulado,
-                        rep3_reparaciones.fanulado,
                         rep3_reparaciones.cajon,
                         rep3_reparaciones.finalizado,
-                        rep3_reparaciones.ffinalizado,
                         rep3_reparaciones.remito_cliente,
                         rep3_reparaciones.remito_despacho,
+                        rep3_reparaciones.remito_sucursal,
                         rep3_reparaciones.estado_id,
                         rep3_reparaciones.lugar_recepcion_id,
+                        rep3_reparaciones.lugar_reparacion,
                         rep3_lugares_recepcion.descripcion as lugar_recepcion_descripcion,
                         rep3_reparaciones.tipo_ingreso,
                         CASE rep3_reparaciones.tipo_ingreso
@@ -68,6 +73,7 @@
                         rep3_productos.familia_id as producto_familia,
                         rep3_reparaciones.forma_retiro_id,
                         rep3_reparaciones.motivo_anulacion_id,
+                        rep3_motivos_anulacion.descripcion as descMotivoAnulacion,
                         rep3_reparaciones.cliente_id,
                         rep3_clientes.localidad_id as clienteLocalidad,
                         rep3_clientes.calle as clienteCalle,
@@ -79,6 +85,7 @@
                         ltrim(rtrim(rep3_clientes.nombre)) as cliente_nombre,
                         ltrim(rtrim(rep3_clientes.apellido)) as cliente_apellido,
                         CONCAT(ltrim(rtrim(rep3_clientes.nombre)),' ',ltrim(rtrim(rep3_clientes.apellido))) as cliente_completo,
+                        CONCAT(ltrim(rtrim(rep3_usuarios.nombre)),' ',ltrim(rtrim(rep3_usuarios.apellido))) as usuarioAnulacion,
                         rep3_reparaciones.estante_id,
                         rep3_reparaciones.producto_canje_id,
                         rep3_reparaciones.diagnosticador_id,
@@ -109,14 +116,68 @@
                         rep3_sucursales
                     ON
                         rep3_reparaciones.sucursal_id           = rep3_sucursales.sucursal_id
+                    LEFT JOIN
+                        rep3_motivos_anulacion
+                    ON
+                        rep3_reparaciones.motivo_anulacion_id   = rep3_motivos_anulacion.motivo_anulacion_id
+                    LEFT JOIN
+                        rep3_usuarios
+                    ON
+                        rep3_reparaciones.anulador_id           = rep3_usuarios.usuario_id
                     WHERE
                         rep3_reparaciones.reparacion_id         = '{$orden}'
                 "; 
 
     $sentenciaSQL= $conexion->prepare($query);
     $sentenciaSQL->execute();
-
     $resultado= $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
+
+    if($resultado['producto_canje_id'] != 0 && $resultado['tipo_ingreso'] == 'C'){
+        $query1      = " SELECT 
+                            codigo      as codigoProdCanje,
+                            descripcion as descProdCanje  
+                        FROM 
+                            rep3_productos
+                        WHERE
+                            producto_id = {$resultado['producto_canje_id']}
+                    "; 
+
+        $sentenciaSQL= $conexion->prepare($query1);
+        $sentenciaSQL->execute();
+        $resultado1= $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
+
+        $resultado['datosCanje'] = $resultado1;
+    } else {
+        $resultado['datosCanje'] = '';
+    }
+
+    $query2 = " SELECT 
+                    adjunto_id,
+                    descripcion,
+                    RIGHT((SUBSTRING(descripcion, 14)),18) as descripcionCorta,
+                    fecha,
+                    size,
+                    usuario_id 
+                FROM 
+                    rep3_rel_reparaciones_adjuntos
+                WHERE
+                    reparacion_id = '{$orden}'
+            "; 
+
+    $sentenciaSQL= $conexion->prepare($query2);
+    $sentenciaSQL->execute();
+    $resultado2= $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
+
+    if($resultado2 != ''){
+        $resultado['adjuntos'] = $resultado2;
+    } else {
+        $resultado['adjuntos'] = '';
+    }
+
+    //Para poder validar que la orden exista al momento de buscar en anulación de orden, anulación de resolución, cambio de sucursal.
+    if($resultado['reparacion_id'] == ''){
+        $resultado['reparacion_id'] = ''; 
+    }
 
     header("Content-type: aplication/json");
     echo json_encode($resultado, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);

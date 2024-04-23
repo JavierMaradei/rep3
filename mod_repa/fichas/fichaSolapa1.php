@@ -1,33 +1,50 @@
 <div class="row p-3">
+    <div class="row" id="ordenAnulada"></div>
     <!-- Card datos del ingreso -->
     <div class="col-md-6 mb-3" id="divDatosGenerales">
         <div class="card h-100 shadow">
             <h4 class="card-header bg-danger text-white text-center"><i>Datos generales de Ingreso</i></h4>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-sm-6 mb-2">
+                    <div class="col-sm-4 mb-2">
                         <label for="ordenFicha" class="form-label">Orden</label>
                         <input type="text" class="form-control" id="ordenFicha" readonly> 
                     </div>
-                    <div class="col-sm-6 mb-2">
+                    <div class="col-sm-4 mb-2">
                         <label for="lugarRecepcionFicha" class="form-label">Lugar de Recepción</label>
                         <select id="lugarRecepcionFicha" class="form-select" disabled></select>
                     </div>
-                    <div class="col-sm-6 mb-2">
+                    <div class="col-sm-4 mb-2">
                         <label for="sucursalRecepcionFicha" class="form-label">Sucursal</label>
                         <select id="sucursalRecepcionFicha" class="form-select" disabled></select>
                     </div>
-                    <div class="col-sm-6 mb-2">
-                        <label for="tipoReparacionFicha" class="form-label">Tipo de ingreso</label>
-                        <select id="tipoReparacionFicha" class="form-select" disabled><?php echo tiposReparacion(); ?></select>
+                    <div class="col-sm-4 mb-2">
+                        <label for="tipoReparacionFicha" class="form-label">Tipo</label>
+                        <select id="tipoReparacionFicha" class="form-select" disabled><?php echo tiposReparacionFicha(); ?></select>
                     </div>
-                    <div class="col-sm-6 mb-2">
+                    <div class="col-sm-4 mb-2">
                         <label for="tecnicoFicha" class="form-label">Técnico Domicilio asignado</label>
                         <select id="tecnicoFicha" class="form-select" disabled></select>
                     </div>
-                    <div class="col-sm-6 mb-2">
+                    <div class="col-sm-4 mb-2">
                         <label for="emisorFicha" class="form-label">Emisor</label>
                         <select id="emisorFicha" class="form-select" disabled></select>
+                    </div>
+                    <div class="col-sm-4 mb-2">
+                        <label for="atencionFicha" class="form-label">Atención</label>
+                        <select id="atencionFicha" class="form-select" disabled><?php echo tiposAtencion(); ?></select>
+                    </div>
+                    <div class="col-sm-2 mb-2">
+                        <label for="garantiaFicha" class="form-label">R.Gtía</label>
+                        <input type="text" class="form-control" id="garantiaFicha" readonly> 
+                    </div>
+                    <div class="col-sm-2 mb-2">
+                        <label for="fleteFicha" class="form-label">Flete</label>
+                        <input type="text" class="form-control" id="fleteFicha" readonly> 
+                    </div>
+                    <div class="col-sm-4 mb-2">
+                        <label for="remitoClienteFicha" class="form-label">Remito</label>
+                        <input type="text" class="form-control" id="remitoClienteFicha" readonly> 
                     </div>
                 </div>
             </div>
@@ -44,24 +61,16 @@
                         <input type="text" class="form-control" id="fechaRecepcionFicha" readonly> 
                     </div>
                     <div class="col-sm-6 mb-2">
-                        <label for="fechaDiagnosticoFicha" class="form-label">Fecha de Diagnóstico</label>
-                        <input type="text" class="form-control" id="fechaDiagnosticoFicha" readonly> 
+                        <label for="fechaReparacionFicha" class="form-label">Fecha de Reparación</label>
+                        <input type="text" class="form-control" id="fechaReparacionFicha" readonly>  
                     </div>
                     <div class="col-sm-6 mb-2">
                         <label for="fechaVisitaFicha" class="form-label">Fecha de visita a domicilio</label>
                         <input type="text" class="form-control" id="fechaVisitaFicha" readonly>  
                     </div>
                     <div class="col-sm-6 mb-2">
-                        <label for="fechaReparacionFicha" class="form-label">Fecha de Reparación</label>
-                        <input type="text" class="form-control" id="fechaReparacionFicha" readonly>  
-                    </div>
-                    <div class="col-sm-6 mb-2">
                         <label for="fechaCierreFicha" class="form-label">Fecha de Cierre</label>
                         <input type="text" class="form-control" id="fechaCierreFicha" readonly> 
-                    </div>
-                    <div class="col-sm-6 mb-2">
-                        <label for="fechaEmbalajeFicha" class="form-label">Fecha de Embalaje</label>
-                        <input type="text" class="form-control" id="fechaEmbalajeFicha" readonly> 
                     </div>
                 </div>
             </div>
@@ -101,32 +110,6 @@
             </div>
         </div>
     </div>
-    <!-- Card Datos Reparación -->
-    <div class="col-md-6 mb-3" id="divDatosRecepcion">
-        <div class="card h-100 shadow">
-            <h4 class="card-header bg-danger text-white text-center"><i>Datos de Recepción</i></h4>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-6 mb-2">
-                        <label for="atencionFicha" class="form-label">Atención</label>
-                        <select id="atencionFicha" class="form-select" disabled><?php echo tiposAtencion(); ?></select>
-                    </div>
-                    <div class="col-sm-6 mb-2">
-                        <label for="garantiaFicha" class="form-label">Reclama garantía</label>
-                        <input type="text" class="form-control" id="garantiaFicha" readonly> 
-                    </div>
-                    <div class="col-sm-6 mb-2">
-                        <label for="fleteFicha" class="form-label">Flete</label>
-                        <input type="text" class="form-control" id="fleteFicha" readonly> 
-                    </div>
-                    <div class="col-sm-6 mb-2">
-                        <label for="remitoClienteFicha" class="form-label">Remito</label>
-                        <input type="text" class="form-control" id="remitoClienteFicha" readonly> 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- Card datos del producto -->
     <div class="col-md-6 mb-3" id="divDatosProducto">
         <div class="card h-100 shadow">
@@ -141,21 +124,43 @@
                         <label for="familiaProductoFicha" class="form-label">Familia</label>
                         <select id="familiaProductoFicha" class="form-select" disabled></select>
                     </div>
-                    <div class="col-sm-8 mb-2">
-                        <label for="productoFicha" class="form-label">Producto</label>
-                        <input type="text" class="form-control" id="productoFicha" readonly> 
+                    <div class="col-sm-6 mb-2">
+                        <label for="codigoProductoFicha" class="form-label">Código</label>
+                        <input type="text" class="form-control" id="codigoProductoFicha" readonly> 
                     </div>
-                    <div class="col-sm-4 mb-2">
+                    <div class="col-sm-6 mb-2">
                         <label for="serieProductoFicha" class="form-label">Serie</label>
                         <input type="text" id="serieProductoFicha" class="form-control" readonly>
+                    </div>
+                    <div class="col-sm-12 mb-2">
+                        <label for="descripcionProductoFicha" class="form-label">Descripción</label>
+                        <div class="input-group">
+                            <input type="text" id="descripcionProductoFicha" class="form-control" readonly>
+                            <button class="btn btn-outline-secondary" type="button" id="btnBuscarProductoFicha" disabled>Buscar</button>
+                        </div>
                     </div>
                     <div class="col-sm-12 mb-2">
                         <label for="problemaProductoFicha" class="form-label">Problema</label>
                         <input type="text" class="form-control" id="problemaProductoFicha" readonly> 
                     </div>
-                    <div class="col-sm-12 mb-2">
+                    <div class="col-sm-12 mb-3">
                         <label for="observacionesProductoFicha" class="form-label">Observaciones</label>
                         <textarea class="form-control" id="observacionesProductoFicha" cols="30" rows="4" readonly></textarea>
+                    </div>
+                    <div class="row mb-12">
+                        <div class="col-sm-12 pt-3">
+                            <div class="form-check form-check-inline">
+                                <input id="reparadoEnTaller" class="form-check-input" type="radio" name="lugarReparacion" disabled>
+                                <label for="reparadoEnTaller" class="form-check-label"><b>Reparación en taller</b></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input id="reparadoEnDomicilio" class="form-check-input" type="radio" name="lugarReparacion" disabled>
+                                <label for="reparadoEnDomicilio" class="form-check-label"><b>Reparación en domicilio cliente</b></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mt-4 mb-2">
+                        <div id="divAdjunto"></div>
                     </div>
                 </div>
             </div>
@@ -171,57 +176,45 @@
                         <label for="estadoFicha" class="form-label">Estado</label>
                         <select id="estadoFicha" class="form-select" disabled></select>
                     </div>
-                    <div class="col-sm-4 mb-2">
+                    <div class="col-sm-6 mb-2">
                         <label for="estanteFicha" class="form-label">Estante</label>
                         <select id="estanteFicha" class="form-select" disabled></select>
                     </div>
-                    <div class="col-sm-12 mb-2">
+                    <div class="col-sm-6 mb-2">
+                        <label for="detalleDiagnosticoFicha" class="form-label">Detalle del diagnóstico</label>
+                        <textarea class="form-control" id="detalleDiagnosticoFicha" cols="30" rows="3" readonly></textarea>
+                    </div>
+                    <div class="col-sm-6 mb-2">
                         <label for="detalleEmbalajeFicha" class="form-label">Detalle del embalaje</label>
                         <textarea class="form-control" id="detalleEmbalajeFicha" cols="30" rows="3" readonly></textarea>
                     </div>
-                    <div class="col-sm-6 mb-2">
+                    <div class="col-sm-8 mb-2">
                         <label for="diagnosticadorFicha" class="form-label">Diagnosticador</label>
                         <select class="form-select" id="diagnosticadorFicha" disabled> </select>
                     </div>
-                    <div class="col-sm-6 mb-2">
+                    <div class="col-sm-4 mb-2">
+                        <label for="fechaDiagnosticoFicha" class="form-label">Fecha de Diagnóstico</label>
+                        <input type="text" class="form-control" id="fechaDiagnosticoFicha" readonly> 
+                    </div>
+                    <div class="col-sm-8 mb-2">
                         <label for="reparadorFicha" class="form-label">Reparador</label>
                         <select class="form-select" id="reparadorFicha" disabled> </select>
                     </div>
-                    <div class="col-sm-6 mb-2">
+                    <div class="col-sm-4 mb-2">
+                        <label for="fechaArmoFicha" class="form-label">Fecha reparación</label>
+                        <input type="text" id="fechaArmoFicha" class="form-control" readonly>
+                    </div>
+                    <div class="col-sm-8 mb-2">
                         <label for="embaladorFicha" class="form-label">Embalador</label>
                         <select class="form-select" id="embaladorFicha" disabled> </select>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Card Producto destino Canje -->
-    <div class="col-md-6 mb-3" id="divDatosCanje">
-        <div class="card h-100 shadow">
-            <h4 class="card-header bg-danger text-white text-center"><i>Producto destino Canje</i></h4>
-            <div class="card-body">
-                <div class="row">
                     <div class="col-sm-4 mb-2">
-                        <label for="codigoProductoCanje" class="form-label">Código</label>
-                        <input type="text" class="form-control" id="codigoProductoCanje" readonly> 
+                        <label for="fechaEmbalajeFicha" class="form-label">Fecha de Embalaje</label>
+                        <input type="text" class="form-control" id="fechaEmbalajeFicha" readonly> 
                     </div>
-                    <div class="col-sm-8 mb-2">
-                        <label for="descripcionProductoCanje" class="form-label">Descripción</label>
-                        <input type="text" id="descripcionProductoCanje" class="form-control" readonly>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Card Remito -->
-    <div class="col-md-6 mb-3" id="divDatosRemito">
-        <div class="card h-100 shadow">
-            <h4 class="card-header bg-danger text-white text-center"><i>Remito</i></h4>
-            <div class="card-body">
-                <div class="row">
                     <div class="col-sm-12 mb-2">
-                        <label for="remitoResolucionFicha" class="form-label">Remito de Despacho</label>
-                        <input type="text" class="form-control" id="remitoResolucionFicha" readonly> 
+                        <label for="numeroRemitoCambioSucursalFicha" class="form-label">Remito cambio de sucursal</label>
+                        <input type="text" id="numeroRemitoCambioSucursalFicha" class="form-control" readonly>
                     </div>
                 </div>
             </div>
@@ -240,6 +233,31 @@
                     <div class="col-sm-4 mb-2">
                         <label for="costoFicha" class="form-label">Costo</label>
                         <input type="text" id="costoFicha" class="form-control" readonly>
+                    </div>
+                    <div class="col-sm-8 mb-2">
+                        <label for="remitoResolucionFicha" class="form-label">Remito de Despacho</label>
+                        <input type="text" class="form-control" id="remitoResolucionFicha" readonly> 
+                    </div>
+                    <div class="col-sm-8 mb-2">
+                        <label for="usuarioCierreFicha" class="form-label">Cerrado por:</label>
+                        <select class="form-select" id="usuarioCierreFicha" disabled> </select>
+                    </div>
+                    <div class="col-sm-4 mb-2">
+                        <label for="fechaCierreFichaResolucion" class="form-label">Fecha de cierre</label>
+                        <input type="text" class="form-control" id="fechaCierreFichaResolucion" readonly> 
+                    </div>
+                    <div id="divDatosCanje" style="display: none;">
+                        <h4 class="text-left pt-3 pb-3"><i>Producto destino Canje</i></h4>
+                        <div class="row">
+                            <div class="col-sm-4 mb-2">
+                                <label for="codigoProductoCanje" class="form-label">Código</label>
+                                <input type="text" class="form-control" id="codigoProductoCanje" readonly> 
+                            </div>
+                            <div class="col-sm-8 mb-2">
+                                <label for="descripcionProductoCanje" class="form-label">Descripción</label>
+                                <input type="text" id="descripcionProductoCanje" class="form-control" readonly>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -278,14 +296,19 @@
                 <h4 class="card-header bg-danger text-white text-center"><i>Acciones Diagnóstico</i></h4>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-sm-12 mb-2">
+                        <div class="col-sm-6 mb-2">
                             <label for="reparadorFichaDiagnostico" class="form-label">Asignar Reparador:</label>
                             <select class="form-select" id="reparadorFichaDiagnostico"></select>
                         </div>
-                        <div class="col-sm-12 mb-2">
+                        <div class="col-sm-6 mb-2">
                             <label for="cajonFichaDiagnostico" class="form-label">Cajón</label>
                             <input type="text" id="cajonFichaDiagnostico" class="form-control">
                         </div>
+                        <div class="col-sm-12 mb-3">
+                            <label for="detalleDiagnostico" class="form-label">Detalle diagnóstico</label>
+                            <textarea class="form-control" id="detalleDiagnostico" cols="30" rows="2"></textarea>
+                        </div>
+                        <div id="adjuntosDropzone"></div>
                     </div>
                 </div>
             </form>

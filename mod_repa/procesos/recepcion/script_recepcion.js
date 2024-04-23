@@ -127,82 +127,6 @@
         recuperaDatosPerfil()
     }
 
-    function busquedaPorProducto(){
-        return new Promise(function(resolve, reject) {    
-            $('#modalRecepcion').show()
-            $('#bodyRecepcion').empty()
-            $('#titulo').text('Equipos')
-    
-            let template = ''
-            template = `
-                <div class="row">
-                    <form id="formModalEquipos">
-                        <div class="row g-3">
-                            <div class="form-group col-sm-4">
-                                <label for="marcaProductoModal">Marca</label>
-                                <select id="marcaProductoModal" class="form-control"></select>
-                            </div>
-                            <div class="form-group col-sm-4">
-                                <label for="familiaProductoModal">Familia</label>
-                                <select id="familiaProductoModal" class="form-control"></select>
-                            </div>
-                            <div class="form-group col-sm-4">
-                                <label for="buscadorModal">Buscador</label>
-                                <input id="buscadorModal" type="text" class="form-control">
-                            </div>
-                            <div class="form-group col-sm-12 text-center">
-                                <button id="btnBuscarEquipo" type="button" class="btn btn-primary">Buscar
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <th>Código</th>
-                                    <th>Descripción</th>
-                                    <th>Marca</th>
-                                    <th>Familia</th>
-                                </thead>
-                                <tbody id="modalBusquedaTabla"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            `
-            $('#bodyRecepcion').html(template)
-
-            resolve()
-        })
-
-    }
-
-    function enviarParametrosModal(marca, familia, buscador, idBodyTabla){
-        let xhr = new XMLHttpRequest
-        xhr.open('GET', 'mod_repa/tablas/productos/productosModal_search.php?marca='+marca+'&familia='+familia+'&buscador='+buscador)
-        xhr.send()
-        xhr.addEventListener('load', () => {
-            if(xhr.status == 200){
-                let respuesta = JSON.parse(xhr.response)
-                let template = ''
-                respuesta.forEach(element => {
-                    template += `
-                        <tr>
-                            <td><a class="product-item" href="${element.codigo}">${element.codigo}</td>
-                            <td>${element.descripcion}</td>
-                            <td>${element.marca}</td>
-                            <td>${element.familia}</td>
-                        </tr>
-                    `
-                });
-
-                idBodyTabla.innerHTML = template
-            }
-        })
-    }
-
     function estadoCanje(){
 
         datosCanje.forEach(element => {
@@ -286,7 +210,7 @@
                         marcaProducto.value         = ''
                         familiaProducto.value       = ''
                         costoProducto.value         = ''
-                        alert('Código inexistente o inválido :(')
+                        swal('Atención', 'Código inexistente o inválido :(', 'warning')
                     }
                 }
             })
@@ -301,7 +225,7 @@
     btnBuscarProducto.addEventListener('click', e => {
         e.preventDefault()
 
-        busquedaPorProducto().then(() => {
+        busquedaPorProducto('#modalRecepcion', '#bodyRecepcion', '#titulo').then(() => {
             let marcaProductoModal      = document.querySelector('#marcaProductoModal')
             let familiaProductoModal    = document.querySelector('#familiaProductoModal')
             let buscadorModal           = document.querySelector('#buscadorModal')
@@ -469,7 +393,7 @@
             })
 
         } else {
-            alert("Ingrese algún valor al buscador de clientes")
+            swal('Atención', 'Ingrese algún valor al buscador de clientes', 'warning')
         }
     })
 
@@ -542,7 +466,7 @@
                     } else {
                         descripcionProdCanje.value  = ''
                         codigoProdCanje.value       = ''
-                        alert('Código inexistente o inválido :(')
+                        swal('Atención', 'Código inexistente o inválido :(', 'warning')
                     }
                 }
             })

@@ -170,16 +170,16 @@
                                 <!-- Layouts submenu list -->
                                 <ul class="mininav-content nav collapse">
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">Anular orden</a>
+                                        <a href="?page=mod_repa/procesos/anularOrden/anularOrden" class="nav-link">Anular orden</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">Anular resolución</a>
+                                        <a href="?page=mod_repa/procesos/anularResolucion/anularResolucion" class="nav-link">Anular resolución</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="?page=mod_repa/procesos/buscar/buscar" class="nav-link">Buscador</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">Cambiar de sucursal</a>
+                                        <a href="?page=mod_repa/procesos/cambiarDeSucursal/cambiarDeSucursal" class="nav-link">Cambiar de sucursal</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="?page=mod_repa/procesos/diagnostico/diagnostico" class="nav-link">Diagnóstico</a>
@@ -191,10 +191,7 @@
                                         <a href="?page=mod_repa/procesos/hojaRuta/hojaRuta" class="nav-link">Hoja de Ruta</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">Modificar orden</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">Orden facturada</a>
+                                        <a href="?page=mod_repa/procesos/modificarOrden/modificarOrden" class="nav-link">Modificar orden</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="?page=mod_repa/procesos/presupuesto/presupuesto" class="nav-link">Presupuesto</a>
@@ -224,19 +221,19 @@
                                 <!-- Layouts submenu list -->
                                 <ul class="mininav-content nav collapse">
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">Ingresos</a>
+                                        <a href="?page=mod_repa/informes/ingresos/ingresos" class="nav-link">Ingresos</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">Diagnósticos</a>
+                                        <a href="?page=mod_repa/informes/diagnosticos/diagnosticos" class="nav-link">Diagnósticos</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">Embalajes</a>
+                                        <a href="?page=mod_repa/informes/embalajes/embalajes" class="nav-link">Embalajes</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">Resoluciones</a>
+                                        <a href="?page=mod_repa/informes/resoluciones/resoluciones" class="nav-link">Resoluciones</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">Pendientes resolución</a>
+                                        <a href="?page=mod_repa/informes/pendientesResolucion/pendientesResolucion" class="nav-link">Pendientes resolución</a>
                                     </li>
                                 </ul>
                                 <!-- END : Layouts submenu list -->

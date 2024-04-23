@@ -85,151 +85,6 @@
         })
     });
 
-    //Tomo el link de la tabla con el ID del registro
-    $(document).on('click', '.reparacion-item', (e) => {
-        e.preventDefault()
-        id                              = e.target.innerText
-        let lugarRecepcionFicha         = document.querySelector('#lugarRecepcionFicha')
-        let sucursalRecepcionFicha      = document.querySelector('#sucursalRecepcionFicha')
-        let tecnicoFicha                = document.querySelector('#tecnicoFicha')
-        let emisorFicha                 = document.querySelector('#emisorFicha')
-        let presupuestadorFicha         = document.querySelector('#presupuestadorFicha')
-        let familiaProductoFicha        = document.querySelector('#familiaProductoFicha')
-        let marcaProductoFicha          = document.querySelector('#marcaProductoFicha')
-        let estadoFicha                 = document.querySelector('#estadoFicha')
-        let estanteFicha                = document.querySelector('#estanteFicha')
-        let diagnosticadorFicha         = document.querySelector('#diagnosticadorFicha')
-        let reparadorFicha              = document.querySelector('#reparadorFicha')
-        let embaladorFicha              = document.querySelector('#embaladorFicha')
-        let reparadorFichaDiagnostico   = document.querySelector('#reparadorFichaDiagnostico')
-        let cajonFichaDiagnostico       = document.querySelector('#cajonFichaDiagnostico')
-        let cerrarSidebar               = document.querySelector('#cerrarSidebar')
-        let solapaDatosFicha            = document.querySelector('#solapaDatosFicha')
-        let solapaFichaTecnica          = document.querySelector('#solapaFichaTecnica')
-        let navDatos                    = document.querySelector('#nav-datos')
-        let navFicha                    = document.querySelector('#nav-ficha')
-        let navCerrar                   = document.querySelector('#nav-cerrar')
-        let bodySolapa2                 = document.querySelector('#bodySolapa2')
-        let productoImagenDespiece      = document.querySelector('#productoImagenDespiece')
-        let btnCancelarFicha            = document.querySelector('#btnCancelarFicha')
-        reparadorFichaDiagnostico.value = ''   
-        cajonFichaDiagnostico.value     = '' 
-
-        btnCancelarFicha.addEventListener('click', e =>{
-            e.preventDefault()
-            sideBar.classList.remove("sb--show")
-        })
-        
-        /*FALTANTES -> Adjuntos
-                    -> Check retiro de equipos
-                    -> Scroll top
-                    -> Hacer arrayVal
-        */
-
-/*         solapaDatosFicha.scrollTo({
-            top: 1,
-            left: 1,
-            behavior: 'smooth'
-            }); */
-        
-        navCerrar.classList.remove("active")
-        navCerrar.classList.remove("show")
-
-        navFicha.classList.remove("active")
-        navFicha.classList.remove("show")
-
-        navDatos.classList.add("active")
-        navDatos.classList.add("show")
-
-        cerrarSidebar.classList.remove("active")
-        cerrarSidebar.ariaSelected = "false"
-
-        solapaFichaTecnica.classList.remove("active")
-        solapaFichaTecnica.ariaSelected = "false"
-
-        solapaDatosFicha.classList.add("active")
-        solapaDatosFicha.ariaSelected = "true"
-
-        cerrarSidebar.addEventListener('click', e => {
-            e.preventDefault()
-            sideBar.classList.remove("sb--show")
-        })
-
-        $('#divDatosCliente').hide()
-        $('#divDatosRecepcion').hide()
-        $('#divDatosCanje').hide()
-        $('#divDatosRemito').hide()
-        $('#divDatosResolucion').hide()
-        $('#divEstadoOrden').hide()
-        $('#divMonitorEmbalaje').hide()
-        $('#divMonitorResolucion').hide()
-        $('#divMonitorDiagnostico').hide()
-        $('#divMonitorPresupuesto').hide()
-        $('#precioDespiece').hide()
-        $('#subTotalDespiece').hide()
-        $('#totalTabla').hide()
-        
-        //console.log(e.target.innerText)
-
-        cargaLugaresRecepcion(lugarRecepcionFicha).then(() => {
-            cargaSucursales(sucursalRecepcionFicha).then(() => {
-                cargaTecnicosFicha(tecnicoFicha).then(() => {
-                    cargaEmisores(presupuestadorFicha).then(() => {
-                        cargaEmisores(emisorFicha).then(() => {
-                            cargaFamilias(familiaProductoFicha).then(() => {
-                                cargaMarcas(marcaProductoFicha).then(() => {
-                                    estadosDeReparacion(estadoFicha).then(() => {
-                                        estanteList(estanteFicha).then(() => {
-                                            cargaDiagnosticadores(diagnosticadorFicha).then(() => {
-                                                cargaReparadores(reparadorFicha).then(() => {
-                                                    cargaEmbaladores(embaladorFicha).then(() => {
-                                                        cargaReparadoresActivos(reparadorFichaDiagnostico).then(() => {
-                                                            datosFichaSolapa1(e.target.innerText).then((respuestaSolapa1) =>{ 
-                                                                tipoIngreso = respuestaSolapa1.tipo_ingreso
-                                                                despieceDiagnostico(id, respuestaSolapa1.producto_id).then((respuestaDespieceDiagnostico) =>{
-                                                                    if(respuestaDespieceDiagnostico.productoImagenDespiece != ''){
-                                                                        productoImagenDespiece.src = `mod_repa/tablas/productos/adjuntos/${respuestaDespieceDiagnostico.productoImagenDespiece}`
-                                                                    } else {
-                                                                        productoImagenDespiece.src = '../../hdn/img/sinImagen.png'
-                                                                    }
-    
-                                                                    let template = ''
-                                                                    if(respuestaDespieceDiagnostico.despiece.length > 0){
-                                                                        respuestaDespieceDiagnostico.despiece.forEach(element => {
-                                                                            template += `
-                                                                                <tr>
-                                                                                    <td>${element.referencia}</td>
-                                                                                    <td>${element.codigo}</td>
-                                                                                    <td>${element.descripcion}</td>
-                                                                                    <td>${element.cantidad}</td>
-                                                                                    <td></td>
-                                                                                    <td></td>
-                                                                                </tr>
-                                                                            ` 
-                                                                        });
-    
-                                                                        bodySolapa2.innerHTML = template
-                                                                    } 
-                                                                })                                                          
-                                                            })   
-                                                        })                                              
-                                                    }) 
-                                                }) 
-                                            })  
-                                        }) 
-                                    }) 
-                                })
-                            })
-                        })
-                    })
-                })
-            })
-        })    
-
-        sideBar.classList.add("sb--show")
-
-    })
-
     function accionesPrefiltro(){
         let btnPrefiltro            = document.querySelector('#btnPrefiltro')
         let formPrefiltro           = document.querySelector('#formPrefiltro')
@@ -284,6 +139,133 @@
     accionesPrefiltro()
 
     setTimeout(() => {
+        let lugarRecepcionFicha         = document.querySelector('#lugarRecepcionFicha')
+        let sucursalRecepcionFicha      = document.querySelector('#sucursalRecepcionFicha')
+        let tecnicoFicha                = document.querySelector('#tecnicoFicha')
+        let emisorFicha                 = document.querySelector('#emisorFicha')
+        let presupuestadorFicha         = document.querySelector('#presupuestadorFicha')
+        let familiaProductoFicha        = document.querySelector('#familiaProductoFicha')
+        let marcaProductoFicha          = document.querySelector('#marcaProductoFicha')
+        let estadoFicha                 = document.querySelector('#estadoFicha')
+        let estanteFicha                = document.querySelector('#estanteFicha')
+        let diagnosticadorFicha         = document.querySelector('#diagnosticadorFicha')
+        let reparadorFicha              = document.querySelector('#reparadorFicha')
+        let embaladorFicha              = document.querySelector('#embaladorFicha')
+        let reparadorFichaDiagnostico   = document.querySelector('#reparadorFichaDiagnostico')
+        let cerrarSidebar               = document.querySelector('#cerrarSidebar')
+        let solapaDatosFicha            = document.querySelector('#solapaDatosFicha')
+        let solapaFichaTecnica          = document.querySelector('#solapaFichaTecnica')
+        let navDatos                    = document.querySelector('#nav-datos')
+        let navFicha                    = document.querySelector('#nav-ficha')
+        let navCerrar                   = document.querySelector('#nav-cerrar')
+        let bodySolapa2                 = document.querySelector('#bodySolapa2')
+        let productoImagenDespiece      = document.querySelector('#productoImagenDespiece')
+        let btnCancelarFicha            = document.querySelector('#btnCancelarFicha')
+        let reparadoEnDomicilio         = document.querySelector('#reparadoEnDomicilio')
+
+        btnCancelarFicha.addEventListener('click', e =>{
+            e.preventDefault()
+            sideBar.classList.remove("sb--show")
+        })
+
+        cerrarSidebar.addEventListener('click', e => {
+            e.preventDefault()
+            sideBar.classList.remove("sb--show")
+        })
+
+        $(document).on('click', '.reparacion-item', (e) => {
+            e.preventDefault()
+            id = e.target.innerText                    
+            navCerrar.classList.remove("active")
+            navCerrar.classList.remove("show")
+
+            navFicha.classList.remove("active")
+            navFicha.classList.remove("show")
+
+            navDatos.classList.add("active")
+            navDatos.classList.add("show")
+
+            cerrarSidebar.classList.remove("active")
+            cerrarSidebar.ariaSelected = "false"
+
+            solapaFichaTecnica.classList.remove("active")
+            solapaFichaTecnica.ariaSelected = "false"
+
+            solapaDatosFicha.classList.add("active")
+            solapaDatosFicha.ariaSelected = "true"
+
+            $('#divDatosCliente').hide()
+            $('#divDatosResolucion').hide()
+            $('#divEstadoOrden').hide()
+            $('#divMonitorEmbalaje').hide()
+            $('#divMonitorResolucion').hide()
+            $('#divMonitorDiagnostico').hide()
+            $('#divMonitorPresupuesto').hide()
+            $('#precioDespiece').hide()
+            $('#subTotalDespiece').hide()
+            $('#totalTabla').hide()
+            
+            //console.log(e.target.innerText)
+
+            cargaLugaresRecepcion(lugarRecepcionFicha).then(() => {
+                cargaSucursales(sucursalRecepcionFicha).then(() => {
+                    cargaTecnicosFicha(tecnicoFicha).then(() => {
+                        cargaEmisores(presupuestadorFicha).then(() => {
+                            cargaEmisores(emisorFicha).then(() => {
+                                cargaFamilias(familiaProductoFicha).then(() => {
+                                    cargaMarcas(marcaProductoFicha).then(() => {
+                                        estadosDeReparacion(estadoFicha).then(() => {
+                                            estanteList(estanteFicha).then(() => {
+                                                cargaDiagnosticadores(diagnosticadorFicha).then(() => {
+                                                    cargaReparadores(reparadorFicha).then(() => {
+                                                        cargaEmbaladores(embaladorFicha).then(() => {
+                                                            cargaReparadoresActivos(reparadorFichaDiagnostico).then(() => {
+                                                                datosFichaSolapa1(e.target.innerText).then((respuestaSolapa1) =>{ 
+                                                                    tipoIngreso = respuestaSolapa1.tipo_ingreso
+                                                                    despieceDiagnostico(id, respuestaSolapa1.producto_id).then((respuestaDespieceDiagnostico) =>{
+                                                                        if(respuestaDespieceDiagnostico.productoImagenDespiece != ''){
+                                                                            productoImagenDespiece.src = `mod_repa/tablas/productos/adjuntos/${respuestaDespieceDiagnostico.productoImagenDespiece}`
+                                                                        } else {
+                                                                            productoImagenDespiece.src = '../../hdn/img/sinImagen.png'
+                                                                        }
+        
+                                                                        let template = ''
+                                                                        if(respuestaDespieceDiagnostico.despiece.length > 0){
+                                                                            respuestaDespieceDiagnostico.despiece.forEach(element => {
+                                                                                template += `
+                                                                                    <tr>
+                                                                                        <td>${element.referencia}</td>
+                                                                                        <td>${element.codigo}</td>
+                                                                                        <td>${element.descripcion}</td>
+                                                                                        <td>${element.cantidad}</td>
+                                                                                        <td></td>
+                                                                                        <td></td>
+                                                                                    </tr>
+                                                                                ` 
+                                                                            });
+        
+                                                                            bodySolapa2.innerHTML = template
+                                                                        } 
+                                                                    })                                                          
+                                                                })   
+                                                            })                                              
+                                                        }) 
+                                                    }) 
+                                                })  
+                                            }) 
+                                        }) 
+                                    })
+                                })
+                            })
+                        })
+                    })
+                })
+            })    
+
+            sideBar.classList.add("sb--show")
+
+        })
+
         let btnGrabar           = document.querySelector('#btnEnviarFicha')
         btnGrabar.addEventListener('click', e => {
             e.preventDefault()
@@ -304,6 +286,7 @@
                         btnAceptarSwal.disabled     = true
                         btnGrabar.disabled          = true
                         formData.append('orden', id)
+                        formData.append('reparadoEnDomicilio', reparadoEnDomicilio.checked)
         
                         //envia data al back
                         let xhr = new XMLHttpRequest
@@ -315,7 +298,8 @@
                                 btnAceptarSwal.disabled     = false
                                 btnGrabar.disabled          = false        
                                 formData.delete('orden')
-        
+                                formData.delete('reparadoEnDomicilio')
+
                                 switch (respuesta.estado) {
                                     case 'ok':
                                         setTimeout(() => {

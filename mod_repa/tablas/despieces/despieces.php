@@ -47,6 +47,7 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <button id="btnAgregarPiezasModal" class="btn btn-success btn-outline" disabled="">Agregar piezas seleccionadas</button>
                 <button id="btnCerrarModal" type="button" class="btn btn-outline-danger" data-dismiss="modal">Cerrar</button>
             </div>
         </div>

@@ -1,2 +1,3 @@
 includes/config.php
 mod_repa/tablas/productos/adjuntos/*
+mod_repa/procesos/diagnostico/adjuntos/*

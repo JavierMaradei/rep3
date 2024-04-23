@@ -46,42 +46,50 @@
         if($archivoAdjunto['0'] == false && $archivoAdjuntoDespiece['0'] == false){
             if($perfilSirep == 1){
 
-                $query1 = " INSERT INTO rep3_productos (
-                                codigo, 
-                                marca_id, 
-                                familia_id, 
-                                descripcion, 
-                                costo_estimado, 
-                                activo,
-                                fmodificacion,
-                                mono_tri,
-                                canje_flag,
-                                foto,
-                                foto_despiece
-                            ) VALUES (
-                                '{$productoCodigo}', 
-                                '{$productoMarca}', 
-                                '{$productoFamilia}', 
-                                '{$productoDescripcion}', 
-                                '{$productoCosto}', 
-                                '{$productoActivo}', 
-                                '{$formateadaArg}', 
-                                '{$productoMonoTri}', 
-                                '{$productoCanjeable}', 
-                                '{$archivoAdjunto[2]}',     
-                                '{$archivoAdjuntoDespiece[2]}'     
-                            )
-                        ";
-    
-                $sentenciaSQL= $conexion->prepare($query1);
+                $query00 = "SELECT codigo FROM rep3_productos WHERE codigo = '{$productoCodigo}' AND marca_id = '{$productoMarca}'";
+                $sentenciaSQL= $conexion->prepare($query00);
                 $sentenciaSQL->execute();
-    
-                if($sentenciaSQL->rowCount() > 0){
-                    $arrayRespuesta['estado'] = 'Transacción exitosa';
+                $respuesta00 = $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
+
+                if(empty($respuesta00)){
+                    $query1 = " INSERT INTO rep3_productos (
+                                    codigo, 
+                                    marca_id, 
+                                    familia_id, 
+                                    descripcion, 
+                                    costo_estimado, 
+                                    activo,
+                                    fmodificacion,
+                                    mono_tri,
+                                    canje_flag,
+                                    foto,
+                                    foto_despiece
+                                ) VALUES (
+                                    '{$productoCodigo}', 
+                                    '{$productoMarca}', 
+                                    '{$productoFamilia}', 
+                                    '{$productoDescripcion}', 
+                                    '{$productoCosto}', 
+                                    '{$productoActivo}', 
+                                    '{$formateadaArg}', 
+                                    '{$productoMonoTri}', 
+                                    '{$productoCanjeable}', 
+                                    '{$archivoAdjunto[2]}',     
+                                    '{$archivoAdjuntoDespiece[2]}'     
+                                )
+                            ";
+
+                    $sentenciaSQL= $conexion->prepare($query1);
+                    $sentenciaSQL->execute();
+
+                    if($sentenciaSQL->rowCount() > 0){
+                        $arrayRespuesta['estado'] = 'Transacción exitosa';
+                    } else {
+                        $arrayRespuesta['estado'] = "Algo salió mal";
+                    } 
                 } else {
-                    $arrayRespuesta['estado'] = "Algo salió mal";
-                } 
-    
+                    $arrayRespuesta['estado'] = "duplicado";  
+                }
             } else {
                 $arrayRespuesta['estado'] = "Error perfil";  
             }

@@ -77,8 +77,9 @@
         id      = e.target.innerText
         url     = 'mod_repa/configuracion/parametros/parametros_single.php'
         edit    = true
-        showData(id, url, inputs)
-        //$(btnEliminaParametros).show()
+        showDataReloaded(id, url, inputs).then((r) =>{
+            valorParametros.value = r.valorParametros
+        })
     })
 
     //Funcionalidad del botón de Grabar

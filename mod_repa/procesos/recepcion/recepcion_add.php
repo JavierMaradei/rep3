@@ -48,16 +48,33 @@
         $nuevoNroSerie              = $_POST['nuevoNroSerie'] == 'true' ? 'S' : 'N';
         $garantia                   = $_POST['garantia'] == 'true' ? 'S' : 'N';
         $flete                      = $_POST['flete'] == 'true' ? 'S' : 'N';
-        $estado                     = $_POST['lugarRecepcion'] == '2' ? '1' : '2';
         $perfilSirep                = recuperaPerfil($_SESSION['usuario_id']);
         $fecha                      = new DateTime();
         $formateadaArg              = $fecha->format("Y-m-d H:i:s");
         $fechaReparacion            = $fechaReparacion->format("Y-m-d");
         $fechaDefault               = $fechaDefault->format("Y-m-d");
         $productoId                 = recuperaIdProducto($codigoProducto);
-        $productoIdCanje            = recuperaIdProducto($codigoProductoCanje);
         $usuarioId                  = recuperaIdUsuario($_SESSION['usuario_id']);
         $conexion                   = conectar(DB_DSN, DB_USER, DB_PASS);
+
+        switch ($tipoReparacion) {
+            case 'P':
+            case 'R':
+                $estado             = $_POST['lugarRecepcion'] == '2' ? '1' : '2';
+                $armado             = 'N';
+                $productoIdCanje    = 0;
+                break; 
+            case 'C':
+                $estado             = 6;
+                $armado             = 'S';
+                $productoIdCanje    = recuperaIdProducto($codigoProductoCanje);
+                break;       
+            default:
+                $estado             = 2;
+                $armado             = 'N';
+                $productoIdCanje    = 0;
+                break;
+        }    
 
         if($perfilSirep == 1){
 
@@ -167,7 +184,6 @@
                             fanulado, 
                             cajon, 
                             finalizado, 
-                            ffinalizado, 
                             remito_cliente, 
                             estado_id, 
                             lugar_recepcion_id, 
@@ -187,7 +203,9 @@
                             finalizador_id, 
                             usuario_id, 
                             sucursal_id, 
-                            tecnico_id
+                            tecnico_id,
+                            armado,
+                            farmado
                         ) VALUES (
                             '{$formateadaArg}',
                             '{$garantia}',
@@ -207,7 +225,6 @@
                             '{$fechaDefault}',
                             '',
                             'N',
-                            '{$fechaDefault}',
                             '{$remitoCliente}',
                             '{$estado}',
                             '{$lugarRecepcion}',
@@ -227,7 +244,9 @@
                             '0',
                             '{$usuarioId}',
                             '{$sucursalRecepcion}',
-                            '{$tecnico}'
+                            '{$tecnico}',
+                            '{$armado}',
+                            '{$fechaDefault}'
                         )
                     ";
 

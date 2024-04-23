@@ -52,41 +52,50 @@
 
         if($archivoAdjunto['0'] == false && $archivoAdjuntoDespiece['0'] == false){
             if($perfilSirep == 1){
-                $query = "  UPDATE 
-                                rep3_productos 
-                            SET 
-                                codigo          = '{$productoCodigo}', 
-                                marca_id        = '{$productoMarca}', 
-                                familia_id      = '{$productoFamilia}', 
-                                descripcion     = '{$productoDescripcion}', 
-                                costo_estimado  = '{$productoCosto}', 
-                                activo          = '{$productoActivo}',
-                                fmodificacion   = '{$formateadaArg}',
-                                mono_tri        = '{$productoMonoTri}',
-                                canje_flag      = '{$productoCanjeable}',
-                                foto            = '{$archivoAdjunto['2']}',     
-                                foto_despiece   = '{$archivoAdjuntoDespiece['2']}'     
-                            WHERE 
-                                producto_id     = '{$id}'
-                        ";
-    
-                $sentenciaSQL   = $conexion->prepare($query);
-                $respuesta      = $sentenciaSQL->execute();
-    
-                if($respuesta){
-                    $arrayRespuesta['estado'] = "Transacción exitosa";
-                    if($productoSubirFoto != ''){
-                        chdir('./adjuntos');
-                        unlink($respuesta0['foto']);
-                    }
-                    if($productoSubirFotoDespiece != ''){
-                        chdir('./adjuntos');
-                        unlink($respuesta0['foto_despiece']);
-                    }
+
+                $query00 = "SELECT codigo FROM rep3_productos WHERE codigo = '{$productoCodigo}' AND producto_id <> '{$id}' AND marca_id = '{$productoMarca}'";
+                $sentenciaSQL= $conexion->prepare($query00);
+                $sentenciaSQL->execute();
+                $respuesta00 = $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
+
+                if(empty($respuesta00)){
+                    $query = "  UPDATE 
+                                    rep3_productos 
+                                SET 
+                                    codigo          = '{$productoCodigo}', 
+                                    marca_id        = '{$productoMarca}', 
+                                    familia_id      = '{$productoFamilia}', 
+                                    descripcion     = '{$productoDescripcion}', 
+                                    costo_estimado  = '{$productoCosto}', 
+                                    activo          = '{$productoActivo}',
+                                    fmodificacion   = '{$formateadaArg}',
+                                    mono_tri        = '{$productoMonoTri}',
+                                    canje_flag      = '{$productoCanjeable}',
+                                    foto            = '{$archivoAdjunto['2']}',     
+                                    foto_despiece   = '{$archivoAdjuntoDespiece['2']}'     
+                                WHERE 
+                                    producto_id     = '{$id}'
+                            ";
+
+                    $sentenciaSQL   = $conexion->prepare($query);
+                    $respuesta      = $sentenciaSQL->execute();
+
+                    if($respuesta){
+                        $arrayRespuesta['estado'] = "Transacción exitosa";
+                        if($productoSubirFoto != ''){
+                            chdir('./adjuntos');
+                            unlink($respuesta0['foto']);
+                        }
+                        if($productoSubirFotoDespiece != ''){
+                            chdir('./adjuntos');
+                            unlink($respuesta0['foto_despiece']);
+                        }
+                    } else {
+                        $arrayRespuesta['estado'] = "Algo salió mal";
+                    } 
                 } else {
-                    $arrayRespuesta['estado'] = "Algo salió mal";
-                } 
-    
+                    $arrayRespuesta['estado'] = "duplicado";  
+                }
             } else {
                 
                 $arrayRespuesta['estado'] = "Error perfil";  

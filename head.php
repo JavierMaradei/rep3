@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
     <meta name="description" content="Nifty is a responsive admin dashboard template based on Bootstrap 5 framework. There are a lot of useful components.">
     <title>Hidroeléctrica del norte - Intranet</title>
+    <link rel="icon" href="assets/img/logo.jpg" type="image/png"/>
 
     <!-- STYLESHEETS -->
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~--- -->
@@ -53,6 +54,11 @@
 
     <!-- Librería JS -->
     <script src="./js/libreria.js?v=<?php echo uniqid()?>"></script>
+
+    <!--Dropzone-->
+    <script src="js/plugins/dropzone/dropzone.js"></script>
+    <link href="css/plugins/dropzone/basic.css" rel="stylesheet">
+    <link href="css/plugins/dropzone/dropzone.css" rel="stylesheet">
 
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~---
 

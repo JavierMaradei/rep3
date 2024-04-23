@@ -24,7 +24,7 @@
                         rep3_motivos_anulacion ";
 
         if($activo == 'S'){
-            $query .="AND activo = 'S'";
+            $query .="WHERE activo = 'S'";
         } 
         $query .= "order by descripcion asc";          
         $sentenciaSQL= $conexion->prepare($query);

@@ -100,6 +100,230 @@ const CODIGO_LENGTH = 12;
     })
 }
 
+function dataGeneral(){
+    let sideBar                     = document.querySelector('#root')
+    let lugarRecepcionFicha         = document.querySelector('#lugarRecepcionFicha')
+    let sucursalRecepcionFicha      = document.querySelector('#sucursalRecepcionFicha')
+    let tecnicoFicha                = document.querySelector('#tecnicoFicha')
+    let emisorFicha                 = document.querySelector('#emisorFicha')
+    let presupuestadorFicha         = document.querySelector('#presupuestadorFicha')
+    let familiaProductoFicha        = document.querySelector('#familiaProductoFicha')
+    let marcaProductoFicha          = document.querySelector('#marcaProductoFicha')
+    let estadoFicha                 = document.querySelector('#estadoFicha')
+    let estanteFicha                = document.querySelector('#estanteFicha')
+    let diagnosticadorFicha         = document.querySelector('#diagnosticadorFicha')
+    let reparadorFicha              = document.querySelector('#reparadorFicha')
+    let embaladorFicha              = document.querySelector('#embaladorFicha')
+    let reparadorFichaDiagnostico   = document.querySelector('#reparadorFichaDiagnostico')
+    let cerrarSidebar               = document.querySelector('#cerrarSidebar')
+    let solapaDatosFicha            = document.querySelector('#solapaDatosFicha')
+    let solapaFichaTecnica          = document.querySelector('#solapaFichaTecnica')
+    let navDatos                    = document.querySelector('#nav-datos')
+    let navFicha                    = document.querySelector('#nav-ficha')
+    let navCerrar                   = document.querySelector('#nav-cerrar')
+    let bodySolapa2                 = document.querySelector('#bodySolapa2')
+    let productoImagenDespiece      = document.querySelector('#productoImagenDespiece')
+    let btnCancelarFicha            = document.querySelector('#btnCancelarFicha')
+    let formaResolucionFicha        = document.querySelector('#formaResolucionFicha')
+    let codigoProductoCanje         = document.querySelector('#codigoProductoCanje')
+    let descripcionProductoCanje    = document.querySelector('#descripcionProductoCanje')
+    let usuarioCierreFicha          = document.querySelector('#usuarioCierreFicha')
+    
+    btnCancelarFicha.addEventListener('click', e =>{
+        e.preventDefault()
+        sideBar.classList.remove("sb--show")
+    })
+
+    cerrarSidebar.addEventListener('click', e => {
+        e.preventDefault()
+        sideBar.classList.remove("sb--show")
+    })
+
+    $(document).on('click', '.reparacion-item', (e) => {
+        e.preventDefault()
+        id = e.target.innerText     
+        bodySolapa2.innerHTML = ''               
+        navCerrar.classList.remove("active")
+        navCerrar.classList.remove("show")
+
+        navFicha.classList.remove("active")
+        navFicha.classList.remove("show")
+
+        navDatos.classList.add("active")
+        navDatos.classList.add("show")
+
+        cerrarSidebar.classList.remove("active")
+        cerrarSidebar.ariaSelected = "false"
+
+        solapaFichaTecnica.classList.remove("active")
+        solapaFichaTecnica.ariaSelected = "false"
+
+        solapaDatosFicha.classList.add("active")
+        solapaDatosFicha.ariaSelected = "true"
+
+        $('#divDatosCliente').hide()
+        $('#divDatosCanje').hide()
+        $('#divMonitorEmbalaje').hide()
+        $('#divMonitorResolucion').hide()
+        $('#divMonitorDiagnostico').hide()
+        $('#divMonitorPresupuesto').hide()
+        $('#precioDespiece').hide()
+        $('#subTotalDespiece').hide()
+        $('#totalTabla').hide()
+        $('#btnEnviarFicha').hide()
+        
+        //console.log(e.target.innerText)
+        cargaFormasDeRetiro(formaResolucionFicha, 'N').then(() =>{
+            cargaLugaresRecepcion(lugarRecepcionFicha).then(() => {
+                cargaSucursales(sucursalRecepcionFicha).then(() => {
+                    cargaTecnicosFicha(tecnicoFicha).then(() => {
+                        cargaEmisores(presupuestadorFicha).then(() => {
+                            cargaEmisores(emisorFicha).then(() => {
+                                cargaEmisores(usuarioCierreFicha).then(() => {
+                                    cargaFamilias(familiaProductoFicha).then(() => {
+                                        cargaMarcas(marcaProductoFicha).then(() => {
+                                            estadosDeReparacion(estadoFicha).then(() => {
+                                                estanteList(estanteFicha).then(() => {
+                                                    cargaDiagnosticadores(diagnosticadorFicha).then(() => {
+                                                        cargaReparadores(reparadorFicha).then(() => {
+                                                            cargaEmbaladores(embaladorFicha).then(() => {
+                                                                cargaReparadoresActivos(reparadorFichaDiagnostico).then(() => {
+                                                                    datosFichaSolapa1(e.target.innerText).then((respuestaSolapa1) =>{ 
+                                                                        tipoIngreso = respuestaSolapa1.tipo_ingreso
+                                                                        if(respuestaSolapa1.datosCanje != ''){
+                                                                            $('#divDatosCanje').show()
+                                                                            codigoProductoCanje.value         = respuestaSolapa1.datosCanje.codigoProdCanje
+                                                                            descripcionProductoCanje.value    = respuestaSolapa1.datosCanje.descProdCanje
+                                                                        } else {
+                                                                            $('#divDatosCanje').hide()
+                                                                            codigoProductoCanje.value         = respuestaSolapa1.datosCanje.codigoProdCanje
+                                                                            descripcionProductoCanje.value    = respuestaSolapa1.datosCanje.descProdCanje
+                                                                        }
+                                                                        despieceDiagnostico(id, respuestaSolapa1.producto_id).then((respuestaDespieceDiagnostico) =>{
+                                                                            if(respuestaDespieceDiagnostico.productoImagenDespiece != ''){
+                                                                                productoImagenDespiece.src = `mod_repa/tablas/productos/adjuntos/${respuestaDespieceDiagnostico.productoImagenDespiece}`
+                                                                            } else {
+                                                                                productoImagenDespiece.src = '../../hdn/img/sinImagen.png'
+                                                                            }
+                                                                            let template = ''
+                                                                            if(respuestaSolapa1.estado_id > '2'){
+                                                                                if(respuestaSolapa1.tipo_ingreso == 'C'){
+                                                                                    template += `
+                                                                                        <tr class="text-center">
+                                                                                            <td colspan="6">Orden de tipo plan canje, no posee diagnóstico.</td>
+                                                                                        </tr>
+                                                                                    `
+                                                                                    bodySolapa2.innerHTML = template
+            
+                                                                                    totalTabla.innerText = ""
+                                                                                } else {
+                                                                                    if(respuestaDespieceDiagnostico.despiece.length > 0){
+                                                                                        respuestaDespieceDiagnostico.despiece.forEach(element => {
+                                                                                            template += `
+                                                                                                <tr>
+                                                                                                    <td>${element.referencia}</td>
+                                                                                                    <td>${element.codigo}</td>
+                                                                                                    <td>${element.descripcion}</td>
+                                                                                                    <td>${element.cantidad}</td>
+                                                                                                    <td></td>
+                                                                                                    <td></td>
+                                                                                                </tr>
+                                                                                            ` 
+                                                                                        });
+                    
+                                                                                        bodySolapa2.innerHTML = template
+                                                                                    } 
+                                                                                } 
+                                                                            } else {
+                                                                                template += `
+                                                                                    <tr class="text-center">
+                                                                                        <td colspan="6">La orden aún no cuenta con un diagnóstico.</td>
+                                                                                    </tr>
+                                                                                `
+                                                                                bodySolapa2.innerHTML = template
+        
+                                                                                totalTabla.innerText = ""
+                                                                            }                                                                  
+                                                                        })                                                          
+                                                                    })   
+                                                                })                                              
+                                                            }) 
+                                                        }) 
+                                                    })  
+                                                }) 
+                                            }) 
+                                        })
+                                    })    
+                                })
+                            })
+                        })
+                    })
+                })
+            })
+        })    
+
+        sideBar.classList.add("sb--show")
+
+    })
+
+    let btnGrabar           = document.querySelector('#btnEnviarFicha')
+    btnGrabar.addEventListener('click', e => {
+        e.preventDefault()
+        swal({
+            title               : "Confirma la grabación?",
+            type                : "warning",
+            showCancelButton    : true,
+            confirmButtonColor  : "#DD6B55",
+            confirmButtonText   : "Si, confirmar!",
+            cancelButtonText    : "No, Cancelar!",
+            closeOnConfirm      : true,
+            closeOnCancel       : true
+            },
+
+            function (isConfirm) {
+                if (isConfirm) {
+                    let btnAceptarSwal          = document.querySelector('.confirm')
+                    btnAceptarSwal.disabled     = true
+                    btnGrabar.disabled          = true
+                    formData.append('orden', id)
+    
+                    //envia data al back
+                    let xhr = new XMLHttpRequest
+                    xhr.open('POST', 'mod_repa/procesos/reparacion/reparacion_edit.php')
+                    xhr.send(formData)
+                    xhr.addEventListener('load', () => {
+                        if(xhr.status == 200){
+                            let respuesta = JSON.parse(xhr.response)
+                            btnAceptarSwal.disabled     = false
+                            btnGrabar.disabled          = false        
+                            formData.delete('orden')
+    
+                            switch (respuesta.estado) {
+                                case 'ok':
+                                    setTimeout(() => {
+                                        msgTransaccionExitosa()
+                                    }, 500);
+                                    sideBar.classList.remove("sb--show")
+                                    tabla.ajax.reload()
+                                    break;
+                                case 'Sesión expirada':
+                                    sesionExpiradaMensajeFlotante()
+                                    break;
+                                case 'Error perfil':
+                                    msgErrorPerfil()
+                                    break;                        
+                                default:
+                                    msgAlgoNoFueBien()
+                                    break;
+                            }
+                        }
+                    })
+                }
+            }
+        )
+    })
+}
+
 /**
  * Limpiar inputs
  * @param {array} entradas
@@ -537,6 +761,140 @@ function cargaPlantillaFicha(orden, lectura = false){
     })
 }
 
+function busquedaPorProducto(modal, body, titulo){
+    return new Promise(function(resolve, reject) {    
+        $(modal).show()
+        $(body).empty()
+        $(titulo).text('Equipos')
+
+        let template = ''
+        template = `
+            <div class="row">
+                <form id="formModalEquipos">
+                    <div class="row g-3">
+                        <div class="form-group col-sm-4">
+                            <label for="marcaProductoModal">Marca</label>
+                            <select id="marcaProductoModal" class="form-control"></select>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="familiaProductoModal">Familia</label>
+                            <select id="familiaProductoModal" class="form-control"></select>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="buscadorModal">Buscador</label>
+                            <input id="buscadorModal" type="text" class="form-control">
+                        </div>
+                        <div class="form-group col-sm-12 text-center">
+                            <button id="btnBuscarEquipo" type="button" class="btn btn-primary">Buscar
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <th>Código</th>
+                                <th>Descripción</th>
+                                <th>Marca</th>
+                                <th>Familia</th>
+                            </thead>
+                            <tbody id="modalBusquedaTabla"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        `
+        $(body).html(template)
+
+        resolve()
+    })
+
+}
+
+function enviarParametrosModal(marca, familia, buscador, idBodyTabla){
+    let xhr = new XMLHttpRequest
+    xhr.open('GET', 'mod_repa/tablas/productos/productosModal_search.php?marca='+marca+'&familia='+familia+'&buscador='+buscador)
+    xhr.send()
+    xhr.addEventListener('load', () => {
+        if(xhr.status == 200){
+            let respuesta = JSON.parse(xhr.response)
+            let template = ''
+            respuesta.forEach(element => {
+                template += `
+                    <tr>
+                        <td><a class="product-item" href="${element.codigo}">${element.codigo}</td>
+                        <td>${element.descripcion}</td>
+                        <td>${element.marca}</td>
+                        <td>${element.familia}</td>
+                    </tr>
+                `
+            });
+
+            idBodyTabla.innerHTML = template
+        }
+    })
+}
+
+/**
+ * Muestra archivo Adjunto
+ * @param {string} archivo
+ */
+function verImagenes(archivo, divFotos, eliminar = true){
+    let nombreArchivo   = ''
+    let template = ''
+
+    if(archivo.length > 0){
+        template += `<div class="col-md-12 mb-3" >
+                        <div class="card h-100" style="box-shadow: 0 0 1px grey !important;">
+                            <h4 class="card-header bg-red text-white text-center"><i>Adjuntos</i></h4>
+                            <div class="card-body">
+                                <div class="row">
+                    `
+    
+        archivo.forEach(element => {
+            nombreArchivo   = 'mod_repa/procesos/diagnostico/adjuntos/'+element.descripcion
+            template +=`
+                <div class="file-box" style="width: 180px">
+                    <a target="_blank" href="${nombreArchivo}">
+                        <div class="file">
+                            <div class="wordBreak text-center"> ${element.descripcionCorta}</div>
+                            <div class="image" style="display: flex; align-items: center; justify-content: center; height: 30px;">
+                                <i class="fa fa-paperclip fa-2x"></i>
+                            </div>
+                            <div class="file-name" id="${nombreArchivo}">
+                                <div class="text-center">
+            `
+            if(eliminar){
+                template += `
+                                    <btn style="width: 100%" class="btn btn-info btn-xs btnEliminarFoto" value="${element.adjunto_id}">
+                                        Eliminar
+                                    </btn>
+                `
+            } else {
+                template += `       <small>Click para ampliar</small>`
+            }
+            template +=`
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            `
+        });
+
+        template += `
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `
+    }
+
+    divFotos.innerHTML = template
+}
+
 /**
  * Carga los valores de la solapa 1 del detalle de la ficha (Ventana desplegable lateral)
  * @param {string} numero
@@ -550,7 +908,6 @@ function datosFichaSolapa1(numero){
             if(xhr.status == 200){
                 let respuesta = JSON.parse(xhr.response)
                 resolve(respuesta)
-                let template = ''
                 if (Object.entries(respuesta).length === 0) {
                     cleanInputs(inputsFicha)
                 } else {
@@ -560,10 +917,13 @@ function datosFichaSolapa1(numero){
                     $('#tecnicoFicha').val(respuesta.tecnico_id);
                     $('#emisorFicha').val(respuesta.usuario_id);
                     $('#fechaRecepcionFicha').val(respuesta.fechaRecepcionFinal);
-                    respuesta.fdiagnostico  == '1900-01-01 00:00:00' ? $('#fechaDiagnosticoFicha').val('')  : $('#fechaDiagnosticoFicha').val(respuesta.fechaDiagnosticoFinal);
-                    respuesta.freparacion   == '1900-01-01 00:00:00' ? $('#fechaReparacionFicha').val('')   : $('#fechaReparacionFicha').val(respuesta.fechaReparacionFinal);
-                    respuesta.fembalaje     == '1900-01-01 00:00:00' ? $('#fechaEmbalajeFicha').val('')     : $('#fechaEmbalajeFicha').val(respuesta.fechaEmbalajeFinal);
-                    respuesta.fresolucion   == '1900-01-01 00:00:00' ? $('#fechaCierreFicha').val('')       : $('#fechaCierreFicha').val(respuesta.fechaResolucionFinal);
+                    respuesta.fdiagnostico  == '1900-01-01 00:00:00' ? $('#fechaDiagnosticoFicha').val('')      : $('#fechaDiagnosticoFicha').val(respuesta.fechaDiagnosticoFinal);
+                    respuesta.freparacion   == '1900-01-01 00:00:00' ? $('#fechaReparacionFicha').val('')       : $('#fechaReparacionFicha').val(respuesta.fechaReparacionFinal);
+                    respuesta.farmado       == '1900-01-01 00:00:00' ? $('#fechaArmoFicha').val('')             : $('#fechaArmoFicha').val(respuesta.fechaArmadoFinal);
+                    respuesta.fembalaje     == '1900-01-01 00:00:00' ? $('#fechaEmbalajeFicha').val('')         : $('#fechaEmbalajeFicha').val(respuesta.fechaEmbalajeFinal);
+                    respuesta.fresolucion   == '1900-01-01 00:00:00' ? $('#fechaCierreFicha').val('')           : $('#fechaCierreFicha').val(respuesta.fechaResolucionFinal);
+                    respuesta.fresolucion   == '1900-01-01 00:00:00' ? $('#fechaCierreFichaResolucion').val('') : $('#fechaCierreFichaResolucion').val(respuesta.fechaResolucionFinal);
+                    respuesta.fpresupuesto  == '1900-01-01 00:00:00' ? $('#fechaPresupuestoFicha').val('')      : $('#fechaPresupuestoFicha').val(respuesta.fechaPresupuestoFinal);
                     $('#clienteIdFicha').val(respuesta.cliente_id);
                     $('#clienteDireccionFicha').val('');
                     $('#clienteApellidoFicha').val(respuesta.cliente_apellido);
@@ -573,11 +933,15 @@ function datosFichaSolapa1(numero){
                     $('#tipoReparacionFicha').val(respuesta.tipo_ingreso);
                     $('#atencionFicha').val(respuesta.tipo_atencion);
                     respuesta.reclama_garantia  == 'S'  ? $('#garantiaFicha').val('Si') : $('#garantiaFicha').val('No');
-                    respuesta.flete == 'S'              ? $('#fleteFicha').val('Si')    : $('#fleteFicha').val('No');
+                    respuesta.flete             == 'S'  ? $('#fleteFicha').val('Si')    : $('#fleteFicha').val('No');
+                    respuesta.lugar_reparacion  == 'T'  ? $('#reparadoEnTaller').prop('checked', true) : $('#reparadoEnTaller').prop('checked', false);
+                    respuesta.lugar_reparacion  == 'D'  ? $('#reparadoEnDomicilio').prop('checked', true) : $('#reparadoEnDomicilio').prop('checked', false);
                     $('#remitoClienteFicha').val(respuesta.remito_cliente);
                     $('#marcaProductoFicha').val(respuesta.producto_marca);
                     $('#familiaProductoFicha').val(respuesta.producto_familia);
-                    $('#productoFicha').val(respuesta.producto_codigo+' - '+respuesta.producto_descripcion);
+                    $('#codigoProductoFicha').val(respuesta.producto_codigo);
+                    $('#descripcionProductoFicha').val(respuesta.producto_descripcion);
+                    //$('#productoFicha').val(respuesta.producto_codigo+' - '+respuesta.producto_descripcion);
                     $('#serieProductoFicha').val(respuesta.nro_serie);
                     $('#problemaProductoFicha').val(respuesta.problema);
                     $('#observacionesProductoFicha').val(respuesta.observaciones);
@@ -587,8 +951,7 @@ function datosFichaSolapa1(numero){
                     $('#diagnosticadorFicha').val(respuesta.diagnosticador_id);
                     $('#reparadorFicha').val(respuesta.reparador_id);
                     $('#embaladorFicha').val(respuesta.embalador_id);
-                    $('#codigoProductoCanje').val(respuesta.embalador_id);
-                    $('#descripcionProductoCanje').val(respuesta.embalador_id);
+                    $('#usuarioCierreFicha').val(respuesta.finalizador_id);
                     $('#remitoResolucionFicha').val(respuesta.remito_despacho);
                     $('#tipoFichaPresupuesto').val(respuesta.tipo_ingreso);
                     $('#atencionFichaPresupuesto').val(respuesta.tipo_atencion);
@@ -597,12 +960,28 @@ function datosFichaSolapa1(numero){
                     $('#numeroFichaPresupuesto').val(respuesta.numero_presupuesto);
                     $('#observacionesFichaPresupuesto').val(respuesta.observaciones);
                     $('#presupuestadorFicha').val(respuesta.presupuestador_id);
-                    $('#fechaPresupuestoFicha').val(respuesta.fechaPresupuestoFinal);
                     $('#numeroPresupuestoFicha').val(respuesta.numero_presupuesto);
                     $('#cajonPresupuestoFicha').val(respuesta.cajon);
                     $('#costoFichaResolucion').val(respuesta.costo);
+                    $('#costoFicha').val(respuesta.costo);
+                    $('#formaResolucionFicha').val(respuesta.forma_retiro_id);
+                    $('#detalleDiagnosticoFicha').val(respuesta.diagnostico_detalle);
+                    $('#numeroRemitoCambioSucursalFicha').val(respuesta.remito_sucursal);
+                    $('#ordenAnulada').empty();
+                    if(respuesta.anulado == 'S'){
+                        let anulacion   = document.querySelector('#ordenAnulada')
+                        let template    = ''
+                        template += `<div class="alert alert-danger text-center"><b>Orden anulada por ${respuesta.usuarioAnulacion} el ${respuesta.fechaAnulacionFinal} | Motivo: ${respuesta.descMotivoAnulacion}</b></div>`
+                        anulacion.innerHTML = template
+                    }
 
-                    //console.log(respuesta)
+                    let divAdjunto = document.querySelector('#divAdjunto')
+
+                    if(respuesta.adjuntos != ''){
+                        verImagenes(respuesta.adjuntos, divAdjunto, false)
+                    } else {
+                        divAdjunto.innerHTML = ''
+                    }
                 }
             } else {
                 reject()
@@ -893,14 +1272,14 @@ function cargaFormasDeRetiro(campo, activo = 'N'){
  */
 function cargaMotivosAnulacion(select, activo = 'N'){
     let xhr = new XMLHttpRequest
-    xhr.open('GET', 'mod_sirep/admin/tablas/motivosAnulacion/motivosAnulacion_list.php?activo='+activo)
+    xhr.open('GET', 'mod_repa/tablas/motivosAnulacion/motivosAnulacion_list.php?activo='+activo)
     xhr.send()
     xhr.addEventListener('load', () => {
         if(xhr.status == 200){
             let respuesta = JSON.parse(xhr.response)
             let template = '<option value= "">Seleccionar</option>'
             respuesta.forEach(element => {
-                template += `<option value= "${element.motivoanulacion_id}">${element.descripcion}</option>`
+                template += `<option value= "${element.motivo_anulacion_id}">${element.descripcion}</option>`
             })
             select.innerHTML = template
         }
@@ -1760,10 +2139,11 @@ function cargaFormasDeResolucionOSCA(select){
 }
 
 /**
- * Carga el select de sucursales. Admite un solo parámetro con el cual se define el input en donde se cargará
+ * Carga el select de sucursales. 
  * @param {string} select
+ * @param {bool} seleccionar
  */
- function cargaSucursales(select){
+ function cargaSucursales(select, seleccionar = 'S'){
     return new Promise(function(resolve, reject) {
         let xhr = new XMLHttpRequest
         xhr.open('GET', 'mod_repa/tablas/sucursales/sucursales_list.php')
@@ -1772,7 +2152,11 @@ function cargaFormasDeResolucionOSCA(select){
             if(xhr.status == 200){
                 let respuesta = JSON.parse(xhr.response)
                 resolve(respuesta)
-                let template = '<option value= "0" selected>Seleccionar</option>'
+
+                let template = ''
+                if(seleccionar == 'S'){
+                    template += '<option value= "0" selected>Seleccionar</option>'
+                }
                 respuesta.forEach(element => {
                     template += `<option value= "${element.sucursal_id}">${element.descripcion}</option>`
                 })
@@ -1873,7 +2257,7 @@ function cargaFormasDeResolucionOSCA(select){
             if(xhr.status == 200){
                 let respuesta = JSON.parse(xhr.response)
                 resolve(respuesta)
-                let template = '<option value= "0"></option>'
+                let template = '<option value= "0">S/D</option>'
                 respuesta.forEach(element => {
                     template += `<option value= "${element.usuario_id}">${element.apellido+', '+element.nombre}</option>`
                 })
@@ -1898,7 +2282,7 @@ function cargaFormasDeResolucionOSCA(select){
             if(xhr.status == 200){
                 let respuesta = JSON.parse(xhr.response)
                 resolve(respuesta)
-                let template = '<option value= "0"></option>'
+                let template = '<option value= "0">S/D</option>'
                 respuesta.forEach(element => {
                     template += `<option value= "${element.usuario_id}">${element.apellido+', '+element.nombre}</option>`
                 })
@@ -1950,7 +2334,7 @@ function cargaFormasDeResolucionOSCA(select){
             if(xhr.status == 200){
                 let respuesta = JSON.parse(xhr.response)
                 resolve(respuesta)
-                let template = '<option value= "0"></option>'
+                let template = '<option value= "0">S/D</option>'
                 respuesta.forEach(element => {
                     template += `<option value= "${element.usuario_id}">${element.apellido+', '+element.nombre}</option>`
                 })
@@ -1979,32 +2363,6 @@ function cargaFormasDeResolucionOSCA(select){
                 let template = '<option value= "0">Seleccionar</option>'
                 respuesta.forEach(element => {
                     template += `<option value= "${element.familia_id}">${element.descripcion}</option>`
-                })
-                select.innerHTML = template
-            } else {
-                reject()
-            }
-        })
-    })
-}
-
-/**
- * Carga el select de Sucursales
- * @param {string} select
- * @param {string} activo
- */
- function cargaSucursales(select){
-    return new Promise(function(resolve, reject) {
-        let xhr = new XMLHttpRequest
-        xhr.open('GET', 'mod_repa/tablas/sucursales/sucursales_list.php')
-        xhr.send()
-        xhr.addEventListener('load', () => {
-            if(xhr.status == 200){
-                let respuesta = JSON.parse(xhr.response)
-                resolve(respuesta)
-                let template = '<option value= "0">Seleccionar</option>'
-                respuesta.forEach(element => {
-                    template += `<option value= "${element.sucursal_id}">${element.descripcion}</option>`
                 })
                 select.innerHTML = template
             } else {
@@ -2054,7 +2412,7 @@ function cargaFormasDeResolucionOSCA(select){
             if(xhr.status == 200){
                 let respuesta = JSON.parse(xhr.response)
                 resolve(respuesta)
-                let template = '<option value= "0"></option>'
+                let template = '<option value= "0">S/A</option>'
                 respuesta.forEach(element => {
                     template += `<option value= "${element.usuario_id}">${element.apellido}, ${element.nombre}</option>`
                 })
@@ -2163,6 +2521,17 @@ function limitaCaracteres(campo, cant){
         title   : "Perfecto!!!",
         text    : `El registro fue grabado con éxito!`,
         type    : "success",
+    });
+}
+
+/**
+ * Sweet Alert - Registro duplicado
+ */
+function msgRegistroDuplicado(){
+    swal({
+        title   : "Atención:( !",
+        text    : "Registro duplicado.",
+        type    : "warning",
     });
 }
 
@@ -2533,81 +2902,6 @@ function despieceDiagnostico(orden, producto){
             }
         })
     })
-}
-
-/**
- * Muestra archivo Adjunto
- * @param {string} archivo
- */
- function verImagenes(archivo, divFotos, urlDelete, eliminar = true){
-
-    let template =`
-        <div class="file-box">
-            <a target="_blank" href="${archivo}">
-                <div class="file">
-                    <div class="image" style="display: flex; align-items: center; justify-content: center;">
-                        <i class="fa fa-paperclip fa-3x"></i>
-                    </div>
-                    <div class="file-name" id="${archivo}">
-                        <div class="text-center">
-    `
-    if(eliminar){
-        template += `
-                            <a href="#" id="btnEliminarFoto">
-                                Eliminar
-                            </a>
-        `
-    } else {
-        template += `       <small>Click para ampliar</small>`
-    }
-    template +=`
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-    `
-    divFotos.innerHTML = template
-
-    if(eliminar){
-
-        let btnEliminarFoto = document.querySelectorAll('#btnEliminarFoto')
-
-        btnEliminarFoto.forEach(eliminar => {
-            eliminar.addEventListener('click', e => {
-                e.preventDefault()
-                let nombre = e.target.parentNode.parentNode.id
-                //console.log(nombre)
-                function eliminarImagen(nameImg){
-                    let xhr = new XMLHttpRequest
-                    xhr.open('GET', urlDelete)
-                    xhr.send()
-                    xhr.addEventListener('load', () => {
-                        if(xhr.status == 200){
-                            $(e.target.parentNode.parentNode.parentNode.parentNode).remove();
-                        }
-                    })
-                }
-                swal({
-                    title               : "Desea eliminar el archivo definitivamente?",
-                    type                : "warning",
-                    showCancelButton    : true,
-                    confirmButtonColor  : "#DD6B55",
-                    confirmButtonText   : "Si, Eliminar!",
-                    cancelButtonText    : "No, Cancelar!",
-                    closeOnConfirm      : true,
-                    closeOnCancel       : true
-                    },
-
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            eliminarImagen(nombre)
-                        }
-                    }
-                )
-            })
-        })
-    }
 }
 
 /**

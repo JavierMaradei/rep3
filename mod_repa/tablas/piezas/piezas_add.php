@@ -36,36 +36,44 @@
         if($archivoAdjunto['0'] == false){
             if($perfilSirep == 1){
 
-                $query1 = " INSERT INTO rep3_piezas (
-                                codigo, 
-                                referencia,
-                                marca_id, 
-                                descripcion, 
-                                costo, 
-                                activo,
-                                fmodificacion,
-                                foto
-                            ) VALUES (
-                                '{$piezaCodigo}', 
-                                '{$piezaRef}', 
-                                '{$piezaMarca}', 
-                                '{$piezaDescripcion}', 
-                                '{$piezaCosto}', 
-                                '{$piezaActivo}', 
-                                '{$formateadaArg}',  
-                                '{$archivoAdjunto[2]}'     
-                            )
-                        ";
-    
-                $sentenciaSQL= $conexion->prepare($query1);
+                $query00 = "SELECT codigo FROM rep3_piezas WHERE codigo = '{$piezaCodigo}' AND marca_id = '{$piezaMarca}'";
+                $sentenciaSQL= $conexion->prepare($query00);
                 $sentenciaSQL->execute();
-    
-                if($sentenciaSQL->rowCount() > 0){
-                    $arrayRespuesta['estado'] = 'Transacción exitosa';
+                $respuesta00 = $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
+
+                if(empty($respuesta00)){
+                    $query1 = " INSERT INTO rep3_piezas (
+                                    codigo, 
+                                    referencia,
+                                    marca_id, 
+                                    descripcion, 
+                                    costo, 
+                                    activo,
+                                    fmodificacion,
+                                    foto
+                                ) VALUES (
+                                    '{$piezaCodigo}', 
+                                    '{$piezaRef}', 
+                                    '{$piezaMarca}', 
+                                    '{$piezaDescripcion}', 
+                                    '{$piezaCosto}', 
+                                    '{$piezaActivo}', 
+                                    '{$formateadaArg}',  
+                                    '{$archivoAdjunto[2]}'     
+                                )
+                            ";
+
+                    $sentenciaSQL= $conexion->prepare($query1);
+                    $sentenciaSQL->execute();
+
+                    if($sentenciaSQL->rowCount() > 0){
+                        $arrayRespuesta['estado'] = 'Transacción exitosa';
+                    } else {
+                        $arrayRespuesta['estado'] = "Algo salió mal";
+                    } 
                 } else {
-                    $arrayRespuesta['estado'] = "Algo salió mal";
-                } 
-    
+                    $arrayRespuesta['estado'] = "duplicado";  
+                }   
             } else {
                 $arrayRespuesta['estado'] = "Error perfil";  
             }

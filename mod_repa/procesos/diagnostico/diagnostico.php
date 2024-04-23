@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="dropdown col-md-4">
                     <button class="btn btn-warning btn-sm" type="button" id="btnPrefiltro">
-                        <i class="fa fa-search"> Prefiltro</i>
+                        <i class="fa fa-search"></i> Prefiltro
                     </button>
                 </div>
                 <div class="col-md-8 text-end">

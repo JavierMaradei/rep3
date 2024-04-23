@@ -15,10 +15,12 @@
     //Creamos la conexión
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         
-        $code       = $_GET['code'];
-        $conexion   = conectar(DB_DSN, DB_USER, DB_PASS);
+        $code           = json_decode($_GET['code']);
+        $conexion       = conectar(DB_DSN, DB_USER, DB_PASS);
+        $arrayRespuesta = array();
         
-        $query      =   "SELECT 
+        foreach ($code as $value) {
+            $query      =   "SELECT 
                             rep3_piezas.pieza_id, 
                             rep3_piezas.codigo, 
                             rep3_piezas.marca_id, 
@@ -33,14 +35,17 @@
                         ON 
                             rep3_piezas.marca_id = rep3_marcas.marca_id
                         WHERE 
-                            rep3_piezas.codigo = '{$code}'
+                            rep3_piezas.codigo = '{$value}'
                         AND
                             rep3_piezas.activo = 'S'
                     ";           
-        $sentenciaSQL   = $conexion->prepare($query);
-        $sentenciaSQL   -> execute();
-        $resultado      = $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
-
+            $sentenciaSQL   = $conexion->prepare($query);
+            $sentenciaSQL   -> execute();
+            $resultado      = $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
+            
+            array_push($arrayRespuesta, $resultado);
+        }
+        
         header("Content-type: aplication/json");
-        echo json_encode($resultado, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
+        echo json_encode($arrayRespuesta, JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
     }

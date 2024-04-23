@@ -3,11 +3,13 @@
     let sideBar                 = document.querySelector('#root')
     let chkTodasLasSucursales   = document.querySelector('#chkTodasLasSucursales')
     let filtro                  = [chkTodasLasSucursales]
-    let id                      = ''
     let modal                   = document.querySelector('#modal')
     let modalBody               = document.querySelector('#body')
     let modalTitulo             = document.querySelector('#titulo')
+    let btnCloseModal           = document.querySelector('#btnCloseModal')
+    let btnCerrarModal          = document.querySelector('#btnCerrarModal')
     let producto                = ''
+    let id                      = ''
 
     //Declaración del complemento DataTable
     let tabla = $('#tabla_presupuesto').DataTable( {
@@ -152,39 +154,51 @@
 
     accionesPrefiltro()
 
+    btnCloseModal.addEventListener('click', e =>{
+        e.preventDefault()
+        $('#modal').hide()
+    })
+
+    btnCerrarModal.addEventListener('click', e =>{
+        e.preventDefault()
+        $('#modal').hide()
+    })
+
     setTimeout(() => {
-        let btnGrabar                       = document.querySelector('#btnEnviarFicha')
-        let btnCancelarFicha                = document.querySelector('#btnCancelarFicha')
-        let codigoProductoCanjePresupuesto  = document.querySelector('#codigoProductoCanjePresupuesto')
+        let btnGrabar                           = document.querySelector('#btnEnviarFicha')
+        let btnCancelarFicha                    = document.querySelector('#btnCancelarFicha')
+        let lugarRecepcionFicha                 = document.querySelector('#lugarRecepcionFicha')
+        let sucursalRecepcionFicha              = document.querySelector('#sucursalRecepcionFicha')
+        let tecnicoFicha                        = document.querySelector('#tecnicoFicha')
+        let emisorFicha                         = document.querySelector('#emisorFicha')
+        let familiaProductoFicha                = document.querySelector('#familiaProductoFicha')
+        let marcaProductoFicha                  = document.querySelector('#marcaProductoFicha')
+        let estadoFicha                         = document.querySelector('#estadoFicha')
+        let estanteFicha                        = document.querySelector('#estanteFicha')
+        let diagnosticadorFicha                 = document.querySelector('#diagnosticadorFicha')
+        let reparadorFicha                      = document.querySelector('#reparadorFicha')
+        let embaladorFicha                      = document.querySelector('#embaladorFicha')
+        let reparadorFichaDiagnostico           = document.querySelector('#reparadorFichaDiagnostico')
+        let cerrarSidebar                       = document.querySelector('#cerrarSidebar')
+        let solapaDatosFicha                    = document.querySelector('#solapaDatosFicha')
+        let solapaFichaTecnica                  = document.querySelector('#solapaFichaTecnica')
+        let navDatos                            = document.querySelector('#nav-datos')
+        let navFicha                            = document.querySelector('#nav-ficha')
+        let navCerrar                           = document.querySelector('#nav-cerrar')
+        let bodySolapa2                         = document.querySelector('#bodySolapa2')
+        let productoImagenDespiece              = document.querySelector('#productoImagenDespiece')
+        let totalTabla                          = document.querySelector('#totalTabla')
+        let tipoFichaPresupuesto                = document.querySelector('#tipoFichaPresupuesto')
+        let atencionFichaPresupuesto            = document.querySelector('#atencionFichaPresupuesto')
+        let numeroFichaPresupuesto              = document.querySelector('#numeroFichaPresupuesto')
+        let cargoFichaPresupuesto               = document.querySelector('#cargoFichaPresupuesto')
+        let costoFichaPresupuesto               = document.querySelector('#costoFichaPresupuesto')
+        let observacionesFichaPresupuesto       = document.querySelector('#observacionesFichaPresupuesto')
+        let codigoProductoCanjePresupuesto      = document.querySelector('#codigoProductoCanjePresupuesto')
         let descripcionProductoCanjePresupuesto = document.querySelector('#descripcionProductoCanjePresupuesto')
-        let lugarRecepcionFicha             = document.querySelector('#lugarRecepcionFicha')
-        let sucursalRecepcionFicha          = document.querySelector('#sucursalRecepcionFicha')
-        let tecnicoFicha                    = document.querySelector('#tecnicoFicha')
-        let emisorFicha                     = document.querySelector('#emisorFicha')
-        let familiaProductoFicha            = document.querySelector('#familiaProductoFicha')
-        let marcaProductoFicha              = document.querySelector('#marcaProductoFicha')
-        let estadoFicha                     = document.querySelector('#estadoFicha')
-        let estanteFicha                    = document.querySelector('#estanteFicha')
-        let diagnosticadorFicha             = document.querySelector('#diagnosticadorFicha')
-        let reparadorFicha                  = document.querySelector('#reparadorFicha')
-        let embaladorFicha                  = document.querySelector('#embaladorFicha')
-        let reparadorFichaDiagnostico       = document.querySelector('#reparadorFichaDiagnostico')
-        let cerrarSidebar                   = document.querySelector('#cerrarSidebar')
-        let solapaDatosFicha                = document.querySelector('#solapaDatosFicha')
-        let solapaFichaTecnica              = document.querySelector('#solapaFichaTecnica')
-        let navDatos                        = document.querySelector('#nav-datos')
-        let navFicha                        = document.querySelector('#nav-ficha')
-        let navCerrar                       = document.querySelector('#nav-cerrar')
-        let bodySolapa2                     = document.querySelector('#bodySolapa2')
-        let productoImagenDespiece          = document.querySelector('#productoImagenDespiece')
-        let totalTabla                      = document.querySelector('#totalTabla')
-        let tipoFichaPresupuesto            = document.querySelector('#tipoFichaPresupuesto')
-        let atencionFichaPresupuesto        = document.querySelector('#atencionFichaPresupuesto')
-        let numeroFichaPresupuesto          = document.querySelector('#numeroFichaPresupuesto')
-        let cargoFichaPresupuesto           = document.querySelector('#cargoFichaPresupuesto')
-        let costoFichaPresupuesto           = document.querySelector('#costoFichaPresupuesto')
-        let observacionesFichaPresupuesto   = document.querySelector('#observacionesFichaPresupuesto')
-        let buscarProductoCanjePresupuesto  = document.querySelector('#buscarProductoCanjePresupuesto')
+        let buscarProductoCanjePresupuesto      = document.querySelector('#buscarProductoCanjePresupuesto')                    
+
+        limitaCaracteres(codigoProductoCanjePresupuesto, CODIGO_LENGTH)
 
         function grabarDatos(){
             if(cargoFichaPresupuesto.value != '0'){
@@ -264,15 +278,7 @@
             solapaDatosFicha.classList.add("active")
             solapaDatosFicha.ariaSelected = "true"
 
-            cerrarSidebar.addEventListener('click', e => {
-                e.preventDefault()
-                sideBar.classList.remove("sb--show")
-            })
-
             $('#divDatosCliente').hide()
-            $('#divDatosRecepcion').hide()
-            $('#divDatosCanje').hide()
-            $('#divDatosRemito').hide()
             $('#divDatosResolucion').hide()
             $('#divDatosPresupuesto').hide()
             $('#divMonitorEmbalaje').hide()
@@ -355,6 +361,11 @@
 
         })
 
+        cerrarSidebar.addEventListener('click', e => {
+            e.preventDefault()
+            sideBar.classList.remove("sb--show")
+        })
+
         btnGrabar.addEventListener('click', e => {
             e.preventDefault()
 
@@ -394,7 +405,7 @@
                         } else {
                             descripcionProductoCanjePresupuesto.value  = ''
                             codigoProdCanje.value       = ''
-                            alert('Código inexistente o inválido :(')
+                            swal('Atención', 'Código inexistente o inválido :(', 'warning')
                         }
                     }
                 })

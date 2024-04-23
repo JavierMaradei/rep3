@@ -48,10 +48,10 @@
                         <div class="dropdown">
 
                             <!-- Toggler -->
-                            <button class="header__btn btn btn-icon btn-sm" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-label="Megamenu dropdown" aria-expanded="false">
+<!--                             <button class="header__btn btn btn-icon btn-sm" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-label="Megamenu dropdown" aria-expanded="false">
                                 <i class="demo-psi-layout-grid"></i>
                             </button>
-
+ -->
                             <!-- Mega Dropdown Menu -->
                             <div class="dropdown-menu dropdown-menu-end p-3 mega-dropdown">
                                 <div class="row">
@@ -193,7 +193,7 @@
                         <div class="dropdown">
 
                             <!-- Toggler -->
-                            <button class="header__btn btn btn-icon btn-sm" type="button" data-bs-toggle="dropdown" aria-label="Notification dropdown" aria-expanded="false">
+<!--                             <button class="header__btn btn btn-icon btn-sm" type="button" data-bs-toggle="dropdown" aria-label="Notification dropdown" aria-expanded="false">
                                 <span class="d-block position-relative">
                                     <i class="demo-psi-bell"></i>
                                     <span class="badge badge-super rounded bg-danger p-1">
@@ -202,7 +202,7 @@
                                     </span>
                                 </span>
                             </button>
-
+ -->
                             <!-- Notification dropdown menu -->
                             <div class="dropdown-menu dropdown-menu-end w-md-300px">
                                 <div class="border-bottom px-3 py-2 mb-3">
@@ -282,9 +282,9 @@
                         <div class="dropdown">
 
                             <!-- Toggler -->
-                            <button class="header__btn btn btn-icon btn-sm" type="button" data-bs-toggle="dropdown" aria-label="User dropdown" aria-expanded="false">
+                            <!-- <button class="header__btn btn btn-icon btn-sm" type="button" data-bs-toggle="dropdown" aria-label="User dropdown" aria-expanded="false">
                                 <i class="demo-psi-male"></i>
-                            </button>
+                            </button> -->
 
                             <!-- User dropdown menu -->
                             <div class="dropdown-menu dropdown-menu-end w-md-450px">
@@ -356,9 +356,9 @@
                         <!-- End - User dropdown -->
 
                         <!-- Sidebar Toggler -->
-                        <button class="sidebar-toggler header__btn btn btn-icon btn-sm" type="button" aria-label="Sidebar button">
+                        <!-- <button class="sidebar-toggler header__btn btn btn-icon btn-sm" type="button" aria-label="Sidebar button">
                             <i class="demo-psi-dot-vertical"></i>
-                        </button>
+                        </button> -->
 
                     </div>
                 </div>

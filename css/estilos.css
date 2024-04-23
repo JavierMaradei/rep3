@@ -42,3 +42,33 @@ label.form-label {
 .dataBasica {
     width: 100%;
 }
+
+.dropzoneDiagnostico {
+    overflow-y: scroll;
+    min-height: 245px !important;
+    max-height: 245px;
+}
+
+.wordBreak {
+    word-break: normal;
+    white-space: pre-line;
+}
+
+.file {
+    border: 1px solid #e7eaec;
+    padding: 0;
+    background-color: #ffffff;
+    position: relative;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+
+.file .file-name {
+    padding: 10px;
+    background-color: #f8f8f8;
+    border-top: 1px solid #e7eaec;
+}
+
+table {
+    white-space: nowrap;
+}

@@ -25,7 +25,7 @@
                         <select id="lugarRecepcion" class="form-select"></select>
                     </div>
                     <div class="col-sm-12 mb-2">
-                        <label for="tipoReparacion" class="form-label">Tipo de Reparación</label>
+                        <label for="tipoReparacion" class="form-label">Tipo de ingreso</label>
                         <select id="tipoReparacion" class="form-select"><?php echo tiposReparacion(); ?></select>
                     </div>
                     <div class="col-sm-12 mb-2">
@@ -79,49 +79,51 @@
                         <input type="text" id="searchCliente" class="form-control" placeholder="Ingrese Id, nombre, apellido, telefono, email o calle">
                         <button class="btn btn-outline-secondary" type="button" id="btnBuscarCliente">Buscar cliente</button>
                     </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="clienteId" class="form-label">ID Cliente</label>
-                        <input type="text" class="form-control" id="clienteId" readonly> 
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="clienteApellido" class="form-label">Apellido</label>
-                        <input type="text" class="form-control" id="clienteApellido"> 
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="clienteNombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="clienteNombre"> 
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="clienteTelefono" class="form-label">Teléfono</label>
-                        <input type="text" class="form-control" id="clienteTelefono"> 
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="clienteCelular" class="form-label">Celular</label>
-                        <input type="text" class="form-control" id="clienteCelular"> 
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="clienteEmail" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="clienteEmail"> 
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="provincia" class="form-label">Provincia</label>
-                        <select class="form-select" id="provincia"></select>
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="localidad" class="form-label">Localidad</label>
-                        <select class="form-select" id="localidad"></select>
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="calle" class="form-label">Calle</label>
-                        <input type="text" class="form-control" id="calle"> 
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="numeroCalle" class="form-label">Número</label>
-                        <input type="text" class="form-control" id="numeroCalle"> 
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <label for="dpto" class="form-label">Dpto.</label>
-                        <input type="text" class="form-control" id="dpto"> 
+                    <div class="row">
+                        <div class="col-sm-12 mb-2">
+                            <label for="clienteId" class="form-label">ID</label>
+                            <input type="text" class="form-control" id="clienteId" readonly> 
+                        </div>
+                        <div class="col-sm-12 mb-2">
+                            <label for="clienteApellido" class="form-label">Apellido</label>
+                            <input type="text" class="form-control" id="clienteApellido"> 
+                        </div>
+                        <div class="col-sm-12 mb-2">
+                            <label for="clienteNombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="clienteNombre"> 
+                        </div>
+                        <div class="col-sm-6 mb-2">
+                            <label for="clienteTelefono" class="form-label">Teléfono</label>
+                            <input type="text" class="form-control" id="clienteTelefono"> 
+                        </div>
+                        <div class="col-sm-6 mb-2">
+                            <label for="clienteCelular" class="form-label">Celular</label>
+                            <input type="text" class="form-control" id="clienteCelular"> 
+                        </div>
+                        <div class="col-sm-12 mb-2">
+                            <label for="clienteEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="clienteEmail"> 
+                        </div>
+                        <div class="col-sm-6 mb-2">
+                            <label for="provincia" class="form-label">Provincia</label>
+                            <select class="form-select" id="provincia"></select>
+                        </div>
+                        <div class="col-sm-6 mb-2">
+                            <label for="localidad" class="form-label">Localidad</label>
+                            <select class="form-select" id="localidad"></select>
+                        </div>
+                        <div class="col-sm-12 mb-2">
+                            <label for="calle" class="form-label">Calle</label>
+                            <input type="text" class="form-control" id="calle"> 
+                        </div>
+                        <div class="col-sm-6 mb-2">
+                            <label for="numeroCalle" class="form-label">Número</label>
+                            <input type="text" class="form-control" id="numeroCalle"> 
+                        </div>
+                        <div class="col-sm-6 mb-2">
+                            <label for="dpto" class="form-label">Dpto.</label>
+                            <input type="text" class="form-control" id="dpto"> 
+                        </div>
                     </div>
                 </div>
             </div>

@@ -37,8 +37,8 @@
             $idCanje            = recuperaIdProducto($codigoProductoCanjePresupuesto);
             break;       
         default:
-            $estadoReparacion   = 5;
-            $armado             = 'N';
+            $estadoReparacion   = 6;
+            $armado             = 'S';
             $idCanje            = 0;
             break;
     }

@@ -16,8 +16,13 @@
     let btnDespieceProducto     = document.querySelector('#btnDespieceProducto')
     let btnCloseModal           = document.querySelector('#btnCloseModal')
     let btnCerrarModal          = document.querySelector('#btnCerrarModal')
+    let btnAgregarPiezasModal   = document.querySelector('#btnAgregarPiezasModal')
     let edit                    = false//flag de edición de registro existente o nuevo registro
     let id                      = ''
+    let bodyTablaModalPiezas    = ''
+    let tablaModalPiezas        = ''
+    let listaPieza              = [];
+    let listaPiezaDuplicada     = [];
     let arrayVal = {
         productoId          : {},
         productoCodigo      : {required: true, maxlength: 30, validated: true},
@@ -31,14 +36,8 @@
         productoCanjeable   : {validated: true}
     }
 
-    btnGrabaDespiece.disabled = true
-
-    /* limitaCaracteres(productoCodigo, 30)
-    limitaCaracteres(productoDescripcion, 100)
-    limitaCaracteres(productoCosto, 10)
-    cargaFamilias(productoFamilia)
-    cargaMarcas(productoMarca)
-    productoActivo.checked = true */
+    btnGrabaDespiece.disabled   = true
+    btnBuscarPieza.disabled     = true
 
     //Declaración del complemento DataTable
     let tabla = $('#tabla_productos').DataTable( {
@@ -171,7 +170,8 @@
         tablaPiezas.clear().draw()
         formData.delete('detalleProductoDespiece')
         formData.delete('productoId')
-        btnGrabaDespiece.disabled = true
+        btnGrabaDespiece.disabled   = true
+        btnBuscarPieza.disabled     = true
     }
 
     function busquedaPorPieza(){
@@ -184,15 +184,15 @@
             template = `
                 <div class="row">
                     <div class="row g-3">
-                        <div class="form-group col-sm-4">
+                        <div class="form-group col-sm-2">
+                        </div>
+                        <div class="form-group col-sm-8">
                             <label for="marcaPiezaModal">Marca</label>
                             <select id="marcaPiezaModal" class="form-control"></select>
                         </div>
-                        <div class="form-group col-sm-8">
-                            <label for="buscadorModal">Buscador por descripción</label>
-                            <input id="buscadorModal" type="text" class="form-control">
+                        <div class="form-group col-sm-2">
                         </div>
-                        <div class="form-group col-sm-12 text-center">
+                        <div class="form-group col-sm-12 text-center mb-4">
                             <button id="btnBuscarPiezaModal" type="button" class="btn btn-primary">Buscar
                         </div>
                     </div>
@@ -200,14 +200,15 @@
                 <div class="col-sm-12">
                     <div class="row">
                         <div class="table-responsive-sm">
-                            <table class="table table-striped table-hover table-sm">
+                            <table class="table table-striped table-hover table-sm" id="tablaModalPiezas">
                                 <thead>
+                                    <th>Selección</th>
                                     <th>Código</th>
                                     <th>Descripción</th>
                                     <th>Referencia</th>
                                     <th>Marca</th>
                                 </thead>
-                                <tbody id="modalBusquedaTabla"></tbody>
+                                <tbody id="bodyTablaModalPiezas"></tbody>
                             </table>
                         </div>
                     </div>
@@ -220,26 +221,26 @@
 
     }
 
-    function enviarParametrosModal(marca, buscador, idBodyTabla){
+    function enviarParametrosModal(marca, tablaModalPiezas){
         let xhr = new XMLHttpRequest
-        xhr.open('GET', 'mod_repa/tablas/despieces/piezasModal_search.php?marca='+marca+'&buscador='+buscador)
+        xhr.open('GET', 'mod_repa/tablas/despieces/piezasModal_search.php?marca='+marca)
         xhr.send()
         xhr.addEventListener('load', () => {
+            tablaModalPiezas.clear().draw() // Primero la vacío de registros preexistentes
             if(xhr.status == 200){
                 let respuesta = JSON.parse(xhr.response)
-                let template = ''
+                let checks = `<input type="checkbox" class="checkPieza">`
                 respuesta.forEach(element => {
-                    template += `
-                        <tr>
-                            <td><a class="pieza-item" href="${element.codigo}">${element.codigo}</td>
-                            <td>${element.descripcion}</td>
-                            <td>${element.referencia}</td>
-                            <td>${element.marca}</td>
-                        </tr>
-                    `
+                    tablaModalPiezas.row.add([
+                        checks,
+                        element.codigo,
+                        element.descripcion,
+                        element.referencia,
+                        element.marca
+                    ])
                 });
 
-                idBodyTabla.innerHTML = template
+                tablaModalPiezas.draw()
             }
         })
     }
@@ -261,9 +262,11 @@
         habilitarBtnGrabar()
     } );
 
-    $(document).on( 'click', '.pieza-item', e => {
+/*     $(document).on( 'click', '.pieza-item', e => {
         e.preventDefault()
         let seleccion = e.target.innerText
+        listaPieza.push(seleccion)
+
         let stateSeleccion = false
         //validar si ya existe ese código en el despiece
         tablaPiezas.rows().data().each(function (value) {
@@ -277,8 +280,10 @@
         if(stateSeleccion == false){
             $('#modalDespiece').hide()
 
+            listaPieza = JSON.stringify(listaPieza)
+
             let xhr = new XMLHttpRequest
-            xhr.open('GET', 'mod_repa/tablas/piezas/piezas_search.php?code='+seleccion)//Envío la información del filtro
+            xhr.open('GET', 'mod_repa/tablas/piezas/piezas_search.php?code='+listaPieza)//Envío la información del filtro
             xhr.send()
     
             xhr.addEventListener('load', () => { //Cuando me vuelven los datos de la query armo la tabla
@@ -297,35 +302,136 @@
                     tablaPiezas.draw() //Imprimo la tabla en pantalla
                 }
             })
+            habilitarBtnGrabar()
         } else {
             alert('Código existente')
+        } 
+    } ); */
+
+    btnAgregarPiezasModal.addEventListener('click', e =>{
+        e.preventDefault()
+
+        let stateSeleccion  = false
+        listaPieza          = [];
+        listaPiezaDuplicada = [];
+        let data            = tablaModalPiezas.rows().nodes();
+
+        data.each(function (value, index) {
+
+            let codigoPieza = value.cells[1].innerText;
+            let check       = value.cells[0].children[0].checked;
+
+            if (check){
+                listaPieza.push(codigoPieza)
+            }            
+        }); 
+
+        tablaPiezas.rows().data().each(function (value) {
+            let codigo = value[1];
+
+            listaPieza.forEach(element => {
+                if(codigo == element){
+                    stateSeleccion = true
+                    listaPiezaDuplicada.push(codigo)
+                }
+            }); 
+        });
+
+        if(stateSeleccion == false){
+            $('#modalDespiece').hide()
+
+            listaPieza = JSON.stringify(listaPieza)
+
+            let xhr = new XMLHttpRequest
+            xhr.open('GET', 'mod_repa/tablas/piezas/piezas_search.php?code='+listaPieza)//Envío la información del filtro
+            xhr.send()
+    
+            xhr.addEventListener('load', () => { //Cuando me vuelven los datos de la query armo la tabla
+                if(xhr.status == 200){
+                    let respuesta = JSON.parse(xhr.response)
+                    respuesta.forEach(element => {
+                        tablaPiezas.row.add([ //Agrego las nuevas filas
+                            element.pieza_id,
+                            element.codigo,
+                            element.descripcion,
+                            element.referencia,
+                            element.marca,
+                            element.pieza_id
+                        ])
+                    });
+                    tablaPiezas.draw() //Imprimo la tabla en pantalla 
+                }
+            })
+            habilitarBtnGrabar()
+        } else {
+            let piezasDuplicadasmsj = JSON.stringify(listaPiezaDuplicada)
+
+            swal('Atención', `Codigo/s duplicado/s: ${piezasDuplicadasmsj}`, 'warning')
         }
-        habilitarBtnGrabar()
-    } );
+    })
 
     btnBuscarPieza.addEventListener('click', e => {
         e.preventDefault()
+        bodyTablaModalPiezas    = ''
+        listaPieza              = [];
+
+        btnAgregarPiezasModal.disabled = true
         busquedaPorPieza().then(() => {
             let marcaPiezaModal         = document.querySelector('#marcaPiezaModal')
-            let buscadorModal           = document.querySelector('#buscadorModal')
             let btnBuscarPiezaModal     = document.querySelector('#btnBuscarPiezaModal')
-            let modalBusquedaTabla      = document.querySelector('#modalBusquedaTabla')
+            bodyTablaModalPiezas        = document.querySelector('#bodyTablaModalPiezas')
+
+            tablaModalPiezas = $('#tablaModalPiezas').DataTable( {
+                order: [[2,'asc']],
+                processing: true,
+                paging: true,
+                bLengthChange: true,
+                iDisplayLength: 10,
+                bAutoWidth: false,
+                /* buttons: [
+                    {extend: 'excel', title: 'Lista de piezas', text: 'Exportar a Excel'}  
+                ], */
+                language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Cargando...</span> ',
+                    "processing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Procesando...</span>',
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+            })
+
+            $(document).on( 'click', '.checkPieza', e => {
+                let contador    = 0
+                
+                $(tablaModalPiezas.$('input[type="checkbox"]:checked').each(function () {
+                    contador = ++contador
+                 }));
+        
+                if(contador > 0){
+                    btnAgregarPiezasModal.disabled = false
+                } else {
+                    btnAgregarPiezasModal.disabled = true
+                }
+            } );
 
             cargaMarcas(marcaPiezaModal)
 
-            let filtros = document.querySelectorAll('#marcaPiezaModal, #buscadorModal')
-            filtros.forEach(element => {
-                element.addEventListener('keyup', e => {
-                    e.preventDefault()
-                    if(e.keyCode === 13){
-                        btnBuscarPiezaModal.click()
-                    }
-                })
-            });
-
             btnBuscarPiezaModal.addEventListener('click', e => {
                 e.preventDefault()
-                enviarParametrosModal(marcaPiezaModal.value, buscadorModal.value, modalBusquedaTabla)
+                enviarParametrosModal(marcaPiezaModal.value, tablaModalPiezas)
             })
         })
     })
@@ -343,7 +449,8 @@
     //Tomo el link de la tabla con el ID del registro
     $(document).on('click', '.task-item', (e) => {
         e.preventDefault()
-        btnGrabaDespiece.disabled = true
+        btnGrabaDespiece.disabled   = true
+        btnBuscarPieza.disabled     = false
         cleanInputs(inputs)
         id= e.target.innerText
         url = 'mod_repa/tablas/productos/productos_single.php'
@@ -374,15 +481,15 @@
         let template = ''
         template = `
                     <div class="col-sm-12 text-center dataBasica">
-                        <img id="productoImagenDespiece" src="../../hdn/img/sinImagen.png" alt="Despiece Producto" class="imagen-escalada">
+                        <img id="productoDespiece" src="../../hdn/img/sinImagen.png" alt="Despiece Producto" class="imagen-escalada">
                     </div>
                 `
         url = 'mod_repa/tablas/productos/productos_single.php'
         showDataReloaded(id, url, inputs).then((r) => {
             if(r.productoImagenDespiece != ''){
-                productoImagenDespiece.src = `mod_repa/tablas/productos/adjuntos/${r.productoImagenDespiece}`
+                productoDespiece.src = `mod_repa/tablas/productos/adjuntos/${r.productoImagenDespiece}`
             } else {
-                productoImagenDespiece.src = '../../hdn/img/sinImagen.png'
+                productoDespiece.src = '../../hdn/img/sinImagen.png'
             }
         })
 

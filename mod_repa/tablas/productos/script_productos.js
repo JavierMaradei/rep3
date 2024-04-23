@@ -98,14 +98,15 @@
 
     function limpieza(){
         cleanInputs(inputs)
-        productoMarca.value= 0
-        productoFamilia.value = 0
-        edit = false
+        productoMarca.value         = 0
+        productoFamilia.value       = 0
+        productoFamilia.value       = 0
+        edit                        = false
         $(btnEliminaProducto).hide()
-        productoActivo.checked = true
-        id = ''
-        productoImagen.src = '../../hdn/img/sinImagen.png'
-        btnDespieceProducto.hidden = true
+        productoActivo.checked      = true
+        id                          = ''
+        productoImagen.src          = '../../hdn/img/sinImagen.png'
+        btnDespieceProducto.hidden  = true
     }
 
     btnDespieceProducto.addEventListener('click', e =>{
@@ -222,7 +223,6 @@
             
             estado.then((respuesta) => {
                 switch (respuesta.estado) {
-
                     case 'Transacción exitosa':
                         msgTransaccionExitosa()
                         tabla.ajax.reload();
@@ -231,21 +231,20 @@
                         cleanFormData(inputs, formData)
                         formData.delete('archivoAdjunto')
                         formData.delete('archivoAdjuntoDespiece')
-                        productoActivo.checked = true
-                        productoImagen.src = '../../hdn/img/sinImagen.png'
-                        id = ''
-                        edit = false
+                        productoActivo.checked  = true
+                        productoMarca.value     = 0
+                        productoFamilia.value   = 0
+                        productoImagen.src      = '../../hdn/img/sinImagen.png'
+                        id                      = ''
+                        edit                    = false
                         break;
-
                     case 'Sesión expirada':
                         sesionExpiradaMensajeFlotante()
                         break;
-
                     case 'Error perfil':
                         msgErrorPerfil()
                         cleanFormData(inputs, formData)
                         break;
-
                     case 'Error adjunto':
                         swal({
                             title   : "Error :( !",
@@ -256,7 +255,10 @@
                         formData.delete('archivoAdjunto')
                         formData.delete('archivoAdjuntoDespiece')
                         break;
-
+                    case 'duplicado':
+                        msgRegistroDuplicado()
+                        cleanFormData(inputs, formData)
+                        break;
                     default:
                         msgAlgoNoFueBien()
                         cleanFormData(inputs, formData)
@@ -304,9 +306,11 @@
                                             $(btnEliminaProducto).hide()
                                             cleanInputs(inputs)
                                             cleanFormData(inputs, formData)
-                                            productoActivo.checked = true
-                                            id = ''
-                                            edit = false
+                                            productoActivo.checked  = true
+                                            productoMarca.value     = 0
+                                            productoFamilia.value   = 0
+                                            id                      = ''
+                                            edit                    = false
                                             productoImagen.src = '../../hdn/img/sinImagen.png'
                                             break;
                                         case 'Sesión expirada':

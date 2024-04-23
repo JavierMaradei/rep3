@@ -82,7 +82,6 @@
      */
     function tiposReparacion(){
         $template = '
-            <option value="R">Reparación</option>
             <option value="P">Presupuesto</option>
             <option value="C">Plan canje</option>
         ';

@@ -13,6 +13,12 @@
     $formateadaArg      = $fecha->format("Y-m-d H:i:s");
     $perfilSirep        = recuperaPerfil($_SESSION['usuario_id']);
     $estadoReparacion   = 5; //En embalaje
+    $mensaje            = '';
+
+    if($_POST['reparadoEnDomicilio'] == 'true'){
+        $estadoReparacion   = 6;
+        $mensaje = 'La orden no pasa por embalaje, se repara en el domicilio del cliente.';
+    }
 
     if(empty($_SESSION['usuario_id'])){
         $arrayRespuesta['estado'] = "Sesión expirada";
@@ -31,7 +37,8 @@
                             armado              = 'S',
                             reparador_id        = '{$usuarioId}',
                             farmado             = '{$formateadaArg}',
-                            estado_id           = '{$estadoReparacion}'
+                            estado_id           = '{$estadoReparacion}',
+                            reparacion_detalle  = '{$mensaje}'
                         WHERE
                             reparacion_id       = '{$orden}'     
                     ";

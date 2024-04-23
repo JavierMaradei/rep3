@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         //Recipients
         $mail->setFrom("cristian_miraval_92@hotmail.com", "HDN - RECEPCIÓN DE EQUIPOS");
         if(MODO != 'prod'){
-            $mail->addAddress('javier.maradei@hotmail.com');     
+            $mail->addAddress('cristianmiraval92@gmail.com');     
         } else {
             $mail->addAddress($email);
         }
