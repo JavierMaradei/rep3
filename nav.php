@@ -190,9 +190,9 @@
                                     <li class="nav-item">
                                         <a href="?page=mod_repa/procesos/hojaRuta/hojaRuta" class="nav-link">Hoja de Ruta</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <!-- <li class="nav-item">
                                         <a href="?page=mod_repa/procesos/modificarOrden/modificarOrden" class="nav-link">Modificar orden</a>
-                                    </li>
+                                    </li> -->
                                     <li class="nav-item">
                                         <a href="?page=mod_repa/procesos/presupuesto/presupuesto" class="nav-link">Presupuesto</a>
                                     </li>
