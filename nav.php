@@ -143,6 +143,9 @@
                                         <a href="?page=mod_repa/tablas/motivosAnulacion/motivosAnulacion" class="nav-link">Motivos anulación</a>
                                     </li>
                                     <li class="nav-item">
+                                        <a href="?page=mod_repa/tablas/observacionesSeguimiento/observacionesSeguimiento" class="nav-link">Obs.Seguimiento</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a href="?page=mod_repa/tablas/piezas/piezas" class="nav-link">Piezas</a>
                                     </li>
                                     <li class="nav-item">
