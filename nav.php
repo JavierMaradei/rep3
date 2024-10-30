@@ -18,12 +18,17 @@
                             <div class="d-grid">
 
                                 <!-- User name and position -->
-                                <button class="d-block btn shadow-none p-2" data-bs-toggle="collapse" data-bs-target="#usernav" aria-expanded="false" aria-controls="usernav">
+                                <!-- <button class="d-block btn shadow-none p-2" data-bs-toggle="collapse" data-bs-target="#usernav" aria-expanded="false" aria-controls="usernav">
                                     <span class="dropdown-toggle d-flex justify-content-center align-items-center">
-                                        <h6 class="mb-0 me-1"><?php echo $_SESSION['nombre'].' '.$_SESSION['apellido'];?></h6>
+                                        <h6 class="mb-0 me-1"><?php //echo $_SESSION['nombre'].' '.$_SESSION['apellido'];?></h6>
                                     </span>
                                     <small class="text-muted">Administrador</small>
-                                </button>
+                                </button> -->
+                                <div class="d-block shadow-none text-center p-2">
+                                    <h6 class="mb-0 me-1"><?php echo $_SESSION['nombre'].' '.$_SESSION['apellido'];?></h6>
+                                    <small class="text-muted">Administrador</small>
+                                </div>
+
 
                                 <!-- Collapsed user menu -->
                                 <div id="usernav" class="nav flex-column collapse">

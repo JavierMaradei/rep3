@@ -193,9 +193,9 @@
                     let hojaDeRuta    = `<button type="button" class="btn btn-light btn-xs coordinarPedido" value="${element.reparacion_id}">Actualizar</button>`
                     //clase = element.coordinado == 'S' ? 'badge badge-info' : 'badge badge-danger'
                     if(element.coordinado == 'S' && element.visita_concluida == 'N'){
-                        clase = 'badge bg-success'
+                        clase = 'badge bg-info'
                     } else if(element.visita_concluida == 'S'){
-                        clase = 'badge bg-primary'
+                        clase = 'badge bg-secondary'
                         element.coordinadoDesc = 'Concluido'
                         hojaDeRuta = ''
                     } else {

@@ -152,7 +152,7 @@
 
     <div class="col-md-12 mb-3">
         <div class="card h-100">
-            <h4 class="card-header bg-dark text-white text-center"><i>Tabla de órdenes</i></h4>
+            <h4 class="card-header bg-light text-center"><i>Tabla de órdenes</i></h4>
             <div class="card-body">
                 <div class="row mb-2">
                     <div class="table-responsive">
