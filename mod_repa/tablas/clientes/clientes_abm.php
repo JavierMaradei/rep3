@@ -1,5 +1,5 @@
 <div class="card h-100">
-    <h4 class="card-header bg-dark text-white text-center"><i>Clientes</i></h4>
+    <h4 class="card-header bg-light text-center"><i>Clientes</i></h4>
     <form id="formClientes">
         <div class="card-body">
             <div class="row mb-2">

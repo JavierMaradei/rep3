@@ -1,5 +1,5 @@
 <div class="card h-100">
-    <h4 class="card-header bg-dark text-white text-center"><i>Piezas</i></h4>
+    <h4 class="card-header bg-light text-center"><i>Piezas</i></h4>
     <form id="formPiezas">
         <div class="card-body">
             <div class="mininav-toggle text-center pb-4 collapsed">

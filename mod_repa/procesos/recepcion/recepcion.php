@@ -1,7 +1,7 @@
-<div class="content__boxed bg-gray-500">
+<div class="content__boxed bg-gray-500" style="background-image: url('./img/banner.jpg'); background-size: cover; border-radius: 10px;">
     <div class="content__wrap">
         <div class="mb-3 mt-3 text-end">
-            <h2><i>Recepción de productos</i></h2>
+            <h2><i style="color: white;">Recepción de productos</i></h2>
         </div>
     </div>
 </div>
@@ -10,7 +10,7 @@
 
         <div class="col-md-6 mb-3">
             <div class="card h-100">
-                <h4 class="card-header bg-dark text-white text-center"><i>Datos generales de Ingreso</i></h4>
+                <h4 class="card-header bg-light text-center"><i>Datos generales de Ingreso</i></h4>
                 <div class="card-body">
                     <div class="col-sm-12 mb-2">
                         <label for="fechaRecepcion" class="form-label">Fecha</label>
@@ -68,7 +68,7 @@
 
         <div class="col-md-6 mb-3">
             <div class="card h-100">
-                <h4 class="card-header bg-dark text-white text-center"><i>Datos Cliente</i></h4>
+                <h4 class="card-header bg-light text-center"><i>Datos Cliente</i></h4>
                 <div class="card-body">
                     <div class="row mb-3">
                         <div class="col-sm-12 text-center">
@@ -133,7 +133,7 @@
 
         <div class="col-md-12 mb-3">
             <div class="card h-100">
-                <h4 class="card-header bg-dark text-white text-center"><i>Datos del Producto</i></h4>
+                <h4 class="card-header bg-light text-center"><i>Datos del Producto</i></h4>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-6">

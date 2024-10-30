@@ -65,6 +65,9 @@
                                         <a href="?page=mod_repa/procesos/recepcion/recepcion" class="nav-link active">Recepción</a>
                                     </li>
                                     <li class="nav-item">
+                                        <a href="?page=mod_repa/procesos/asignaPedido/asignaPedido" class="nav-link active">Asignar pedidos</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a href="?page=mod_repa/procesos/hojaRuta/hojaRuta" class="nav-link active">Hoja de Ruta</a>
                                     </li>
                                     <li class="nav-item">

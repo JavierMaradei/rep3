@@ -13,7 +13,7 @@
     <div class="row mt-3">
         <div class="col-md-12 mb-3">
             <div class="card h-100" style="box-shadow: 0 0 1px grey !important;">
-                <h4 class="card-header bg-black text-white text-center"><i>Anulación de resolución</i></h4>
+                <h4 class="card-header bg-light text-center"><i>Anulación de resolución</i></h4>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-4 mb-2">

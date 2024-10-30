@@ -3,7 +3,7 @@
     <!-- Card datos del ingreso -->
     <div class="col-md-6 mb-3" id="divDatosGenerales">
         <div class="card h-100 shadow">
-            <h4 class="card-header bg-danger text-white text-center"><i>Datos generales de Ingreso</i></h4>
+            <h4 class="card-header bg-light text-center"><i>Datos generales de Ingreso</i></h4>
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-4 mb-2">
@@ -53,7 +53,7 @@
     <!-- Card fechas -->
     <div class="col-md-6 mb-3" id="divFechas">
         <div class="card h-100 shadow">
-            <h4 class="card-header bg-danger text-white text-center"><i>Fechas generales</i></h4>
+            <h4 class="card-header bg-light text-center"><i>Fechas generales</i></h4>
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-6 mb-2">
@@ -79,7 +79,7 @@
     <!-- Card datos del cliente -->
     <div class="col-md-6 mb-3" id="divDatosCliente">
         <div class="card h-100 shadow">
-            <h4 class="card-header bg-danger text-white text-center"><i>Datos Cliente</i></h4>
+            <h4 class="card-header bg-light text-center"><i>Datos Cliente</i></h4>
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-2 mb-2">
@@ -113,7 +113,7 @@
     <!-- Card datos del producto -->
     <div class="col-md-6 mb-3" id="divDatosProducto">
         <div class="card h-100 shadow">
-            <h4 class="card-header bg-danger text-white text-center"><i>Datos del Producto</i></h4>
+            <h4 class="card-header bg-light text-center"><i>Datos del Producto</i></h4>
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-6 mb-2">
@@ -169,7 +169,7 @@
     <!-- Card Estados -->
     <div class="col-md-6 mb-3" id="divEstadoOrden">
         <div class="card h-100 shadow">
-            <h4 class="card-header bg-danger text-white text-center"><i>Estado</i></h4>
+            <h4 class="card-header bg-light text-center"><i>Estado</i></h4>
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-6 mb-2">
@@ -223,7 +223,7 @@
     <!-- Card Resolución / cargo -->
     <div class="col-md-6 mb-3" id="divDatosResolucion">
         <div class="card h-100 shadow">
-            <h4 class="card-header bg-danger text-white text-center"><i>Resolución / Cargo</i></h4>
+            <h4 class="card-header bg-light text-center"><i>Resolución / Cargo</i></h4>
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12 mb-2">
@@ -266,7 +266,7 @@
     <!-- Card Presupuesto -->
     <div class="col-md-6 mb-3" id="divDatosPresupuesto">
         <div class="card h-100 shadow">
-            <h4 class="card-header bg-danger text-white text-center"><i>Presupuesto</i></h4>
+            <h4 class="card-header bg-light text-center"><i>Presupuesto</i></h4>
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-8 mb-2">
@@ -293,7 +293,7 @@
     <div class="col-md-6 mb-3" id="divMonitorDiagnostico">
         <div class="card h-100 shadow">
             <form id="formAccionesDiagnostico">
-                <h4 class="card-header bg-danger text-white text-center"><i>Acciones Diagnóstico</i></h4>
+                <h4 class="card-header bg-light text-center"><i>Acciones Diagnóstico</i></h4>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-6 mb-2">
@@ -317,7 +317,7 @@
     <!-- Card Monitor Presupuesto -->
     <div class="col-md-6 mb-3" id="divMonitorPresupuesto">
         <div class="card h-100 shadow">
-            <h4 class="card-header bg-danger text-white text-center"><i>Acciones Presupuesto</i></h4>
+            <h4 class="card-header bg-light text-center"><i>Acciones Presupuesto</i></h4>
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12 mb-2">
@@ -365,7 +365,7 @@
     <!-- Card Monitor Embalaje -->
     <div class="col-md-6 mb-3" id="divMonitorEmbalaje">
         <div class="card h-100 shadow">
-            <h4 class="card-header bg-danger text-white text-center"><i>Acciones Embalaje</i></h4>
+            <h4 class="card-header bg-light text-center"><i>Acciones Embalaje</i></h4>
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12 mb-2">
@@ -383,7 +383,7 @@
     <!-- Card Monitor Resolución -->
     <div class="col-md-6 mb-3" id="divMonitorResolucion">
         <div class="card h-100 shadow">
-            <h4 class="card-header bg-danger text-white text-center"><i>Acciones Resolución</i></h4>
+            <h4 class="card-header bg-light text-center"><i>Acciones Resolución</i></h4>
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12 mb-2">

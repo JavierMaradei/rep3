@@ -325,6 +325,25 @@ function dataGeneral(){
 }
 
 /**
+ * Carga de información para los pedidos de domicilio cliente
+ * @param {string} campo
+ * @param {string} activo
+ */
+function cargaDataDomicilio(idPedido) {
+    return new Promise(function(resolve, reject) {
+        let xhr = new XMLHttpRequest
+        xhr.open('GET', 'mod_repa/querys/clienteHistorial_single.php?id='+idPedido)
+        xhr.send()
+        xhr.addEventListener('load', () => {
+            if(xhr.status == 200){
+                let respuesta = JSON.parse(xhr.response)
+                resolve(respuesta)
+            }
+        })
+    })
+}
+
+/**
  * Limpiar inputs
  * @param {array} entradas
  * @version 1.0

@@ -1,9 +1,9 @@
-<div class="content__boxed bg-gray-500">
+<div class="content__boxed bg-gray-500" style="background-image: url('./img/banner.jpg'); background-size: cover; border-radius: 10px;">
     <div class="content__wrap">
         <div class="mb-3 mt-3">
             <div class="row">
                 <div class="col-md-12 text-end">
-                    <h2><i>Informe de resoluciones</i></h2>
+                    <h2><i style="color: white;">Informe de resoluciones</i></h2>
                 </div>
             </div>
         </div>
@@ -13,7 +13,7 @@
     <div class="row mt-3">
         <div class="col-md-12 mb-3">
             <div class="card h-100" style="box-shadow: 0 0 1px grey !important;">
-                <h4 class="card-header bg-black text-white text-center"><i>Pre-filtro</i></h4>
+                <h4 class="card-header bg-light text-center"><i>Pre-filtro</i></h4>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-4 mb-2">
@@ -43,7 +43,7 @@
 
         <div class="col-md-12 mb-3">
             <div class="card h-100">
-                <h4 class="card-header bg-dark text-white text-center"><i>Tabla de órdenes</i></h4>
+                <h4 class="card-header bg-light text-center"><i>Tabla de órdenes</i></h4>
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="table-responsive">

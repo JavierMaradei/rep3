@@ -1,14 +1,14 @@
-<div class="content__boxed bg-gray-500">
+<div class="content__boxed bg-gray-500" style="background-image: url('./img/banner.jpg'); background-size: cover; border-radius: 10px;">
     <div class="content__wrap">
         <div class="mb-3 mt-3 text-end">
-            <h2><i>Familias</i></h2>
+            <h2><i style="color: white;">Familias</i></h2>
         </div>
     </div>
 </div>
 <div class="row mt-3">
     <div class="col-md-4 mb-3">
         <div class="card h-100">
-            <h4 class="card-header bg-dark text-white text-center"><i>Familia</i></h4>
+            <h4 class="card-header bg-light text-center"><i>Familia</i></h4>
             <form id="formFamilias">
                 <div class="card-body">
                     <div class="row mb-2">
@@ -40,7 +40,7 @@
     </div>
     <div class="col-md-8 mb-3">
         <div class="card h-100">
-            <h4 class="card-header bg-dark text-white text-center"><i>Listado de Familias</i></h4>
+            <h4 class="card-header bg-light text-center"><i>Listado de Familias</i></h4>
             <div class="card-body">
                 <div class="row mb-2">
                     <div class="table-responsive">

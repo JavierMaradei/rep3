@@ -1,4 +1,4 @@
-<div class="content__boxed bg-gray-500">
+<div class="content__boxed bg-gray-500" style="background-image: url('./img/banner.jpg'); background-size: cover; border-radius: 10px;">
     <div class="content__wrap">
         <div class="mb-3 mt-3">
             <div class="row">
@@ -9,7 +9,7 @@
                 </div>
 
                 <div class="col-md-8 text-end">
-                    <h2><i>Hoja de Ruta</i></h2>
+                    <h2><i style="color: white;">Hoja de Ruta</i></h2>
                 </div>
             </div>
         </div>
@@ -19,7 +19,7 @@
     <div class="col-md-4 mb-3">
         <div class="card h-100">
             <form id="form">
-                <h4 class="card-header bg-dark text-white text-center"><i>Pedido de Service</i></h4>
+                <h4 class="card-header bg-light text-center"><i>Pedido de Service</i></h4>
                 <div class="card-body">
                     <div class="row mb-2">
                         <label for="idPedido" class="col-sm-2 col-form-label">Id</label>
@@ -91,7 +91,7 @@
     </div>
     <div class="col-md-8 mb-3">
         <div class="card h-100">
-            <h4 class="card-header bg-dark text-white text-center"><i>Listado de Pedidos de Service</i></h4>
+            <h4 class="card-header bg-light text-center"><i>Listado de Pedidos de Service</i></h4>
             <div class="card-body">
                 <div class="row mb-2">
                     <div class="table-responsive" style="width: 100%; overflow-y:auto; overflow-x:auto;">
